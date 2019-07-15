@@ -18,8 +18,8 @@ apply plugin: 'maven-publish'
 //    version = "${minecraft_version}-${mod_version}-" + System.getenv('BUILD_NUMBER')
 //}
 version = "${version}"
-group = 'epicsquid.embers' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'embers'
+group = 'mystic.druidcraft' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'druidcraft'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
@@ -46,7 +46,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                embers {
+                druidcraft {
                     source sourceSets.main
                 }
             }
@@ -62,7 +62,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                embers {
+                druidcraft {
                     source sourceSets.main
                 }
             }
@@ -77,10 +77,10 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'embers', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'druidcraft', '--all', '--output', file('src/generated/resources/')
 
             mods {
-                embers {
+                druidcraft {
                     source sourceSets.main
                 }
             }
@@ -107,7 +107,7 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "embers",
+                "Specification-Title"     : "druidcraft",
                 "Specification-Vendor"    : "mysticmodding",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,

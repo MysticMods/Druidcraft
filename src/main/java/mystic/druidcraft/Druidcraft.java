@@ -1,18 +1,17 @@
-package epicsquid.embers;
+package mystic.druidcraft;
 
-import epicsquid.embers.setup.ClientSetup;
-import epicsquid.embers.setup.ModSetup;
+import mystic.druidcraft.setup.ModSetup;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod("embers")
-public class Embers {
+public class Druidcraft {
 	public static final String MODID = "embers";
 
 	public static ModSetup setup = new ModSetup();
 
-	public Embers() {
+	public Druidcraft() {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 	}
 
