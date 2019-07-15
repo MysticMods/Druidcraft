@@ -5,9 +5,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-@Mod("embers")
+@Mod("druidcraft")
 public class Druidcraft {
-	public static final String MODID = "embers";
+	public static final String MODID = "druidcraft";
 
 	public static ModSetup setup = new ModSetup();
 

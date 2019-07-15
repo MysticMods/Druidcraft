@@ -1,0 +1,12 @@
+{
+    "itemGroup.firefly": "Firefly Magic",
+
+    "item.firefly.firefly_jar": "Firefly Jar",
+    "item.firefly.firefly_jar_forest": "Forest Firefly",
+    "item.firefly.firefly_jar_fairy": "Fairy Firefly",
+    "item.firefly.firefly_jar_mountain": "Mountain Firefly",
+    "item.firefly.firefly_jar_void": "Void Firefly",
+    "item.firefly.firefly_jar_demon": "Demon Firefly",
+    "item.firefly.firefly_jar_ice": "Ice Firefly",
+    "item.firefly.firefly_jar_earth": "Earth Firefly"
+}

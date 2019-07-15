@@ -23,11 +23,12 @@ public class RegistryManager {
 
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event) {
+		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.setup.tab)).setRegistryName("amber"));
 		ItemGenerator generator = new ItemGenerator();
 		generator.addAllFactories(ToolFactories.getFactories());
 		generator.execute(new MaterialProperties()
 										.setItemProps(() -> new Item.Properties().maxDamage(256).maxStackSize(1).group(Druidcraft.setup.tab))
-										.setName("dawnstone")
+										.setName("bone")
 										.setDamage("SWORD", 7)
 										.setAttackSpeed("SWORD", 1.6f)
 										.setTier(() -> new BaseItemTier(256, 5.0f, 4.0f, 4, 4,
