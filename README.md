@@ -1,6 +1,5 @@
-# Embers
-Embers is best described as a dwarven magic mod. It features a smattering of magical and technical content, from staples such as ore doubling and item transport to alchemy and magical ray guns. All centered around the core mechanic of Ember, a limited form of power that you must extract from the world's core near bedrock.
+# Druidcraft
 
-You can download the latest files here on curseforge. https://minecraft.curseforge.com/projects/embers
+This Minecraft mod is one that revolves around a much more laid back sort of druid. One that wouldn't fret about automating everything in life, but enjoying what it has to offer. Whether it's fighting bosses, discovering new fey or beasts, brewing up teas and poultices, decorating your little grove, or pushing yourself to the status of an archdruid and discovering all the spells, there's something for every aspiring druid in Druidcraft.
 
-You can also contact us on our discord here. https://discord.gg/75aVV7C
+This is a work in progress!
