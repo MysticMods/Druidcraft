@@ -3,11 +3,17 @@ package mystic.druidcraft.setup;
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.material.IMaterial;
 import mystic.druidcraft.Druidcraft;
+import mystic.druidcraft.entity.DreadFishEntity;
+import mystic.druidcraft.entity.render.DreadFishRenderer;
 import mystic.druidcraft.items.BoneMaterial;
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -40,5 +46,14 @@ public class RegistryManager {
 		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.setup.tab)).setRegistryName("rope"));
 		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.setup.tab)).setRegistryName("soulfire"));
 		LibRegistry.registerMetalSetItems(new BoneMaterial(), event.getRegistry(), Druidcraft.MODID);
+	}
+
+	@SubscribeEvent
+	public static void registerEntityTypes(final RegistryEvent.Register<EntityType<?>> event)
+	{
+		event.getRegistry().register(EntityType.Builder.create(DreadFishEntity::new, EntityClassification.WATER_CREATURE).size(0.5F, 0.5F).build("dreadfish")
+				.setRegistryName(new ResourceLocation(Druidcraft.MODID, "dreadfish")));
+
+		RenderingRegistry.registerEntityRenderingHandler(DreadFishEntity.class, DreadFishRenderer::new);
 	}
 }
