@@ -2,6 +2,7 @@ package mystic.druidcraft.setup;
 
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.material.IMaterial;
+import epicsquid.mysticallib.material.MaterialGenerator;
 import mystic.druidcraft.Druidcraft;
 import mystic.druidcraft.items.BoneMaterial;
 import net.minecraft.block.Block;
@@ -39,6 +40,7 @@ public class RegistryManager {
 		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.setup.tab)).setRegistryName("rockroot"));
 		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.setup.tab)).setRegistryName("rope"));
 		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.setup.tab)).setRegistryName("soulfire"));
-		LibRegistry.registerMetalSetItems(new BoneMaterial(), event.getRegistry(), Druidcraft.MODID);
+
+		MaterialGenerator.getInstance().generateItems(new BoneMaterial(), event.getRegistry(), Druidcraft.MODID);
 	}
 }
