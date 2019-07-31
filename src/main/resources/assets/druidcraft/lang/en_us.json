@@ -18,5 +18,17 @@
     "item.druidcraft.radiant_javelin_active": "Radiant Javelin (Active)",
     "item.druidcraft.rockroot": "Rockroot",
     "item.druidcraft.rope": "Rope",
-    "item.druidcraft.soulfire": "Soulfire"
+    "item.druidcraft.soulfire": "Soulfire",
+
+    "item.druidcraft.bone_sword": "Bone Sword",
+    "item.druidcraft.bone_knife": "Bone Knife",
+    "item.druidcraft.bone_hoe": "Bone Hoe",
+    "item.druidcraft.bone_pickaxe": "Bone Pickaxe",
+    "item.druidcraft.bone_axe": "Bone Axe",
+    "item.druidcraft.bone_shovel": "Bone Shovel",
+    "item.druidcraft.bone_chestplate": "Bone Chestplate",
+    "item.druidcraft.bone_boots": "Bone Boots",
+    "item.druidcraft.bone_leggings": "Bone Leggings",
+    "item.druidcraft.bone_helmet": "Bone Helmet",
+    "item.druidcraft.bone_spear": "Bone Spear"
 }
