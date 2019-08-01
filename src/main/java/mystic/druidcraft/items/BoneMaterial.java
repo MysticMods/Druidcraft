@@ -11,6 +11,11 @@ import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.SoundEvents;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class BoneMaterial implements IMaterial {
 
     private static final String SWORD = "SWORD";
@@ -21,14 +26,34 @@ public class BoneMaterial implements IMaterial {
     private static final String HOE = "HOE";
     private static final String SPEAR = "SPEAR";
 
+    private int enchantability = 14;
+
+    private Map<String, Float> damage = new HashMap<>();
+    private Map<String, Float> speed = new HashMap<>();
+
+    public BoneMaterial() {
+        damage.put(SWORD, 3.0f);
+        damage.put(SHOVEL, 1.5f);
+        damage.put(PICKAXE, 1.0f);
+        damage.put(AXE, 5.0f);
+        damage.put(KNIFE, 2.5f);
+
+        speed.put(SWORD, -2.4f);
+        speed.put(SHOVEL, -3.0f);
+        speed.put(PICKAXE, -2.8f);
+        speed.put(AXE, -3.1f);
+        speed.put(KNIFE, -1.0f);
+        speed.put(HOE, 3.0f);
+    }
+
     @Override
     public IItemTier getTier() {
-        return new BaseItemTier(170, 6.0F, 2.0F, 2, 14, () -> Ingredient.fromItems(Items.BONE));
+        return new BaseItemTier(170, 6.0F, 2.0F, 2, enchantability, () -> Ingredient.fromItems(Items.BONE));
     }
 
     @Override
     public IArmorMaterial getArmor() {
-        return new BaseArmorMaterial("druidcraft:bone", 15, new int[]{2, 5, 6, 2}, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F, () -> Ingredient.fromItems(Items.BONE));
+        return new BaseArmorMaterial(Druidcraft.MODID + ":" + getName(), 15, new int[]{2, 5, 6, 2}, enchantability, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0.0F, () -> Ingredient.fromItems(Items.BONE));
     }
 
     @Override
@@ -48,28 +73,12 @@ public class BoneMaterial implements IMaterial {
 
     @Override
     public float getAttackSpeed(String name) {
-        switch(name){
-            case SWORD:
-                return -2.4F;
-            case KNIFE:
-                return -1.0F;
-            case PICKAXE:
-                return -2.8F;
-            case AXE:
-                return -3.1F;
-            case SHOVEL:
-                return -3.0F;
-            case HOE:
-                return -1.0F;
-            case SPEAR:
-                return -1.5F;
-        }
-        return 0;
+        return speed.getOrDefault(name, 1.0f);
     }
 
     @Override
     public float getAttackDamage(String name) {
-        return ItemTier.IRON.getAttackDamage();
+        return damage.getOrDefault(name, 1.0f);
     }
 
     @Override
@@ -78,7 +87,17 @@ public class BoneMaterial implements IMaterial {
     }
 
     @Override
-    public boolean isMetal() {
-        return false;
+    public List<String> getWhitelist() {
+        return Arrays.asList("ingot", "nugget", "ore", "block", "dust", "");
+    }
+
+    @Override
+    public boolean isBlacklist() {
+        return true;
+    }
+
+    @Override
+    public int getDurability() {
+        return 0;
     }
 }
