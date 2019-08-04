@@ -58,7 +58,7 @@ public class BoneMaterial implements IMaterial {
 
     @Override
     public Item.Properties getItemProps() {
-        return new Item.Properties().group(Druidcraft.setup.tab);
+        return new Item.Properties().group(Druidcraft.GROUP);
     }
 
     @Override
