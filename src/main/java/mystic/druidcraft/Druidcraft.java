@@ -4,6 +4,7 @@ import mystic.druidcraft.registry.ModItems;
 import mystic.druidcraft.setup.ModSetup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -15,7 +16,7 @@ public class Druidcraft {
 	public static final ItemGroup GROUP = new ItemGroup(Druidcraft.MODID) {
 		@Override
 		public ItemStack createIcon() {
-			return new ItemStack(ModItems.AMBER);
+			return new ItemStack(Items.APPLE);
 		}
 	};
 
