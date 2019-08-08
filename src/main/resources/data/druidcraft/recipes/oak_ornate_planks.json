@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "#/#",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:oak_planks"
+        },
+        "/": {
+            "item": "minecraft:stick"
+        }
+    },
+    "result": { "druidcraft:oak_ornate_planks", "count": 8 },
+    "group": "ornate_planks"
+}

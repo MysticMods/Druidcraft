@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "#/#",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:acacia_planks"
+        },
+        "/": {
+            "item": "minecraft:stick"
+        }
+    },
+    "result": { "druidcraft:acacia_ornate_planks", "count": 8 },
+    "group": "ornate_planks"
+}

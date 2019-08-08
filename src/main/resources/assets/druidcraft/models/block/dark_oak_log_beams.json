@@ -1,5 +1,5 @@
 {
-    "parent": "block/cube_column",
+    "parent": "minecraft:block/cube_column",
     "textures": {
         "end": "druidcraft:block/dark_oak_log_beams_top",
         "side": "druidcraft:block/dark_oak_log_beams"
