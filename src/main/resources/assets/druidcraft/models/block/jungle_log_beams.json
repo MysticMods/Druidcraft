@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "druidcraft:block/jungle_log_beams_top",
+        "side": "druidcraft:block/jungle_log_beams"
+    }
+}
