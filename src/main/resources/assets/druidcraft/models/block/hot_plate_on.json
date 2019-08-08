@@ -1,13 +1,13 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "block/hotplate_side_on",
-		"1": "block/hotplate_inner_on",
-		"2": "block/hotplate_front_on",
-		"3": "block/hotplate_top",
-		"4": "block/hotplate_bottom",
-		"5": "block/hotplate_pots",
-		"particle": "block/hotplate_bottom"
+		"0": "druidcraft:block/hotplate_side_on",
+		"1": "druidcraft:block/hotplate_inner_on",
+		"2": "druidcraft:block/hotplate_front_on",
+		"3": "druidcraft:block/hotplate_top",
+		"4": "druidcraft:block/hotplate_bottom",
+		"5": "druidcraft:block/hotplate_pots",
+		"particle": "druidcraft:block/hotplate_bottom"
 	},
 	"elements": [
 		{

@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "block/hemp_stem_stage2",
-		"3": "block/hempleaf3"
+		"0": "druidcraft:block/hemp_stem_stage2",
+		"3": "druidcraft:block/hempleaf3"
 	},
 	"elements": [
 		{

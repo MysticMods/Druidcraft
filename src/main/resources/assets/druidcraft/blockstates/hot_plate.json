@@ -1,12 +1,12 @@
 {
     "variants": {
-        "facing=north,lit=false": { "model": "block/hot_plate" },
-        "facing=south,lit=false": { "model": "block/hot_plate", "y": 180 },
-        "facing=west,lit=false":  { "model": "block/hot_plate", "y": 270 },
-        "facing=east,lit=false":  { "model": "block/hot_plate", "y": 90 },
-        "facing=north,lit=true": { "model": "block/hot_plate_on" },
-        "facing=south,lit=true": { "model": "block/hot_plate_on", "y": 180 },
-        "facing=west,lit=true":  { "model": "block/hot_plate_on", "y": 270 },
-        "facing=east,lit=true":  { "model": "block/hot_plate_on", "y": 90 }
+        "facing=north,lit=false": { "model": "druidcraft:block/hot_plate" },
+        "facing=south,lit=false": { "model": "druidcraft:block/hot_plate", "y": 180 },
+        "facing=west,lit=false":  { "model": "druidcraft:block/hot_plate", "y": 270 },
+        "facing=east,lit=false":  { "model": "druidcraft:block/hot_plate", "y": 90 },
+        "facing=north,lit=true": { "model": "druidcraft:block/hot_plate_on" },
+        "facing=south,lit=true": { "model": "druidcraft:block/hot_plate_on", "y": 180 },
+        "facing=west,lit=true":  { "model": "druidcraft:block/hot_plate_on", "y": 270 },
+        "facing=east,lit=true":  { "model": "druidcraft:block/hot_plate_on", "y": 90 }
     }
 }

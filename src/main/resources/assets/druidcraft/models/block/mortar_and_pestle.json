@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "assets/druidcraft/textures/block/mortar_and_pestle",
-		"particle": "assets/druidcraft/textures/block/mortar_and_pestle"
+		"0": "druidcraft:block/mortar_and_pestle",
+		"particle": "druidcraft:block/mortar_and_pestle"
 	},
 	"elements": [
 		{

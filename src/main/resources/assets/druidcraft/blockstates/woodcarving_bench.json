@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "block/woodcarving_bench" },
+        "facing=south": { "model": "block/woodcarving_bench", "y": 180 },
+        "facing=west":  { "model": "block/woodcarving_bench", "y": 270 },
+        "facing=east":  { "model": "block/woodcarving_bench", "y": 90 }
+    }
+}
