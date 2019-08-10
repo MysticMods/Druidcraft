@@ -4,6 +4,8 @@ import epicsquid.mysticallib.block.OreBlockProperties;
 import epicsquid.mysticallib.material.BaseArmorMaterial;
 import epicsquid.mysticallib.material.BaseItemTier;
 import epicsquid.mysticallib.material.IMaterial;
+import epicsquid.mysticallib.material.IMaterialFactory;
+import epicsquid.mysticallib.material.factory.FactoryPredicates;
 import mystic.druidcraft.Druidcraft;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -15,6 +17,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public class BoneMaterial implements IMaterial {
 
@@ -87,13 +90,8 @@ public class BoneMaterial implements IMaterial {
     }
 
     @Override
-    public List<String> getWhitelist() {
-        return Arrays.asList("ingot", "nugget", "ore", "block", "dust", "");
-    }
-
-    @Override
-    public boolean isBlacklist() {
-        return true;
+    public Predicate<IMaterialFactory<?>> matches() {
+        return FactoryPredicates.TOOLS.or(FactoryPredicates.ARMOR);
     }
 
     @Override
