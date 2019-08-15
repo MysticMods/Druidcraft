@@ -1,11 +1,12 @@
 package mystic.druidcraft.registry;
 
+import mystic.druidcraft.Druidcraft;
 import net.minecraft.item.Item;
 import net.minecraftforge.registries.ObjectHolder;
 
-@ObjectHolder("druidcraft")
+@ObjectHolder(Druidcraft.MODID)
 public class ModItems {
 
-    public static final Item AMBER = null;
+    public static final Item HEMP = null;
 
 }
