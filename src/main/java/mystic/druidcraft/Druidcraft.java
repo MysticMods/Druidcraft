@@ -16,7 +16,7 @@ public class Druidcraft {
 	public static final ItemGroup GROUP = new ItemGroup(Druidcraft.MODID) {
 		@Override
 		public ItemStack createIcon() {
-			return new ItemStack(Items.APPLE);
+			return new ItemStack(ModItems.AMBER);
 		}
 	};
 

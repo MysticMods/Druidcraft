@@ -30,5 +30,24 @@
     "item.druidcraft.bone_boots": "Bone Boots",
     "item.druidcraft.bone_leggings": "Bone Leggings",
     "item.druidcraft.bone_helmet": "Bone Helmet",
-    "item.druidcraft.bone_spear": "Bone Spear"
+    "item.druidcraft.bone_spear": "Bone Spear",
+
+    "block.druidcraft.acacia_log_beams": "Acacia Log Beams",
+    "block.druidcraft.acacia_ornate_planks": "Ornate Acacia Planks",
+    "block.druidcraft.acacia_panels": "Acacia Panels",
+    "block.druidcraft.birch_log_beams": "Birch Log Beams",
+    "block.druidcraft.birch_ornate_planks": "Ornate Birch Planks",
+    "block.druidcraft.birch_panels": "Birch Panels",
+    "block.druidcraft.dark_oak_log_beams": "Dark Oak Log Beams",
+    "block.druidcraft.dark_oak_ornate_planks": "Ornate Dark Oak Planks",
+    "block.druidcraft.dark_oak_panels": "Dark Oak Panels",
+    "block.druidcraft.jungle_log_beams": "Jungle Log Beams",
+    "block.druidcraft.jungle_ornate_planks": "Ornate Jungle Planks",
+    "block.druidcraft.jungle_panels": "Jungle Panels",
+    "block.druidcraft.oak_log_beams": "Oak Log Beams",
+    "block.druidcraft.oak_ornate_planks": "Ornate Oak Planks",
+    "block.druidcraft.oak_panels": "Oak Panels",
+    "block.druidcraft.spruce_log_beams": "Spruce Log Beams",
+    "block.druidcraft.spruce_ornate_planks": "Ornate Spruce Planks",
+    "block.druidcraft.spruce_panels": "Spruce Panels"
 }

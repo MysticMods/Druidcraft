@@ -8,6 +8,9 @@ import mystic.druidcraft.entity.DreadFishEntity;
 import mystic.druidcraft.entity.render.DreadFishRenderer;
 import mystic.druidcraft.items.BoneMaterial;
 import net.minecraft.block.Block;
+import net.minecraft.block.LogBlock;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
@@ -30,9 +33,22 @@ public class RegistryManager {
 	public static void onBlockRegistry(final RegistryEvent.Register<Block> event){
 		blocks.add(new DryingRackBlock());
 
+		generateWoodVariants("acacia");
+		generateWoodVariants("birch");
+		generateWoodVariants("dark_oak");
+		generateWoodVariants("jungle");
+		generateWoodVariants("oak");
+		generateWoodVariants("spruce");
+
 		for(Block b : blocks){
 			event.getRegistry().register(b);
 		}
+	}
+
+	private static void generateWoodVariants(String name) {
+		blocks.add(new LogBlock(MaterialColor.WOOD, Block.Properties.create(Material.WOOD, MaterialColor.WOOD)).setRegistryName(Druidcraft.MODID, name + "_log_beams"));
+		blocks.add(new Block(Block.Properties.create(Material.WOOD, MaterialColor.WOOD)).setRegistryName(Druidcraft.MODID, name + "_ornate_planks"));
+		blocks.add(new Block(Block.Properties.create(Material.WOOD, MaterialColor.WOOD)).setRegistryName(Druidcraft.MODID, name + "_panels"));
 	}
 
 	@SubscribeEvent
