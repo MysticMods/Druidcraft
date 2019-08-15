@@ -1,7 +1,9 @@
 package mystic.druidcraft.setup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import epicsquid.mysticallib.material.MaterialGenerator;
-import epicsquid.mysticalworld.MysticalWorld;
 import mystic.druidcraft.Druidcraft;
 import mystic.druidcraft.block.DryingRackBlock;
 import mystic.druidcraft.entity.DreadFishEntity;
@@ -21,16 +23,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Mod.EventBusSubscriber(modid = Druidcraft.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RegistryManager {
 
 	private static List<Block> blocks = new ArrayList<>();
 
 	@SubscribeEvent
-	public static void onBlockRegistry(final RegistryEvent.Register<Block> event){
+	public static void registerBlocks(final RegistryEvent.Register<Block> event) {
 		blocks.add(new DryingRackBlock());
 
 		generateWoodVariants("acacia");
@@ -40,7 +39,7 @@ public class RegistryManager {
 		generateWoodVariants("oak");
 		generateWoodVariants("spruce");
 
-		for(Block b : blocks){
+		for (Block b : blocks) {
 			event.getRegistry().register(b);
 		}
 	}
@@ -53,24 +52,25 @@ public class RegistryManager {
 
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event) {
-		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("amber"));
-		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("ash"));
-		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("druid_book"));
-		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("fiery_glass"));
-		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("frosted_heart"));
-		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("ghostly_halo"));
-		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("ghostly_halo_empowered"));
-		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("growth_lantern_idle"));
-		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("growth_lantern_active"));
-		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("hemp"));
-		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("hemp_seeds"));
-		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("mistletoe"));
-		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("moonstone"));
-		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("radiant_javelin_idle"));
-		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("radiant_javelin_active"));
-		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("rockroot"));
-		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("rope"));
-		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("soulfire"));
+		//		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("amber"));
+		//		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("ash"));
+		//		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("druid_book"));
+		//		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("fiery_glass"));
+		//		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("frosted_heart"));
+		//		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("ghostly_halo"));
+		//		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("ghostly_halo_empowered"));
+		//		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("growth_lantern_idle"));
+		//		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("growth_lantern_active"));
+		//		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("mistletoe"));
+		//		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("moonstone"));
+		//		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("radiant_javelin_idle"));
+		//		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("radiant_javelin_active"));
+		//		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("rockroot"));
+		//		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName("soulfire"));
+
+		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName(Druidcraft.MODID, "hemp"));
+		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName(Druidcraft.MODID, "hemp_seeds"));
+		event.getRegistry().register(new Item(new Item.Properties().group(Druidcraft.GROUP)).setRegistryName(Druidcraft.MODID, "rope"));
 
 		MaterialGenerator.getInstance().generateItems(new BoneMaterial(), event.getRegistry(), Druidcraft.MODID);
 
@@ -79,11 +79,7 @@ public class RegistryManager {
 	}
 
 	@SubscribeEvent
-	public static void registerEntityTypes(final RegistryEvent.Register<EntityType<?>> event)
-	{
-		event.getRegistry().register(EntityType.Builder.create(DreadFishEntity::new, EntityClassification.WATER_CREATURE).size(0.5F, 0.5F).build("dreadfish")
-				.setRegistryName(new ResourceLocation(Druidcraft.MODID, "dreadfish")));
-
-		RenderingRegistry.registerEntityRenderingHandler(DreadFishEntity.class, DreadFishRenderer::new);
+	public static void registerEntityTypes(final RegistryEvent.Register<EntityType<?>> event) {
+		event.getRegistry().register(EntityType.Builder.create(DreadFishEntity::new, EntityClassification.WATER_CREATURE).size(0.5F, 0.5F).build("dreadfish").setRegistryName(new ResourceLocation(Druidcraft.MODID, "dreadfish")));
 	}
 }

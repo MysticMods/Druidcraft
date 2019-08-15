@@ -29,7 +29,7 @@ public class BoneMaterial implements IMaterial {
     private static final String HOE = "HOE";
     private static final String SPEAR = "SPEAR";
 
-    private int enchantability = 14;
+    private int enchantability = 12;
 
     private Map<String, Float> damage = new HashMap<>();
     private Map<String, Float> speed = new HashMap<>();
@@ -56,7 +56,7 @@ public class BoneMaterial implements IMaterial {
 
     @Override
     public IArmorMaterial getArmor() {
-        return new BaseArmorMaterial(Druidcraft.MODID + ":" + getName(), 15, new int[]{2, 5, 6, 2}, enchantability, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0.0F, () -> Ingredient.fromItems(Items.BONE));
+        return new BaseArmorMaterial(Druidcraft.MODID + ":" + getName(), 15, new int[]{1, 4, 5, 2}, enchantability, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0.0F, () -> Ingredient.fromItems(Items.BONE));
     }
 
     @Override
