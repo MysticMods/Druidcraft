@@ -11,6 +11,7 @@ import mystic.druidcraft.entity.render.DreadFishRenderer;
 import mystic.druidcraft.items.BoneMaterial;
 import net.minecraft.block.Block;
 import net.minecraft.block.LogBlock;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.EntityClassification;
@@ -45,9 +46,9 @@ public class RegistryManager {
 	}
 
 	private static void generateWoodVariants(String name) {
-		blocks.add(new LogBlock(MaterialColor.WOOD, Block.Properties.create(Material.WOOD, MaterialColor.WOOD)).setRegistryName(Druidcraft.MODID, name + "_log_beams"));
-		blocks.add(new Block(Block.Properties.create(Material.WOOD, MaterialColor.WOOD)).setRegistryName(Druidcraft.MODID, name + "_ornate_planks"));
-		blocks.add(new Block(Block.Properties.create(Material.WOOD, MaterialColor.WOOD)).setRegistryName(Druidcraft.MODID, name + "_panels"));
+		blocks.add(new LogBlock(MaterialColor.WOOD, Block.Properties.create(Material.WOOD, MaterialColor.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0F)).setRegistryName(Druidcraft.MODID, name + "_log_beams"));
+		blocks.add(new Block(Block.Properties.create(Material.WOOD, MaterialColor.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0F, 3.0F)).setRegistryName(Druidcraft.MODID, name + "_ornate_planks"));
+		blocks.add(new Block(Block.Properties.create(Material.WOOD, MaterialColor.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0F, 3.0F)).setRegistryName(Druidcraft.MODID, name + "_panels"));
 	}
 
 	@SubscribeEvent
