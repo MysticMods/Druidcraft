@@ -1,7 +1,0 @@
-{
-    "variants": {
-        "axis=y":    { "model": "druidcraft:block/jungle_log_beams" },
-        "axis=z":     { "model": "druidcraft:block/jungle_log_beams", "x": 90 },
-        "axis=x":     { "model": "druidcraft:block/jungle_log_beams", "x": 90, "y": 90 }
-    }
-}

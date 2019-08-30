@@ -1,6 +1,6 @@
 {
-  "parent": "item/handheld",
-  "textures": {
-    "layer0": "druidcraft:item/bone_pickaxe"
-  }
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "druidcraft:item/bone_pickaxe"
+    }
 }

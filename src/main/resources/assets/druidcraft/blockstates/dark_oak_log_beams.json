@@ -1,7 +1,0 @@
-{
-    "variants": {
-        "axis=y":    { "model": "druidcraft:block/dark_oak_log_beams" },
-        "axis=z":     { "model": "druidcraft:block/dark_oak_log_beams", "x": 90 },
-        "axis=x":     { "model": "druidcraft:block/dark_oak_log_beams", "x": 90, "y": 90 }
-    }
-}

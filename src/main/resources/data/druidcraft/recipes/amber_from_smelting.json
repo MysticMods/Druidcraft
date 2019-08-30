@@ -1,0 +1,7 @@
+{
+	"type": "minecraft:smelting",
+	"ingredient": { "item": "druidcraft:amber_ore" },
+	"result": "druidcraft:amber",
+	"experience": 1.0,
+	"cookingtime": 200
+}
