@@ -21,5 +21,11 @@
   "item.druidcraft.bone_leggings": "Bone Leggings",
   "item.druidcraft.bone_boots": "Bone Boots",
 
+  "block.druidcraft.darkwood_log": "Darkwood Log",
+  "block.druidcraft.stripped_darkwood_log": "Stripped Darkwood Log",
+  "block.druidcraft.darkwood_leaves": "Darkwood Leaves",
+  "block.druidcraft.darkwood_sapling": "Darkwood Sapling",
+  "block.druidcraft.darkwood_planks": "Darkwood Planks",
+
   "itemGroup.druidcraft": "Druidcraft"
 }

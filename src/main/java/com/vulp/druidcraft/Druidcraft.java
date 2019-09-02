@@ -1,6 +1,8 @@
 package com.vulp.druidcraft;
 
 import com.vulp.druidcraft.blocks.OreBlock;
+import com.vulp.druidcraft.blocks.SaplingBlock;
+import com.vulp.druidcraft.blocks.trees.DarkwoodTree;
 import com.vulp.druidcraft.config.Configuration;
 import com.vulp.druidcraft.registry.ArmorMaterialRegistry;
 import com.vulp.druidcraft.registry.BlockRegistry;
@@ -8,11 +10,15 @@ import com.vulp.druidcraft.registry.ItemRegistry;
 import com.vulp.druidcraft.registry.ToolMaterialRegistry;
 import com.vulp.druidcraft.world.OreGeneration;
 import net.minecraft.block.Block;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.trees.Tree;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.PlantType;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -24,6 +30,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.registries.IForgeRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -73,6 +80,8 @@ public class Druidcraft
     public static class RegistryEvents
     {
 
+        private static Object DarkwoodTree;
+
         // ITEM REGISTRATION
         @SubscribeEvent
         public static void onItemsRegistry(final RegistryEvent.Register<Item> itemRegistryEvent)
@@ -102,7 +111,13 @@ public class Druidcraft
                             ItemRegistry.amber_ore = new BlockItem(BlockRegistry.amber_ore, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.amber_ore.getRegistryName()),
                             ItemRegistry.moonstone_ore = new BlockItem(BlockRegistry.moonstone_ore, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.moonstone_ore.getRegistryName()),
                             ItemRegistry.fiery_glass_ore = new BlockItem(BlockRegistry.fiery_glass_ore, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.fiery_glass_ore.getRegistryName()),
-                            ItemRegistry.rockroot_ore = new BlockItem(BlockRegistry.rockroot_ore, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.rockroot_ore.getRegistryName())
+                            ItemRegistry.rockroot_ore = new BlockItem(BlockRegistry.rockroot_ore, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.rockroot_ore.getRegistryName()),
+
+                            ItemRegistry.darkwood_log = new BlockItem(BlockRegistry.darkwood_log, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_log.getRegistryName()),
+                            ItemRegistry.stripped_darkwood_log = new BlockItem(BlockRegistry.stripped_darkwood_log, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.stripped_darkwood_log.getRegistryName()),
+                            ItemRegistry.darkwood_leaves = new BlockItem(BlockRegistry.darkwood_leaves, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_leaves.getRegistryName()),
+                            ItemRegistry.darkwood_sapling = new BlockItem(BlockRegistry.darkwood_sapling, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_sapling.getRegistryName()),
+                            ItemRegistry.darkwood_planks = new BlockItem(BlockRegistry.darkwood_planks, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_planks.getRegistryName())
                     );
             LOGGER.info("Items registered.");
         }
@@ -116,8 +131,13 @@ public class Druidcraft
                                 BlockRegistry.amber_ore = new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(1), 3, 6).setRegistryName(location("amber_ore")),
                                 BlockRegistry.moonstone_ore = new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(2), 3, 7).setRegistryName(location("moonstone_ore")),
                                 BlockRegistry.fiery_glass_ore = new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(2), 2, 5).setRegistryName(location("fiery_glass_ore")),
-                                BlockRegistry.rockroot_ore = new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(0), 1, 5).setRegistryName(location("rockroot_ore"))
+                                BlockRegistry.rockroot_ore = new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(0), 1, 5).setRegistryName(location("rockroot_ore")),
 
+                                BlockRegistry.darkwood_log = new Block(Block.Properties.create(Material.WOOD).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.AXE)).setRegistryName(location("darkwood_log")),
+                                BlockRegistry.stripped_darkwood_log = new Block(Block.Properties.create(Material.WOOD).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.AXE)).setRegistryName(location("stripped_darkwood_log")),
+                                BlockRegistry.darkwood_leaves = new Block(Block.Properties.create(Material.LEAVES).hardnessAndResistance(1.0f, 5.0f)).setRegistryName(location("darkwood_leaves")),
+                                BlockRegistry.darkwood_sapling = new SaplingBlock((Tree) DarkwoodTree, Block.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f, 5.0f)).setRegistryName(location("darkwood_sapling")),
+                                BlockRegistry.darkwood_planks = new Block(Block.Properties.create(Material.WOOD).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.AXE)).setRegistryName(location("darkwood_planks"))
                         );
                 {
 

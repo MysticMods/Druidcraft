@@ -25,4 +25,11 @@ public class ItemRegistry
     public static Item fiery_glass_ore;
     public static Item rockroot_ore;
 
+    public static Item darkwood_log;
+    public static Item stripped_darkwood_log;
+    public static Item darkwood_leaves;
+    public static Item darkwood_sapling;
+    public static Item darkwood_planks;
+
+
 }
