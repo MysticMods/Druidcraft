@@ -1,0 +1,7 @@
+{
+	"type": "minecraft:smelting",
+	"ingredient": { "item": "druidcraft:rockroot_ore" },
+	"result": "druidcraft:rockroot",
+	"experience": 1.0,
+	"cookingtime": 200
+}

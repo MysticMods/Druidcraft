@@ -1,0 +1,7 @@
+{
+	"type": "minecraft:blasting",
+	"ingredient": { "item": "druidcraft:fiery_glass_ore" },
+	"result": "druidcraft:fiery_glass",
+	"experience": 1.0,
+	"cookingtime": 100
+}
