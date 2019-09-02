@@ -1,5 +1,6 @@
 package com.vulp.druidcraft;
 
+import com.vulp.druidcraft.blocks.OreBlock;
 import com.vulp.druidcraft.config.Configuration;
 import com.vulp.druidcraft.registry.ArmorMaterialRegistry;
 import com.vulp.druidcraft.registry.BlockRegistry;
@@ -7,18 +8,12 @@ import com.vulp.druidcraft.registry.ItemRegistry;
 import com.vulp.druidcraft.registry.ToolMaterialRegistry;
 import com.vulp.druidcraft.world.OreGeneration;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.OreBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolType;
-import net.minecraftforge.common.extensions.IForgeBlock;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -87,6 +82,9 @@ public class Druidcraft
                             // True items:
                             ItemRegistry.hemp = new Item(new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("hemp")),
                             ItemRegistry.amber = new Item(new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("amber")),
+                            ItemRegistry.moonstone = new Item(new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("moonstone")),
+                            ItemRegistry.fiery_glass = new Item(new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("fiery_glass")),
+                            ItemRegistry.rockroot = new Item(new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("rockroot")),
 
                             //Tools & Armour:
                             ItemRegistry.bone_sword = new SwordItem(ToolMaterialRegistry.bone, 3, -2.4f, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("bone_sword")),
@@ -115,10 +113,10 @@ public class Druidcraft
             {
                 BlockRegistryEvent.getRegistry().registerAll
                         (
-                                BlockRegistry.amber_ore = new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(1)).setRegistryName(location("amber_ore")),
-                                BlockRegistry.moonstone_ore = new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(2)).setRegistryName(location("moonstone_ore")),
-                                BlockRegistry.fiery_glass_ore = new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(2)).setRegistryName(location("fiery_glass_ore")),
-                                BlockRegistry.rockroot_ore = new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(0)).setRegistryName(location("rockroot_ore"))
+                                BlockRegistry.amber_ore = new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(1), 3, 6).setRegistryName(location("amber_ore")),
+                                BlockRegistry.moonstone_ore = new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(2), 3, 7).setRegistryName(location("moonstone_ore")),
+                                BlockRegistry.fiery_glass_ore = new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(2), 2, 5).setRegistryName(location("fiery_glass_ore")),
+                                BlockRegistry.rockroot_ore = new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(0), 1, 5).setRegistryName(location("rockroot_ore"))
 
                         );
                 {
