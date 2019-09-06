@@ -1,10 +1,12 @@
 {
+  "block.druidcraft.hemp_crop": "Hemp Crop",
   "block.druidcraft.amber_ore": "Amber Ore",
   "block.druidcraft.moonstone_ore": "Moonstone Ore",
   "block.druidcraft.fiery_glass_ore": "Fiery Glass Ore",
   "block.druidcraft.rockroot_ore": "Rockroot Ore",
 
   "item.druidcraft.hemp": "Hemp",
+  "item.druidcraft.hemp_seeds": "Hemp Seeds",
   "item.druidcraft.amber": "Amber",
   "item.druidcraft.moonstone": "Moonstone",
   "item.druidcraft.fiery_glass": "Fiery Glass",

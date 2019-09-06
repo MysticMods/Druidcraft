@@ -5,6 +5,7 @@ import net.minecraft.item.Item;
 public class ItemRegistry
 {
     public static Item hemp;
+    public static Item hemp_seeds;
     public static Item amber;
     public static Item moonstone;
     public static Item fiery_glass;
@@ -20,6 +21,9 @@ public class ItemRegistry
     public static Item bone_leggings;
     public static Item bone_boots;
 
+    public static Item dreadfish_egg;
+
+    public static Item hemp_crop;
     public static Item amber_ore;
     public static Item moonstone_ore;
     public static Item fiery_glass_ore;

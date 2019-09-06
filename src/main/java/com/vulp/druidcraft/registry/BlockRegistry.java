@@ -5,11 +5,11 @@ import net.minecraft.block.Block;
 
 public class BlockRegistry
 {
+    public static Block hemp_crop;
     public static Block amber_ore;
     public static Block moonstone_ore;
     public static Block fiery_glass_ore;
     public static Block rockroot_ore;
-
     public static Block darkwood_log;
     public static Block stripped_darkwood_log;
     public static Block darkwood_leaves;
