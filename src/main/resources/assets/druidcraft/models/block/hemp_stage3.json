@@ -3,7 +3,7 @@
 	"textures": {
 		"0": "druidcraft:block/hemp_stem_stage3",
 		"1": "druidcraft:block/hempleaf1",
-		"3": "druidcraft:block/hempleaf3",
+		"2": "druidcraft:block/hempleaf2",
 		"particle": "druidcraft:block/hempleaf1"
 	},
 	"elements": [
@@ -41,12 +41,12 @@
 			"to": [16, 4, 16],
 			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 4, 8]},
 			"faces": {
-				"north": {"uv": [0, 0, 16, 0], "texture": "#3"},
-				"east": {"uv": [0, 0, 16, 0], "texture": "#3"},
-				"south": {"uv": [0, 0, 16, 0], "texture": "#3"},
-				"west": {"uv": [0, 0, 16, 0], "texture": "#3"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#3"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#3"}
+				"north": {"uv": [0, 0, 16, 0], "texture": "#2"},
+				"east": {"uv": [0, 0, 16, 0], "texture": "#2"},
+				"south": {"uv": [0, 0, 16, 0], "texture": "#2"},
+				"west": {"uv": [0, 0, 16, 0], "texture": "#2"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#2"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#2"}
 			}
 		},
 		{
@@ -69,12 +69,12 @@
 			"to": [16.02793, 16.00004, 15.97203],
 			"rotation": {"angle": -22.5, "axis": "z", "origin": [8.02793, 16.00004, 7.97203]},
 			"faces": {
-				"north": {"uv": [0, 0, 16, 0], "texture": "#3"},
-				"east": {"uv": [0, 0, 16, 0], "texture": "#3"},
-				"south": {"uv": [0, 0, 16, 0], "texture": "#3"},
-				"west": {"uv": [0, 0, 16, 0], "texture": "#3"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#3"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#3"}
+				"north": {"uv": [0, 0, 16, 0], "texture": "#2"},
+				"east": {"uv": [0, 0, 16, 0], "texture": "#2"},
+				"south": {"uv": [0, 0, 16, 0], "texture": "#2"},
+				"west": {"uv": [0, 0, 16, 0], "texture": "#2"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#2"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#2"}
 			}
 		}
 	]

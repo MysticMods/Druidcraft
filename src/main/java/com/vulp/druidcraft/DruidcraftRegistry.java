@@ -7,6 +7,7 @@ import com.vulp.druidcraft.items.PlantableItem;
 import com.vulp.druidcraft.registry.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -74,7 +75,7 @@ public class DruidcraftRegistry {
     {
         BlockRegistryEvent.getRegistry().registerAll
                 (
-                        BlockRegistry.hemp_crop = new HempBlock(Block.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).doesNotBlockMovement().tickRandomly()).setRegistryName(location("hemp_crop")),
+                        BlockRegistry.hemp_crop = new HempBlock(Block.Properties.create(Material.PLANTS).sound(SoundType.CROP).hardnessAndResistance(0.0f).doesNotBlockMovement().tickRandomly()).setRegistryName(location("hemp_crop")),
                         BlockRegistry.amber_ore = new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(1), 3, 6).setRegistryName(location("amber_ore")),
                         BlockRegistry.moonstone_ore = new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(2), 3, 7).setRegistryName(location("moonstone_ore")),
                         BlockRegistry.fiery_glass_ore = new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(2), 2, 5).setRegistryName(location("fiery_glass_ore")),

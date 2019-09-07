@@ -1,6 +1,7 @@
 package com.vulp.druidcraft.blocks;
 
 import com.vulp.druidcraft.registry.BlockRegistry;
+import com.vulp.druidcraft.registry.ItemRegistry;
 import net.minecraft.block.AirBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -9,6 +10,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -17,7 +19,10 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.player.BonemealEvent;
 
 import java.util.Iterator;
 import java.util.Random;
@@ -35,58 +40,78 @@ public class HempBlock extends CropBlock {
     boolean topBlockValid;
 
     @Override
-    public boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        Block block = worldIn.getBlockState(pos.down()).getBlock();
+    protected int getBonemealAgeIncrease(World world) {
+        return MathHelper.nextInt(world.rand, 1, 3);
+    }
+
+    @Override
+    public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos) {
+        return isValidGround(state, world, pos);
+    }
+
+    @Override
+    protected boolean isValidGround(BlockState state, IBlockReader world, BlockPos pos) {
+        Block block = world.getBlockState(pos.down()).getBlock();
         if (block == Blocks.FARMLAND || block == BlockRegistry.hemp_crop) {
             return true;
-        } else {
-            return false;
         }
+        else return false;
     }
 
-    protected int getBonemealAgeIncrease(World worldIn) {
-        return MathHelper.nextInt(worldIn.rand, 1, 3);
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    protected IItemProvider getSeedsItem() {
+        return ItemRegistry.hemp_seeds;
     }
 
-    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        BlockState soil = worldIn.getBlockState(pos.down());
-        if (soil.canSustainPlant(worldIn, pos.down(), Direction.UP, this)) {
-            return true;
+    @Override
+    public boolean canGrow(IBlockReader world, BlockPos pos, BlockState state, boolean isClient) {
+        return (!isMaxAge(state)) || (world.getBlockState(pos.down()).getBlock() != this) && (world.getBlockState(pos.up()).getBlock() != this);
+    }
+
+    @Override
+    public void tick(BlockState state, World world, BlockPos pos, Random random) {
+
+        super.tick(state, world, pos, random);
+        isValidPosition(state, world, pos);
+
+        if ((world.getBlockState(pos.down()).getBlock() != this) && (world.isAirBlock(pos.up()))) {
+            topBlockValid = true;
         } else {
-            Block block = worldIn.getBlockState(pos.down()).getBlock();
-            if (block == this || block == Blocks.FARMLAND) {
-                return true;
-            } else {
-                return false;
+            topBlockValid = false;
+        }
+
+        if (!world.isAreaLoaded(pos, 1)) return;
+        if (world.getLightSubtracted(pos, 0) >= 9) {
+            int i = this.getAge(state);
+            if (i < this.getMaxAge()) {
+                float f = getGrowthChance(this, world, pos);
+                if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(world, pos, state, random.nextInt((int) (25.0F / f) + 1) == 0) && (i < this.getMaxAge()) && (topBlockValid == false)) {
+                    world.setBlockState(pos, this.withAge(i + 1), 2);
+                    net.minecraftforge.common.ForgeHooks.onCropsGrowPost(world, pos, state);
+                }
+            }
+            else {
+                if ((topBlockValid == true) && (i == this.getMaxAge())) {
+                    world.setBlockState(pos.up(), this.getDefaultState());
+                }
             }
         }
     }
 
     @Override
-    public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
-        super.tick(state, worldIn, pos, random);
-        if (isValidGround(state, worldIn, pos) == false) {
-            worldIn.destroyBlock(pos, true);
-        } else if ((worldIn.getBlockState(pos.down()).getBlock() != this) && (worldIn.isAirBlock(pos.up()))) {
-            topBlockValid = true;
-        } else {
-            topBlockValid = false;
+    public void grow(World world, BlockPos pos, BlockState state) {
+        int i = this.getAge(state) + this.getBonemealAgeIncrease(world);
+        int j = this.getMaxAge();
+        if (i > j) {
+            i = j;
         }
-        if (!worldIn.isAreaLoaded(pos, 1)) return;
-        if (worldIn.getLightSubtracted(pos, 0) >= 9) {
-            int i = this.getAge(state);
-            if (i < this.getMaxAge()) {
-                float f = getGrowthChance(this, worldIn, pos);
-                if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt((int) (25.0F / f) + 1) == 0) && (i < this.getMaxAge()) && (topBlockValid == false)) {
-                    worldIn.setBlockState(pos, this.withAge(i + 1), 2);
-                    net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
-                }
 
-            } else {
-                if ((topBlockValid == true) && (i == this.getMaxAge())) {
-                    worldIn.setBlockState(pos.up(), this.getDefaultState());
-                }
-            }
+        if (this.getAge(state) != j) {
+            world.setBlockState(pos, this.withAge(i), 2);
+        }
+        else if ((this.getAge(state) == j) && (topBlockValid = true)) {
+            world.setBlockState(pos.up(), this.getDefaultState());
         }
     }
 

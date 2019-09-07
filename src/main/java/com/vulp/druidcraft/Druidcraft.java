@@ -30,8 +30,6 @@ public class Druidcraft {
     public static final String MODID = "druidcraft";
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
-    public static final ItemGroup DRUIDCRAFT = new DruidcraftItemGroup();
-
     public Druidcraft() {
         INSTANCE = this;
 
