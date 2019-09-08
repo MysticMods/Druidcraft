@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#"
+    ],
+    "key": {
+        "#": {
+            "item": "druidcraft:birch_beam"
+        }
+    },
+    "result": { "item": "minecraft:birch_log", "count": 1 }
+}

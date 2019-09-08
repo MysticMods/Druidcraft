@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "#druidcraft:oak_beams",
+	"#druidcraft:spruce_beams",
+	"#druidcraft:birch_beams",
+	"#druidcraft:jungle_beams",
+	"#druidcraft:acacia_beams",
+	"#druidcraft:dark_oak_beams",
+	"#druidcraft:darkwood_beams"
+  ]
+}

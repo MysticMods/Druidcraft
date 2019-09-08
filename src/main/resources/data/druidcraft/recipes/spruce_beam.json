@@ -1,0 +1,13 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:spruce_log"
+        }
+    },
+    "result": { "item": "druidcraft:spruce_beam", "count": 3 },
+    "group": "beams"
+}

@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "druidcraft:oak_panels",
+	"druidcraft:spruce_panels",
+	"druidcraft:birch_panels",
+	"druidcraft:jungle_panels",
+	"druidcraft:acacia_panels",
+	"druidcraft:dark_oak_panels",
+	"druidcraft:darkwood_panels"
+  ]
+}

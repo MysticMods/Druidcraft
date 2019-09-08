@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#"
+    ],
+    "key": {
+        "#": {
+            "item": "druidcraft:jungle_beam"
+        }
+    },
+    "result": { "item": "minecraft:jungle_log", "count": 1 }
+}

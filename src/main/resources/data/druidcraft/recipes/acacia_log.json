@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#"
+    ],
+    "key": {
+        "#": {
+            "item": "druidcraft:acacia_beam"
+        }
+    },
+    "result": { "item": "minecraft:acacia_log", "count": 1 }
+}

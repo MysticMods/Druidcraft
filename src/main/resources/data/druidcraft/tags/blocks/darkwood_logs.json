@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "druidcraft:darkwood_log",
+    "druidcraft:darkwood_wood",
+    "druidcraft:stripped_darkwood_log",
+    "druidcraft:stripped_darkwood_wood"
+  ]
+}
