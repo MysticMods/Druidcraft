@@ -1,3 +1,6 @@
 {
-	"parent": "druidcraft:block/darkwood_sapling"
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "druidcraft:block/darkwood_sapling"
+    }
 }
