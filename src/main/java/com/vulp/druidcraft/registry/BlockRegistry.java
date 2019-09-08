@@ -15,4 +15,18 @@ public class BlockRegistry
     public static Block darkwood_leaves;
     public static Block darkwood_sapling;
     public static Block darkwood_planks;
+    public static Block oak_beam;
+    public static Block spruce_beam;
+    public static Block birch_beam;
+    public static Block jungle_beam;
+    public static Block acacia_beam;
+    public static Block dark_oak_beam;
+    public static Block darkwood_beam;
+    public static Block oak_panels;
+    public static Block spruce_panels;
+    public static Block birch_panels;
+    public static Block jungle_panels;
+    public static Block acacia_panels;
+    public static Block dark_oak_panels;
+    public static Block darkwood_panels;
 }

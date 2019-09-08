@@ -35,5 +35,20 @@ public class ItemRegistry
     public static Item darkwood_sapling;
     public static Item darkwood_planks;
 
+    public static Item oak_beam;
+    public static Item spruce_beam;
+    public static Item birch_beam;
+    public static Item jungle_beam;
+    public static Item acacia_beam;
+    public static Item dark_oak_beam;
+    public static Item darkwood_beam;
+    public static Item oak_panels;
+    public static Item spruce_panels;
+    public static Item birch_panels;
+    public static Item jungle_panels;
+    public static Item acacia_panels;
+    public static Item dark_oak_panels;
+    public static Item darkwood_panels;
+
 
 }

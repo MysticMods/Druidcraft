@@ -1,7 +1,7 @@
 {
     "parent": "block/cube_column",
     "textures": {
-        "end": "druidcraftblock/darkwood_log_top",
+        "end": "druidcraft:block/darkwood_log_top",
         "side": "druidcraft:block/darkwood_log"
     }
 }

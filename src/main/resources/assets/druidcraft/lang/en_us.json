@@ -29,5 +29,20 @@
   "block.druidcraft.darkwood_sapling": "Darkwood Sapling",
   "block.druidcraft.darkwood_planks": "Darkwood Planks",
 
+  "block.druidcraft.oak_beam": "Oak Beam",
+  "block.druidcraft.spruce_beam": "Spruce Beam",
+  "block.druidcraft.birch_beam": "Birch Beam",
+  "block.druidcraft.jungle_beam": "Jungle Beam",
+  "block.druidcraft.acacia_beam": "Acacia Beam",
+  "block.druidcraft.dark_oak_beam": "Dark Oak Beam",
+  "block.druidcraft.darkwood_beam": "Darkwood Beam",
+  "block.druidcraft.oak_panels": "Oak Panels",
+  "block.druidcraft.spruce_panels": "Spruce Panels",
+  "block.druidcraft.birch_panels": "Birch Panels",
+  "block.druidcraft.jungle_panels": "Jungle Panels",
+  "block.druidcraft.acacia_panels": "Acacia Panels",
+  "block.druidcraft.dark_oak_panels": "Dark Oak Panels",
+  "block.druidcraft.darkwood_panels": "Darkwood Panels",
+
   "itemGroup.druidcraft": "Druidcraft"
 }
