@@ -15,6 +15,16 @@ public class BlockRegistry
     public static Block darkwood_leaves;
     public static Block darkwood_sapling;
     public static Block darkwood_planks;
+    public static Block stripped_darkwood_wood;
+    public static Block darkwood_wood;
+    public static Block darkwood_slab;
+    public static Block darkwood_stairs;
+    public static Block darkwood_fence;
+    public static Block darkwood_fence_gate;
+    public static Block darkwood_pressure_plate;
+    public static Block darkwood_button;
+    public static Block darkwood_trapdoor;
+    public static Block darkwood_door;
     public static Block oak_beam;
     public static Block spruce_beam;
     public static Block birch_beam;

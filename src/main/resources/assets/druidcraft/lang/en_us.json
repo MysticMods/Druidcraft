@@ -28,6 +28,16 @@
   "block.druidcraft.darkwood_leaves": "Darkwood Leaves",
   "block.druidcraft.darkwood_sapling": "Darkwood Sapling",
   "block.druidcraft.darkwood_planks": "Darkwood Planks",
+  "block.druidcraft.stripped_darkwood_wood": "Stripped Darkwood Wood",
+  "block.druidcraft.darkwood_wood": "Darkwood Wood",
+  "block.druidcraft.darkwood_slab": "Darkwood Slab",
+  "block.druidcraft.darkwood_stairs": "Darkwood Stairs",
+  "block.druidcraft.darkwood_fence": "Darkwood Fence",
+  "block.druidcraft.darkwood_fence_gate": "Darkwood Fence Gate",
+  "block.druidcraft.darkwood_pressure_plate": "Darkwood Pressure Plate",
+  "block.druidcraft.darkwood_button": "Darkwood Button",
+  "block.druidcraft.darkwood_trapdoor": "Darkwood Trapdoor",
+  "block.druidcraft.darkwood_door": "Darkwood Door",
 
   "block.druidcraft.oak_beam": "Oak Beam",
   "block.druidcraft.spruce_beam": "Spruce Beam",
@@ -44,5 +54,20 @@
   "block.druidcraft.dark_oak_panels": "Dark Oak Panels",
   "block.druidcraft.darkwood_panels": "Darkwood Panels",
 
+  "biome.druidcraft.darkwood_forest": "Darkwood Forest",
+
   "itemGroup.druidcraft": "Druidcraft"
+  
+  
+  
+  "advancements.druidry.obtain_hemp_seeds.title": "Agricultural Diversity",
+  "advancements.druidry.obtain_hemp_seeds.description": "Forage through grass for some hemp seeds",
+  "advancements.druidry.grow_hemp.title": "It's Industrial, I Swear!",
+  "advancements.druidry.grow_hemp.description": "Plant some hemp and harvest it",
+  "advancements.druidry.bone_armor.title": "Thick Skulled",
+  "advancements.druidry.bone_armor.description": "Don a bone helmet",
+  "advancements.druidry.darkwood_forest.title": "Dark Times",
+  "advancements.druidry.darkwood_forest.description": "Stumble into a darkwood forest",
+  "advancements.druidry.useless_ores.title": "Collector",
+  "advancements.druidry.useless_ores.description": "Collect each of the Druidcraft ores and craft their equivalent blocks",
 }

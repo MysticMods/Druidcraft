@@ -1,0 +1,8 @@
+{
+    "parent": "block/stairs",
+    "textures": {
+        "bottom": "druidcraft:block/darkwood_planks",
+        "top": "druidcraft:block/darkwood_planks",
+        "side": "druidcraft:block/darkwood_planks"
+    }
+}

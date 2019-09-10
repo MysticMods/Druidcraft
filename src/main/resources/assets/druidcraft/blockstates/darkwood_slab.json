@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "type=bottom": { "model": "druidcraft:block/darkwood_slab" },
+        "type=top": { "model": "druidcraft:block/darkwood_slab_top" },
+        "type=double": { "model": "druidcraft:block/darkwood_planks" }
+    }
+}

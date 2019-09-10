@@ -1,7 +1,7 @@
 {
     "variants": {
-        "axis=y":    { "model": "druidcraft:block/darkwood_log" },
-        "axis=z":     { "model": "druidcraft:block/darkwood_log", "x": 90 },
-        "axis=x":     { "model": "druidcraft:block/darkwood_log", "x": 90, "y": 90 }
+        "axis=y": { "model": "druidcraft:block/darkwood_log" },
+        "axis=z": { "model": "druidcraft:block/darkwood_log", "x": 90 },
+        "axis=x": { "model": "druidcraft:block/darkwood_log", "x": 90, "y": 90 }
     }
 }

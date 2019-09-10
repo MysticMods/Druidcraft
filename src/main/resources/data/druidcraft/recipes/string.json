@@ -8,5 +8,5 @@
             "item": "druidcraft:hemp"
         }
     },
-    "result": { "minecraft:string" }
+    "result": { "item": "minecraft:string" }
 }

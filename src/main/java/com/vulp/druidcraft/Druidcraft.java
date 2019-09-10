@@ -47,6 +47,7 @@ public class Druidcraft {
 
     private void setup(final FMLCommonSetupEvent event) {
         OreGeneration.setupOreGeneration();
+        VanillaIntegrationRegistry.setup();
         LOGGER.info("Setup method registered.");
     }
 

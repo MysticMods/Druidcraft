@@ -21,8 +21,6 @@ public class ItemRegistry
     public static Item bone_leggings;
     public static Item bone_boots;
 
-    public static Item dreadfish_egg;
-
     public static Item hemp_crop;
     public static Item amber_ore;
     public static Item moonstone_ore;
@@ -34,6 +32,16 @@ public class ItemRegistry
     public static Item darkwood_leaves;
     public static Item darkwood_sapling;
     public static Item darkwood_planks;
+    public static Item stripped_darkwood_wood;
+    public static Item darkwood_wood;
+    public static Item darkwood_slab;
+    public static Item darkwood_stairs;
+    public static Item darkwood_fence;
+    public static Item darkwood_fence_gate;
+    public static Item darkwood_pressure_plate;
+    public static Item darkwood_button;
+    public static Item darkwood_trapdoor;
+    public static Item darkwood_door;
 
     public static Item oak_beam;
     public static Item spruce_beam;

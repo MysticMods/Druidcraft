@@ -1,0 +1,31 @@
+{
+  "parent": "druidcraft:druidry/obtain_hemp_seeds",
+  "display": {
+    "icon": {
+      "item": "druidcraft:darkwood_sapling"
+    },
+    "title": {
+      "translate": "advancements.druidcraft.darkwood_forest.title"
+    },
+    "description": {
+      "translate": "advancements.druidcraft.darkwood_forest.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "druidcraft:darkwood_forest": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "biome": "druidcraft:darkwood_forest"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "druidcraft:darkwood_forest"
+    ]
+  ]
+}

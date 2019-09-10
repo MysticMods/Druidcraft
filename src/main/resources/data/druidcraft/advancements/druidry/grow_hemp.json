@@ -1,0 +1,35 @@
+{
+  "parent": "druidcraft:druidry/obtain_hemp_seeds",
+  "display": {
+    "icon": {
+      "item": "druidcraft:hemp"
+    },
+    "title": {
+      "translate": "advancements.druidry.grow_hemp.title"
+    },
+    "description": {
+      "translate": "advancements.druidry.grow_hemp.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hemp": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "druidcraft:hemp"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hemp"
+    ]
+  ]
+}
