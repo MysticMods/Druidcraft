@@ -1,53 +1,24 @@
--------------------------------------------
-Source installation information for modders
--------------------------------------------
-This code follows the Minecraft Forge installation methodology. It will apply
-some small patches to the vanilla MCP source code, giving you and it access 
-to some of the data and functions you need to build a successful mod.
+# Druidcraft
+[![Discord](https://img.shields.io/discord/455383608773836801?color=%237289da&label=Mystic%20Discord&logo=discord&style=flat-square)](https://discord.gg/75aVV7C)
+[![](https://img.shields.io/github/contributors/MysticMods/Druidcraft.svg?style=flat-square&logo=github)](https://github.com/MysticMods/Roots/graphs/contributors)
+[![](https://img.shields.io/github/issues/MysticMods/Druidcraft.svg?style=flat-square&logo=github)](https://github.com/MysticMods/Druidcraft/issues)
+[![](https://img.shields.io/github/forks/MysticMods/Druidcraft.svg?style=flat_square&logo=github)](https://github.com/MysticMods/Druidcraft/network/members)
+[![](https://img.shields.io/github/license/MysticMods/Druidcraft.svg?logo=github&style=flat-square)](https://github.com/MysticMods/Druidcraft/blob/master/LICENSE)
 
-Note also that the patches are built against "unrenamed" MCP source code (aka
-srgnames) - this means that you will not be able to read them directly against
-normal code.
+Druidcraft is a druid-themed mod currently in *extremely* early stages! Out for release in 1.14 to populate the modding community and gain some feedback. There's tons planned! Spells, runecarving, beast-mastery, conjuration, herbalism are just some of the planned features!
 
-Source pack installation information:
+Download from CurseForge here!: ~~SOON~~
 
-Standalone source installation
-==============================
+If you wish to talk, come drop by the Mystic Discord! We're at: https://discord.gg/75aVV7C
 
-See the Forge Documentation online for more detailed instructions:
-http://mcforge.readthedocs.io/en/latest/gettingstarted/
+### Features!
 
-Step 1: Open your command-line and browse to the folder where you extracted the zip file.
+The following features are in the current build, and more will be added soon!:
 
-Step 2: You're left with a choice.
-If you prefer to use Eclipse:
-1. Run the following command: "gradlew genEclipseRuns" (./gradlew genEclipseRuns if you are on Mac/Linux)
-2. Open Eclipse, Import > Existing Gradle Project > Select Folder 
-   or run "gradlew eclipse" to generate the project.
-(Current Issue)
-4. Open Project > Run/Debug Settings > Edit runClient and runServer > Environment
-5. Edit MOD_CLASSES to show [modid]%%[Path]; 2 times rather then the generated 4.
+- Bone tools, weapons and armour!
+- Hemp crop for easy string! Also used for rope, which allows easier creation of leads. Placeable rope planned for later!
+- Darkwood forests and darkwood itself! A very dark, soft wood with a unique look to it. It will have a few unique uses further on.
+- New decorative wood blocks! Wooden beams to properly embolden your structures, and wood panels with a softer feel than planks to use for walls or floors!
+- Four new ores! Amber, moonstone, fiery glass and rockroot. They're near useless at the moment, but tons is planned for them! *( Experience drops on them are turned up a little bit in the meantime just to make up for it. ;) )*
 
-If you prefer to use IntelliJ:
-1. Open IDEA, and import project.
-2. Select your build.gradle file and have it import.
-3. Run the following command: "gradlew genIntellijRuns" (./gradlew genIntellijRuns if you are on Mac/Linux)
-4. Refresh the Gradle Project in IDEA if required.
-
-If at any point you are missing libraries in your IDE, or you've run into problems you can run "gradlew --refresh-dependencies" to refresh the local cache. "gradlew clean" to reset everything {this does not affect your code} and then start the processs again.
-
-Should it still not work, 
-Refer to #ForgeGradle on EsperNet for more information about the gradle environment.
-or the Forge Project Discord discord.gg/UvedJ9m
-
-Forge source installation
-=========================
-MinecraftForge ships with this code and installs it as part of the forge
-installation process, no further action is required on your part.
-
-LexManos' Install Video
-=======================
-https://www.youtube.com/watch?v=8VEdtQLuLO0&feature=youtu.be
-
-For more details update more often refer to the Forge Forums:
-http://www.minecraftforge.net/forum/index.php/topic,14048.0.html
+Any questions or problems, or even just want to suggest something or say hi? Discord link is above! <3
