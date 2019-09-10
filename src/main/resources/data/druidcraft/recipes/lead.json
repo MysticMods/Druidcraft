@@ -1,12 +1,14 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        "###"
+        " ##",
+		" ##",
+		"#  "
     ],
     "key": {
         "#": {
-            "item": "druidcraft:hemp"
+            "item": "druidcraft:rope"
         }
     },
-    "result": { "item": "druidcraft:rope" }
+    "result": { "item": "minecraft:lead", "count": 2 }
 }
