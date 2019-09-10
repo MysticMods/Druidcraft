@@ -148,6 +148,7 @@ public class DruidcraftRegistry {
                         BlockRegistry.dark_oak_panels = new Block(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.AXE)).setRegistryName(location("dark_oak_panels")),
                         BlockRegistry.darkwood_panels = new Block(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.AXE)).setRegistryName(location("darkwood_panels"))
                 );
+
         LOGGER.info("Blocks registered.");
     }
 
@@ -158,7 +159,6 @@ public class DruidcraftRegistry {
         IForgeRegistry<Biome> registry = BiomeRegistryEvent.getRegistry();
 
         BiomeRegistry.registerBiome(registry, new DarkwoodForest(), "darkwood_forest", 6, false, BiomeManager.BiomeType.COOL, BiomeDictionary.Type.CONIFEROUS);
-
 
         LOGGER.info("Biomes registered.");
     }

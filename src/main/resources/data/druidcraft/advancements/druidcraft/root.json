@@ -4,16 +4,16 @@
       "item": "druidcraft:hemp_seeds"
     },
     "title": {
-      "translate": "advancements.druidry.root.title"
+      "translate": "advancements.druidcraft.root.title"
     },
     "description": {
-      "translate": "advancements.druidry.root.description"
+      "translate": "advancements.druidcraft.root.description"
     },
     "frame": "task",
     "show_toast": false,
     "announce_to_chat": false,
     "hidden": false,
-    "background": "druidcraft:textures/gui/advancements/backgrounds/druidry.png"
+    "background": "druidcraft:textures/gui/advancements/backgrounds/druidcraft.png"
   },
   "criteria": {
     "hemp_seeds": {

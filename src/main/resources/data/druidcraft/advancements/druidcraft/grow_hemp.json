@@ -1,14 +1,14 @@
 {
-  "parent": "druidcraft:druidry/root",
+  "parent": "druidcraft:druidcraft/root",
   "display": {
     "icon": {
       "item": "druidcraft:hemp"
     },
     "title": {
-      "translate": "advancements.druidry.grow_hemp.title"
+      "translate": "advancements.druidcraft.grow_hemp.title"
     },
     "description": {
-      "translate": "advancements.druidry.grow_hemp.description"
+      "translate": "advancements.druidcraft.grow_hemp.description"
     },
     "frame": "goal",
     "show_toast": true,

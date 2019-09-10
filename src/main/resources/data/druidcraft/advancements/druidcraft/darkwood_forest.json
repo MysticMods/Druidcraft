@@ -1,5 +1,5 @@
 {
-  "parent": "druidcraft:druidry/root",
+  "parent": "druidcraft:druidcraft/root",
   "display": {
     "icon": {
       "item": "druidcraft:darkwood_sapling"

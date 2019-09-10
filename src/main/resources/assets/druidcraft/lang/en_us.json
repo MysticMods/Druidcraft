@@ -59,14 +59,14 @@
 
   "itemGroup.druidcraft": "Druidcraft",
   
-  "advancements.druidry.root.title": "Druidcraft",
-  "advancements.druidry.root.description": "Forage through grass for some hemp seeds",
-  "advancements.druidry.grow_hemp.title": "It's Industrial, I Swear!",
-  "advancements.druidry.grow_hemp.description": "Plant some hemp and harvest it",
-  "advancements.druidry.bone_armor.title": "Thick Skulled",
-  "advancements.druidry.bone_armor.description": "Don a bone helmet",
-  "advancements.druidry.darkwood_forest.title": "Dark Times",
-  "advancements.druidry.darkwood_forest.description": "Stumble into a darkwood forest",
-  "advancements.druidry.useless_ores.title": "Collector",
-  "advancements.druidry.useless_ores.description": "Collect each of the Druidcraft ores and craft their equivalent blocks"
+  "advancements.druidcraft.root.title": "Druidcraft",
+  "advancements.druidcraft.root.description": "Forage through grass for some hemp seeds",
+  "advancements.druidcraft.grow_hemp.title": "It's Industrial, I Swear!",
+  "advancements.druidcraft.grow_hemp.description": "Plant some hemp and harvest it",
+  "advancements.druidcraft.bone_armor.title": "Thick Skulled",
+  "advancements.druidcraft.bone_armor.description": "Don a bone helmet",
+  "advancements.druidcraft.darkwood_forest.title": "Dark Times",
+  "advancements.druidcraft.darkwood_forest.description": "Stumble into a darkwood forest",
+  "advancements.druidcraft.useless_ores.title": "Collector",
+  "advancements.druidcraft.useless_ores.description": "Collect each of the Druidcraft ores and craft their equivalent blocks"
 }

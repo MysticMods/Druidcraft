@@ -52,7 +52,7 @@ public class Druidcraft {
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        LOGGER.info("Client registry method registered.", event.getMinecraftSupplier().get().gameSettings);
+        LOGGER.info("Client registry method registered.");
     }
 
     @SubscribeEvent
@@ -60,8 +60,4 @@ public class Druidcraft {
         LOGGER.info("HELLO from server starting");
     }
 
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents {
-
     }
-}
