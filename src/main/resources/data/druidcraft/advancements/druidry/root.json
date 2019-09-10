@@ -1,21 +1,22 @@
 {
   "display": {
     "icon": {
-      "item": "druidcraft:hemp"
+      "item": "druidcraft:hemp_seeds"
     },
     "title": {
-      "translate": "advancements.druidry.obtain_hemp_seeds.title"
+      "translate": "advancements.druidry.root.title"
     },
     "description": {
-      "translate": "advancements.druidry.obtain_hemp_seeds.description"
+      "translate": "advancements.druidry.root.description"
     },
     "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "druidcraft:textures/gui/advancements/backgrounds/druidry.png"
   },
   "criteria": {
-    "blaze_rod": {
+    "hemp_seeds": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [

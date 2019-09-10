@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "fiery_glass",
+  "ingredients": [
+    {
+      "tag": "druidcraft:fiery_glass_blocks"
+    }
+  ],
+  "result": { "item": "druidcraft:fiery_glass" }
+}

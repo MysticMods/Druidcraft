@@ -1,0 +1,15 @@
+{
+    "type": "minecraft:crafting_shaped",
+	"group": "amber_blocks",
+    "pattern": [
+        "###",
+		"###",
+		"###"
+    ],
+    "key": {
+        "#": {
+            "tag": "forge:amber"
+        }
+    },
+    "result": { "block": "druidcraft:amber_block" }
+}

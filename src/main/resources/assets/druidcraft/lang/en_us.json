@@ -7,6 +7,7 @@
 
   "item.druidcraft.hemp": "Hemp",
   "item.druidcraft.hemp_seeds": "Hemp Seeds",
+  "item.druidcraft.rope": "Rope",
   "item.druidcraft.amber": "Amber",
   "item.druidcraft.moonstone": "Moonstone",
   "item.druidcraft.fiery_glass": "Fiery Glass",
@@ -56,12 +57,10 @@
 
   "biome.druidcraft.darkwood_forest": "Darkwood Forest",
 
-  "itemGroup.druidcraft": "Druidcraft"
+  "itemGroup.druidcraft": "Druidcraft",
   
-  
-  
-  "advancements.druidry.obtain_hemp_seeds.title": "Agricultural Diversity",
-  "advancements.druidry.obtain_hemp_seeds.description": "Forage through grass for some hemp seeds",
+  "advancements.druidry.root.title": "Druidcraft",
+  "advancements.druidry.root.description": "Forage through grass for some hemp seeds",
   "advancements.druidry.grow_hemp.title": "It's Industrial, I Swear!",
   "advancements.druidry.grow_hemp.description": "Plant some hemp and harvest it",
   "advancements.druidry.bone_armor.title": "Thick Skulled",
@@ -69,5 +68,5 @@
   "advancements.druidry.darkwood_forest.title": "Dark Times",
   "advancements.druidry.darkwood_forest.description": "Stumble into a darkwood forest",
   "advancements.druidry.useless_ores.title": "Collector",
-  "advancements.druidry.useless_ores.description": "Collect each of the Druidcraft ores and craft their equivalent blocks",
+  "advancements.druidry.useless_ores.description": "Collect each of the Druidcraft ores and craft their equivalent blocks"
 }

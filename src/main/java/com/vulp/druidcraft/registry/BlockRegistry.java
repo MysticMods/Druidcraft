@@ -1,6 +1,5 @@
 package com.vulp.druidcraft.registry;
 
-import com.vulp.druidcraft.Druidcraft;
 import net.minecraft.block.Block;
 
 public class BlockRegistry

@@ -6,6 +6,7 @@ public class ItemRegistry
 {
     public static Item hemp;
     public static Item hemp_seeds;
+    public static Item rope;
     public static Item amber;
     public static Item moonstone;
     public static Item fiery_glass;

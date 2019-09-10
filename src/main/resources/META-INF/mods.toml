@@ -5,10 +5,12 @@ modId="druidcraft"
 version="0.1"
 displayName="Druidcraft"
 logoFile="examplemod.png"
-credits="Thanks for this example mod goes to Java"
+credits="Java, Forge, MCP, Minecraft, and the Mystic team for supporting me!"
 authors="VulpTheHorseDog"
 description='''
-placeholder
+A druid-focused splice-of-life mod that's currently in very early alpha, if you'd even consider it at that point yet.
+
+Regardless, I hope you enjoy the features as they're rolled out! :)
 '''
 [[dependencies.druidcraft]]
     modId="forge"

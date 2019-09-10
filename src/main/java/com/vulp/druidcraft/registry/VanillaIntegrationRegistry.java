@@ -14,6 +14,7 @@ public class VanillaIntegrationRegistry {
 
     public static void setup() {
         addStrippable(BlockRegistry.darkwood_log, BlockRegistry.stripped_darkwood_log);
+        addStrippable(BlockRegistry.darkwood_wood, BlockRegistry.stripped_darkwood_wood);
     }
 
 }

@@ -1,5 +1,5 @@
 {
-  "parent": "druidcraft:druidry/obtain_hemp_seeds",
+  "parent": "druidcraft:druidry/root",
   "display": {
     "icon": {
       "item": "druidcraft:hemp"

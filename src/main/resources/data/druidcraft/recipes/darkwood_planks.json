@@ -1,13 +1,13 @@
 {
-    "type": "minecraft:crafting_shaped",
-    "pattern": [
-        "#"
-    ],
-    "key": {
-        "#": {
-            "item": "druidcraft:darkwood_log"
-        }
-    },
-    "result": { "item": "druidcraft:darkwood_planks", "count": 4 },
-    "group": "planks"
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "druidcraft:darkwood_logs"
+    }
+  ],
+  "result": {
+    "item": "druidcraft:darkwood_planks",
+    "count": 4
+  }
 }

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "bark",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "druidcraft:darkwood_log"
+    }
+  },
+  "result": {
+    "item": "druidcraft:darkwood_wood",
+    "count": 3
+  }
+}
