@@ -1,9 +1,9 @@
 # Druidcraft
-[![Discord](https://img.shields.io/discord/455383608773836801?color=%237289da&label=Mystic%20Discord&logo=discord&style=flat-square)(https://discord.gg/75aVV7C)
-[![](https://img.shields.io/github/contributors/MysticMods/Druidcraft.svg?style=flat-square&logo=github)(https://github.com/MysticMods/Roots/graphs/contributors)
-[![](https://img.shields.io/github/issues/MysticMods/Druidcraft.svg?style=flat-square&logo=github)(https://github.com/MysticMods/Druidcraft/issues)
-[![](https://img.shields.io/github/forks/MysticMods/Druidcraft.svg?style=flat_square&logo=github)(https://github.com/MysticMods/Druidcraft/network/members)
-[![](https://img.shields.io/github/license/MysticMods/Druidcraft.svg?logo=github&style=flat-square)(https://github.com/MysticMods/Druidcraft/blob/master/LICENSE)
+[![Discord](https://img.shields.io/discord/455383608773836801?color=%237289da&label=Mystic%20Discord&logo=discord&style=flat-square)](https://discord.gg/75aVV7C)
+[![](https://img.shields.io/github/contributors/MysticMods/Druidcraft.svg?style=flat-square&logo=github)](https://github.com/MysticMods/Druidcraft/graphs/contributors)
+[![](https://img.shields.io/github/issues/MysticMods/Druidcraft.svg?style=flat-square&logo=github)](https://github.com/MysticMods/Druidcraft/issues)
+[![](https://img.shields.io/github/forks/MysticMods/Druidcraft.svg?style=flat_square&logo=github)](https://github.com/MysticMods/Druidcraft/network/members)
+[![](https://img.shields.io/github/license/MysticMods/Druidcraft.svg?logo=github&style=flat-square)](https://github.com/MysticMods/Druidcraft/blob/master/LICENSE)
 
 Druidcraft is a druid-themed mod currently in *extremely* early stages! Out for release in 1.14 to populate the modding community and gain some feedback. There's tons planned! Spells, runecarving, beast-mastery, conjuration, herbalism are just some of the planned features!
 
