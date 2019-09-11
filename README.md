@@ -7,7 +7,7 @@
 
 Druidcraft is a druid-themed mod currently in *extremely* early stages! Out for release in 1.14 to populate the modding community and gain some feedback. There's tons planned! Spells, runecarving, beast-mastery, conjuration, herbalism are just some of the planned features!
 
-Download from CurseForge here!: ~~SOON~~
+Download from CurseForge here!: https://www.curseforge.com/minecraft/mc-mods/druidcraft
 
 If you wish to talk, come drop by the Mystic Discord! We're at: https://discord.gg/75aVV7C
 
