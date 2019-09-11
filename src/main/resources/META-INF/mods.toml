@@ -2,7 +2,7 @@ modLoader="javafml"
 loaderVersion="[28,)"
 [[mods]]
 modId="druidcraft"
-version="0.1"
+version="0.1.1"
 displayName="Druidcraft"
 logoFile=""
 credits="Java, Forge, MCP, Minecraft, and the Mystic team for supporting me!"

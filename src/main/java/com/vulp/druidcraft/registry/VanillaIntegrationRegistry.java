@@ -1,13 +1,20 @@
 package com.vulp.druidcraft.registry;
 
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+import com.vulp.druidcraft.Druidcraft;
 import net.minecraft.block.Block;
+import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.item.AxeItem;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.storage.loot.LootPool;
+import net.minecraft.world.storage.loot.TableLootEntry;
+import net.minecraftforge.event.LootTableLoadEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class VanillaIntegrationRegistry {
 
-    public static void addStrippable(Block unstrippedBlock, Block strippedBlock)
-    {
+    public static void addStrippable(Block unstrippedBlock, Block strippedBlock) {
         AxeItem.BLOCK_STRIPPING_MAP = Maps.newHashMap(AxeItem.BLOCK_STRIPPING_MAP);
         AxeItem.BLOCK_STRIPPING_MAP.put(unstrippedBlock, strippedBlock);
     }
@@ -16,5 +23,4 @@ public class VanillaIntegrationRegistry {
         addStrippable(BlockRegistry.darkwood_log, BlockRegistry.stripped_darkwood_log);
         addStrippable(BlockRegistry.darkwood_wood, BlockRegistry.stripped_darkwood_wood);
     }
-
 }
