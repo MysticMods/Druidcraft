@@ -9,6 +9,10 @@ public class BlockRegistry
     public static Block moonstone_ore;
     public static Block fiery_glass_ore;
     public static Block rockroot_ore;
+    public static Block amber_block;
+    public static Block moonstone_block;
+    public static Block fiery_glass_block;
+    public static Block rockroot_block;
     public static Block darkwood_log;
     public static Block stripped_darkwood_log;
     public static Block darkwood_leaves;
