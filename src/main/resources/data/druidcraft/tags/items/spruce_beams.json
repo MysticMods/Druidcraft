@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "druidcraft:spruce_beam",
-    "druidcraft:spruce_log_beam"
+    "druidcraft:spruce_beam"
   ]
 }
