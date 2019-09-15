@@ -11,5 +11,5 @@
             "tag": "forge:moonstones"
         }
     },
-    "result": { "block": "druidcraft:moonstone_block" }
+    "result": { "item": "druidcraft:moonstone_block" }
 }

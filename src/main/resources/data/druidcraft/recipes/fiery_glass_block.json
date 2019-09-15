@@ -11,5 +11,5 @@
             "tag": "druidcraft:fiery_glass"
         }
     },
-    "result": { "block": "druidcraft:fiery_glass_block" }
+    "result": { "item": "druidcraft:fiery_glass_block" }
 }

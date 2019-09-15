@@ -11,5 +11,5 @@
             "tag": "druidcraft:rockroots"
         }
     },
-    "result": { "block": "druidcraft:rockroot_block" }
+    "result": { "item": "druidcraft:rockroot_block" }
 }
