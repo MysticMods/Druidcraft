@@ -12,6 +12,8 @@ public class ItemRegistry
     public static Item fiery_glass;
     public static Item rockroot;
 
+    public static Item dreadfish_spawn_egg;
+
     public static Item bone_sword;
     public static Item bone_pickaxe;
     public static Item bone_axe;
@@ -27,6 +29,10 @@ public class ItemRegistry
     public static Item moonstone_ore;
     public static Item fiery_glass_ore;
     public static Item rockroot_ore;
+    public static Item amber_block;
+    public static Item moonstone_block;
+    public static Item fiery_glass_block;
+    public static Item rockroot_block;
 
     public static Item darkwood_log;
     public static Item stripped_darkwood_log;

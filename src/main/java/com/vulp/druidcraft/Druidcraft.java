@@ -52,6 +52,7 @@ public class Druidcraft {
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
+        RenderRegistry.registryEntityRenders();
         LOGGER.info("Client registry method registered.");
     }
 
