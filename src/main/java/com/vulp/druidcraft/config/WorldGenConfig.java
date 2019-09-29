@@ -2,7 +2,7 @@ package com.vulp.druidcraft.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
-public class OreGenerationConfig
+public class WorldGenConfig
 {
     public static ForgeConfigSpec.IntValue amber_size;
     public static ForgeConfigSpec.IntValue amber_weight;
@@ -16,7 +16,7 @@ public class OreGenerationConfig
 
     public static void init(ForgeConfigSpec.Builder server, ForgeConfigSpec.Builder client)
     {
-        server.comment("Ore Generation Config");
+        server.comment("World Generation Config");
 
         amber_size = server.comment("Determines the size of an amber vein.").defineInRange("oregeneration.amber_size", 8, 1, 32);
         amber_weight = server.comment("Determines the rarity of amber veins.").defineInRange("oregeneration.amber_weight", 2, 1, 200);

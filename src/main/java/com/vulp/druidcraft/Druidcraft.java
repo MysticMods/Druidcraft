@@ -2,6 +2,8 @@ package com.vulp.druidcraft;
 
 import com.vulp.druidcraft.blocks.OreBlock;
 import com.vulp.druidcraft.config.Configuration;
+import com.vulp.druidcraft.config.DropRateConfig;
+import com.vulp.druidcraft.events.LootHandler;
 import com.vulp.druidcraft.registry.*;
 import com.vulp.druidcraft.world.OreGeneration;
 import net.minecraft.block.Block;
@@ -9,6 +11,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.RegistryEvent;
@@ -48,6 +51,11 @@ public class Druidcraft {
     private void setup(final FMLCommonSetupEvent event) {
         OreGeneration.setupOreGeneration();
         VanillaIntegrationRegistry.setup();
+
+        if (DropRateConfig.drop_seeds.get()) {
+            MinecraftForge.EVENT_BUS.register(new LootHandler());
+        }
+
         LOGGER.info("Setup method registered.");
     }
 
@@ -60,5 +68,4 @@ public class Druidcraft {
     public void onServerStarting(FMLServerStartingEvent event) {
         LOGGER.info("HELLO from server starting");
     }
-
-    }
+}

@@ -1,22 +1,29 @@
 package com.vulp.druidcraft.events;
 
-import com.vulp.druidcraft.Druidcraft;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootPool;
-import net.minecraft.world.storage.loot.TableLootEntry;
-import net.minecraftforge.event.LootTableLoadEvent;
+import com.vulp.druidcraft.config.DropRateConfig;
+import com.vulp.druidcraft.registry.ItemRegistry;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.world.World;
+import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = Druidcraft.MODID)
 public class LootHandler {
 
-    private static ResourceLocation grass_table = new ResourceLocation("minecraft", "blocks/grass");
-
     @SubscribeEvent
-    public static void onLootLoad(LootTableLoadEvent event) {
-        if (event.getName().equals(grass_table)) {
-            event.getTable().addPool(LootPool.builder().addEntry(TableLootEntry.builder(new ResourceLocation(Druidcraft.MODID, "blocks/grass_druidcraft_seeds"))).build());
+    public void onGrassBroken(BreakEvent event) {
+        if (!event.getWorld().isRemote()) {
+            if ((event.getPlayer().getHeldItemMainhand().getItem() != Items.SHEARS) || (!event.getPlayer().isCreative())) {
+                if (event.getState().getBlock() == Blocks.GRASS || event.getState().getBlock() == Blocks.TALL_GRASS || event.getState().getBlock() == Blocks.FERN) {
+                    if (Math.random() <= (double) DropRateConfig.hemp_seed_drops.get() / 100) {
+                        event.getWorld().setBlockState(event.getPos(), Blocks.AIR.getDefaultState(), 2);
+                        event.getWorld().addEntity(new ItemEntity((World) event.getWorld(), event.getPos().getX(),
+                                event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemRegistry.hemp_seeds, 1)));
+                    }
+                }
+            }
         }
     }
 }

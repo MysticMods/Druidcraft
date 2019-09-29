@@ -1,18 +1,36 @@
 package com.vulp.druidcraft.registry;
 
+import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.DruidcraftRegistry;
 import com.vulp.druidcraft.entities.DreadfishEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraftforge.event.RegistryEvent;
 
 public class EntityRegistry
 {
-    public static EntityType<?> dreadfish_entity = EntityType.Builder.create(DreadfishEntity::new, EntityClassification.AMBIENT).build(DruidcraftRegistry.MODID + ":dreadfish").setRegistryName(DruidcraftRegistry.location("dreadfish"));
+    public static final EntityType<DreadfishEntity> dreadfish_entity = createEntity(DreadfishEntity.class, DreadfishEntity::new, EntityClassification.MONSTER, "dreadfish", 0.8f, 0.4f);
+
+    private static <T extends Entity> EntityType<T> createEntity(Class<T> entityClass, EntityType.IFactory<T> factory, EntityClassification entityClassification, String name, float width, float height) {
+        ResourceLocation location = new ResourceLocation(Druidcraft.MODID, name);
+
+        EntityType<T> entity = EntityType.Builder.create(factory, entityClassification)
+                .size(width, height).setTrackingRange(64)
+                .setShouldReceiveVelocityUpdates(true)
+                .setUpdateInterval(3)
+                .build(location.toString());
+
+        entity.setRegistryName(location);
+
+        return entity;
+    }
 
     public static void registerEntitySpawnEggs(final RegistryEvent.Register<Item> event)
     {

@@ -19,7 +19,8 @@ public class Configuration
 
     static
     {
-        OreGenerationConfig.init(server_builder, client_builder);
+        WorldGenConfig.init(server_builder, client_builder);
+        DropRateConfig.init(server_builder, client_builder);
 
         server_config = server_builder.build();
         client_config = client_builder.build();

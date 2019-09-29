@@ -1,10 +1,13 @@
 modLoader="javafml"
 loaderVersion="[28,)"
+issueTrackerURL="https://github.com/MysticMods/Druidcraft/issues"
+
 [[mods]]
 modId="druidcraft"
-version="0.1.1"
+version="0.2.0"
+mcversion= "1.14,"
 displayName="Druidcraft"
-logoFile=""
+displayURL="https://www.curseforge.com/minecraft/mc-mods/druidcraft"
 credits="Java, Forge, MCP, Minecraft, and the Mystic team for supporting me!"
 authors="VulpTheHorseDog"
 description='''
@@ -12,15 +15,10 @@ A druid-focused splice-of-life mod that's currently in very early alpha, if you'
 
 Regardless, I hope you enjoy the features as they're rolled out! :)
 '''
+
 [[dependencies.druidcraft]]
     modId="forge"
     mandatory=true
-    versionRange="[28,)"
-    ordering="NONE"
-    side="BOTH"
-[[dependencies.examplemod]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.14.4]"
+    versionRange="[28.1,)"
     ordering="NONE"
     side="BOTH"

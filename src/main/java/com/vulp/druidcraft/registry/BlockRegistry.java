@@ -17,6 +17,7 @@ public class BlockRegistry
     public static Block stripped_darkwood_log;
     public static Block darkwood_leaves;
     public static Block darkwood_sapling;
+    public static Block potted_darkwood_sapling;
     public static Block darkwood_planks;
     public static Block stripped_darkwood_wood;
     public static Block darkwood_wood;

@@ -18,7 +18,7 @@ public class DreadfishEntityRender extends MobRenderer<DreadfishEntity, Dreadfis
 {
     public DreadfishEntityRender(EntityRendererManager manager)
     {
-        super(manager, new DreadfishEntityModel(), 1f);
+        super(manager, new DreadfishEntityModel(), 0.4f);
     }
 
     @Override

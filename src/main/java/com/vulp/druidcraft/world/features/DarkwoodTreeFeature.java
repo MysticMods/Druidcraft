@@ -75,7 +75,7 @@ public class DarkwoodTreeFeature extends TallTaigaTreeFeature {
                             int l2 = k2 - position.getZ();
                             if (Math.abs(j2) != i3 || Math.abs(l2) != i3 || i3 <= 0) {
                                 BlockPos blockpos = new BlockPos(i2, j4, k2);
-                                if (isAirOrLeaves(worldIn, blockpos) || func_214576_j(worldIn, blockpos)) {
+                                if (isAirOrLeaves(worldIn, blockpos) || isTallPlants(worldIn, blockpos)) {
                                     this.setLogState(changedBlocks, worldIn, blockpos, LEAF, p_208519_5_);
                                 }
                             }

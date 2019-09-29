@@ -23,8 +23,8 @@ public class DreadfishEntityModel extends EntityModel<DreadfishEntity> {
         this.textureHeight = 32;
 
         this.spine1 = new RendererModel(this, 0, 0);
-        this.spine1.addBox(-1.5F, -2.5F, -3F, 3, 5, 6, 0.0F, false);
-        this.spine1.setRotationPoint(0.0F, 14.0F, -2.0F);
+        this.spine1.addBox(-1.5F, -2.5F, -3.0F, 3, 5, 6, 0.0F, false);
+        this.spine1.setRotationPoint(0.0F, 21.0F, 6.0F);
 
         this.spine2 = new RendererModel(this, 18, 0);
         this.spine2.addBox(-1.0F, -2.5F, 0.0F, 2, 4, 4, 0.0F, false);
@@ -59,8 +59,8 @@ public class DreadfishEntityModel extends EntityModel<DreadfishEntity> {
         this.sidefinL.rotateAngleZ = 0.7853982F;
 
         this.topFin = new RendererModel(this, 10, 20);
-        this.topFin.addBox(0.0F, -2.0F, -1.5F, 0, 2, 3, 0.0F, false);
-        this.topFin.setRotationPoint(0.0F, 2.5F, 1.5F);
+        this.topFin.addBox(0.0F, -7.5F, 6.0F, 0, 2, 3, 0.0F, false);
+        this.topFin.setRotationPoint(0.0F, 3.0F, -6.0F);
         this.spine1.addChild(this.topFin);
 
     }
