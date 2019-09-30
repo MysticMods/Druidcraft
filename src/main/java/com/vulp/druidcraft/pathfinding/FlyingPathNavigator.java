@@ -1,7 +1,9 @@
 package com.vulp.druidcraft.pathfinding;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.pathfinding.FlyingNodeProcessor;
+import net.minecraft.pathfinding.Path;
 import net.minecraft.pathfinding.PathFinder;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.util.math.RayTraceContext;
@@ -26,6 +28,11 @@ public class FlyingPathNavigator extends SwimmerPathNavigator {
         return true;
     }
 
+    @Override
+    public boolean tryMoveToEntityLiving(Entity entityIn, double speedIn) {
+        Path path = this.getPathToEntityLiving(entityIn, 1);
+        return path != null && this.setPath(path, speedIn);
+    }
 
     @Override
     protected boolean isDirectPathBetweenPoints(Vec3d posVec31, Vec3d posVec32, int sizeX, int sizeY, int sizeZ) {

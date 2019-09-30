@@ -44,7 +44,7 @@ public class FollowOwnerGoalMonster extends Goal {
         LivingEntity livingentity = this.tameable.getOwner();
         if (livingentity == null) {
             return false;
-        } else if (livingentity instanceof PlayerEntity && ((PlayerEntity) livingentity).isSpectator()) {
+        } else if (livingentity instanceof PlayerEntity && livingentity.isSpectator()) {
             return false;
         } else if (this.tameable.isSitting()) {
             return false;
@@ -70,8 +70,8 @@ public class FollowOwnerGoalMonster extends Goal {
     @Override
     public void startExecuting() {
         this.timeToRecalcPath = 0;
-        this.oldWaterCost =this.tameable.getPathPriority(PathNodeType.WATER);
-        this.tameable.setPathPriority(PathNodeType.WATER,0.0F);
+        this.oldWaterCost = this.tameable.getPathPriority(PathNodeType.WATER);
+        this.tameable.setPathPriority(PathNodeType.WATER, 0.0F);
     }
 
     /**
@@ -93,31 +93,30 @@ public class FollowOwnerGoalMonster extends Goal {
         if (!this.tameable.isSitting()) {
             if (--this.timeToRecalcPath <= 0) {
                 this.timeToRecalcPath = 10;
-                if (!this.navigator.tryMoveToEntityLiving(this.owner, this.followSpeed)) {
-                    if (!this.tameable.getLeashed() && !this.tameable.isPassenger()) {
-                        if (!(this.tameable.getDistanceSq(this.owner) < 144.0D)) {
-                            int i = MathHelper.floor(this.owner.posX) - 2;
-                            int j = MathHelper.floor(this.owner.posZ) - 2;
-                            int k = MathHelper.floor(this.owner.getBoundingBox().minY);
+                if (!this.tameable.getLeashed() && !this.tameable.isPassenger()) {
+                    if (!(this.tameable.getDistanceSq(this.owner) < 144.0D)) {
+                        int i = MathHelper.floor(this.owner.posX) - 2;
+                        int j = MathHelper.floor(this.owner.posZ) - 2;
+                        int k = MathHelper.floor(this.owner.getBoundingBox().minY);
 
-                            for(int l = 0; l <= 4; ++l) {
-                                for(int i1 = 0; i1 <= 4; ++i1) {
-                                    if ((l < 1 || i1 < 1 || l > 3 || i1 > 3) && this.canTeleportToBlock(new BlockPos(i + l, k - 1, j + i1))) {
-                                        this.tameable.setLocationAndAngles((double)((float)(i + l) + 0.5F), (double)k, (double)((float)(j + i1) + 0.5F), this.tameable.rotationYaw, this.tameable.rotationPitch);
-                                        this.navigator.clearPath();
-                                        return;
-                                    }
+                        for (int l = 0; l <= 4; ++l) {
+                            for (int i1 = 0; i1 <= 4; ++i1) {
+                                if ((l < 1 || i1 < 1 || l > 3 || i1 > 3) && this.canTeleportToBlock(new BlockPos(i + l, k - 1, j + i1))) {
+                                    this.tameable.setLocationAndAngles((float) (i + l) + 0.5F, k + 1, (float) (j + i1) + 0.5F, this.tameable.rotationYaw, this.tameable.rotationPitch);
+                                    this.navigator.clearPath();
+
                                 }
                             }
                         }
                     }
                 }
+                this.navigator.tryMoveToEntityLiving(this.owner, this.followSpeed);
             }
         }
     }
 
     private boolean canTeleportToBlock(BlockPos pos) {
         BlockState blockstate = this.world.getBlockState(pos);
-        return blockstate.func_215682_a(this.world, pos, this.tameable) && this.world.isAirBlock(pos.up()) && this.world.isAirBlock(pos.up(2));
+        return blockstate.func_215682_a(this.world, pos, this.tameable) && this.world.isAirBlock(pos.up(2)) && this.world.isAirBlock(pos.up(3));
     }
 }

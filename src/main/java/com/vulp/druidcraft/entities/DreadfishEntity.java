@@ -6,6 +6,7 @@ import com.vulp.druidcraft.particle.ParticleSpawn;
 import com.vulp.druidcraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.CreeperEntity;
@@ -18,12 +19,16 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -33,11 +38,13 @@ import java.util.function.Predicate;
 public class DreadfishEntity extends TameableMonster
 {
     private static final Predicate<LivingEntity> isPlayer;
-    protected FlyingPathNavigator navigator;
+    private static final DataParameter<Integer> SMOKE_COLOR;
+    private FlyingPathNavigator navigator;
 
     public DreadfishEntity(EntityType<? extends MonsterEntity> type, World worldIn)
     {
         super(type, worldIn);
+        this.navigator = (FlyingPathNavigator) this.createNavigator(worldIn);
         this.setTamed(false);
         this.moveController = new DreadfishEntity.MoveHelperController(this);
     }
@@ -50,7 +57,7 @@ public class DreadfishEntity extends TameableMonster
         this.goalSelector.addGoal(1, this.sitGoal);
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 3.0, true));
         this.goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.addGoal(4, new FollowOwnerGoalMonster(this, 3.0D, 10.0F, 2.0F));
+        this.goalSelector.addGoal(4, new FollowOwnerGoalMonster(this, 4.0D, 10.0F, 2.0F));
         this.goalSelector.addGoal(5, new DreadfishEntity.SwimGoal(this));
 
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoalMonster(this));
@@ -65,6 +72,11 @@ public class DreadfishEntity extends TameableMonster
     {
         super.registerAttributes();
         this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.975d);
+    }
+
+    protected void registerData() {
+        super.registerData();
+        this.dataManager.register(SMOKE_COLOR, DyeColor.PURPLE.getId());
     }
 
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
@@ -103,11 +115,15 @@ public class DreadfishEntity extends TameableMonster
     public void writeAdditional(CompoundNBT compound) {
         super.writeAdditional(compound);
         compound.putBoolean("Hostile", this.isHostile());
+        compound.putByte("SmokeColor", (byte)this.getSmokeColor().getId());
     }
 
     public void readAdditional(CompoundNBT compound) {
         super.readAdditional(compound);
         this.setHostile(compound.getBoolean("Hostile"));
+        if (compound.contains("SmokeColor", 99)) {
+            this.setSmokeColor(DyeColor.byId(compound.getInt("SmokeColor")));
+        }
     }
 
     @Override
@@ -153,6 +169,7 @@ public class DreadfishEntity extends TameableMonster
         }
     }
 
+
     static class MoveHelperController extends MovementController {
         private final DreadfishEntity dreadfish;
 
@@ -164,7 +181,7 @@ public class DreadfishEntity extends TameableMonster
         @Override
         public void tick() {
 
-                this.dreadfish.setMotion(this.dreadfish.getMotion().add(0.0D, 0.0D, 0.0D));
+            this.dreadfish.setMotion(this.dreadfish.getMotion().add(0.0D, 0.0D, 0.0D));
 
             if (this.action == Action.MOVE_TO && !this.dreadfish.getNavigator().noPath()) {
                 double d0 = this.posX - this.dreadfish.posX;
@@ -205,6 +222,15 @@ public class DreadfishEntity extends TameableMonster
 
     }
 
+    public DyeColor getSmokeColor() {
+        return DyeColor.byId((Integer)this.dataManager.get(SMOKE_COLOR));
+    }
+
+    public void setSmokeColor(DyeColor smokeColor) {
+        this.dataManager.set(SMOKE_COLOR, smokeColor.getId());
+    }
+
+    @Override
     public boolean processInteract(PlayerEntity player, Hand hand) {
         ItemStack itemstack = player.getHeldItem(hand);
         Item item = itemstack.getItem();
@@ -218,9 +244,27 @@ public class DreadfishEntity extends TameableMonster
                     this.heal(4f);
                     return true;
                 }
-            }
 
-        } else if (item == Items.PRISMARINE_CRYSTALS) {
+                else if (item instanceof DyeItem) {
+                    DyeColor dyecolor = ((DyeItem) item).getDyeColor();
+                    if (dyecolor != this.getSmokeColor()) {
+                        this.setSmokeColor(dyecolor);
+                        if (!player.abilities.isCreativeMode) {
+                            itemstack.shrink(1);
+                        }
+
+                        return true;
+                    }
+                }
+            }
+            if (this.isOwner(player) && !this.world.isRemote && !(item == Items.BONE && item instanceof DyeItem)) {
+                this.sitGoal.setSitting(!this.isSitting());
+                this.isJumping = false;
+                this.navigator.clearPath();
+                this.setAttackTarget((LivingEntity) null);
+            }
+        }
+        else if (item == Items.PRISMARINE_CRYSTALS) {
             if (!player.abilities.isCreativeMode) {
                 itemstack.shrink(1);
             }
@@ -279,6 +323,7 @@ public class DreadfishEntity extends TameableMonster
     }
 
     static {
+        SMOKE_COLOR = EntityDataManager.createKey(DreadfishEntity.class, DataSerializers.VARINT);
         isPlayer = (type) -> {
             EntityType<?> entitytype = type.getType();
             return entitytype == EntityType.PLAYER;
@@ -302,7 +347,83 @@ public class DreadfishEntity extends TameableMonster
     @Override
     public void livingTick() {
         super.livingTick();
-        ParticleSpawn.MAGIC_SMOKE.spawn(this.world, this.posX, this.posY + (((rand.nextDouble() - 0.5) + 0.2) / 3), this.posZ + (((rand.nextDouble() - 0.5) + 0.2) / 3), 0.3, 0.1, 1, 1);
+        if (this.world.isRemote) {
+            int red;
+            int blue;
+            int green;
+
+            if (this.getSmokeColor() == DyeColor.BLACK) {
+                red = 15;
+                green = 15;
+                blue = 15;
+            } else if (this.getSmokeColor() == DyeColor.RED) {
+                red = 255;
+                green = 50;
+                blue = 40;
+            } else if (this.getSmokeColor() == DyeColor.GREEN) {
+                red = 15;
+                green = 150;
+                blue = 45;
+            } else if (this.getSmokeColor() == DyeColor.BROWN) {
+                red = 130;
+                green = 70;
+                blue = 45;
+            } else if (this.getSmokeColor() == DyeColor.BLUE) {
+                red = 30;
+                green = 60;
+                blue = 225;
+            } else if (this.getSmokeColor() == DyeColor.PURPLE) {
+                red = 135;
+                green = 45;
+                blue = 245;
+            } else if (this.getSmokeColor() == DyeColor.CYAN) {
+                red = 20;
+                green = 125;
+                blue = 130;
+            } else if (this.getSmokeColor() == DyeColor.LIGHT_GRAY) {
+                red = 160;
+                green = 160;
+                blue = 155;
+            } else if (this.getSmokeColor() == DyeColor.GRAY) {
+                red = 90;
+                green = 90;
+                blue = 90;
+            } else if (this.getSmokeColor() == DyeColor.PINK) {
+                red = 255;
+                green = 115;
+                blue = 170;
+            } else if (this.getSmokeColor() == DyeColor.LIME) {
+                red = 135;
+                green = 250;
+                blue = 35;
+            } else if (this.getSmokeColor() == DyeColor.YELLOW) {
+                red = 240;
+                green = 240;
+                blue = 50;
+            } else if (this.getSmokeColor() == DyeColor.LIGHT_BLUE) {
+                red = 40;
+                green = 200;
+                blue = 255;
+            } else if (this.getSmokeColor() == DyeColor.MAGENTA) {
+                red = 230;
+                green = 65;
+                blue = 170;
+            } else if (this.getSmokeColor() == DyeColor.ORANGE) {
+                red = 240;
+                green = 135;
+                blue = 30;
+            } else if (this.getSmokeColor() == DyeColor.WHITE) {
+                red = 215;
+                green = 215;
+                blue = 215;
+            } else {
+                red = 0;
+                green = 0;
+                blue = 0;
+            }
+            ParticleSpawn.MAGIC_SMOKE.spawn(this.world, this.posX, this.posY + (((rand.nextDouble() - 0.5) + 0.2) / 3), this.posZ + (((rand.nextDouble() - 0.5) + 0.2) / 3), (float) red / 255, (float) green / 255, (float) blue / 255);
+        }
+
         if (!this.world.isRemote && this.getAttackTarget() == null && this.isHostile()) {
             this.setHostile(false);
         }

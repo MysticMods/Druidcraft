@@ -36,6 +36,7 @@ import net.minecraft.scoreboard.Team;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -45,11 +46,11 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class TameableMonster extends MonsterEntity {
-    protected static final DataParameter<Byte> TAMED = EntityDataManager.createKey(TameableEntity.class, DataSerializers.BYTE);
-    protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.createKey(TameableEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
-    protected SitGoalMonster sitGoal;
+    static final DataParameter<Byte> TAMED = EntityDataManager.createKey(TameableEntity.class, DataSerializers.BYTE);
+    private static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.createKey(TameableEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+    SitGoalMonster sitGoal;
 
-    protected TameableMonster(EntityType<? extends MonsterEntity> type, World worldIn) {
+    TameableMonster(EntityType<? extends MonsterEntity> type, World worldIn) {
         super(type, worldIn);
         this.setupTamedAI();
     }
@@ -91,7 +92,7 @@ public class TameableMonster extends MonsterEntity {
             s = compound.getString("OwnerUUID");
         } else {
             String s1 = compound.getString("Owner");
-            s = PreYggdrasilConverter.convertMobOwnerIfNeeded(this.getServer(), s1);
+            s = PreYggdrasilConverter.convertMobOwnerIfNeeded(Objects.requireNonNull(this.getServer()), s1);
         }
 
         if (!s.isEmpty()) {
@@ -110,14 +111,32 @@ public class TameableMonster extends MonsterEntity {
         this.setSitting(compound.getBoolean("Sitting"));
     }
 
+    @Override
+    public boolean canDespawn(double distanceToClosestPlayer) {
+        return !this.isTamed() || !this.hasCustomName();
+    }
+
+    @Override
+    public boolean preventDespawn() {
+        return this.isTamed() || this.hasCustomName();
+    }
+
     public boolean canBeLeashedTo(PlayerEntity player) {
         return !this.getLeashed();
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (!this.world.isRemote && this.world.getDifficulty() == Difficulty.PEACEFUL && !this.isTamed()) {
+            this.remove();
+        }
     }
 
     /**
      * Play the taming effect, will either be hearts or smoke depending on status
      */
-    protected void playTameEffect(boolean play) {
+    void playTameEffect(boolean play) {
         IParticleData particle = ParticleTypes.AMBIENT_ENTITY_EFFECT;
         if (play) {
             particle = ParticleTypes.HEART;
@@ -165,7 +184,7 @@ public class TameableMonster extends MonsterEntity {
         this.setupTamedAI();
     }
 
-    protected void setupTamedAI() {
+    private void setupTamedAI() {
     }
 
     public boolean isSitting() {
@@ -183,15 +202,15 @@ public class TameableMonster extends MonsterEntity {
     }
 
     @Nullable
-    public UUID getOwnerId() {
+    private UUID getOwnerId() {
         return this.dataManager.get(OWNER_UNIQUE_ID).orElse((UUID)null);
     }
 
-    public void setOwnerId(@Nullable UUID p_184754_1_) {
+    private void setOwnerId(@Nullable UUID p_184754_1_) {
         this.dataManager.set(OWNER_UNIQUE_ID, Optional.ofNullable(p_184754_1_));
     }
 
-    public void setTamedBy(PlayerEntity player) {
+    void setTamedBy(PlayerEntity player) {
         this.setTamed(true);
         this.setOwnerId(player.getUniqueID());
         if (player instanceof ServerPlayerEntity) {
@@ -212,11 +231,16 @@ public class TameableMonster extends MonsterEntity {
 
     @Override
     public boolean canAttack(LivingEntity target) {
-        return this.isOwner(target) ? false : super.canAttack(target);
+        return !this.isOwner(target) && super.canAttack(target);
     }
 
-    public boolean isOwner(LivingEntity entityIn) {
+    boolean isOwner(LivingEntity entityIn) {
         return entityIn == this.getOwner();
+    }
+
+    @Override
+    public boolean attemptTeleport(double p_213373_1_, double p_213373_3_, double p_213373_5_, boolean p_213373_7_) {
+        return super.attemptTeleport(p_213373_1_, p_213373_3_, p_213373_5_, p_213373_7_);
     }
 
     /**

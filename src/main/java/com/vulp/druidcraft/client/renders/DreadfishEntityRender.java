@@ -16,15 +16,31 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 @OnlyIn(Dist.CLIENT)
 public class DreadfishEntityRender extends MobRenderer<DreadfishEntity, DreadfishEntityModel>
 {
+    private static final ResourceLocation DREADFISH_HEALTH_FULL = new ResourceLocation(DruidcraftRegistry.MODID + ":textures/entity/dreadfish/dreadfish_0.png");
+    private static final ResourceLocation DREADFISH_HEALTH_HIGH = new ResourceLocation(DruidcraftRegistry.MODID + ":textures/entity/dreadfish/dreadfish_1.png");
+    private static final ResourceLocation DREADFISH_HEALTH_MEDIUM = new ResourceLocation(DruidcraftRegistry.MODID + ":textures/entity/dreadfish/dreadfish_2.png");
+    private static final ResourceLocation DREADFISH_HEALTH_LOW = new ResourceLocation(DruidcraftRegistry.MODID + ":textures/entity/dreadfish/dreadfish_3.png");
+
     public DreadfishEntityRender(EntityRendererManager manager)
     {
         super(manager, new DreadfishEntityModel(), 0.4f);
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(DreadfishEntity entity)
-    {
-        return new ResourceLocation(DruidcraftRegistry.MODID + ":textures/entity/dreadfish/dreadfish.png");
+    protected ResourceLocation getEntityTexture(DreadfishEntity entity) {
+        if (entity.isTamed()) {
+            if (entity.getHealth() >= entity.getMaxHealth()) {
+                return DREADFISH_HEALTH_FULL;
+            } else if ((entity.getHealth() < entity.getMaxHealth()) && (entity.getHealth() >= 16.0f)) {
+                return DREADFISH_HEALTH_HIGH;
+            } else if ((entity.getHealth() < 16.0f) && (entity.getHealth() >= 8.0f)) {
+                return DREADFISH_HEALTH_MEDIUM;
+            } else if ((entity.getHealth() < 8.0f)) {
+                return DREADFISH_HEALTH_LOW;
+            }
+            else return DREADFISH_HEALTH_FULL;
+        }
+        else return DREADFISH_HEALTH_FULL;
     }
 
     public static class RenderFactory implements IRenderFactory<DreadfishEntity>
