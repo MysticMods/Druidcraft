@@ -1,27 +1,13 @@
 package com.vulp.druidcraft.entities;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.vulp.druidcraft.advancements.CriteriaTriggers;
 import com.vulp.druidcraft.entities.AI.goals.SitGoalMonster;
 import com.vulp.druidcraft.pathfinding.FlyingPathNavigator;
-import net.minecraft.advancements.ICriterionTrigger;
-import net.minecraft.advancements.PlayerAdvancements;
-import net.minecraft.advancements.criterion.CriterionInstance;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.TameAnimalTrigger;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.SitGoal;
-import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -35,7 +21,6 @@ import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
@@ -43,7 +28,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 
 public class TameableMonster extends MonsterEntity {
     static final DataParameter<Byte> TAMED = EntityDataManager.createKey(TameableEntity.class, DataSerializers.BYTE);
@@ -56,12 +43,12 @@ public class TameableMonster extends MonsterEntity {
     }
 
     @Override
-    public FlyingPathNavigator getNavigator() {
+    public PathNavigator getNavigator() {
         if (this.isPassenger() && this.getRidingEntity() instanceof TameableMonster) {
             MobEntity mobentity = (MobEntity)this.getRidingEntity();
-            return (FlyingPathNavigator) mobentity.getNavigator();
+            return mobentity.getNavigator();
         } else {
-            return (FlyingPathNavigator) this.navigator;
+            return this.navigator;
         }
     }
 

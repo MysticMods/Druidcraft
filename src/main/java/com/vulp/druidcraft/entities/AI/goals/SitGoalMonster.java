@@ -1,17 +1,16 @@
 package com.vulp.druidcraft.entities.AI.goals;
 
-import com.vulp.druidcraft.entities.TameableMonster;
+import com.vulp.druidcraft.entities.TameableAirSwimMonster;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.passive.TameableEntity;
 
 import java.util.EnumSet;
 
 public class SitGoalMonster extends Goal {
-    private final TameableMonster tameable;
+    private final TameableAirSwimMonster tameable;
     private boolean isSitting;
 
-    public SitGoalMonster(TameableMonster entityIn) {
+    public SitGoalMonster(TameableAirSwimMonster entityIn) {
         this.tameable = entityIn;
         this.setMutexFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
     }

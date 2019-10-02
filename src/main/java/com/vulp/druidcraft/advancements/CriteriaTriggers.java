@@ -1,8 +1,8 @@
 package com.vulp.druidcraft.advancements;
 
 import com.vulp.druidcraft.advancements.criterion.TameMonsterTrigger;
+import com.vulp.druidcraft.entities.TameableAirSwimMonster;
 import com.vulp.druidcraft.entities.TameableMonster;
-import net.minecraft.advancements.criterion.TameAnimalTrigger;
 import net.minecraft.entity.player.ServerPlayerEntity;
 
 public class CriteriaTriggers extends net.minecraft.advancements.CriteriaTriggers {

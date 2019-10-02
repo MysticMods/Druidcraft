@@ -13,6 +13,7 @@ public class ItemRegistry
     public static Item rockroot;
 
     public static Item dreadfish_spawn_egg;
+    public static Item beetle_spawn_egg;
 
     public static Item bone_sword;
     public static Item bone_pickaxe;

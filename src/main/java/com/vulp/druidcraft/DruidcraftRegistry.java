@@ -165,7 +165,8 @@ public class DruidcraftRegistry {
     {
         EntityRegistryEvent.getRegistry().registerAll
                 (
-                        EntityRegistry.dreadfish_entity
+                        EntityRegistry.dreadfish_entity,
+                        EntityRegistry.beetle_entity
                 );
 
         EntityRegistry.registerEntityWorldSpawns();
