@@ -18,7 +18,9 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 public class BeetleEntity extends TameableMonster implements IInventoryChangedListener {
-    private static final DataParameter<Boolean> DATA_ID_CHEST = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Boolean> CHESTED = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Boolean> SADDLED = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
+
     private static final DataParameter<Byte> STATUS = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BYTE);
     private Inventory beetleChest;
 
@@ -30,15 +32,15 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
     @Override
     protected void registerData() {
         super.registerData();
-        this.dataManager.register(DATA_ID_CHEST, false);
+        this.dataManager.register(CHESTED, false);
     }
 
     public boolean hasChest() {
-        return this.dataManager.get(DATA_ID_CHEST);
+        return this.dataManager.get(CHESTED);
     }
 
     private void setChested(boolean chested) {
-        this.dataManager.set(DATA_ID_CHEST, chested);
+        this.dataManager.set(CHESTED, chested);
     }
 
     private int getInventorySize() {
@@ -50,7 +52,7 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
     }
 
     public int getInventoryColumns() {
-        return 5;
+        return 9;
     }
 
     protected void dropInventory() {
@@ -85,7 +87,7 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
         this.itemHandler = net.minecraftforge.common.util.LazyOptional.of(() -> new net.minecraftforge.items.wrapper.InvWrapper(this.beetleChest));
     }
 
-    private boolean canBeSaddled() {
+    public boolean canBeSaddled() {
         return true;
     }
 
