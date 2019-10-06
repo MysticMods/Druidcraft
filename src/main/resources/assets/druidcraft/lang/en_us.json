@@ -17,8 +17,10 @@
   "item.druidcraft.moonstone": "Moonstone",
   "item.druidcraft.fiery_glass": "Fiery Glass",
   "item.druidcraft.rockroot": "Rockroot",
+  "item.druidcraft.soulfire": "Soulfire",
 
   "item.druidcraft.dreadfish_spawn_egg": "Dreadfish Spawn Egg",
+  "item.druidcraft.beetle_spawn_egg": "Beetle Spawn Egg",
 
   "item.druidcraft.bone_sword": "Bone Sword",
   "item.druidcraft.bone_shovel": "Bone Shovel",
@@ -61,6 +63,25 @@
   "block.druidcraft.acacia_panels": "Acacia Panels",
   "block.druidcraft.dark_oak_panels": "Dark Oak Panels",
   "block.druidcraft.darkwood_panels": "Darkwood Panels",
+  "block.druidcraft.black_soulfire": "Black Soulfire",
+  "block.druidcraft.red_soulfire": "Red Soulfire",
+  "block.druidcraft.green_soulfire": "Green Soulfire",
+  "block.druidcraft.brown_soulfire": "Brown Soulfire",
+  "block.druidcraft.blue_soulfire": "Blue Soulfire",
+  "block.druidcraft.purple_soulfire": "Purple Soulfire",
+  "block.druidcraft.cyan_soulfire": "Cyan Soulfire",
+  "block.druidcraft.light_gray_soulfire": "Light Gray Soulfire",
+  "block.druidcraft.gray_soulfire": "Gray Soulfire",
+  "block.druidcraft.pink_soulfire": "Pink Soulfire",
+  "block.druidcraft.lime_soulfire": "Lime Soulfire",
+  "block.druidcraft.yellow_soulfire": "Yellow Soulfire",
+  "block.druidcraft.light_blue_soulfire": "Light Blue Soulfire",
+  "block.druidcraft.magenta_soulfire": "Magenta Soulfire",
+  "block.druidcraft.orange_soulfire": "Orange Soulfire",
+  "block.druidcraft.white_soulfire": "White Soulfire",
+
+  "entity.druidcraft.dreadfish": "Dreadfish",
+  "entity.druidcraft.beetle": "Beetle",
 
   "biome.druidcraft.darkwood_forest": "Darkwood Forest",
 
