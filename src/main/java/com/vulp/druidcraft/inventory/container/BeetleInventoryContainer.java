@@ -9,28 +9,27 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
-
 public class BeetleInventoryContainer extends Container {
-    private final IInventory beetleInventory;
-    private final BeetleEntity beetle;
+    private IInventory beetleInventory;
+    private BeetleEntity beetle;
 
-    public BeetleInventoryContainer(int p_i50077_1_, PlayerInventory playerInventory, IInventory inventory, final BeetleEntity beetle) {
-        super((ContainerType)null, p_i50077_1_);
+    public BeetleInventoryContainer(int windowID, PlayerInventory playerInventory, PacketBuffer extraData, IInventory inventory, final BeetleEntity beetle) {
+        super((ContainerType)null, windowID);
         this.beetleInventory = inventory;
         this.beetle = beetle;
         inventory.openInventory(playerInventory.player);
         this.addSlot(new Slot(inventory, 0, 18, 72) {
             public boolean isItemValid(ItemStack stack) {
-                return stack.getItem() == Items.SADDLE && !this.getHasStack() && beetle.canBeSaddled();
+                return stack.getItem() == Items.SADDLE && !this.getHasStack();
             }
 
             @OnlyIn(Dist.CLIENT)
             public boolean isEnabled() {
-                return beetle.canBeSaddled();
+                return true;
             }
         });
 
@@ -38,8 +37,8 @@ public class BeetleInventoryContainer extends Container {
         int k1;
         if (beetle instanceof BeetleEntity && beetle.hasChest()) {
             for(j1 = 0; j1 < 3; ++j1) {
-                for(k1 = 0; k1 < beetle.getInventoryColumns(); ++k1) {
-                    this.addSlot(new Slot(inventory, 2 + k1 + j1 * beetle.getInventoryColumns(), 80 + k1 * 18, 18 + j1 * 18));
+                for(k1 = 0; k1 < 9; ++k1) {
+                    this.addSlot(new Slot(inventory, 2 + k1 + j1 * 9, 80 + k1 * 18, 18 + j1 * 18));
                 }
             }
         }

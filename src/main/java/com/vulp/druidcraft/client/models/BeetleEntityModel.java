@@ -147,16 +147,16 @@ public class BeetleEntityModel extends EntityModel<BeetleEntity> {
         this.setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
         this.body_1.render(scale);
 
-        if (entity.isBeetleSaddled()) {
+    //    if (entity.isBeetleSaddled()) {
             this.harness.showModel = true;
             this.saddle_main.showModel = true;
             this.saddle_front.showModel = true;
             this.saddle_back.showModel = true;
-        } else {
-            this.harness.showModel = false;
-            this.saddle_main.showModel = false;
-            this.saddle_front.showModel = false;
-            this.saddle_back.showModel = false;
+    //    } else {
+    //       this.harness.showModel = false;
+    //        this.saddle_main.showModel = false;
+    //        this.saddle_front.showModel = false;
+    //        this.saddle_back.showModel = false;
 
             if (entity.hasChest()) {
                 this.chest_L_front.showModel = true;
@@ -170,7 +170,7 @@ public class BeetleEntityModel extends EntityModel<BeetleEntity> {
                 this.chest_R_back.showModel = false;
             }
         }
-    }
+    //}
 
     private void RotationPoint(RendererModel rendererModel, float x, float y, float z) {
         rendererModel.rotateAngleX = x;

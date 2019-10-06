@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @OnlyIn(Dist.CLIENT)
 public class BeetleInventoryScreen extends ContainerScreen<BeetleInventoryContainer> {
@@ -40,7 +41,7 @@ public class BeetleInventoryScreen extends ContainerScreen<BeetleInventoryContai
         if (this.beetleEntity instanceof BeetleEntity) {
             BeetleEntity beetleEntity = (BeetleEntity)this.beetleEntity;
             if (beetleEntity.hasChest()) {
-                this.blit(i + 84, j + 17, this.xSize, 0, beetleEntity.getInventoryColumns() * 18, 126);
+                this.blit(i + 84, j + 17, this.xSize, 0, 9 * 18, 126);
             }
         }
         // mousePosY NEEDS CALIBRATION!
