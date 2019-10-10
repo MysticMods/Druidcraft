@@ -1,6 +1,7 @@
 package com.vulp.druidcraft.client.gui.screen.inventory;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.entities.BeetleEntity;
 import com.vulp.druidcraft.inventory.container.BeetleInventoryContainer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -17,7 +18,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @OnlyIn(Dist.CLIENT)
 public class BeetleInventoryScreen extends ContainerScreen<BeetleInventoryContainer> {
-    private static final ResourceLocation BEETLE_GUI_TEXTURES = new ResourceLocation("textures/gui/container/beetle.png");
+    private static final ResourceLocation BEETLE_GUI_TEXTURES = new ResourceLocation(Druidcraft.MODID, "textures/gui/container/beetle.png");
     private final BeetleEntity beetleEntity;
     private float mousePosx;
     private float mousePosY;

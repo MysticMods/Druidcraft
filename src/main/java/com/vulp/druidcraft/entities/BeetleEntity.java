@@ -5,7 +5,6 @@ import com.vulp.druidcraft.inventory.container.BeetleInventoryContainer;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -179,13 +178,13 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
                             this.playTameEffect(true);
                             this.setTamedBy(player);
                             this.navigator.clearPath();
-                            this.setAttackTarget((LivingEntity)null);
-                            this.sitGoal.setSitting(true);
+                            this.setAttackTarget((LivingEntity) null);
+                        //    this.sitGoal.setSitting(true);
                             this.setHealth(24.0F);
-                            this.world.setEntityState(this, (byte)7);
+                            this.world.setEntityState(this, (byte) 7);
                         } else {
                             this.playTameEffect(false);
-                            this.world.setEntityState(this, (byte)6);
+                            this.world.setEntityState(this, (byte) 6);
                         }
                     }
 
@@ -199,10 +198,12 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
                 }
             }
 
-            if (!this.hasChest() && itemstack.getItem() == Blocks.CHEST.asItem()) {
-                this.setChested(true);
-                this.playChestEquipSound();
-                this.initBeetleChest();
+            if (!this.world.isRemote) {
+                if (!this.hasChest() && itemstack.getItem() == Blocks.CHEST.asItem()) {
+                    this.setChested(true);
+                    this.playChestEquipSound();
+                    this.initBeetleChest();
+                }
             }
 
             if (!this.isChild() && !this.hasSaddle() && itemstack.getItem() == Items.SADDLE) {
@@ -217,7 +218,7 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
     @Override
     public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity)
     {
-        return new BeetleInventoryContainer(i, playerInventory, beetleChest, this);
+        return new BeetleInventoryContainer(i, playerInventory, beetleChest, this.getEntityId());
     }
 
     private void openGUI(PlayerEntity playerEntity) {

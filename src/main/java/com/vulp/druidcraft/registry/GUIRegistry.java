@@ -35,10 +35,4 @@ public class GUIRegistry {
         CONTAINER_TYPE.forEach(type -> event.getRegistry().register(type));
         CONTAINER_TYPE.clear();
     }
-
-    @OnlyIn(Dist.CLIENT)
-    public static void registerScreenFactories()
-    {
-
-    }
 }
