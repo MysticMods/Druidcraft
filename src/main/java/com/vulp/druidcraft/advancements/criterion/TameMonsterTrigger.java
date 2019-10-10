@@ -30,11 +30,13 @@ public class TameMonsterTrigger implements ICriterionTrigger<TameMonsterTrigger>
     public TameMonsterTrigger() {
     }
 
-    public ResourceLocation getId() {
+    @Override
+	public ResourceLocation getId() {
         return ID;
     }
 
-    public void addListener(PlayerAdvancements playerAdvancementsIn, ICriterionTrigger.Listener<TameMonsterTrigger> listener) {
+    @Override
+	public void addListener(PlayerAdvancements playerAdvancementsIn, ICriterionTrigger.Listener<TameMonsterTrigger> listener) {
         TameMonsterTrigger.Listeners tamemonstertrigger$listeners = this.listeners.get(playerAdvancementsIn);
         if (tamemonstertrigger$listeners == null) {
             tamemonstertrigger$listeners = new TameMonsterTrigger.Listeners(playerAdvancementsIn);
@@ -44,7 +46,8 @@ public class TameMonsterTrigger implements ICriterionTrigger<TameMonsterTrigger>
         tamemonstertrigger$listeners.add(listener);
     }
 
-    public void removeListener(PlayerAdvancements playerAdvancementsIn, ICriterionTrigger.Listener<TameMonsterTrigger> listener) {
+    @Override
+	public void removeListener(PlayerAdvancements playerAdvancementsIn, ICriterionTrigger.Listener<TameMonsterTrigger> listener) {
         TameMonsterTrigger.Listeners tamemonstertrigger$listeners = this.listeners.get(playerAdvancementsIn);
         if (tamemonstertrigger$listeners != null) {
             tamemonstertrigger$listeners.remove(listener);
@@ -55,11 +58,13 @@ public class TameMonsterTrigger implements ICriterionTrigger<TameMonsterTrigger>
 
     }
 
-    public void removeAllListeners(PlayerAdvancements playerAdvancementsIn) {
+    @Override
+	public void removeAllListeners(PlayerAdvancements playerAdvancementsIn) {
         this.listeners.remove(playerAdvancementsIn);
     }
 
-    public TameMonsterTrigger deserializeInstance(JsonObject json, JsonDeserializationContext context) {
+    @Override
+	public TameMonsterTrigger deserializeInstance(JsonObject json, JsonDeserializationContext context) {
         EntityPredicate entitypredicate = EntityPredicate.deserialize(json.get("entity"));
         return new TameMonsterTrigger(entitypredicate);
     }
@@ -92,7 +97,8 @@ public class TameMonsterTrigger implements ICriterionTrigger<TameMonsterTrigger>
             return this.entity.test(player, entity);
         }
 
-        public JsonElement serialize() {
+        @Override
+		public JsonElement serialize() {
             JsonObject jsonobject = new JsonObject();
             jsonobject.add("entity", this.entity.serialize());
             return jsonobject;

@@ -22,7 +22,8 @@ public class OwnerHurtByTargetGoalMonster extends TargetGoal {
         /**
          * Returns whether the EntityAIBase should begin execution.
          */
-        public boolean shouldExecute() {
+        @Override
+		public boolean shouldExecute() {
             if (this.tameable.isTamed() && !this.tameable.isSitting()) {
                 LivingEntity livingentity = this.tameable.getOwner();
                 if (livingentity == null) {
@@ -40,7 +41,8 @@ public class OwnerHurtByTargetGoalMonster extends TargetGoal {
         /**
          * Execute a one shot task or start executing a continuous task
          */
-        public void startExecuting() {
+        @Override
+		public void startExecuting() {
             this.goalOwner.setAttackTarget(this.attacker);
             LivingEntity livingentity = this.tameable.getOwner();
             if (livingentity != null) {

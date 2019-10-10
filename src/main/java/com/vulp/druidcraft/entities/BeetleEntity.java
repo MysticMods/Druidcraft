@@ -84,6 +84,7 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
         }
     }
 
+    @Override
     public void writeAdditional(CompoundNBT compound) {
         super.writeAdditional(compound);
         compound.putBoolean("ChestedBeetle", this.hasChest());
@@ -105,6 +106,7 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
 
     }
 
+    @Override
     public void readAdditional(CompoundNBT compound) {
         super.readAdditional(compound);
         this.setChested(compound.getBoolean("ChestedBeetle"));
@@ -124,6 +126,7 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
         this.updateHorseSlots();
     }
 
+    @Override
     public boolean replaceItemInInventory(int inventorySlot, ItemStack itemStackIn) {
         if (inventorySlot == 499) {
             if (this.hasChest() && itemStackIn.isEmpty()) {
@@ -160,6 +163,7 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
         }
     }
 
+    @Override
     public boolean processInteract(PlayerEntity player, Hand hand) {
         ItemStack itemstack = player.getHeldItem(hand);
         if (this.isTamed() && player.isSneaking()) {
@@ -256,6 +260,7 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
         this.playSound(SoundEvents.ENTITY_DONKEY_CHEST, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
     }
 
+    @Override
     protected void dropInventory() {
         super.dropInventory();
         if (this.hasChest()) {

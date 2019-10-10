@@ -59,7 +59,8 @@ public abstract class Particle extends TexturedParticle implements IParticleRend
         return 1f;
     }
 
-    public IParticleRenderType getRenderType() {
+    @Override
+	public IParticleRenderType getRenderType() {
         return IParticleRenderType.CUSTOM;
     }
 

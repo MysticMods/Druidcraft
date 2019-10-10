@@ -26,7 +26,8 @@ public class MegaDarkwoodTreeFeature extends HugeTreesFeature<NoFeatureConfig> {
         this.setSapling((IPlantable)BlockRegistry.darkwood_sapling);
     }
 
-    public boolean place(Set<BlockPos> changedBlocks, IWorldGenerationReader worldIn, Random rand, BlockPos position, MutableBoundingBox p_208519_5_) {
+    @Override
+	public boolean place(Set<BlockPos> changedBlocks, IWorldGenerationReader worldIn, Random rand, BlockPos position, MutableBoundingBox p_208519_5_) {
         int i = this.getHeight(rand);
         if (!this.func_203427_a(worldIn, position, i)) {
             return false;

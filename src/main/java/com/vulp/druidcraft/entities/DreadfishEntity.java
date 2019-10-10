@@ -95,11 +95,13 @@ public class DreadfishEntity extends TameableAirSwimMonster
         this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.975d);
     }
 
+    @Override
     protected void registerData() {
         super.registerData();
         this.dataManager.register(SMOKE_COLOR, DyeColor.PURPLE.getId());
     }
 
+    @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return 0.2F;
     }
@@ -110,12 +112,15 @@ public class DreadfishEntity extends TameableAirSwimMonster
         }
     }
 
+    @Override
     public void fall(float distance, float damageMultiplier) {
     }
 
+    @Override
     protected void updateFallState(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
     }
 
+    @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
         if (this.isInvulnerableTo(source)) {
             return false;
@@ -133,12 +138,14 @@ public class DreadfishEntity extends TameableAirSwimMonster
         }
     }
 
+    @Override
     public void writeAdditional(CompoundNBT compound) {
         super.writeAdditional(compound);
         compound.putBoolean("Hostile", this.isHostile());
         compound.putByte("SmokeColor", (byte)this.getSmokeColor().getId());
     }
 
+    @Override
     public void readAdditional(CompoundNBT compound) {
         super.readAdditional(compound);
         this.setHostile(compound.getBoolean("Hostile"));
@@ -185,6 +192,7 @@ public class DreadfishEntity extends TameableAirSwimMonster
             this.dreadfish = dreadfish;
         }
 
+        @Override
         public boolean shouldExecute() {
             return this.dreadfish.execute() && super.shouldExecute();
         }
@@ -222,6 +230,7 @@ public class DreadfishEntity extends TameableAirSwimMonster
         }
     }
 
+    @Override
     public void setTamed(boolean tamed) {
         super.setTamed(tamed);
         if (tamed) {
@@ -233,6 +242,7 @@ public class DreadfishEntity extends TameableAirSwimMonster
         this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4.0D);
     }
 
+    @Override
     public void setAttackTarget(@Nullable LivingEntity entitylivingbaseIn) {
         super.setAttackTarget(entitylivingbaseIn);
         if (entitylivingbaseIn == null) {
@@ -319,6 +329,7 @@ public class DreadfishEntity extends TameableAirSwimMonster
         return super.processInteract(player, hand);
     }
 
+    @Override
     public boolean shouldAttackEntity(LivingEntity target, LivingEntity owner) {
         if (!(target instanceof CreeperEntity)) {
             if (target instanceof WolfEntity) {
@@ -347,6 +358,7 @@ public class DreadfishEntity extends TameableAirSwimMonster
         }
     }
 
+    @Override
     public boolean canBeLeashedTo(PlayerEntity player) {
         return !this.isHostile() && !this.isTamed();
     }
@@ -387,6 +399,7 @@ public class DreadfishEntity extends TameableAirSwimMonster
         }
     }
 
+    @Override
     public boolean isOnLadder() {
         return false;
     }

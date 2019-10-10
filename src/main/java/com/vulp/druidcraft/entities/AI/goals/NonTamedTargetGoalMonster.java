@@ -23,14 +23,16 @@ public class NonTamedTargetGoalMonster<T extends LivingEntity> extends NearestAt
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
-    public boolean shouldExecute() {
+    @Override
+	public boolean shouldExecute() {
         return !this.tameable.isTamed() && super.shouldExecute();
     }
 
     /**
      * Returns whether an in-progress EntityAIBase should continue executing
      */
-    public boolean shouldContinueExecuting() {
+    @Override
+	public boolean shouldContinueExecuting() {
         return this.targetEntitySelector != null ? this.targetEntitySelector.canTarget(this.goalOwner, this.nearestTarget) : super.shouldContinueExecuting();
     }
 }

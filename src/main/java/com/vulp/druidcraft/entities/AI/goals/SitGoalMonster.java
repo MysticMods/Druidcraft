@@ -18,14 +18,16 @@ public class SitGoalMonster extends Goal {
     /**
      * Returns whether an in-progress EntityAIBase should continue executing
      */
-    public boolean shouldContinueExecuting() {
+    @Override
+	public boolean shouldContinueExecuting() {
         return this.isSitting;
     }
 
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
-    public boolean shouldExecute() {
+    @Override
+	public boolean shouldExecute() {
         if (!this.tameable.isTamed()) {
             return false;
         } else if (this.tameable.isInWaterOrBubbleColumn()) {
@@ -43,7 +45,8 @@ public class SitGoalMonster extends Goal {
     /**
      * Execute a one shot task or start executing a continuous task
      */
-    public void startExecuting() {
+    @Override
+	public void startExecuting() {
         this.tameable.getNavigator().clearPath();
         this.tameable.setSitting(true);
     }
@@ -51,7 +54,8 @@ public class SitGoalMonster extends Goal {
     /**
      * Reset the task's internal state. Called when this task is interrupted by another one
      */
-    public void resetTask() {
+    @Override
+	public void resetTask() {
         this.tameable.setSitting(false);
     }
 

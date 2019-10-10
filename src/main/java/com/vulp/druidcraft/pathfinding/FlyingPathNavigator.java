@@ -40,6 +40,7 @@ public class FlyingPathNavigator extends SwimmerPathNavigator {
         return this.world.rayTraceBlocks(new RayTraceContext(posVec31, vec3d, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.ANY, this.entity)).getType() == RayTraceResult.Type.MISS;
     }
 
-    public void setCanSwim(boolean canSwim) {
+    @Override
+	public void setCanSwim(boolean canSwim) {
     }
 }

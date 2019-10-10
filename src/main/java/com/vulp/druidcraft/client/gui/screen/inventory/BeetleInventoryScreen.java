@@ -29,11 +29,13 @@ public class BeetleInventoryScreen extends ContainerScreen<BeetleInventoryContai
         this.passEvents = false;
     }
 
+    @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         this.font.drawString(this.title.getFormattedText(), 18.0F, 6.0F, 4210752);
         this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 49.0F, 144.0F, 4210752);
     }
 
+    @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(BEETLE_GUI_TEXTURES);
@@ -51,6 +53,7 @@ public class BeetleInventoryScreen extends ContainerScreen<BeetleInventoryContai
         InventoryScreen.drawEntityOnScreen(i + 43, j + 58, 17, (float)(i + 43) - this.mousePosx, (float)(j + 48) - this.mousePosY, this.beetleEntity);
     }
 
+    @Override
     public void render(int p_render_1_, int p_render_2_, float p_render_3_) {
         this.renderBackground();
         this.mousePosx = (float)p_render_1_;

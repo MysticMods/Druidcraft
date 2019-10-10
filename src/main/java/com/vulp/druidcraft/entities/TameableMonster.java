@@ -52,12 +52,14 @@ public class TameableMonster extends MonsterEntity {
         }
     }
 
+    @Override
     protected void registerData() {
         super.registerData();
         this.dataManager.register(TAMED, (byte)0);
         this.dataManager.register(OWNER_UNIQUE_ID, Optional.empty());
     }
 
+    @Override
     public void writeAdditional(CompoundNBT compound) {
         super.writeAdditional(compound);
         if (this.getOwnerId() == null) {
@@ -72,6 +74,7 @@ public class TameableMonster extends MonsterEntity {
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
+    @Override
     public void readAdditional(CompoundNBT compound) {
         super.readAdditional(compound);
         String s;
@@ -108,6 +111,7 @@ public class TameableMonster extends MonsterEntity {
         return this.isTamed() || this.hasCustomName();
     }
 
+    @Override
     public boolean canBeLeashedTo(PlayerEntity player) {
         return !this.getLeashed();
     }
@@ -144,6 +148,7 @@ public class TameableMonster extends MonsterEntity {
     /**
      * Handler for {@link World#setEntityState}
      */
+    @Override
     @OnlyIn(Dist.CLIENT)
     public void handleStatusUpdate(byte id) {
         if (id == 7) {

@@ -24,10 +24,12 @@ public class BeetleInventoryContainer extends Container {
         this.beetle = (BeetleEntity) playerInventory.player.world.getEntityByID(id);
         inventory.openInventory(playerInventory.player);
         this.addSlot(new Slot(inventory, 0, 18, 72) {
+            @Override
             public boolean isItemValid(ItemStack stack) {
                 return stack.getItem() == Items.SADDLE && !this.getHasStack();
             }
 
+            @Override
             @OnlyIn(Dist.CLIENT)
             public boolean isEnabled() {
                 return true;
