@@ -6,7 +6,6 @@ import com.vulp.druidcraft.particle.ParticleSpawn;
 import com.vulp.druidcraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.CreeperEntity;
@@ -28,7 +27,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -37,7 +35,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 @SuppressWarnings("unchecked")
-public class DreadfishEntity extends TameableMonster
+public class DreadfishEntity extends TameableAirSwimMonster
 {
     private static final Predicate<LivingEntity> isPlayer;
     private static final DataParameter<Integer> SMOKE_COLOR;
@@ -80,7 +78,7 @@ public class DreadfishEntity extends TameableMonster
         this.goalSelector.addGoal(1, this.sitGoal);
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 3.0, true));
         this.goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.addGoal(4, new FollowOwnerGoalMonster(this, 4.0D, 10.0F, 2.0F));
+        this.goalSelector.addGoal(4, new FollowOwnerGoalMonster(this, 5.0D, 10.0F, 2.0F));
         this.goalSelector.addGoal(5, new DreadfishEntity.SwimGoal(this));
 
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoalMonster(this));
@@ -183,7 +181,7 @@ public class DreadfishEntity extends TameableMonster
         private final DreadfishEntity dreadfish;
 
         public SwimGoal(DreadfishEntity dreadfish) {
-            super(dreadfish, 0.3D, 40);
+            super(dreadfish, 0.8D, 40);
             this.dreadfish = dreadfish;
         }
 

@@ -43,4 +43,20 @@ public class BlockRegistry
     public static Block acacia_panels;
     public static Block dark_oak_panels;
     public static Block darkwood_panels;
+    public static Block black_soulfire;
+    public static Block red_soulfire;
+    public static Block green_soulfire;
+    public static Block brown_soulfire;
+    public static Block blue_soulfire;
+    public static Block purple_soulfire;
+    public static Block cyan_soulfire;
+    public static Block light_gray_soulfire;
+    public static Block gray_soulfire;
+    public static Block pink_soulfire;
+    public static Block lime_soulfire;
+    public static Block yellow_soulfire;
+    public static Block light_blue_soulfire;
+    public static Block magenta_soulfire;
+    public static Block orange_soulfire;
+    public static Block white_soulfire;
 }

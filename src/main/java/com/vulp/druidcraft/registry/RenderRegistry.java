@@ -1,6 +1,8 @@
 package com.vulp.druidcraft.registry;
 
+import com.vulp.druidcraft.client.renders.BeetleEntityRender;
 import com.vulp.druidcraft.client.renders.DreadfishEntityRender;
+import com.vulp.druidcraft.entities.BeetleEntity;
 import com.vulp.druidcraft.entities.DreadfishEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -12,5 +14,6 @@ public class RenderRegistry
     public static void registryEntityRenders()
     {
         RenderingRegistry.registerEntityRenderingHandler(DreadfishEntity.class, new DreadfishEntityRender.RenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(BeetleEntity.class, new BeetleEntityRender.RenderFactory());
     }
 }

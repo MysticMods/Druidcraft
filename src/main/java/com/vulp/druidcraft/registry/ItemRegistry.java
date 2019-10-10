@@ -13,6 +13,23 @@ public class ItemRegistry
     public static Item rockroot;
 
     public static Item dreadfish_spawn_egg;
+    public static Item beetle_spawn_egg;
+    public static Item black_soulfire;
+    public static Item red_soulfire;
+    public static Item green_soulfire;
+    public static Item brown_soulfire;
+    public static Item blue_soulfire;
+    public static Item purple_soulfire;
+    public static Item cyan_soulfire;
+    public static Item light_gray_soulfire;
+    public static Item gray_soulfire;
+    public static Item pink_soulfire;
+    public static Item lime_soulfire;
+    public static Item yellow_soulfire;
+    public static Item light_blue_soulfire;
+    public static Item magenta_soulfire;
+    public static Item orange_soulfire;
+    public static Item white_soulfire;
 
     public static Item bone_sword;
     public static Item bone_pickaxe;

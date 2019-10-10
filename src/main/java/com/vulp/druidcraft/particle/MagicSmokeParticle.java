@@ -27,7 +27,7 @@ public class MagicSmokeParticle extends Particle {
         this.motionX = this.motionX * 0.009999999776482582d;
         this.motionY = this.motionY * 0.009999999776482582d;
         this.motionZ = this.motionZ * 0.009999999776482582d;
-        this.scale = this.particleScale = 0.5f;
+        this.scale = this.particleScale = 0.3f;
         this.particleGravity = 0.002f;
         this.particleRed = (float) motionX;
         this.particleGreen = (float) motionY;

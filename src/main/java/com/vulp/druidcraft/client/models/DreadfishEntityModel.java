@@ -62,7 +62,6 @@ public class DreadfishEntityModel extends EntityModel<DreadfishEntity> {
         this.topFin.addBox(0.0F, -7.5F, 6.0F, 0, 2, 3, 0.0F, false);
         this.topFin.setRotationPoint(0.0F, 3.0F, -6.0F);
         this.spine1.addChild(this.topFin);
-
     }
 
     @Override

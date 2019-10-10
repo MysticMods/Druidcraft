@@ -1,20 +1,11 @@
 package com.vulp.druidcraft;
 
-import com.vulp.druidcraft.blocks.OreBlock;
 import com.vulp.druidcraft.config.Configuration;
 import com.vulp.druidcraft.config.DropRateConfig;
 import com.vulp.druidcraft.events.LootHandler;
 import com.vulp.druidcraft.registry.*;
 import com.vulp.druidcraft.world.OreGeneration;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.*;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -52,6 +43,7 @@ public class Druidcraft {
         OreGeneration.setupOreGeneration();
         VanillaIntegrationRegistry.setup();
 
+        MinecraftForge.EVENT_BUS.register(new GUIRegistry());
         if (DropRateConfig.drop_seeds.get()) {
             MinecraftForge.EVENT_BUS.register(new LootHandler());
         }
