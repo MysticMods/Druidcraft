@@ -39,7 +39,7 @@ import java.util.function.Predicate;
 public class DreadfishEntity extends TameableAirSwimMonster
 {
     private static final Predicate<LivingEntity> isPlayer;
-    private static final DataParameter<Integer> SMOKE_COLOR;
+    private static final DataParameter<Integer> SMOKE_COLOR = EntityDataManager.createKey(DreadfishEntity.class, DataSerializers.VARINT);
     private static final Map<DyeColor, int[]> DYE_COLOR_MAP = new HashMap<>();
     private FlyingPathNavigator navigator;
     private DyeColor smokeColor = null;
@@ -365,7 +365,6 @@ public class DreadfishEntity extends TameableAirSwimMonster
     }
 
     static {
-        SMOKE_COLOR = EntityDataManager.createKey(DreadfishEntity.class, DataSerializers.VARINT);
         isPlayer = (type) -> {
             EntityType<?> entitytype = type.getType();
             return entitytype == EntityType.PLAYER;
