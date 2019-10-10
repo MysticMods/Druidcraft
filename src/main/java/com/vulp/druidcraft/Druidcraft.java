@@ -5,6 +5,8 @@ import com.vulp.druidcraft.config.DropRateConfig;
 import com.vulp.druidcraft.events.LootHandler;
 import com.vulp.druidcraft.registry.*;
 import com.vulp.druidcraft.world.OreGeneration;
+import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -53,7 +55,12 @@ public class Druidcraft {
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         RenderRegistry.registryEntityRenders();
+        ScreenRegistry.registryScreenRenders();
         LOGGER.info("Client registry method registered.");
+    }
+
+    public static World getClientWorld() {
+        throw new IllegalStateException("This should only run on the client!");
     }
 
     @SubscribeEvent

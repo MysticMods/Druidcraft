@@ -17,7 +17,7 @@ import net.minecraftforge.event.RegistryEvent;
 public class EntityRegistry
 {
     public static final EntityType<DreadfishEntity> dreadfish_entity = createEntity(DreadfishEntity.class, DreadfishEntity::new, EntityClassification.MONSTER, "dreadfish", 0.8f, 0.4f);
-    public static final EntityType<BeetleEntity> beetle_entity = createEntity(BeetleEntity.class, (type, worldIn) -> new BeetleEntity(type, worldIn, player, beetleInventory), EntityClassification.MONSTER, "beetle", 0.8f, 0.4f);
+    public static final EntityType<BeetleEntity> beetle_entity = createEntity(BeetleEntity.class, BeetleEntity::new, EntityClassification.MONSTER, "beetle", 0.8f, 0.4f);
 
 
     private static <T extends Entity> EntityType<T> createEntity(Class<T> entityClass, EntityType.IFactory<T> factory, EntityClassification entityClassification, String name, float width, float height) {

@@ -17,6 +17,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
@@ -205,6 +206,18 @@ public class DruidcraftRegistry {
 
         EntityRegistry.registerEntityWorldSpawns();
         LOGGER.info("Entities registered.");
+    }
+
+    // GUI REGISTRATION
+    @SubscribeEvent
+    public static void onContainerRegistry(final RegistryEvent.Register<ContainerType<?>> ContainerRegistryEvent)
+    {
+        ContainerRegistryEvent.getRegistry().registerAll
+                (
+                        GUIRegistry.beetle_inv
+                );
+
+        LOGGER.info("GUI registered.");
     }
 
     // BIOME REGISTRATION

@@ -10,6 +10,7 @@ import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,9 +22,9 @@ public class BeetleInventoryScreen extends ContainerScreen<BeetleInventoryContai
     private float mousePosx;
     private float mousePosY;
 
-    public BeetleInventoryScreen(BeetleInventoryContainer container, PlayerInventory inventory, BeetleEntity entity) {
-        super(container, inventory, entity.getDisplayName());
-        this.beetleEntity = entity;
+    public BeetleInventoryScreen(BeetleInventoryContainer container, PlayerInventory inventory, ITextComponent text) {
+        super(container, inventory, container.getBeetle().getDisplayName());
+        this.beetleEntity = container.getBeetle();
         this.passEvents = false;
     }
 
@@ -44,6 +45,7 @@ public class BeetleInventoryScreen extends ContainerScreen<BeetleInventoryContai
                 this.blit(i + 84, j + 17, this.xSize, 0, 9 * 18, 126);
             }
         }
+
         // mousePosY NEEDS CALIBRATION!
         InventoryScreen.drawEntityOnScreen(i + 43, j + 58, 17, (float)(i + 43) - this.mousePosx, (float)(j + 48) - this.mousePosY, this.beetleEntity);
     }

@@ -1,6 +1,7 @@
 package com.vulp.druidcraft.inventory.container;
 
 import com.vulp.druidcraft.entities.BeetleEntity;
+import com.vulp.druidcraft.registry.GUIRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
@@ -17,8 +18,8 @@ public class BeetleInventoryContainer extends Container {
     private IInventory beetleInventory;
     private BeetleEntity beetle;
 
-    public BeetleInventoryContainer(int windowID, PlayerInventory playerInventory, PacketBuffer extraData, IInventory inventory, final BeetleEntity beetle) {
-        super((ContainerType)null, windowID);
+    public BeetleInventoryContainer(int windowID, PlayerInventory playerInventory, IInventory inventory, final BeetleEntity beetle) {
+        super(GUIRegistry.beetle_inv, windowID);
         this.beetleInventory = inventory;
         this.beetle = beetle;
         inventory.openInventory(playerInventory.player);
@@ -53,6 +54,10 @@ public class BeetleInventoryContainer extends Container {
             this.addSlot(new Slot(inventory, j1, 8 + j1 * 18, 142));
         }
 
+    }
+
+    public BeetleEntity getBeetle() {
+        return beetle;
     }
 
     @Override
