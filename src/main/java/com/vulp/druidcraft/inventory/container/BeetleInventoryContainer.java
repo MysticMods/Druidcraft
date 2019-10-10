@@ -18,10 +18,10 @@ public class BeetleInventoryContainer extends Container {
     private IInventory beetleInventory;
     private BeetleEntity beetle;
 
-    public BeetleInventoryContainer(int windowID, PlayerInventory playerInventory, IInventory inventory, final BeetleEntity beetle) {
+    public BeetleInventoryContainer(int windowID, PlayerInventory playerInventory, IInventory inventory, int id) {
         super(GUIRegistry.beetle_inv, windowID);
         this.beetleInventory = inventory;
-        this.beetle = beetle;
+        this.beetle = (BeetleEntity) playerInventory.player.world.getEntityByID(id);
         inventory.openInventory(playerInventory.player);
         this.addSlot(new Slot(inventory, 0, 18, 72) {
             public boolean isItemValid(ItemStack stack) {

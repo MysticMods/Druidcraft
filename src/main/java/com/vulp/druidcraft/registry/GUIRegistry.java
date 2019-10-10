@@ -4,6 +4,7 @@ import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.client.gui.screen.inventory.BeetleInventoryScreen;
 import com.vulp.druidcraft.entities.BeetleEntity;
 import com.vulp.druidcraft.inventory.container.BeetleInventoryContainer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
@@ -25,8 +26,7 @@ public class GUIRegistry {
     public static ContainerType beetle_inv = IForgeContainerType.create((windowId, inv, data) -> {
         int id = data.readInt();
         int size = data.readInt();
-        BeetleEntity beetle =(BeetleEntity) Druidcraft.getClientWorld().getEntityByID(id);
-        return new BeetleInventoryContainer(windowId, inv, new Inventory(size), beetle);
+        return new BeetleInventoryContainer(windowId, inv, new Inventory(size), id);
     }).setRegistryName(Druidcraft.MODID, "beetle_inv");
 
     @SubscribeEvent

@@ -59,10 +59,6 @@ public class Druidcraft {
         LOGGER.info("Client registry method registered.");
     }
 
-    public static World getClientWorld() {
-        throw new IllegalStateException("This should only run on the client!");
-    }
-
     @SubscribeEvent
     public void onServerStarting(FMLServerStartingEvent event) {
         LOGGER.info("HELLO from server starting");
