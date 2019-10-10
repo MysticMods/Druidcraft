@@ -3,10 +3,7 @@ package com.vulp.druidcraft.entities;
 import com.vulp.druidcraft.advancements.CriteriaTriggers;
 import com.vulp.druidcraft.entities.AI.goals.SitGoalMonster;
 import com.vulp.druidcraft.pathfinding.FlyingPathNavigator;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,8 +18,13 @@ import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.GameRules;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -32,14 +34,15 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
-public class TameableMonster extends MonsterEntity {
+public class TameableMonster extends CreatureEntity {
     static final DataParameter<Byte> TAMED = EntityDataManager.createKey(TameableEntity.class, DataSerializers.BYTE);
     private static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.createKey(TameableEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
     SitGoalMonster sitGoal;
 
-    TameableMonster(EntityType<? extends MonsterEntity> type, World worldIn) {
+    TameableMonster(EntityType<? extends TameableMonster> type, World worldIn) {
         super(type, worldIn);
         this.setupTamedAI();
+        this.experienceValue = 5;
     }
 
     @Override
@@ -57,6 +60,12 @@ public class TameableMonster extends MonsterEntity {
         super.registerData();
         this.dataManager.register(TAMED, (byte)0);
         this.dataManager.register(OWNER_UNIQUE_ID, Optional.empty());
+    }
+
+    @Override
+    protected void registerAttributes() {
+       super.registerAttributes();
+       this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
     }
 
     @Override
@@ -122,6 +131,12 @@ public class TameableMonster extends MonsterEntity {
         if (!this.world.isRemote && this.world.getDifficulty() == Difficulty.PEACEFUL && !this.isTamed()) {
             this.remove();
         }
+    }
+
+    @Override
+    public void livingTick() {
+        this.updateArmSwingProgress();
+        super.livingTick();
     }
 
     /**
@@ -287,5 +302,53 @@ public class TameableMonster extends MonsterEntity {
         }
 
         super.onDeath(cause);
+    }
+
+   /**
+    * Called when the entity is attacked.
+    */
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+       return !this.isInvulnerableTo(source) && super.attackEntityFrom(source, amount);
+    }
+
+    @Override
+    protected boolean canDropLoot() {
+        return true;
+    }
+
+    // Sound functions
+    @Override
+    public SoundCategory getSoundCategory() {
+        return isTamed() ? SoundCategory.NEUTRAL : SoundCategory.HOSTILE;
+    }
+
+    @Override
+    protected SoundEvent getSwimSound() {
+        return isTamed() ? SoundEvents.ENTITY_GENERIC_SWIM : SoundEvents.ENTITY_HOSTILE_SWIM;
+    }
+
+    @Override
+    protected SoundEvent getSplashSound() {
+        return isTamed() ? SoundEvents.ENTITY_GENERIC_SPLASH : SoundEvents.ENTITY_HOSTILE_SPLASH;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+        return isTamed() ? SoundEvents.ENTITY_GENERIC_HURT : SoundEvents.ENTITY_HOSTILE_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return isTamed() ? SoundEvents.ENTITY_GENERIC_DEATH : SoundEvents.ENTITY_HOSTILE_DEATH;
+    }
+
+    @Override
+    protected SoundEvent getFallSound(int heightIn) {
+        if (isTamed()) {
+            return heightIn > 4 ? SoundEvents.ENTITY_GENERIC_BIG_FALL : SoundEvents.ENTITY_GENERIC_SMALL_FALL;
+        } else {
+            return heightIn > 4 ? SoundEvents.ENTITY_HOSTILE_BIG_FALL : SoundEvents.ENTITY_HOSTILE_SMALL_FALL;
+        }
     }
 }
