@@ -32,6 +32,8 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 
 @SuppressWarnings("unchecked")
@@ -39,7 +41,28 @@ public class DreadfishEntity extends TameableMonster
 {
     private static final Predicate<LivingEntity> isPlayer;
     private static final DataParameter<Integer> SMOKE_COLOR;
+    private static final Map<DyeColor, int[]> DYE_COLOR_MAP = new HashMap<>();
     private FlyingPathNavigator navigator;
+    private DyeColor smokeColor = null;
+
+    static {
+        DYE_COLOR_MAP.put(DyeColor.BLACK, new int[]{15, 15, 15});
+        DYE_COLOR_MAP.put(DyeColor.RED, new int[]{255, 50, 40});
+        DYE_COLOR_MAP.put(DyeColor.GREEN, new int[]{15, 150, 45});
+        DYE_COLOR_MAP.put(DyeColor.BROWN, new int[]{130, 70, 45});
+        DYE_COLOR_MAP.put(DyeColor.BLUE, new int[]{30, 60, 225});
+        DYE_COLOR_MAP.put(DyeColor.PURPLE, new int[]{135, 45, 245});
+        DYE_COLOR_MAP.put(DyeColor.CYAN, new int[]{20, 125, 130});
+        DYE_COLOR_MAP.put(DyeColor.LIGHT_GRAY, new int[]{160, 160, 155});
+        DYE_COLOR_MAP.put(DyeColor.GRAY, new int[]{90, 90, 90});
+        DYE_COLOR_MAP.put(DyeColor.PINK, new int[]{255, 115, 170});
+        DYE_COLOR_MAP.put(DyeColor.LIME, new int[]{135, 250, 35});
+        DYE_COLOR_MAP.put(DyeColor.YELLOW, new int[]{240, 240, 50});
+        DYE_COLOR_MAP.put(DyeColor.LIGHT_BLUE, new int[]{50, 200, 255});
+        DYE_COLOR_MAP.put(DyeColor.MAGENTA, new int[]{230, 65, 170});
+        DYE_COLOR_MAP.put(DyeColor.ORANGE, new int[]{240, 135, 30});
+        DYE_COLOR_MAP.put(DyeColor.WHITE, new int[]{215, 215, 215});
+    }
 
     public DreadfishEntity(EntityType<? extends MonsterEntity> type, World worldIn)
     {
@@ -222,12 +245,20 @@ public class DreadfishEntity extends TameableMonster
 
     }
 
+    public int[] getSmokeColorArray () {
+        return DYE_COLOR_MAP.getOrDefault(getSmokeColor(), new int[]{0, 0, 0});
+    }
+
     public DyeColor getSmokeColor() {
-        return DyeColor.byId((Integer)this.dataManager.get(SMOKE_COLOR));
+        if (smokeColor == null) {
+            smokeColor = DyeColor.byId(this.dataManager.get(SMOKE_COLOR));
+        }
+        return smokeColor;
     }
 
     public void setSmokeColor(DyeColor smokeColor) {
         this.dataManager.set(SMOKE_COLOR, smokeColor.getId());
+        this.smokeColor = smokeColor;
     }
 
     @Override
@@ -348,80 +379,9 @@ public class DreadfishEntity extends TameableMonster
     public void livingTick() {
         super.livingTick();
         if (this.world.isRemote) {
-            int red;
-            int blue;
-            int green;
+            int[] color = getSmokeColorArray();
 
-            if (this.getSmokeColor() == DyeColor.BLACK) {
-                red = 15;
-                green = 15;
-                blue = 15;
-            } else if (this.getSmokeColor() == DyeColor.RED) {
-                red = 255;
-                green = 50;
-                blue = 40;
-            } else if (this.getSmokeColor() == DyeColor.GREEN) {
-                red = 15;
-                green = 150;
-                blue = 45;
-            } else if (this.getSmokeColor() == DyeColor.BROWN) {
-                red = 130;
-                green = 70;
-                blue = 45;
-            } else if (this.getSmokeColor() == DyeColor.BLUE) {
-                red = 30;
-                green = 60;
-                blue = 225;
-            } else if (this.getSmokeColor() == DyeColor.PURPLE) {
-                red = 135;
-                green = 45;
-                blue = 245;
-            } else if (this.getSmokeColor() == DyeColor.CYAN) {
-                red = 20;
-                green = 125;
-                blue = 130;
-            } else if (this.getSmokeColor() == DyeColor.LIGHT_GRAY) {
-                red = 160;
-                green = 160;
-                blue = 155;
-            } else if (this.getSmokeColor() == DyeColor.GRAY) {
-                red = 90;
-                green = 90;
-                blue = 90;
-            } else if (this.getSmokeColor() == DyeColor.PINK) {
-                red = 255;
-                green = 115;
-                blue = 170;
-            } else if (this.getSmokeColor() == DyeColor.LIME) {
-                red = 135;
-                green = 250;
-                blue = 35;
-            } else if (this.getSmokeColor() == DyeColor.YELLOW) {
-                red = 240;
-                green = 240;
-                blue = 50;
-            } else if (this.getSmokeColor() == DyeColor.LIGHT_BLUE) {
-                red = 40;
-                green = 200;
-                blue = 255;
-            } else if (this.getSmokeColor() == DyeColor.MAGENTA) {
-                red = 230;
-                green = 65;
-                blue = 170;
-            } else if (this.getSmokeColor() == DyeColor.ORANGE) {
-                red = 240;
-                green = 135;
-                blue = 30;
-            } else if (this.getSmokeColor() == DyeColor.WHITE) {
-                red = 215;
-                green = 215;
-                blue = 215;
-            } else {
-                red = 0;
-                green = 0;
-                blue = 0;
-            }
-            ParticleSpawn.MAGIC_SMOKE.spawn(this.world, this.posX, this.posY + (((rand.nextDouble() - 0.5) + 0.2) / 3), this.posZ + (((rand.nextDouble() - 0.5) + 0.2) / 3), (float) red / 255, (float) green / 255, (float) blue / 255);
+            ParticleSpawn.MAGIC_SMOKE.spawn(this.world, this.posX, this.posY + (((rand.nextDouble() - 0.5) + 0.2) / 3), this.posZ + (((rand.nextDouble() - 0.5) + 0.2) / 3), color[0] / 255.f, color[1] / 255.f, color[2] / 255.f);
         }
 
         if (!this.world.isRemote && this.getAttackTarget() == null && this.isHostile()) {
