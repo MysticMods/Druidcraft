@@ -13,7 +13,7 @@
     "show_toast": false,
     "announce_to_chat": false,
     "hidden": false,
-    "background": "druidcraft:textures/gui/advancements/backgrounds/druidcraft.png"
+    "background": "druidcraft:textures/gui/advancements/backgrounds/druidry.png"
   },
   "criteria": {
     "hemp_seeds": {
