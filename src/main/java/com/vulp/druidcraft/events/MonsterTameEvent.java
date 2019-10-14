@@ -1,22 +1,22 @@
 package com.vulp.druidcraft.events;
 
-import net.minecraft.entity.monster.MonsterEntity;
+import com.vulp.druidcraft.entities.TameableMonster;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.living.LivingEvent;
 
 public class MonsterTameEvent extends LivingEvent
 {
-    private final MonsterEntity monster;
+    private final TameableMonster monster;
     private final PlayerEntity tamer;
 
-    public MonsterTameEvent(MonsterEntity monster, PlayerEntity tamer)
+    public MonsterTameEvent(TameableMonster monster, PlayerEntity tamer)
     {
         super(monster);
         this.monster = monster;
         this.tamer = tamer;
     }
 
-    public MonsterEntity getMonster()
+    public TameableMonster getMonster()
     {
         return monster;
     }

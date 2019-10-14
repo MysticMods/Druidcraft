@@ -12,6 +12,7 @@ import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -38,7 +39,7 @@ import java.util.function.Predicate;
 public class DreadfishEntity extends TameableAirSwimMonster
 {
     private static final Predicate<LivingEntity> isPlayer;
-    private static final DataParameter<Integer> SMOKE_COLOR;
+    private static final DataParameter<Integer> SMOKE_COLOR = EntityDataManager.createKey(DreadfishEntity.class, DataSerializers.VARINT);
     private static final Map<DyeColor, int[]> DYE_COLOR_MAP = new HashMap<>();
     private FlyingPathNavigator navigator;
     private DyeColor smokeColor = null;
@@ -62,7 +63,7 @@ public class DreadfishEntity extends TameableAirSwimMonster
         DYE_COLOR_MAP.put(DyeColor.WHITE, new int[]{215, 215, 215});
     }
 
-    public DreadfishEntity(EntityType<? extends MonsterEntity> type, World worldIn)
+    public DreadfishEntity(EntityType<? extends TameableMonster> type, World worldIn)
     {
         super(type, worldIn);
         this.navigator = (FlyingPathNavigator) this.createNavigator(worldIn);
@@ -364,7 +365,6 @@ public class DreadfishEntity extends TameableAirSwimMonster
     }
 
     static {
-        SMOKE_COLOR = EntityDataManager.createKey(DreadfishEntity.class, DataSerializers.VARINT);
         isPlayer = (type) -> {
             EntityType<?> entitytype = type.getType();
             return entitytype == EntityType.PLAYER;
