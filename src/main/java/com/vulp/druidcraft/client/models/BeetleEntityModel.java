@@ -30,6 +30,7 @@ public class BeetleEntityModel extends EntityModel<BeetleEntity> {
     private final RendererModel saddle_back;
 
     public BeetleEntityModel() {
+
         this.textureWidth = 112;
         this.textureHeight = 112;
 
@@ -142,35 +143,45 @@ public class BeetleEntityModel extends EntityModel<BeetleEntity> {
         this.saddle_back.addBox(-7.0F, -1.0F, -1.5F, 14, 2, 3, 0.0F, false);
         }
 
+
+
     @Override
     public void render(BeetleEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         this.setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
         this.body_1.render(scale);
+        this.harness.showModel = false;
+        this.saddle_main.showModel = false;
+        this.saddle_front.showModel = false;
+        this.saddle_back.showModel = false;
+        this.chest_L_front.showModel = false;
+        this.chest_L_back.showModel = false;
+        this.chest_R_front.showModel = false;
+        this.chest_R_back.showModel = false;
 
-    //    if (entity.isBeetleSaddled()) {
+        if (entity.hasSaddle()) {
             this.harness.showModel = true;
             this.saddle_main.showModel = true;
             this.saddle_front.showModel = true;
             this.saddle_back.showModel = true;
-    //    } else {
-    //       this.harness.showModel = false;
-    //        this.saddle_main.showModel = false;
-    //        this.saddle_front.showModel = false;
-    //        this.saddle_back.showModel = false;
-
-            if (entity.hasChest()) {
-                this.chest_L_front.showModel = true;
-                this.chest_L_back.showModel = true;
-                this.chest_R_front.showModel = true;
-                this.chest_R_back.showModel = true;
-            } else {
-                this.chest_L_front.showModel = false;
-                this.chest_L_back.showModel = false;
-                this.chest_R_front.showModel = false;
-                this.chest_R_back.showModel = false;
-            }
+        } else {
+            this.harness.showModel = false;
+            this.saddle_main.showModel = false;
+            this.saddle_front.showModel = false;
+            this.saddle_back.showModel = false;
         }
-    //}
+
+        if (entity.hasChest()) {
+            this.chest_L_front.showModel = true;
+            this.chest_L_back.showModel = true;
+            this.chest_R_front.showModel = true;
+            this.chest_R_back.showModel = true;
+        } else {
+            this.chest_L_front.showModel = false;
+            this.chest_L_back.showModel = false;
+            this.chest_R_front.showModel = false;
+            this.chest_R_back.showModel = false;
+        }
+    }
 
     private void RotationPoint(RendererModel rendererModel, float x, float y, float z) {
         rendererModel.rotateAngleX = x;

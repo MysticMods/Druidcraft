@@ -64,7 +64,7 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
         }
     }
 
-    private boolean hasSaddle() {
+    public boolean hasSaddle() {
         return (this.dataManager.get(STATUS) == 1 || this.dataManager.get(STATUS) == 3);
     }
 
@@ -135,7 +135,7 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
                 return true;
             }
 
-            if (!this.hasChest() && itemStackIn.getItem() == Blocks.CHEST.asItem()) {
+            if (!this.hasChest() && itemStackIn.getItem() == Items.CHEST) {
                 this.setChested(true);
                 this.initBeetleChest();
                 return true;
@@ -146,11 +146,11 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
     }
 
     private int getInventorySize() {
-        return 1;
-    }
-
-    public int getInventoryColumns() {
-        return 5;
+        if (hasChest())
+        {
+            return 64;
+        }
+        else return 1;
     }
 
     private boolean canBeSaddled() {
@@ -183,7 +183,7 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
                             this.setTamedBy(player);
                             this.navigator.clearPath();
                             this.setAttackTarget((LivingEntity) null);
-                        //    this.sitGoal.setSitting(true);
+                            //    this.sitGoal.setSitting(true);
                             this.setHealth(24.0F);
                             this.world.setEntityState(this, (byte) 7);
                         } else {
@@ -197,16 +197,15 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
 
                 if (itemstack.interactWithEntity(player, this, hand)) {
                     return true;
-                } else {
-                    return true;
                 }
             }
 
             if (!this.world.isRemote) {
-                if (!this.hasChest() && itemstack.getItem() == Blocks.CHEST.asItem()) {
+                if (!this.hasChest() && itemstack.getItem() == Items.CHEST) {
                     this.setChested(true);
                     this.playChestEquipSound();
                     this.initBeetleChest();
+                    return true;
                 }
             }
 
@@ -251,9 +250,7 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
 
         this.beetleChest.addListener(this);
         this.updateHorseSlots();
-        this.itemHandler = LazyOptional.of(() -> {
-            return new InvWrapper(this.beetleChest);
-        });
+        this.itemHandler = LazyOptional.of(() -> new InvWrapper(this.beetleChest));
     }
 
     private void playChestEquipSound() {

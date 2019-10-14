@@ -25,6 +25,8 @@ public class BeetleInventoryScreen extends ContainerScreen<BeetleInventoryContai
 
     public BeetleInventoryScreen(BeetleInventoryContainer container, PlayerInventory inventory, ITextComponent text) {
         super(container, inventory, container.getBeetle().getDisplayName());
+        this.xSize = 257;
+        this.ySize = 238;
         this.beetleEntity = container.getBeetle();
         this.passEvents = false;
     }
@@ -43,14 +45,16 @@ public class BeetleInventoryScreen extends ContainerScreen<BeetleInventoryContai
         int j = (this.height - this.ySize) / 2;
         this.blit(i, j, 0, 0, this.xSize, this.ySize);
         if (this.beetleEntity instanceof BeetleEntity) {
-            BeetleEntity beetleEntity = (BeetleEntity)this.beetleEntity;
+            BeetleEntity beetleEntity = this.beetleEntity;
             if (beetleEntity.hasChest()) {
-                this.blit(i + 84, j + 17, this.xSize, 0, 9 * 18, 126);
+                for (int k = 0; k < 7; k++) {
+                    this.blit(i + 84, j + 17 + (k * 18), 0, this.ySize, 162, 18);
+                }
             }
         }
 
         // mousePosY NEEDS CALIBRATION!
-        InventoryScreen.drawEntityOnScreen(i + 43, j + 58, 17, (float)(i + 43) - this.mousePosx, (float)(j + 48) - this.mousePosY, this.beetleEntity);
+        InventoryScreen.drawEntityOnScreen(i + 43, j + 62, 17, (float)(i + 43) - this.mousePosx, (float)(j + 48) - this.mousePosY, this.beetleEntity);
     }
 
     @Override
