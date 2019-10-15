@@ -30,8 +30,8 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 import javax.annotation.Nullable;
 
 public class BeetleEntity extends TameableMonster implements IInventoryChangedListener, INamedContainerProvider {
-    private static final DataParameter<Boolean> SADDLE = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
-    private static final DataParameter<Boolean> CHEST = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Boolean> SADDLE;
+    private static final DataParameter<Boolean> CHEST;
     private Inventory beetleChest;
 
     public BeetleEntity(EntityType<? extends TameableMonster> type, World worldIn) {
@@ -42,24 +42,24 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
     @Override
     protected void registerData() {
         super.registerData();
-        this.getDataManager().register(SADDLE, false);
-        this.getDataManager().register(CHEST, false);
+        this.dataManager.register(SADDLE, false);
+        this.dataManager.register(CHEST, false);
     }
 
     public boolean hasChest() {
-        return this.getDataManager().get(CHEST);
+        return (boolean)this.dataManager.get(CHEST);
     }
 
     private void setChested(boolean chested) {
-        this.getDataManager().set(CHEST, chested);
+        this.dataManager.set(CHEST, chested);
     }
 
     public boolean hasSaddle() {
-        return this.getDataManager().get(SADDLE);
+        return (boolean)this.dataManager.get(SADDLE);
     }
 
     private void setSaddled(boolean saddled) {
-        this.getDataManager().set(SADDLE, saddled);
+        this.dataManager.set(SADDLE, saddled);
     }
 
     @Override
@@ -265,6 +265,11 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
         if (this.isAlive() && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && itemHandler != null)
             return itemHandler.cast();
         return super.getCapability(capability, facing);
+    }
+
+    static {
+        SADDLE = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
+        CHEST = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
     }
 
 }

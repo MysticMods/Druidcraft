@@ -106,24 +106,24 @@ public class BeetleEntityModel extends EntityModel<BeetleEntity> {
         this.harness.addBox(-11.0F, -22.125F, -10.25F, 22, 18, 24, 0.3F, false);
 
         this.chest_L_front = new RendererModel(this, 0, 0);
-        this.chest_L_front.setRotationPoint(-12.7F, -10.625F, -3.25F);
-        this.harness.addChild(this.chest_L_front);
-        this.chest_L_front.addBox(-1.5F, -3.5F, -4.0F, 3, 7, 8, 0.0F, false);
+        this.chest_L_front.setRotationPoint(-12.7F, 1.5F, -17.0F);
+        this.body_2.addChild(this.chest_L_front);
+        this.chest_L_front.addBox(-1.3F, -3.5F, -4.0F, 3, 7, 8, 0.0F, false);
 
         this.chest_L_back = new RendererModel(this, 0, 0);
-        this.chest_L_back.setRotationPoint(-12.7F, -10.625F, 6.75F);
-        this.harness.addChild(this.chest_L_back);
-        this.chest_L_back.addBox(-1.5F, -3.5F, -4.0F, 3, 7, 8, 0.0F, false);
+        this.chest_L_back.setRotationPoint(-12.7F, 1.5F, -7.0F);
+        this.body_2.addChild(this.chest_L_back);
+        this.chest_L_back.addBox(-1.3F, -3.5F, -4.0F, 3, 7, 8, 0.0F, false);
 
         this.chest_R_front = new RendererModel(this, 0, 0);
-        this.chest_R_front.setRotationPoint(12.7F, -10.625F, -3.25F);
-        this.harness.addChild(this.chest_R_front);
-        this.chest_R_front.addBox(-1.5F, -3.5F, -4.0F, 3, 7, 8, 0.0F, false);
+        this.chest_R_front.setRotationPoint(12.7F, 1.5F, -17.0F);
+        this.body_2.addChild(this.chest_R_front);
+        this.chest_R_front.addBox(-1.7F, -3.5F, -4.0F, 3, 7, 8, 0.0F, false);
 
         this.chest_R_back = new RendererModel(this, 0, 0);
-        this.chest_R_back.setRotationPoint(12.7F, -10.625F, 6.75F);
-        this.harness.addChild(this.chest_R_back);
-        this.chest_R_back.addBox(-1.5F, -3.5F, -4.0F, 3, 7, 8, 0.0F, false);
+        this.chest_R_back.setRotationPoint(12.7F, 1.5F, -17.0F);
+        this.body_2.addChild(this.chest_R_back);
+        this.chest_R_back.addBox(-1.7F, -3.5F, -4.0F, 3, 7, 8, 0.0F, false);
 
         this.saddle_main = new RendererModel(this, 44, 84);
         this.saddle_main.setRotationPoint(0.0F, -22.625F, 1.75F);
