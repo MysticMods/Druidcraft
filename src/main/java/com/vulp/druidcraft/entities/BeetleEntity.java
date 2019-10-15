@@ -30,7 +30,8 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 import javax.annotation.Nullable;
 
 public class BeetleEntity extends TameableMonster implements IInventoryChangedListener, INamedContainerProvider {
-    private static final DataParameter<Integer> STATUS = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.VARINT);
+    private static final DataParameter<Boolean> SADDLE = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Boolean> CHEST = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
     private Inventory beetleChest;
 
     public BeetleEntity(EntityType<? extends TameableMonster> type, World worldIn) {
@@ -41,47 +42,24 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
     @Override
     protected void registerData() {
         super.registerData();
-        this.dataManager.register(STATUS, 0);
+        this.getDataManager().register(SADDLE, false);
+        this.getDataManager().register(CHEST, false);
     }
 
     public boolean hasChest() {
-        return (this.dataManager.get(STATUS) == 2 || this.dataManager.get(STATUS) == 3);
+        return this.getDataManager().get(CHEST);
     }
 
     private void setChested(boolean chested) {
-        if (chested) {
-            if (this.dataManager.get(STATUS) == 1) {
-                this.dataManager.set(STATUS, 3);
-            } else {
-                this.dataManager.set(STATUS, 2);
-            }
-        } else {
-            if (this.dataManager.get(STATUS) == 3) {
-                this.dataManager.set(STATUS, 1);
-            } else {
-                this.dataManager.set(STATUS, 0);
-            }
-        }
+        this.getDataManager().set(CHEST, chested);
     }
 
     public boolean hasSaddle() {
-        return (this.dataManager.get(STATUS) == 1 || this.dataManager.get(STATUS) == 3);
+        return this.getDataManager().get(SADDLE);
     }
 
     private void setSaddled(boolean saddled) {
-        if (saddled) {
-            if (this.dataManager.get(STATUS) == 2) {
-                this.dataManager.set(STATUS, 3);
-            } else {
-                this.dataManager.set(STATUS, 1);
-            }
-        } else {
-            if (this.dataManager.get(STATUS) == 3) {
-                this.dataManager.set(STATUS, 2);
-            } else {
-                this.dataManager.set(STATUS, 0);
-            }
-        }
+        this.getDataManager().set(SADDLE, saddled);
     }
 
     @Override
@@ -183,7 +161,6 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
                             this.setTamedBy(player);
                             this.navigator.clearPath();
                             this.setAttackTarget((LivingEntity) null);
-                            //    this.sitGoal.setSitting(true);
                             this.setHealth(24.0F);
                             this.world.setEntityState(this, (byte) 7);
                         } else {
@@ -205,6 +182,9 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
                     this.setChested(true);
                     this.playChestEquipSound();
                     this.initBeetleChest();
+                    if (!player.isCreative()) {
+                        itemstack.shrink(1);
+                    }
                     return true;
                 }
             }
