@@ -5,7 +5,9 @@ import com.vulp.druidcraft.registry.ItemRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.state.IProperty;
 import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
@@ -21,7 +23,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.Random;
 
 public class HempBlock extends CropBlock {
-   public static final IntegerProperty AGE = BlockStateProperties.AGE_0_3;
+    private static final IntegerProperty HEMP_AGE;
 
     public HempBlock(Properties properties) {
         super(properties);
@@ -29,7 +31,7 @@ public class HempBlock extends CropBlock {
 
     @Override
     public IntegerProperty getAgeProperty () {
-        return AGE;
+        return HEMP_AGE;
     }
 
     @Override
@@ -118,5 +120,14 @@ public class HempBlock extends CropBlock {
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader blockReader, BlockPos pos, ISelectionContext selectionContext) {
         return Block.makeCuboidShape(4, 0, 4, 12.0d, 4.0d * (state.get(getAgeProperty()) + 1), 12.0d);
+    }
+
+    @Override
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(new IProperty[]{HEMP_AGE});
+    }
+
+    static {
+        HEMP_AGE = BlockStateProperties.AGE_0_3;
     }
 }
