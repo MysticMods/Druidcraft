@@ -17,6 +17,6 @@ public class CropBlock extends CropsBlock
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader blockReader, BlockPos pos, ISelectionContext selectionContext) {
-        return Block.makeCuboidShape(0, 0, 0, 16.0d, 2.0d * (state.get(AGE) + 1), 16.0d);
+        return Block.makeCuboidShape(0, 0, 0, 16.0d, 2.0d * (state.get(getAgeProperty()) + 1), 16.0d);
     }
 }
