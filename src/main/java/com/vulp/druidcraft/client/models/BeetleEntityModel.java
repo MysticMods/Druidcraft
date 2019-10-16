@@ -3,6 +3,7 @@ package com.vulp.druidcraft.client.models;
 import com.vulp.druidcraft.entities.BeetleEntity;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.entity.model.RendererModel;
+import net.minecraft.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -148,7 +149,7 @@ public class BeetleEntityModel extends EntityModel<BeetleEntity> {
     @Override
     public void render(BeetleEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         this.setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-        this.body_1.render(scale);
+
         this.harness.showModel = false;
         this.saddle_main.showModel = false;
         this.saddle_front.showModel = false;
@@ -163,11 +164,6 @@ public class BeetleEntityModel extends EntityModel<BeetleEntity> {
             this.saddle_main.showModel = true;
             this.saddle_front.showModel = true;
             this.saddle_back.showModel = true;
-        } else {
-            this.harness.showModel = false;
-            this.saddle_main.showModel = false;
-            this.saddle_front.showModel = false;
-            this.saddle_back.showModel = false;
         }
 
         if (entity.hasChest()) {
@@ -175,12 +171,9 @@ public class BeetleEntityModel extends EntityModel<BeetleEntity> {
             this.chest_L_back.showModel = true;
             this.chest_R_front.showModel = true;
             this.chest_R_back.showModel = true;
-        } else {
-            this.chest_L_front.showModel = false;
-            this.chest_L_back.showModel = false;
-            this.chest_R_front.showModel = false;
-            this.chest_R_back.showModel = false;
         }
+
+        this.body_1.render(scale);
     }
 
     private void RotationPoint(RendererModel rendererModel, float x, float y, float z) {
