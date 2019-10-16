@@ -39,9 +39,9 @@ public class BeetleInventoryContainer extends Container {
         int j1;
         int k1;
         if (beetle instanceof BeetleEntity && beetle.hasChest()) {
-            for(j1 = 0; j1 < 3; ++j1) {
+            for(j1 = 0; j1 < 7; ++j1) {
                 for(k1 = 0; k1 < 9; ++k1) {
-                    this.addSlot(new Slot(inventory, 2 + k1 + j1 * 9, 80 + k1 * 18, 18 + j1 * 18));
+                    this.addSlot(new Slot(inventory, 2 + k1 + j1 * 9, 85 + (k1 * 18), 18 + (j1 * 18)));
                 }
             }
         }

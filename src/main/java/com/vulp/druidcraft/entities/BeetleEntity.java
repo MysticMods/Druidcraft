@@ -30,11 +30,12 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 import javax.annotation.Nullable;
 
 public class BeetleEntity extends TameableMonster implements IInventoryChangedListener, INamedContainerProvider {
-    private static final DataParameter<Boolean> SADDLE;
-    private static final DataParameter<Boolean> CHEST;
+    private static final DataParameter<Boolean> SADDLE = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Boolean> CHEST = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
     private Inventory beetleChest;
+    private LazyOptional<?> itemHandler = null;
 
-    public BeetleEntity(EntityType<? extends TameableMonster> type, World worldIn) {
+    public BeetleEntity(EntityType<? extends BeetleEntity> type, World worldIn) {
         super(type, worldIn);
         this.initBeetleChest();
     }
@@ -46,14 +47,6 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
         this.dataManager.register(CHEST, false);
     }
 
-    public boolean hasChest() {
-        return (boolean)this.dataManager.get(CHEST);
-    }
-
-    private void setChested(boolean chested) {
-        this.dataManager.set(CHEST, chested);
-    }
-
     public boolean hasSaddle() {
         return (boolean)this.dataManager.get(SADDLE);
     }
@@ -62,10 +55,19 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
         this.dataManager.set(SADDLE, saddled);
     }
 
+    public boolean hasChest() {
+        return (boolean)this.dataManager.get(CHEST);
+    }
+
+    private void setChested(boolean chested) {
+        this.dataManager.set(CHEST, chested);
+    }
+
     @Override
     public void writeAdditional(CompoundNBT compound) {
         super.writeAdditional(compound);
-        compound.putBoolean("ChestedBeetle", this.hasChest());
+        compound.putBoolean("saddled", this.hasSaddle());
+        compound.putBoolean("chested", this.hasChest());
         if (this.hasChest()) {
             ListNBT listnbt = new ListNBT();
 
@@ -87,7 +89,8 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
     @Override
     public void readAdditional(CompoundNBT compound) {
         super.readAdditional(compound);
-        this.setChested(compound.getBoolean("ChestedBeetle"));
+        this.setSaddled(compound.getBoolean("saddled"));
+        this.setChested(compound.getBoolean("chested"));
         if (this.hasChest()) {
             ListNBT listnbt = compound.getList("Items", 10);
             this.initBeetleChest();
@@ -101,7 +104,7 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
             }
         }
 
-        this.updateHorseSlots();
+        this.updateBeetleSlots();
     }
 
     @Override
@@ -126,7 +129,7 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
     private int getInventorySize() {
         if (hasChest())
         {
-            return 64;
+            return 65;
         }
         else return 1;
     }
@@ -135,7 +138,7 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
         return true;
     }
 
-    private void updateHorseSlots() {
+    private void updateBeetleSlots() {
         if (!this.world.isRemote) {
             this.setSaddled(!this.beetleChest.getStackInSlot(0).isEmpty() && this.canBeSaddled());
         }
@@ -229,7 +232,7 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
         }
 
         this.beetleChest.addListener(this);
-        this.updateHorseSlots();
+        this.updateBeetleSlots();
         this.itemHandler = LazyOptional.of(() -> new InvWrapper(this.beetleChest));
     }
 
@@ -252,24 +255,17 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
     @Override
     public void onInventoryChanged(IInventory invBasic) {
         boolean flag = this.hasSaddle();
-        this.updateHorseSlots();
+        this.updateBeetleSlots();
         if (this.ticksExisted > 20 && !flag && this.hasSaddle()) {
             this.playSound(SoundEvents.ENTITY_HORSE_SADDLE, 0.5F, 1.0F);
         }
     }
-
-    private net.minecraftforge.common.util.LazyOptional<?> itemHandler = null;
 
     @Override
     public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable net.minecraft.util.Direction facing) {
         if (this.isAlive() && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && itemHandler != null)
             return itemHandler.cast();
         return super.getCapability(capability, facing);
-    }
-
-    static {
-        SADDLE = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
-        CHEST = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
     }
 
 }
