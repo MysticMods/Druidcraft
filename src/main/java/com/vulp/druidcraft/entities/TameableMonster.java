@@ -35,8 +35,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class TameableMonster extends CreatureEntity {
-    static final DataParameter<Byte> TAMED = EntityDataManager.createKey(TameableMonster.class, DataSerializers.BYTE);
-    private static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.createKey(TameableEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+    private static final DataParameter<Byte> TAMED = EntityDataManager.createKey(TameableMonster.class, DataSerializers.BYTE);
+    private static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.createKey(TameableMonster.class, DataSerializers.OPTIONAL_UNIQUE_ID);
     SitGoalMonster sitGoal;
 
     TameableMonster(EntityType<? extends TameableMonster> type, World worldIn) {
