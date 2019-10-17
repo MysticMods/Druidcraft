@@ -53,6 +53,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         this.dataManager.register(CHEST, false);
     }
 
+    @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new SwimGoal(this));
         this.goalSelector.addGoal(3, new LeapAtTargetGoal(this, 0.4F));
@@ -93,6 +94,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         this.dataManager.set(CHEST, chested);
     }
 
+    @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return 0.7F;
     }
@@ -151,6 +153,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         this.updateBeetleSlots();
     }
 
+    @Override
     public CreatureAttribute getCreatureAttribute() {
         return CreatureAttribute.ARTHROPOD;
     }
@@ -224,31 +227,51 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
                 if (itemstack.interactWithEntity(player, this, hand)) {
                     return true;
                 }
-            }
-
-            if (!this.world.isRemote) {
-                if (!this.hasChest() && itemstack.getItem() == Items.CHEST) {
-                    this.setChested(true);
-                    this.playChestEquipSound();
-                    this.initBeetleChest();
-                    if (!player.isCreative()) {
-                        itemstack.shrink(1);
+            } else if (this.isTamed()) {
+                if (!this.world.isRemote) {
+                    if (!this.hasChest() && itemstack.getItem() == Items.CHEST) {
+                        this.setChested(true);
+                        this.playChestEquipSound();
+                        this.initBeetleChest();
+                        if (!player.isCreative()) {
+                            itemstack.shrink(1);
+                        }
+                        return true;
                     }
-                    return true;
-                }
 
-                if (this.hasSaddle() && !this.isBeingRidden()) {
-                    player.startRiding(this);
-                    return true;
-                }
-
-                if (!this.hasSaddle() && itemstack.getItem() == Items.SADDLE) {
-                    this.openGUI(player);
-                    return true;
+                    if (!this.hasSaddle() && itemstack.getItem() == Items.SADDLE) {
+                        this.openGUI(player);
+                        return true;
+                    }
                 }
             }
+        } else {
+              if (!this.world.isRemote) {
+                  if (this.hasSaddle() && !this.isBeingRidden()) {
+                      this.mountTo(player);
+                      //player.startRiding(this);
+                      return true;
+                  }
+              }
         }
         return super.processInteract(player, hand);
+    }
+
+   private void mountTo(PlayerEntity player) {
+      if (!this.world.isRemote) {
+         player.rotationYaw = this.rotationYaw;
+         player.rotationPitch = this.rotationPitch;
+         player.startRiding(this);
+      }
+    }
+
+    @Override
+    public void updatePassenger(Entity passenger) {
+        super.updatePassenger(passenger);
+        if (passenger instanceof MobEntity) {
+            MobEntity mobentity = (MobEntity)passenger;
+            this.renderYawOffset = mobentity.renderYawOffset;
+        }
     }
 
     @Nullable
@@ -328,19 +351,23 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         return super.getCapability(capability, facing);
     }
 
+    @Override
     public boolean canBeSteered() {
         return this.getControllingPassenger() instanceof LivingEntity;
     }
 
+    @Override
     public double getMountedYOffset() {
         return (double) (this.getHeight() * 0.5F);
     }
 
+    @Override
     @Nullable
     public Entity getControllingPassenger() {
         return this.getPassengers().isEmpty() ? null : this.getPassengers().get(0);
     }
 
+    @Override
     public void travel(Vec3d p_213352_1_) {
         if (this.isAlive()) {
             if (this.isBeingRidden() && this.canBeSteered() && this.hasSaddle()) {
