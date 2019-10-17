@@ -4,6 +4,7 @@ import com.vulp.druidcraft.entities.BeetleEntity;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.entity.model.RendererModel;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -40,22 +41,22 @@ public class BeetleEntityModel extends EntityModel<BeetleEntity> {
         this.body_1.addBox(-11.0F, -16.5F, -9.0F, 22, 18, 24, 0.0F, false);
 
         this.head = new RendererModel(this, 68, 42);
-        this.head.setRotationPoint(0.0F, 7.5F, -3.0F);
+        this.head.setRotationPoint(0.0F, -5.5F, -9.0F);
         this.body_1.addChild(this.head);
-        this.head.addBox(-5.0F, -18.0F, -14.0F, 10, 10, 8, 0.0F, false);
+        this.head.addBox(-5.0F, -5.0F, -8.0F, 10, 10, 8, 0.0F, false);
 
         this.antennae_L = new RendererModel(this, 0, 0);
-        this.antennae_L.setRotationPoint(0.0F, 0.0F, 0.0F);
+        this.antennae_L.setRotationPoint(-2.0F, -3.0F, -8.0F);
         this.head.addChild(this.antennae_L);
-        this.antennae_L.addBox(-2.0F, -19.0F, -16.0F, 0, 3, 2, 0.0F, false);
+        this.antennae_L.addBox(0.0F, -3.0F, -2.0F, 0, 3, 2, 0.0F, false);
 
         this.antennae_R = new RendererModel(this, 0, 3);
-        this.antennae_R.setRotationPoint(0.0F, 0.0F, 0.0F);
+        this.antennae_R.setRotationPoint(2.0F, -3.0F, -8.0F);
         this.head.addChild(this.antennae_R);
-        this.antennae_R.addBox(2.0F, -19.0F, -16.0F, 0, 3, 2, 0.0F, false);
+        this.antennae_R.addBox(0.0F, -3.0F, -2.0F, 0, 3, 2, 0.0F, false);
 
         this.mandibles = new RendererModel(this, 65, 60);
-        this.mandibles.setRotationPoint(0.0F, -9.0F, -14.0F);
+        this.mandibles.setRotationPoint(0.0F, 4.0F, -8.0F);
         RotationPoint(this.mandibles, 0.4363F, 0.0F, 0.0F);
         this.head.addChild(this.mandibles);
         this.mandibles.addBox(-5.0F, 0.0F, -3.0F, 10, 0, 3, 0.0F, false);
@@ -122,7 +123,7 @@ public class BeetleEntityModel extends EntityModel<BeetleEntity> {
         this.chest_R_front.addBox(-1.7F, -3.5F, -4.0F, 3, 7, 8, 0.0F, false);
 
         this.chest_R_back = new RendererModel(this, 0, 0);
-        this.chest_R_back.setRotationPoint(12.7F, 1.5F, -17.0F);
+        this.chest_R_back.setRotationPoint(12.7F, 1.5F, -7.0F);
         this.body_2.addChild(this.chest_R_back);
         this.chest_R_back.addBox(-1.7F, -3.5F, -4.0F, 3, 7, 8, 0.0F, false);
 
@@ -180,5 +181,22 @@ public class BeetleEntityModel extends EntityModel<BeetleEntity> {
         rendererModel.rotateAngleX = x;
         rendererModel.rotateAngleY = y;
         rendererModel.rotateAngleZ = z;
+    }
+
+    public void setRotationAngles(BeetleEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+        this.head.rotateAngleY = netHeadYaw * 0.01F;
+        this.head.rotateAngleX = headPitch * 0.01F;
+        float f3 = -(MathHelper.cos(entity.limbSwing * 0.6662F * 2.0F + 0.0F) * 1.4F) * entity.limbSwingAmount;
+        float f4 = -(MathHelper.cos(entity.limbSwing * 0.6662F * 2.0F + (float)Math.PI) * 0.4F) * entity.limbSwingAmount;
+        float f5 = -(MathHelper.cos(entity.limbSwing * 0.6662F * 2.0F + ((float)Math.PI / 2F)) * 0.4F) * entity.limbSwingAmount;
+        float f7 = Math.abs(MathHelper.sin(entity.limbSwing * 0.6662F + 0.0F) * 0.4F) * entity.limbSwingAmount;
+        float f8 = Math.abs(MathHelper.sin(entity.limbSwing * 0.6662F + (float)Math.PI) * 0.4F) * entity.limbSwingAmount;
+        float f9 = Math.abs(MathHelper.sin(entity.limbSwing * 0.6662F + ((float)Math.PI / 2F)) * 0.4F) * entity.limbSwingAmount;
+        this.leg_R_front.rotateAngleY += f3;
+        this.leg_L_front.rotateAngleY += -f3;
+        this.leg_R_middle.rotateAngleY += f4;
+        this.leg_L_middle.rotateAngleY += -f4;
+        this.leg_R_back.rotateAngleY += f5;
+        this.leg_L_back.rotateAngleY += -f5;
     }
 }

@@ -96,7 +96,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
 
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-        return 0.7F;
+        return 0.8F;
     }
 
     @Override
@@ -249,7 +249,6 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
               if (!this.world.isRemote) {
                   if (this.hasSaddle() && !this.isBeingRidden()) {
                       this.mountTo(player);
-                      //player.startRiding(this);
                       return true;
                   }
               }
@@ -358,7 +357,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
 
     @Override
     public double getMountedYOffset() {
-        return (double) (this.getHeight() * 0.5F);
+        return (double) (this.getHeight() + 0.1d);
     }
 
     @Override
