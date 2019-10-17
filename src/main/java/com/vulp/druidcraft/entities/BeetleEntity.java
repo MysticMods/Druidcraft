@@ -1,10 +1,12 @@
 package com.vulp.druidcraft.entities;
 
+import com.vulp.druidcraft.entities.AI.goals.NonTamedTargetGoalMonster;
 import com.vulp.druidcraft.events.EventFactory;
 import com.vulp.druidcraft.inventory.container.BeetleInventoryContainer;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -20,8 +22,11 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -29,7 +34,7 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nullable;
 
-public class BeetleEntity extends TameableMonster implements IInventoryChangedListener, INamedContainerProvider {
+public class BeetleEntity extends TameableMonsterEntity implements IInventoryChangedListener, INamedContainerProvider {
     private static final DataParameter<Boolean> SADDLE = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Boolean> CHEST = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
     private Inventory beetleChest;
@@ -37,6 +42,7 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
 
     public BeetleEntity(EntityType<? extends BeetleEntity> type, World worldIn) {
         super(type, worldIn);
+        this.experienceValue = 10;
         this.initBeetleChest();
     }
 
@@ -47,8 +53,32 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
         this.dataManager.register(CHEST, false);
     }
 
+    protected void registerGoals() {
+        this.goalSelector.addGoal(1, new SwimGoal(this));
+        this.goalSelector.addGoal(3, new LeapAtTargetGoal(this, 0.4F));
+        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 0.5d, false));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
+        this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+        this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
+        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(2, new NonTamedTargetGoalMonster<>(this, PlayerEntity.class, false, null));
+        this.targetSelector.addGoal(3, new NonTamedTargetGoalMonster<>(this, IronGolemEntity.class, false));
+    }
+
+
+    @Override
+    protected void registerAttributes() {
+        super.registerAttributes();
+        this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(20.0d);
+        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0d);
+        this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.5d);
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.1d);
+        this.getAttribute(SharedMonsterAttributes.ATTACK_KNOCKBACK).setBaseValue(1.5d);
+        this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8.0d);
+    }
+
     public boolean hasSaddle() {
-        return (boolean)this.dataManager.get(SADDLE);
+        return (boolean) this.dataManager.get(SADDLE);
     }
 
     private void setSaddled(boolean saddled) {
@@ -56,11 +86,15 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
     }
 
     public boolean hasChest() {
-        return (boolean)this.dataManager.get(CHEST);
+        return (boolean) this.dataManager.get(CHEST);
     }
 
     private void setChested(boolean chested) {
         this.dataManager.set(CHEST, chested);
+    }
+
+    protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+        return 0.7F;
     }
 
     @Override
@@ -71,11 +105,11 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
         if (this.hasChest()) {
             ListNBT listnbt = new ListNBT();
 
-            for(int i = 2; i < this.beetleChest.getSizeInventory(); ++i) {
+            for (int i = 2; i < this.beetleChest.getSizeInventory(); ++i) {
                 ItemStack itemstack = this.beetleChest.getStackInSlot(i);
                 if (!itemstack.isEmpty()) {
                     CompoundNBT compoundnbt = new CompoundNBT();
-                    compoundnbt.putByte("Slot", (byte)i);
+                    compoundnbt.putByte("Slot", (byte) i);
                     itemstack.write(compoundnbt);
                     listnbt.add(compoundnbt);
                 }
@@ -84,6 +118,9 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
             compound.put("Items", listnbt);
         }
 
+        if (!this.beetleChest.getStackInSlot(0).isEmpty()) {
+            compound.put("SaddleItem", this.beetleChest.getStackInSlot(0).write(new CompoundNBT()));
+        }
     }
 
     @Override
@@ -95,7 +132,7 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
             ListNBT listnbt = compound.getList("Items", 10);
             this.initBeetleChest();
 
-            for(int i = 0; i < listnbt.size(); ++i) {
+            for (int i = 0; i < listnbt.size(); ++i) {
                 CompoundNBT compoundnbt = listnbt.getCompound(i);
                 int j = compoundnbt.getByte("Slot") & 255;
                 if (j >= 2 && j < this.beetleChest.getSizeInventory()) {
@@ -104,7 +141,18 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
             }
         }
 
+        if (compound.contains("SaddleItem", 10)) {
+            ItemStack itemstack = ItemStack.read(compound.getCompound("SaddleItem"));
+            if (itemstack.getItem() == Items.SADDLE) {
+                this.beetleChest.setInventorySlotContents(0, itemstack);
+            }
+        }
+
         this.updateBeetleSlots();
+    }
+
+    public CreatureAttribute getCreatureAttribute() {
+        return CreatureAttribute.ARTHROPOD;
     }
 
     @Override
@@ -127,11 +175,9 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
     }
 
     private int getInventorySize() {
-        if (hasChest())
-        {
+        if (hasChest()) {
             return 65;
-        }
-        else return 1;
+        } else return 1;
     }
 
     private boolean canBeSaddled() {
@@ -190,11 +236,16 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
                     }
                     return true;
                 }
-            }
 
-            if (!this.isChild() && !this.hasSaddle() && itemstack.getItem() == Items.SADDLE) {
-                this.openGUI(player);
-                return true;
+                if (this.hasSaddle() && !this.isBeingRidden()) {
+                    player.startRiding(this);
+                    return true;
+                }
+
+                if (!this.hasSaddle() && itemstack.getItem() == Items.SADDLE) {
+                    this.openGUI(player);
+                    return true;
+                }
             }
         }
         return super.processInteract(player, hand);
@@ -202,14 +253,13 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
 
     @Nullable
     @Override
-    public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity)
-    {
+    public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         return new BeetleInventoryContainer(i, playerInventory, beetleChest, this.getEntityId());
     }
 
     private void openGUI(PlayerEntity playerEntity) {
         if (!this.world.isRemote && (!this.isBeingRidden() || this.isPassenger(playerEntity)) && this.isTamed()) {
-            NetworkHooks.openGui((ServerPlayerEntity)playerEntity, this, packetBuffer -> {
+            NetworkHooks.openGui((ServerPlayerEntity) playerEntity, this, packetBuffer -> {
                 packetBuffer.writeInt(this.getEntityId());
                 packetBuffer.writeInt(getInventorySize());
             });
@@ -223,7 +273,7 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
             inventory.removeListener(this);
             int i = Math.min(inventory.getSizeInventory(), this.beetleChest.getSizeInventory());
 
-            for(int j = 0; j < i; ++j) {
+            for (int j = 0; j < i; ++j) {
                 ItemStack itemstack = inventory.getStackInSlot(j);
                 if (!itemstack.isEmpty()) {
                     this.beetleChest.setInventorySlotContents(j, itemstack.copy());
@@ -243,12 +293,22 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
     @Override
     protected void dropInventory() {
         super.dropInventory();
-        if (this.hasChest()) {
-            if (!this.world.isRemote) {
+        if (!this.world.isRemote) {
+            if (this.hasChest()) {
                 this.entityDropItem(Blocks.CHEST);
+                this.setChested(false);
+                for (int i = 0; i < this.beetleChest.getSizeInventory(); ++i) {
+                    ItemStack itemstack = this.beetleChest.getStackInSlot(i);
+                    if (!itemstack.isEmpty()) {
+                        this.entityDropItem(itemstack);
+                    }
+                }
             }
 
-            this.setChested(false);
+            if (this.hasSaddle()) {
+                this.entityDropItem(Items.SADDLE);
+                this.setSaddled(false);
+            }
         }
     }
 
@@ -268,5 +328,46 @@ public class BeetleEntity extends TameableMonster implements IInventoryChangedLi
         return super.getCapability(capability, facing);
     }
 
+    public boolean canBeSteered() {
+        return this.getControllingPassenger() instanceof LivingEntity;
+    }
+
+    public double getMountedYOffset() {
+        return (double) (this.getHeight() * 0.5F);
+    }
+
+    @Nullable
+    public Entity getControllingPassenger() {
+        return this.getPassengers().isEmpty() ? null : this.getPassengers().get(0);
+    }
+
+    public void travel(Vec3d p_213352_1_) {
+        if (this.isAlive()) {
+            if (this.isBeingRidden() && this.canBeSteered() && this.hasSaddle()) {
+                LivingEntity livingentity = (LivingEntity) this.getControllingPassenger();
+                this.rotationYaw = livingentity.rotationYaw;
+                this.prevRotationYaw = this.rotationYaw;
+                this.rotationPitch = livingentity.rotationPitch * 0.5F;
+                this.setRotation(this.rotationYaw, this.rotationPitch);
+                this.renderYawOffset = this.rotationYaw;
+                this.rotationYawHead = this.renderYawOffset;
+                this.stepHeight = 1.0F;
+                this.jumpMovementFactor = this.getAIMoveSpeed() * 0.1F;
+                float f = livingentity.moveStrafing * 0.5F;
+                float f1 = livingentity.moveForward;
+
+                if (this.canPassengerSteer()) {
+                    this.setAIMoveSpeed((float)this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue());
+                    super.travel(new Vec3d((double)f, p_213352_1_.y, (double)f1));
+                } else if (livingentity instanceof PlayerEntity) {
+                    this.setMotion(Vec3d.ZERO);
+                }
+            } else {
+                this.stepHeight = 0.5F;
+                this.jumpMovementFactor = 0.02F;
+                super.travel(p_213352_1_);
+            }
+        }
+    }
 }
 

@@ -1,6 +1,6 @@
 package com.vulp.druidcraft.entities.AI.goals;
 
-import com.vulp.druidcraft.entities.TameableAirSwimMonster;
+import com.vulp.druidcraft.entities.TameableAirSwimMonsterEntityEntity;
 import com.vulp.druidcraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -14,7 +14,7 @@ import net.minecraft.world.IWorldReader;
 import java.util.EnumSet;
 
 public class FollowOwnerGoalMonster extends Goal {
-    private final TameableAirSwimMonster tameable;
+    private final TameableAirSwimMonsterEntityEntity tameable;
     private LivingEntity owner;
     protected final IWorldReader world;
     private final double followSpeed;
@@ -24,7 +24,7 @@ public class FollowOwnerGoalMonster extends Goal {
     private final float minDist;
     private float oldWaterCost;
 
-    public FollowOwnerGoalMonster(TameableAirSwimMonster tameableIn, double followSpeedIn, float minDistIn, float maxDistIn) {
+    public FollowOwnerGoalMonster(TameableAirSwimMonsterEntityEntity tameableIn, double followSpeedIn, float minDistIn, float maxDistIn) {
         this.tameable = tameableIn;
         this.world = tameableIn.world;
         this.followSpeed = followSpeedIn;

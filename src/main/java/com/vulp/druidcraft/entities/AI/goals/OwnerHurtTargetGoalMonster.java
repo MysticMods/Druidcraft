@@ -1,6 +1,6 @@
 package com.vulp.druidcraft.entities.AI.goals;
 
-import com.vulp.druidcraft.entities.TameableAirSwimMonster;
+import com.vulp.druidcraft.entities.TameableAirSwimMonsterEntityEntity;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
@@ -9,11 +9,11 @@ import net.minecraft.entity.ai.goal.TargetGoal;
 import java.util.EnumSet;
 
 public class OwnerHurtTargetGoalMonster extends TargetGoal {
-    private final TameableAirSwimMonster tameable;
+    private final TameableAirSwimMonsterEntityEntity tameable;
     private LivingEntity attacker;
     private int timestamp;
 
-    public OwnerHurtTargetGoalMonster(TameableAirSwimMonster theEntityTameableIn) {
+    public OwnerHurtTargetGoalMonster(TameableAirSwimMonsterEntityEntity theEntityTameableIn) {
         super(theEntityTameableIn, false);
         this.tameable = theEntityTameableIn;
         this.setMutexFlags(EnumSet.of(Goal.Flag.TARGET));

@@ -2,10 +2,7 @@ package com.vulp.druidcraft.entities;
 
 import com.vulp.druidcraft.advancements.CriteriaTriggers;
 import com.vulp.druidcraft.entities.AI.goals.SitGoalMonster;
-import com.vulp.druidcraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.entity.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -21,10 +18,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.GameRules;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -34,12 +29,12 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
-public class TameableMonster extends CreatureEntity {
-    static final DataParameter<Byte> TAMED = EntityDataManager.createKey(TameableMonster.class, DataSerializers.BYTE);
-    private static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.createKey(TameableMonster.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+public class TameableMonsterEntity extends CreatureEntity {
+    static final DataParameter<Byte> TAMED = EntityDataManager.createKey(TameableMonsterEntity.class, DataSerializers.BYTE);
+    private static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.createKey(TameableMonsterEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
     SitGoalMonster sitGoal;
 
-    TameableMonster(EntityType<? extends TameableMonster> type, World worldIn) {
+    TameableMonsterEntity(EntityType<? extends TameableMonsterEntity> type, World worldIn) {
         super(type, worldIn);
         this.setupTamedAI();
         this.experienceValue = 5;
@@ -47,7 +42,7 @@ public class TameableMonster extends CreatureEntity {
 
     @Override
     public PathNavigator getNavigator() {
-        if (this.isPassenger() && this.getRidingEntity() instanceof TameableMonster) {
+        if (this.isPassenger() && this.getRidingEntity() instanceof TameableMonsterEntity) {
             MobEntity mobentity = (MobEntity)this.getRidingEntity();
             return mobentity.getNavigator();
         } else {
@@ -123,6 +118,10 @@ public class TameableMonster extends CreatureEntity {
     @Override
     public boolean canBeLeashedTo(PlayerEntity player) {
         return !this.getLeashed();
+    }
+
+    public boolean isPreventingPlayerRest(PlayerEntity playerIn) {
+        return !this.isTamed();
     }
 
     @Override
