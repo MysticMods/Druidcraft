@@ -36,6 +36,7 @@ public class ItemRegistry
     public static Item bone_axe;
     public static Item bone_shovel;
     public static Item bone_hoe;
+    public static Item bone_sickle;
     public static Item bone_helmet;
     public static Item bone_chestplate;
     public static Item bone_leggings;
@@ -81,6 +82,14 @@ public class ItemRegistry
     public static Item acacia_panels;
     public static Item dark_oak_panels;
     public static Item darkwood_panels;
+
+    public static Item wooden_sickle;
+    public static Item stone_sickle;
+    public static Item iron_sickle;
+    public static Item gold_sickle;
+    public static Item diamond_sickle;
+
+
 
 
 }
