@@ -3,13 +3,14 @@ package com.vulp.druidcraft.client.models;
 import com.vulp.druidcraft.entities.BeetleEntity;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.entity.model.RendererModel;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class BeetleEntityModel extends EntityModel<BeetleEntity> {
+
+    private BeetleEntity beetle;
     private final RendererModel body_1;
     private final RendererModel head;
     private final RendererModel antennae_L;
@@ -57,7 +58,7 @@ public class BeetleEntityModel extends EntityModel<BeetleEntity> {
 
         this.mandibles = new RendererModel(this, 65, 60);
         this.mandibles.setRotationPoint(0.0F, 4.0F, -8.0F);
-        RotationPoint(this.mandibles, 0.4363F, 0.0F, 0.0F);
+        this.rotationPoint(this.mandibles, 0.4363F, 0.0F, 0.0F);
         this.head.addChild(this.mandibles);
         this.mandibles.addBox(-5.0F, 0.0F, -3.0F, 10, 0, 3, 0.0F, false);
 
@@ -68,37 +69,37 @@ public class BeetleEntityModel extends EntityModel<BeetleEntity> {
 
         this.leg_L_front = new RendererModel(this, 0, 15);
         this.leg_L_front.setRotationPoint(-6.0F, 6.0F, -21.0F);
-        RotationPoint(this.leg_L_front, 0.0F, -0.1745F, -0.6109F);
+        this.rotationPoint(this.leg_L_front, 0.0F, -0.1745F, -0.6109F);
         this.body_2.addChild(this.leg_L_front);
         this.leg_L_front.addBox(-8.0F, 0.0F, -2.0F, 8, 4, 4, 0.0F, false);
 
         this.leg_L_middle = new RendererModel(this, 0, 15);
         this.leg_L_middle.setRotationPoint(-6.0F, 6.0F, -12.0F);
-        RotationPoint(this.leg_L_middle, 0.0F, 0.0F, -0.6109F);
+        this.rotationPoint(this.leg_L_middle, 0.0F, 0.0F, -0.6109F);
         this.body_2.addChild(this.leg_L_middle);
         this.leg_L_middle.addBox(-8.0F, 0.0F, -2.0F, 8, 4, 4, 0.0F, false);
 
         this.leg_L_back = new RendererModel(this, 0, 15);
         this.leg_L_back.setRotationPoint(-6.0F, 6.0F, -3.0F);
-        RotationPoint(this.leg_L_back, 0.0F, 0.1745F, -0.6109F);
+        this.rotationPoint(this.leg_L_back, 0.0F, 0.1745F, -0.6109F);
         this.body_2.addChild(this.leg_L_back);
         this.leg_L_back.addBox(-8.0F, 0.0F, -2.0F, 8, 4, 4, 0.0F, false);
 
         this.leg_R_front = new RendererModel(this, 0, 15);
         this.leg_R_front.setRotationPoint(6.0F, 6.0F, -21.0F);
-        RotationPoint(this.leg_R_front, 0.0F, 0.1745F, 0.6109F);
+        this.rotationPoint(this.leg_R_front, 0.0F, 0.1745F, 0.6109F);
         this.body_2.addChild(this.leg_R_front);
         this.leg_R_front.addBox(0.0F, 0.0F, -2.0F, 8, 4, 4, 0.0F, false);
 
         this.leg_R_middle = new RendererModel(this, 0, 15);
         this.leg_R_middle.setRotationPoint(6.0F, 6.0F, -12.0F);
-        RotationPoint(this.leg_R_middle, 0.0F, 0.0F, 0.6109F);
+        this.rotationPoint(this.leg_R_middle, 0.0F, 0.0F, 0.6109F);
         this.body_2.addChild(this.leg_R_middle);
         this.leg_R_middle.addBox(0.0F, 0.0F, -2.0F, 8, 4, 4, 0.0F, false);
 
         this.leg_R_back = new RendererModel(this, 0, 15);
         this.leg_R_back.setRotationPoint(6.0F, 6.0F, -3.0F);
-        RotationPoint(this.leg_R_back, 0.0F, -0.1745F, 0.6109F);
+        this.rotationPoint(this.leg_R_back, 0.0F, -0.1745F, 0.6109F);
         this.body_2.addChild(this.leg_R_back);
         this.leg_R_back.addBox(0.0F, 0.0F, -2.0F, 8, 4, 4, 0.0F, false);
 
@@ -134,13 +135,13 @@ public class BeetleEntityModel extends EntityModel<BeetleEntity> {
 
         this.saddle_front = new RendererModel(this, 78, 105);
         this.saddle_front.setRotationPoint(0.0F, -23.125F, -6.75F);
-        RotationPoint(this.saddle_front, 0.2618F, 0.0F, 0.0F);
+        this.rotationPoint(this.saddle_front, 0.2618F, 0.0F, 0.0F);
         this.harness.addChild(this.saddle_front);
         this.saddle_front.addBox(-7.0F, -1.0F, -1.5F, 14, 2, 3, 0.0F, false);
 
         this.saddle_back = new RendererModel(this, 44, 105);
         this.saddle_back.setRotationPoint(0.0F, -23.125F, 10.25F);
-        RotationPoint(this.saddle_back, -0.2618F, 0.0F, 0.0F);
+        this.rotationPoint(this.saddle_back, -0.2618F, 0.0F, 0.0F);
         this.harness.addChild(this.saddle_back);
         this.saddle_back.addBox(-7.0F, -1.0F, -1.5F, 14, 2, 3, 0.0F, false);
         }
@@ -177,15 +178,16 @@ public class BeetleEntityModel extends EntityModel<BeetleEntity> {
         this.body_1.render(scale);
     }
 
-    private void RotationPoint(RendererModel rendererModel, float x, float y, float z) {
+    private void rotationPoint(RendererModel rendererModel, float x, float y, float z) {
         rendererModel.rotateAngleX = x;
         rendererModel.rotateAngleY = y;
         rendererModel.rotateAngleZ = z;
     }
 
+    @Override
     public void setRotationAngles(BeetleEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        this.head.rotateAngleY = netHeadYaw * 0.01F;
-        this.head.rotateAngleX = headPitch * 0.01F;
+        this.head.rotateAngleY = netHeadYaw * 0.012F;
+        this.head.rotateAngleX = headPitch * 0.012F;
         float f3 = -(MathHelper.cos(entity.limbSwing * 0.6662F * 2.0F + 0.0F) * 1.4F) * entity.limbSwingAmount;
         float f4 = -(MathHelper.cos(entity.limbSwing * 0.6662F * 2.0F + (float)Math.PI) * 0.4F) * entity.limbSwingAmount;
         float f5 = -(MathHelper.cos(entity.limbSwing * 0.6662F * 2.0F + ((float)Math.PI / 2F)) * 0.4F) * entity.limbSwingAmount;

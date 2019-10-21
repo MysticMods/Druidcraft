@@ -9,14 +9,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class DreadfishEntityModel extends EntityModel<DreadfishEntity> {
-    private final RendererModel spine1;
-    private final RendererModel spine2;
-    private final RendererModel head1;
-    private final RendererModel head2;
-    private final RendererModel tail;
-    private final RendererModel topFin;
-    private final RendererModel sidefinR;
-    private final RendererModel sidefinL;
+    private RendererModel spine1;
+    private RendererModel spine2;
+    private RendererModel head1;
+    private RendererModel head2;
+    private RendererModel tail;
+    private RendererModel topFin;
+    private RendererModel sidefinR;
+    private RendererModel sidefinL;
 
     public DreadfishEntityModel() {
         this.textureWidth = 32;
