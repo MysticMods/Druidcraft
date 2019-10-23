@@ -5,8 +5,6 @@ import com.vulp.druidcraft.config.DropRateConfig;
 import com.vulp.druidcraft.events.LootHandler;
 import com.vulp.druidcraft.registry.*;
 import com.vulp.druidcraft.world.OreGeneration;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;

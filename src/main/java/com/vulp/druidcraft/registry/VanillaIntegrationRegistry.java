@@ -1,18 +1,9 @@
 package com.vulp.druidcraft.registry;
 
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
-import com.vulp.druidcraft.Druidcraft;
 import net.minecraft.block.Block;
 import net.minecraft.block.ComposterBlock;
-import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.item.AxeItem;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootPool;
-import net.minecraft.world.storage.loot.TableLootEntry;
-import net.minecraftforge.event.LootTableLoadEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class VanillaIntegrationRegistry {
 

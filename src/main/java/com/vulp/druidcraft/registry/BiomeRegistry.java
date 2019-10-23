@@ -1,13 +1,9 @@
 package com.vulp.druidcraft.registry;
 
 import com.vulp.druidcraft.Druidcraft;
-import com.vulp.druidcraft.world.biomes.DarkwoodForest;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.common.BiomeManager;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class BiomeRegistry
