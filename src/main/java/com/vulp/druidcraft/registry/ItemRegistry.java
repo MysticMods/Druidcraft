@@ -83,6 +83,9 @@ public class ItemRegistry
     public static Item dark_oak_panels;
     public static Item darkwood_panels;
 
+    public static Item wet_mud_bricks;
+    public static Item dry_mud_bricks;
+
     public static Item wooden_sickle;
     public static Item stone_sickle;
     public static Item iron_sickle;

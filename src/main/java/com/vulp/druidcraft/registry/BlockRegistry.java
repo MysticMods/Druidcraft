@@ -43,6 +43,8 @@ public class BlockRegistry
     public static Block acacia_panels;
     public static Block dark_oak_panels;
     public static Block darkwood_panels;
+    public static Block wet_mud_bricks;
+    public static Block dry_mud_bricks;
     public static Block black_soulfire;
     public static Block red_soulfire;
     public static Block green_soulfire;
