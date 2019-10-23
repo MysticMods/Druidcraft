@@ -6,6 +6,7 @@ import com.vulp.druidcraft.inventory.container.BeetleInventoryContainer;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.passive.IFlyingAnimal;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -58,7 +59,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         this.goalSelector.addGoal(1, new SwimGoal(this));
         this.goalSelector.addGoal(3, new LeapAtTargetGoal(this, 0.4F));
         this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 0.5d, false));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
@@ -73,7 +74,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(20.0d);
         this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0d);
         this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.5d);
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.1d);
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4d);
         this.getAttribute(SharedMonsterAttributes.ATTACK_KNOCKBACK).setBaseValue(1.5d);
         this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8.0d);
     }
@@ -270,6 +271,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         if (passenger instanceof MobEntity) {
             MobEntity mobentity = (MobEntity)passenger;
             this.renderYawOffset = mobentity.renderYawOffset;
+            passenger.setPosition(this.posX + 5.0, this.posY + this.getMountedYOffset() + passenger.getYOffset(), this.posZ);
         }
     }
 
@@ -357,7 +359,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
 
     @Override
     public double getMountedYOffset() {
-        return (double) (this.getHeight() + 0.1d);
+        return (double) (this.getHeight() - 0.1d);
     }
 
     @Override
@@ -371,6 +373,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         if (this.isAlive()) {
             if (this.isBeingRidden() && this.canBeSteered() && this.hasSaddle()) {
                 LivingEntity livingentity = (LivingEntity) this.getControllingPassenger();
+                this.limbSwingAmount /= 2;
                 this.rotationYaw = livingentity.rotationYaw;
                 this.prevRotationYaw = this.rotationYaw;
                 this.rotationPitch = livingentity.rotationPitch * 0.5F;

@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 @OnlyIn(Dist.CLIENT)
-public class BeetleEntityRender extends MobRenderer<BeetleEntity, BeetleEntityModel>
+public class BeetleEntityRender extends MobRenderer<BeetleEntity, BeetleEntityModel<BeetleEntity>>
 {
     private static final ResourceLocation BEETLE = new ResourceLocation(DruidcraftRegistry.MODID + ":textures/entity/beetle/beetle.png");
 
