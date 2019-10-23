@@ -168,7 +168,7 @@ public class BeetleEntityModel<T extends BeetleEntity> extends EntityModel<T> {
         this.body_1.render(scale);
     }
 
-    private void rotationPoint(RendererModel rendererModel, float x, float y, float z) {
+    private void rotationAngles(RendererModel rendererModel, float x, float y, float z) {
         rendererModel.rotateAngleX = x;
         rendererModel.rotateAngleY = y;
         rendererModel.rotateAngleZ = z;
@@ -179,15 +179,15 @@ public class BeetleEntityModel<T extends BeetleEntity> extends EntityModel<T> {
 
         this.head.rotateAngleY = netHeadYaw * 0.012F;
         this.head.rotateAngleX = headPitch * 0.012F;
-        this.rotationPoint(this.mandibles, 0.4363F, 0.0F, 0.0F);
-        this.rotationPoint(this.leg_L_front, 0.0F, -0.1745F, -0.6109F);
-        this.rotationPoint(this.leg_L_middle, 0.0F, 0.0F, -0.6109F);
-        this.rotationPoint(this.leg_L_back, 0.0F, 0.1745F, -0.6109F);
-        this.rotationPoint(this.leg_R_front, 0.0F, 0.1745F, 0.6109F);
-        this.rotationPoint(this.leg_R_middle, 0.0F, 0.0F, 0.6109F);
-        this.rotationPoint(this.leg_R_back, 0.0F, -0.1745F, 0.6109F);
-        this.rotationPoint(this.saddle_front, 0.2618F, 0.0F, 0.0F);
-        this.rotationPoint(this.saddle_back, -0.2618F, 0.0F, 0.0F);
+        this.rotationAngles(this.mandibles, 0.4363F, 0.0F, 0.0F);
+        this.rotationAngles(this.leg_L_front, 0.0F, -0.1745F, -0.6109F);
+        this.rotationAngles(this.leg_L_middle, 0.0F, 0.0F, -0.6109F);
+        this.rotationAngles(this.leg_L_back, 0.0F, 0.1745F, -0.6109F);
+        this.rotationAngles(this.leg_R_front, 0.0F, 0.1745F, 0.6109F);
+        this.rotationAngles(this.leg_R_middle, 0.0F, 0.0F, 0.6109F);
+        this.rotationAngles(this.leg_R_back, 0.0F, -0.1745F, 0.6109F);
+        this.rotationAngles(this.saddle_front, 0.2618F, 0.0F, 0.0F);
+        this.rotationAngles(this.saddle_back, -0.2618F, 0.0F, 0.0F);
         float f3 = -(MathHelper.cos(entity.limbSwing * 0.6662F * 4.0F + 0.0F) * 2.0F) * entity.limbSwingAmount;
         float f4 = -(MathHelper.cos(entity.limbSwing * 0.6662F * 4.0F + (float)Math.PI) * 2.0F) * entity.limbSwingAmount;
         float f5 = -(MathHelper.cos(entity.limbSwing * 0.6662F * 4.0F + ((float)Math.PI / 2F)) * 2.0F) * entity.limbSwingAmount;
