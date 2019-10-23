@@ -14,12 +14,13 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class WetMudBlock extends FallingBlock {
+public class WetMudBlock extends Block {
     private static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D);
-    private Block convertedBlock;
+    private Block block;
 
     public WetMudBlock(Block convertedBlock, Properties properties) {
         super(properties);
+        this.block = convertedBlock;
     }
 
     @Override
@@ -31,7 +32,7 @@ public class WetMudBlock extends FallingBlock {
     public void randomTick(BlockState state, World worldIn, BlockPos pos, Random random) {
         super.randomTick(state, worldIn, pos, random);
         if (worldIn.rand.nextInt(4) == 0) {
-            worldIn.setBlockState(pos, convertedBlock.getDefaultState());
+            worldIn.setBlockState(pos, block.getDefaultState());
         }
     }
 
