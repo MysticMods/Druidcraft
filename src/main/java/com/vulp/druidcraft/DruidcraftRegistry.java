@@ -68,6 +68,12 @@ public class DruidcraftRegistry {
                         ItemRegistry.bone_leggings = new ArmorItem(ArmorMaterialRegistry.bone, EquipmentSlotType.LEGS, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("bone_leggings")),
                         ItemRegistry.bone_boots = new ArmorItem(ArmorMaterialRegistry.bone, EquipmentSlotType.FEET, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("bone_boots")),
 
+                        ItemRegistry.wooden_sickle = new SickleItem(new ItemProperties().attackDamage(0).attackSpeed(-1.5f).tier(ItemTier.WOOD).radius(1).setGroup(DRUIDCRAFT)).setRegistryName(location("wooden_sickle")),
+                        ItemRegistry.stone_sickle = new SickleItem(new ItemProperties().attackDamage(0).attackSpeed(-1.5f).tier(ItemTier.STONE).radius(2).setGroup(DRUIDCRAFT)).setRegistryName(location("stone_sickle")),
+                        ItemRegistry.iron_sickle = new SickleItem(new ItemProperties().attackDamage(0).attackSpeed(-1.5f).tier(ItemTier.IRON).radius(3).setGroup(DRUIDCRAFT)).setRegistryName(location("iron_sickle")),
+                        ItemRegistry.gold_sickle = new SickleItem(new ItemProperties().attackDamage(0).attackSpeed(-1.5f).tier(ItemTier.GOLD).radius(1).setGroup(DRUIDCRAFT)).setRegistryName(location("gold_sickle")),
+                        ItemRegistry.diamond_sickle = new SickleItem(new ItemProperties().attackDamage(0).attackSpeed(-1.5f).tier(ItemTier.DIAMOND).radius(4).setGroup(DRUIDCRAFT)).setRegistryName(location("diamond_sickle")),
+
                         // Item-blocks:
                         ItemRegistry.hemp_crop = new BlockItem(BlockRegistry.hemp_crop, new Item.Properties()).setRegistryName(BlockRegistry.hemp_crop.getRegistryName()),
                         ItemRegistry.amber_ore = new BlockItem(BlockRegistry.amber_ore, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.amber_ore.getRegistryName()),
@@ -107,6 +113,8 @@ public class DruidcraftRegistry {
                         ItemRegistry.acacia_panels = new BlockItem(BlockRegistry.acacia_panels, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.acacia_panels.getRegistryName()),
                         ItemRegistry.dark_oak_panels = new BlockItem(BlockRegistry.dark_oak_panels, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.dark_oak_panels.getRegistryName()),
                         ItemRegistry.darkwood_panels = new BlockItem(BlockRegistry.darkwood_panels, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_panels.getRegistryName()),
+                        ItemRegistry.wet_mud_bricks = new BlockItem(BlockRegistry.wet_mud_bricks, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.wet_mud_bricks.getRegistryName()),
+                        ItemRegistry.dry_mud_bricks = new BlockItem(BlockRegistry.dry_mud_bricks, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.dry_mud_bricks.getRegistryName()),
 
                         ItemRegistry.black_soulfire = new BlockItem(BlockRegistry.black_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.black_soulfire.getRegistryName()),
                         ItemRegistry.red_soulfire = new BlockItem(BlockRegistry.red_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.red_soulfire.getRegistryName()),
@@ -123,13 +131,7 @@ public class DruidcraftRegistry {
                         ItemRegistry.light_blue_soulfire = new BlockItem(BlockRegistry.light_blue_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.light_blue_soulfire.getRegistryName()),
                         ItemRegistry.magenta_soulfire = new BlockItem(BlockRegistry.magenta_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.magenta_soulfire.getRegistryName()),
                         ItemRegistry.orange_soulfire = new BlockItem(BlockRegistry.orange_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.orange_soulfire.getRegistryName()),
-                        ItemRegistry.white_soulfire = new BlockItem(BlockRegistry.white_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.white_soulfire.getRegistryName()),
-
-                        ItemRegistry.wooden_sickle = new SickleItem(new ItemProperties().attackDamage(0).attackSpeed(-1.5f).tier(ItemTier.WOOD).radius(1).setGroup(DRUIDCRAFT)).setRegistryName(location("wooden_sickle")),
-                        ItemRegistry.stone_sickle = new SickleItem(new ItemProperties().attackDamage(0).attackSpeed(-1.5f).tier(ItemTier.STONE).radius(2).setGroup(DRUIDCRAFT)).setRegistryName(location("stone_sickle")),
-                        ItemRegistry.iron_sickle = new SickleItem(new ItemProperties().attackDamage(0).attackSpeed(-1.5f).tier(ItemTier.IRON).radius(3).setGroup(DRUIDCRAFT)).setRegistryName(location("iron_sickle")),
-                        ItemRegistry.gold_sickle = new SickleItem(new ItemProperties().attackDamage(0).attackSpeed(-1.5f).tier(ItemTier.GOLD).radius(1).setGroup(DRUIDCRAFT)).setRegistryName(location("gold_sickle")),
-                        ItemRegistry.diamond_sickle = new SickleItem(new ItemProperties().attackDamage(0).attackSpeed(-1.5f).tier(ItemTier.DIAMOND).radius(4).setGroup(DRUIDCRAFT)).setRegistryName(location("diamond_sickle"))
+                        ItemRegistry.white_soulfire = new BlockItem(BlockRegistry.white_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.white_soulfire.getRegistryName())
                 );
 
 
@@ -183,6 +185,8 @@ public class DruidcraftRegistry {
                         BlockRegistry.acacia_panels = new Block(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f, 3.0f).harvestTool(ToolType.AXE)).setRegistryName(location("acacia_panels")),
                         BlockRegistry.dark_oak_panels = new Block(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f, 3.0f).harvestTool(ToolType.AXE)).setRegistryName(location("dark_oak_panels")),
                         BlockRegistry.darkwood_panels = new Block(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f, 3.0f).harvestTool(ToolType.AXE)).setRegistryName(location("darkwood_panels")),
+                        BlockRegistry.wet_mud_bricks = new WetMudBlock(BlockRegistry.dry_mud_bricks, WetMudBlock.Properties.create(Material.EARTH).sound(SoundType.SLIME).hardnessAndResistance(0.8f).harvestTool(ToolType.SHOVEL)).setRegistryName(location("wet_mud_bricks")),
+                        BlockRegistry.dry_mud_bricks = new Block(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(2.0F, 4.0F).harvestTool(ToolType.PICKAXE)).setRegistryName(location("dry_mud_bricks")),
 
                         BlockRegistry.black_soulfire = new SoulfireBlock(DyeColor.BLACK, SoulfireBlock.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f).doesNotBlockMovement().lightValue(13)).setRegistryName(location("black_soulfire")),
                         BlockRegistry.red_soulfire = new SoulfireBlock(DyeColor.RED, SoulfireBlock.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f).doesNotBlockMovement().lightValue(13)).setRegistryName(location("red_soulfire")),
