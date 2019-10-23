@@ -24,10 +24,6 @@ public class SickleHarvestUtil {
     public static void breakNeighbours(ItemStack tool, World world, BlockPos pos, PlayerEntity player) {
         if (world.isRemote) return;
 
-        BlockState originalState = world.getBlockState(pos);
-        world.setBlockState(pos, Blocks.GLASS.getDefaultState());
-        world.setBlockState(pos, originalState);
-
         int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, tool);
         int silkTouch = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, tool);
         int blocksBroken = 0;
