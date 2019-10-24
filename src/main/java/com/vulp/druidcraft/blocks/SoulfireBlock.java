@@ -26,6 +26,7 @@ public class SoulfireBlock extends Block {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public VoxelShape getShape(BlockState state, IBlockReader blockReader, BlockPos pos, ISelectionContext selectionContext) {
         return Block.makeCuboidShape(5.0d, 5.0d, 5.0d, 11.0d, 11.0d, 11.0d);
     }
