@@ -2,9 +2,9 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "druidcraft:block/hemp_stem_stage3",
-		"1": "druidcraft:block/hempleaf1",
-		"2": "druidcraft:block/hempleaf2",
-		"particle": "druidcraft:block/hempleaf1"
+		"1": "druidcraft:block/hempleaf1g",
+		"2": "druidcraft:block/hempleaf2g",
+		"particle": "druidcraft:block/hempleaf1g"
 	},
 	"elements": [
 		{
