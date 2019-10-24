@@ -2,20 +2,30 @@ package com.vulp.druidcraft.particle;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.vulp.druidcraft.util.IParticle;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.IParticleFactory;
+import net.minecraft.client.particle.IParticleRenderType;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.TexturedParticle;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
+import net.minecraft.particles.BasicParticleType;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nullable;
 
-public class MagicSmokeParticle extends Particle {
+
+public class MagicSmokeParticle extends TexturedParticle implements IParticleRenderType {
     private final float scale;
     private final int MAX_FRAME_ID = 7;
     protected int currentFrame = 0;
@@ -36,13 +46,40 @@ public class MagicSmokeParticle extends Particle {
     }
 
     @Override
+    protected float getMinU() {
+        return 0;
+    }
+
+    @Override
+    protected float getMaxU() {
+        return 0;
+    }
+
+    @Override
+    protected float getMinV() {
+        return 0;
+    }
+
+    @Override
+    protected float getMaxV() {
+        return 0;
+    }
+
+    @Override
+    public void renderParticle(BufferBuilder buffer, ActiveRenderInfo entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+        TextureManager textureManager = Minecraft.getInstance().textureManager;
+        beginRender(buffer, textureManager);
+        onPreRender(buffer, entityIn, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
+        super.renderParticle(buffer, entityIn, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
+        finishRender(Tessellator.getInstance());
+    }
+
+    @Override
     public void move(double x, double y, double z) {
         super.move(x, y, z);
     }
 
-    @Override
     public void onPreRender(BufferBuilder buffer, ActiveRenderInfo activeInfo, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
-        super.onPreRender(buffer, activeInfo, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
         Entity entity = activeInfo.getRenderViewEntity();
         if (entity.ticksExisted >= this.lastTick + 5) {
             if (this.currentFrame == MAX_FRAME_ID) {
@@ -77,14 +114,24 @@ public class MagicSmokeParticle extends Particle {
     }
 
     @Override
+    public IParticleRenderType getRenderType() {
+        return PARTICLE_SHEET_TRANSLUCENT;
+    }
+
+    @Override
     public void beginRender(BufferBuilder buffer, TextureManager textureManager) {
         RenderHelper.disableStandardItemLighting();
         GlStateManager.depthMask(true);
-        textureManager.bindTexture(getTexture());
+        textureManager.bindTexture(ParticleTexture.MAGIC_SMOKE[currentFrame]);
         GlStateManager.enableAlphaTest();
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
         buffer.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+    }
+
+    @Override
+    public void finishRender(Tessellator tess) {
+        tess.draw();
     }
 
     @Override
@@ -102,16 +149,11 @@ public class MagicSmokeParticle extends Particle {
         return j | k << 16;
     }
 
-    @Override
-    public ResourceLocation getTexture() {
-        return ParticleTexture.MAGIC_SMOKE[currentFrame];
-    }
-
     @OnlyIn(Dist.CLIENT)
-    public static class Factory implements IParticle {
+    public static class Factory implements IParticleFactory<BasicParticleType> {
 
         @Override
-        public net.minecraft.client.particle.Particle makeParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int... params) {
+        public Particle makeParticle(BasicParticleType typeIn, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             return new MagicSmokeParticle(world, x, y, z, xSpeed, ySpeed, zSpeed);
         }
     }

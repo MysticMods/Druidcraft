@@ -2,10 +2,13 @@ package com.vulp.druidcraft.particle;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.vulp.druidcraft.util.IParticle;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.IParticleRenderType;
+import net.minecraft.client.particle.TexturedParticle;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
@@ -16,7 +19,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 
-public class MagicRisingSparkParticle extends Particle {
+public class MagicRisingSparkParticle extends TexturedParticle implements IParticleRenderType {
     private final float scale;
     private final int MAX_FRAME_ID = 3;
     private int currentFrame = 0;
@@ -36,6 +39,15 @@ public class MagicRisingSparkParticle extends Particle {
     }
 
     @Override
+    public void renderParticle(BufferBuilder buffer, ActiveRenderInfo entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+        TextureManager textureManager = Minecraft.getInstance().textureManager;
+        beginRender(buffer, textureManager);
+        onPreRender(buffer, entityIn, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
+        super.renderParticle(buffer, entityIn, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
+        finishRender(Tessellator.getInstance());
+    }
+
+    @Override
     public void move(double x, double y, double z) {
         super.move(x, y, z);
     }
@@ -52,8 +64,26 @@ public class MagicRisingSparkParticle extends Particle {
     }
 
     @Override
+    protected float getMinU() {
+        return 0;
+    }
+
+    @Override
+    protected float getMaxU() {
+        return 0;
+    }
+
+    @Override
+    protected float getMinV() {
+        return 0;
+    }
+
+    @Override
+    protected float getMaxV() {
+        return 0;
+    }
+
     public void onPreRender(BufferBuilder buffer, ActiveRenderInfo activeInfo, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
-        super.onPreRender(buffer, activeInfo, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
         Entity entity = activeInfo.getRenderViewEntity();
         if (entity.ticksExisted >= this.lastTick + 5) {
             if (this.currentFrame == MAX_FRAME_ID) {
@@ -86,7 +116,15 @@ public class MagicRisingSparkParticle extends Particle {
 
     @Override
     public void beginRender(BufferBuilder buffer, TextureManager textureManager) {
+        RenderHelper.disableStandardItemLighting();
+        GlStateManager.depthMask(true);
+        textureManager.bindTexture(ParticleTexture.MAGIC_RISING_SPARK[currentFrame]);
         buffer.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+    }
+
+    @Override
+    public void finishRender(Tessellator tess) {
+        tess.draw();
     }
 
     @Override
@@ -102,11 +140,6 @@ public class MagicRisingSparkParticle extends Particle {
         }
 
         return j | k << 16;
-    }
-
-    @Override
-    public ResourceLocation getTexture() {
-        return ParticleTexture.MAGIC_RISING_SPARK[currentFrame];
     }
 
     @OnlyIn(Dist.CLIENT)

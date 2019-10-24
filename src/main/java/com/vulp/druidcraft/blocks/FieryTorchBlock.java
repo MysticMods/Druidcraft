@@ -1,15 +1,12 @@
 package com.vulp.druidcraft.blocks;
 
-import com.vulp.druidcraft.particle.Particle;
 import com.vulp.druidcraft.particle.ParticleSpawn;
 import net.minecraft.block.*;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.IProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;

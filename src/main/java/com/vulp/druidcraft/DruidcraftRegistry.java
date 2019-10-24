@@ -13,7 +13,6 @@ import com.vulp.druidcraft.blocks.trees.DarkwoodTree;
 import com.vulp.druidcraft.items.ItemProperties;
 import com.vulp.druidcraft.items.PlantableItem;
 import com.vulp.druidcraft.items.SickleItem;
-import com.vulp.druidcraft.particle.ParticleSpawn;
 import com.vulp.druidcraft.registry.*;
 import com.vulp.druidcraft.world.biomes.DarkwoodForest;
 import net.minecraft.block.*;
@@ -23,6 +22,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.*;
+import net.minecraft.particles.ParticleType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
@@ -134,7 +134,7 @@ public class DruidcraftRegistry {
                         ItemRegistry.darkwood_panels = new BlockItem(BlockRegistry.darkwood_panels, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_panels.getRegistryName()),
                         ItemRegistry.wet_mud_bricks = new BlockItem(BlockRegistry.wet_mud_bricks, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.wet_mud_bricks.getRegistryName()),
                         ItemRegistry.dry_mud_bricks = new BlockItem(BlockRegistry.dry_mud_bricks, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.dry_mud_bricks.getRegistryName()),
-                        ItemRegistry.dry_mud_bricks = new WallOrFloorItem(BlockRegistry.fiery_torch, BlockRegistry.wall_fiery_torch, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.fiery_torch.getRegistryName()),
+                        ItemRegistry.fiery_torch = new WallOrFloorItem(BlockRegistry.fiery_torch, BlockRegistry.wall_fiery_torch, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.fiery_torch.getRegistryName()),
 
                         ItemRegistry.black_soulfire = new BlockItem(BlockRegistry.black_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.black_soulfire.getRegistryName()),
                         ItemRegistry.red_soulfire = new BlockItem(BlockRegistry.red_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.red_soulfire.getRegistryName()),
@@ -242,6 +242,20 @@ public class DruidcraftRegistry {
                 );
 
         EntityRegistry.registerEntityWorldSpawns();
+        LOGGER.info("Entities registered.");
+    }
+
+    // ENTITY REGISTRATION
+    @SubscribeEvent
+    public static void onParticleRegistry(final RegistryEvent.Register<ParticleType<?>> ParticleRegistryEvent)
+    {
+        ParticleRegistryEvent.getRegistry().registerAll
+                (
+                        ParticleRegistry.magic_smoke.setRegistryName("magic_smoke"),
+                        ParticleRegistry.magic_rising_spark.setRegistryName("magic_rising_spark")
+                );
+        ParticleRegistry.registerFactories();
+
         LOGGER.info("Entities registered.");
     }
 
