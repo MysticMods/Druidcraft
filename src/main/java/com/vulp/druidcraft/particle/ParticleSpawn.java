@@ -9,7 +9,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 
 public enum ParticleSpawn {
-    MAGIC_SMOKE;
+    MAGIC_SMOKE,
+    MAGIC_RISING_SPARK;
 
     ParticleSpawn() {}
 
@@ -23,12 +24,14 @@ public enum ParticleSpawn {
         switch (this) {
             case MAGIC_SMOKE:
                 return new MagicSmokeParticle.Factory();
+            case MAGIC_RISING_SPARK:
+                return new MagicRisingSparkParticle.Factory();
         }
         return this.getDefaultParticle().getFactory();
     }
 
     public ParticleSpawn getDefaultParticle() {
-        return MAGIC_SMOKE;
+        return MAGIC_RISING_SPARK;
     }
 
     public void spawn(World world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, int... params) {
