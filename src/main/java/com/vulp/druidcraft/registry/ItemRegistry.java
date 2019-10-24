@@ -42,6 +42,23 @@ public class ItemRegistry
     public static Item bone_leggings;
     public static Item bone_boots;
 
+    public static Item chitin;
+    public static Item chitin_helmet;
+    public static Item chitin_chestplate;
+    public static Item chitin_leggings;
+    public static Item chitin_boots;
+
+    public static Item moonstone_sword;
+    public static Item moonstone_pickaxe;
+    public static Item moonstone_axe;
+    public static Item moonstone_shovel;
+    public static Item moonstone_hoe;
+    public static Item moonstone_sickle;
+    public static Item moonstone_helmet;
+    public static Item moonstone_chestplate;
+    public static Item moonstone_leggings;
+    public static Item moonstone_boots;
+
     public static Item hemp_crop;
     public static Item amber_ore;
     public static Item moonstone_ore;
@@ -82,17 +99,14 @@ public class ItemRegistry
     public static Item acacia_panels;
     public static Item dark_oak_panels;
     public static Item darkwood_panels;
-
     public static Item wet_mud_bricks;
     public static Item dry_mud_bricks;
+    public static Item fiery_torch;
 
     public static Item wooden_sickle;
     public static Item stone_sickle;
     public static Item iron_sickle;
     public static Item gold_sickle;
     public static Item diamond_sickle;
-
-
-
 
 }
