@@ -3,6 +3,7 @@ package com.vulp.druidcraft.entities;
 import com.vulp.druidcraft.entities.AI.goals.NonTamedTargetGoalMonster;
 import com.vulp.druidcraft.events.EventFactory;
 import com.vulp.druidcraft.inventory.container.BeetleInventoryContainer;
+import com.vulp.druidcraft.registry.ItemRegistry;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
@@ -23,6 +24,8 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.pathfinding.ClimberPathNavigator;
+import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
@@ -38,6 +41,7 @@ import javax.annotation.Nullable;
 public class BeetleEntity extends TameableMonsterEntity implements IInventoryChangedListener, INamedContainerProvider {
     private static final DataParameter<Boolean> SADDLE = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Boolean> CHEST = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Boolean> CLIMBING = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
     private Inventory beetleChest;
     private LazyOptional<?> itemHandler = null;
 
@@ -52,6 +56,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         super.registerData();
         this.dataManager.register(SADDLE, false);
         this.dataManager.register(CHEST, false);
+        this.dataManager.register(CLIMBING, false);
     }
 
     @Override
@@ -95,9 +100,34 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         this.dataManager.set(CHEST, chested);
     }
 
+    public boolean isClimbable() {
+        return (boolean) this.dataManager.get(CLIMBING);
+    }
+
+    private void setClimbable(boolean climbable) {
+        this.dataManager.set(CLIMBING, climbable);
+    }
+
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return 0.8F;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (!this.world.isRemote()) {
+            this.setClimbable(this.collidedHorizontally);
+        }
+    }
+
+    @Override
+    public boolean isOnLadder() {
+        return this.isClimbable();
+    }
+
+    protected PathNavigator createNavigator(World worldIn) {
+        return new ClimberPathNavigator(this, worldIn);
     }
 
     @Override
@@ -203,7 +233,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         }
         if (!itemstack.isEmpty()) {
             if (!this.isTamed() || itemstack.getItem() == Items.NAME_TAG) {
-                if (itemstack.getItem() == Items.SLIME_BALL) {
+                if (itemstack.getItem() == Items.GOLDEN_APPLE) {
                     if (!player.abilities.isCreativeMode) {
                         itemstack.shrink(1);
                     }
@@ -214,7 +244,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
                             this.setTamedBy(player);
                             this.navigator.clearPath();
                             this.setAttackTarget((LivingEntity) null);
-                            this.setHealth(24.0F);
+                            this.setHealth(32.0F);
                             this.world.setEntityState(this, (byte) 7);
                         } else {
                             this.playTameEffect(false);
@@ -318,20 +348,27 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
     protected void dropInventory() {
         super.dropInventory();
         if (!this.world.isRemote) {
-            if (this.hasChest()) {
-                this.entityDropItem(Blocks.CHEST);
-                this.setChested(false);
-                for (int i = 0; i < this.beetleChest.getSizeInventory(); ++i) {
-                    ItemStack itemstack = this.beetleChest.getStackInSlot(i);
-                    if (!itemstack.isEmpty()) {
-                        this.entityDropItem(itemstack);
+            if (isTamed()) {
+                if (this.hasChest()) {
+                    this.entityDropItem(Blocks.CHEST);
+                    this.setChested(false);
+                    for (int i = 0; i < this.beetleChest.getSizeInventory(); ++i) {
+                        ItemStack itemstack = this.beetleChest.getStackInSlot(i);
+                        if (!itemstack.isEmpty()) {
+                            this.entityDropItem(itemstack);
+                        }
                     }
                 }
-            }
 
-            if (this.hasSaddle()) {
-                this.entityDropItem(Items.SADDLE);
-                this.setSaddled(false);
+                if (this.hasSaddle()) {
+                    this.entityDropItem(Items.SADDLE);
+                    this.setSaddled(false);
+                }
+            } else {
+                int j = this.rand.nextInt(2);
+                for (int k = 0; k <= j; ++k) {
+                    this.entityDropItem(ItemRegistry.chitin);
+                }
             }
         }
     }

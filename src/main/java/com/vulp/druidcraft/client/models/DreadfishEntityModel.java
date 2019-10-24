@@ -74,6 +74,10 @@ public class DreadfishEntityModel extends EntityModel<DreadfishEntity> {
     public void setRotationAngles(DreadfishEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
         float f = 1.5F;
         float f1 = 1.5F;
-        this.spine2.rotateAngleY = -f * 0.25F * MathHelper.sin(f1 * 0.6F * ageInTicks);
+        float j = 1.0F;
+        if (this.isSitting) {
+            j = 0.5F;
+        }
+        this.spine2.rotateAngleY = -f * 0.25F * MathHelper.sin(f1 * 0.6F * ageInTicks * j);
         }
 }
