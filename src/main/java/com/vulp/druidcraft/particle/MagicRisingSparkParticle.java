@@ -19,7 +19,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class MagicRisingSparkParticle extends Particle {
     private final float scale;
     private final int MAX_FRAME_ID = 3;
-    protected int currentFrame = 0;
+    private int currentFrame = 0;
     private boolean directionRight = true;
     private int lastTick = 0;
 
@@ -114,7 +114,7 @@ public class MagicRisingSparkParticle extends Particle {
 
         @Override
         public net.minecraft.client.particle.Particle makeParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int... params) {
-            return new MagicSmokeParticle(world, x, y, z, xSpeed, ySpeed, zSpeed);
+            return new MagicRisingSparkParticle(world, x, y, z, xSpeed, ySpeed, zSpeed);
         }
     }
 }

@@ -9,8 +9,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 
 public enum ParticleSpawn {
-    MAGIC_SMOKE,
-    MAGIC_RISING_SPARK;
+    MAGIC_SMOKE, MAGIC_RISING_SPARK;
 
     ParticleSpawn() {}
 
