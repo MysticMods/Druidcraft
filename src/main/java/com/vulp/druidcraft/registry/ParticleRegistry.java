@@ -23,7 +23,7 @@ public class ParticleRegistry {
     public static final BasicParticleType magic_rising_spark = new BasicParticleType(false);
 
     @OnlyIn(Dist.CLIENT)
-    public void registerFactories() {
+    public static void registerFactories() {
         ParticleManager particles = Minecraft.getInstance().particles;
 
         particles.registerFactory(magic_smoke, MagicSmokeParticle.Factory::new);

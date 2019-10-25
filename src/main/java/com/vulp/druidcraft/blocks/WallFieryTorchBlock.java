@@ -2,7 +2,7 @@ package com.vulp.druidcraft.blocks;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import com.vulp.druidcraft.particle.ParticleSpawn;
+import com.vulp.druidcraft.registry.ParticleRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -11,7 +11,6 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.IProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
@@ -26,7 +25,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Random;
 
@@ -113,7 +111,7 @@ public class WallFieryTorchBlock extends FieryTorchBlock {
             float offset0 = Math.min(limit, Math.max(-limit, rand.nextFloat() - 0.5f));
             float offset1 = Math.min(limit, Math.max(-limit, rand.nextFloat() - 0.5f));
             float offset2 = Math.min(limit, Math.max(-limit, rand.nextFloat() - 0.5f));
-            ParticleSpawn.MAGIC_RISING_SPARK.spawn(worldIn, d0 + offset0 + d4 * (double)direction1.getXOffset(), d1 + offset1 + d3, d2 + offset2 + d4 * (double)direction1.getZOffset(), (255 + j0) / 255F, (140 + j1) / 255F, (30 + j2) / 255F);
+            worldIn.addParticle(ParticleRegistry.magic_rising_spark, false, d0 + offset0 + d4 * (double)direction1.getXOffset(), d1 + offset1 + d3, d2 + offset2 + d4 * (double)direction1.getZOffset(), (255 + j0) / 255F, (140 + j1) / 255F, (30 + j2) / 255F);
         }
     }
 }

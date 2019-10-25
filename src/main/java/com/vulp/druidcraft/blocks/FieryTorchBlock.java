@@ -1,6 +1,6 @@
 package com.vulp.druidcraft.blocks;
 
-import com.vulp.druidcraft.particle.ParticleSpawn;
+import com.vulp.druidcraft.registry.ParticleRegistry;
 import net.minecraft.block.*;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
@@ -96,7 +96,7 @@ public class FieryTorchBlock extends TorchBlock implements IBucketPickupHandler,
             float offset0 = Math.min(limit, Math.max(-limit, rand.nextFloat() - 0.5f));
             float offset1 = Math.min(limit, Math.max(-limit, rand.nextFloat() - 0.5f));
             float offset2 = Math.min(limit, Math.max(-limit, rand.nextFloat() - 0.5f));
-            ParticleSpawn.MAGIC_RISING_SPARK.spawn(worldIn, d0 + offset0, d1 + offset1, d2 + offset2, (255 + j0) / 255F, (140 + j1) / 255F, (30 + j2) / 255F);
+            worldIn.addParticle(ParticleRegistry.magic_rising_spark, false, d0 + offset0, d1 + offset1, d2 + offset2, (255 + j0) / 255F, (140 + j1) / 255F, (30 + j2) / 255F);
         }
     }
 }

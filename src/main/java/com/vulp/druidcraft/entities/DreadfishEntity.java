@@ -2,8 +2,8 @@ package com.vulp.druidcraft.entities;
 
 import com.vulp.druidcraft.entities.AI.goals.*;
 import com.vulp.druidcraft.events.EventFactory;
-import com.vulp.druidcraft.particle.ParticleSpawn;
 import com.vulp.druidcraft.pathfinding.FlyingPathNavigator;
+import com.vulp.druidcraft.registry.ParticleRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.controller.MovementController;
@@ -389,7 +389,7 @@ public class DreadfishEntity extends TameableAirSwimMonsterEntityEntity
         if (this.world.isRemote) {
             int[] color = getSmokeColorArray();
 
-            ParticleSpawn.MAGIC_SMOKE.spawn(this.world, this.posX, this.posY + (((rand.nextDouble() - 0.5) + 0.2) / 3), this.posZ + (((rand.nextDouble() - 0.5) + 0.2) / 3), color[0] / 255.f, color[1] / 255.f, color[2] / 255.f);
+            world.addParticle(ParticleRegistry.magic_smoke, false, this.posX, this.posY + (((rand.nextDouble() - 0.5) + 0.2) / 3), this.posZ + (((rand.nextDouble() - 0.5) + 0.2) / 3), color[0] / 255.f, color[1] / 255.f, color[2] / 255.f);
         }
 
         if (!this.world.isRemote && this.getAttackTarget() == null && this.isHostile()) {

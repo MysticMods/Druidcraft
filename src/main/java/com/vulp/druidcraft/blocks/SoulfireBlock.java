@@ -1,6 +1,6 @@
 package com.vulp.druidcraft.blocks;
 
-import com.vulp.druidcraft.particle.ParticleSpawn;
+import com.vulp.druidcraft.registry.ParticleRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.*;
@@ -71,7 +71,7 @@ public class SoulfireBlock extends Block {
             float offset1 = Math.min(limit, Math.max(-limit, random.nextFloat() - 0.5f));
             float offset2 = Math.min(limit, Math.max(-limit, random.nextFloat() - 0.5f));
             float offset3 = Math.min(limit, Math.max(-limit, random.nextFloat() - 0.5f));
-            ParticleSpawn.MAGIC_SMOKE.spawn(world, d0 + offset1, d1 + offset2, d2 + offset3, color[0] / 255.f, color[1] / 255.f, color[2] / 255.f);
+            world.addParticle(ParticleRegistry.magic_smoke, false, d0 + offset1, d1 + offset2, d2 + offset3, color[0] / 255.f, color[1] / 255.f, color[2] / 255.f);
         }
     }
 }

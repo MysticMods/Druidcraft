@@ -245,7 +245,7 @@ public class DruidcraftRegistry {
         LOGGER.info("Entities registered.");
     }
 
-    // ENTITY REGISTRATION
+    // PARTICLE REGISTRATION
     @SubscribeEvent
     public static void onParticleRegistry(final RegistryEvent.Register<ParticleType<?>> ParticleRegistryEvent)
     {
@@ -254,9 +254,8 @@ public class DruidcraftRegistry {
                         ParticleRegistry.magic_smoke.setRegistryName("magic_smoke"),
                         ParticleRegistry.magic_rising_spark.setRegistryName("magic_rising_spark")
                 );
-        ParticleRegistry.registerFactories();
 
-        LOGGER.info("Entities registered.");
+        LOGGER.info("Particles registered.");
     }
 
     // GUI REGISTRATION

@@ -54,6 +54,7 @@ public class Druidcraft {
     private void doClientStuff(final FMLClientSetupEvent event) {
         RenderRegistry.registryEntityRenders();
         ScreenRegistry.registryScreenRenders();
+        ParticleRegistry.registerFactories();
         LOGGER.info("Client registry method registered.");
     }
 
