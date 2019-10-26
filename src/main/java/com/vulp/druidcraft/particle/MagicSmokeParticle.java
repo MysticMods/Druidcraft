@@ -18,9 +18,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 
 public class MagicSmokeParticle extends SpriteTexturedParticle {
+    private final IAnimatedSprite spriteSet;
 
-    public MagicSmokeParticle(World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ) {
+    public MagicSmokeParticle(World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, IAnimatedSprite sprite) {
         super(world, posX, posY, posZ, motionX, motionY, motionZ);
+        this.spriteSet = sprite;
         this.motionX = this.motionX * 0.009999999776482582d;
         this.motionY = this.motionY * 0.009999999776482582d;
         this.motionZ = this.motionZ * 0.009999999776482582d;
@@ -30,6 +32,12 @@ public class MagicSmokeParticle extends SpriteTexturedParticle {
         this.particleGreen = (float) motionY;
         this.particleBlue = (float) motionZ;
         this.maxAge = this.rand.nextInt(20) + 10;
+        this.selectSpriteWithAge(sprite);
+    }
+
+    @Override
+    public IParticleRenderType getRenderType() {
+        return ICustomParticleRender.PARTICLE_SHEET_TRANSLUCENT_GLOW;
     }
 
     @Override
@@ -38,6 +46,7 @@ public class MagicSmokeParticle extends SpriteTexturedParticle {
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
         if (this.age++ < this.maxAge && this.particleAlpha > 0.0F) {
+            this.selectSpriteWithAge(spriteSet);
             this.motionX += this.rand.nextFloat() / 5000.0F * (float)(this.rand.nextBoolean() ? 1 : -1);
             this.motionZ += this.rand.nextFloat() / 5000.0F * (float)(this.rand.nextBoolean() ? 1 : -1);
             this.motionY -= this.rand.nextFloat() / 5000.0F * (float)(this.rand.nextBoolean() ? 1 : -1);;
@@ -49,11 +58,6 @@ public class MagicSmokeParticle extends SpriteTexturedParticle {
             this.setExpired();
         }
 
-    }
-
-    @Override
-    public IParticleRenderType getRenderType() {
-        return ICustomParticleRender.PARTICLE_SHEET_TRANSLUCENT_GLOW;
     }
 
     @Override
@@ -81,8 +85,7 @@ public class MagicSmokeParticle extends SpriteTexturedParticle {
 
         @Override
         public Particle makeParticle(BasicParticleType typeIn, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            MagicSmokeParticle particle = new MagicSmokeParticle(world, x, y, z, xSpeed, ySpeed, zSpeed);
-            particle.selectSpriteWithAge(this.spriteSet);
+            MagicSmokeParticle particle = new MagicSmokeParticle(world, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
             return particle;
 
         }

@@ -41,7 +41,6 @@ import javax.annotation.Nullable;
 public class BeetleEntity extends TameableMonsterEntity implements IInventoryChangedListener, INamedContainerProvider {
     private static final DataParameter<Boolean> SADDLE = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Boolean> CHEST = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
-    private static final DataParameter<Boolean> CLIMBING = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
     private Inventory beetleChest;
     private LazyOptional<?> itemHandler = null;
 
@@ -56,7 +55,6 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         super.registerData();
         this.dataManager.register(SADDLE, false);
         this.dataManager.register(CHEST, false);
-        this.dataManager.register(CLIMBING, false);
     }
 
     @Override
@@ -100,34 +98,9 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         this.dataManager.set(CHEST, chested);
     }
 
-    public boolean isClimbable() {
-        return (boolean) this.dataManager.get(CLIMBING);
-    }
-
-    private void setClimbable(boolean climbable) {
-        this.dataManager.set(CLIMBING, climbable);
-    }
-
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return 0.8F;
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-        if (!this.world.isRemote()) {
-            this.setClimbable(this.collidedHorizontally);
-        }
-    }
-
-    @Override
-    public boolean isOnLadder() {
-        return this.isClimbable();
-    }
-
-    protected PathNavigator createNavigator(World worldIn) {
-        return new ClimberPathNavigator(this, worldIn);
     }
 
     @Override
@@ -301,7 +274,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         if (passenger instanceof MobEntity) {
             MobEntity mobentity = (MobEntity)passenger;
             this.renderYawOffset = mobentity.renderYawOffset;
-            passenger.setPosition(this.posX + 5.0, this.posY + this.getMountedYOffset() + passenger.getYOffset(), this.posZ);
+            passenger.setPosition(this.posX, this.posY + this.getMountedYOffset() + passenger.getYOffset(), this.posZ);
         }
     }
 
@@ -396,7 +369,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
 
     @Override
     public double getMountedYOffset() {
-        return (double) (this.getHeight() - 0.1d);
+        return (double) (this.getHeight() - 0.5d);
     }
 
     @Override

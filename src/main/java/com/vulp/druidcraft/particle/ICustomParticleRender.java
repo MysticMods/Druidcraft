@@ -15,7 +15,6 @@ public interface ICustomParticleRender extends IParticleRenderType {
         public void beginRender(BufferBuilder buffer, TextureManager textureManager) {
             RenderHelper.disableStandardItemLighting();
             GlStateManager.depthMask(true);
-            GlStateManager.enableAlphaTest();
             textureManager.bindTexture(AtlasTexture.LOCATION_PARTICLES_TEXTURE);
             GlStateManager.enableBlend();
             GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);

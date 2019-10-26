@@ -5,6 +5,7 @@ import com.vulp.druidcraft.config.DropRateConfig;
 import com.vulp.druidcraft.events.LootHandler;
 import com.vulp.druidcraft.registry.*;
 import com.vulp.druidcraft.world.OreGeneration;
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -32,6 +33,7 @@ public class Druidcraft {
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doParticleStuff);
 
         Configuration.loadConfig(Configuration.server_config, FMLPaths.CONFIGDIR.get().resolve("druidcraft-server.toml").toString());
         Configuration.loadConfig(Configuration.client_config, FMLPaths.CONFIGDIR.get().resolve("druidcraft-client.toml").toString());
@@ -54,6 +56,10 @@ public class Druidcraft {
     private void doClientStuff(final FMLClientSetupEvent event) {
         RenderRegistry.registryEntityRenders();
         ScreenRegistry.registryScreenRenders();
+        LOGGER.info("Client registry method registered.");
+    }
+
+    private void doParticleStuff(final ParticleFactoryRegisterEvent event) {
         ParticleRegistry.registerFactories();
         LOGGER.info("Client registry method registered.");
     }

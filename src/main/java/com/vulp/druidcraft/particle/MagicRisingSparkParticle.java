@@ -20,17 +20,17 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 
 public class MagicRisingSparkParticle extends SpriteTexturedParticle {
+    private final IAnimatedSprite spriteSet;
 
-    public MagicRisingSparkParticle(World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ) {
+    public MagicRisingSparkParticle(World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, IAnimatedSprite sprite) {
         super(world, posX, posY, posZ, motionX, motionY, motionZ);
-        this.motionX = this.motionX * 0.10d;
-        this.motionY = this.motionY * 0.01d;
+        this.spriteSet = sprite;
+        this.motionX = this.motionX * 0.01d;
+        this.motionY = this.motionY * 0.02d;
         this.motionZ = this.motionZ * 0.01d;
-        this.particleScale = 0.5f;
-        this.particleRed = (float) motionX;
-        this.particleGreen = (float) motionY;
-        this.particleBlue = (float) motionZ;
+        this.particleScale = 0.3f;
         this.maxAge = (int)(8.0D / (Math.random() * 0.8D + 0.2D)) + 4;
+        this.selectSpriteRandomly(this.spriteSet);
     }
 
     @Override
@@ -43,6 +43,7 @@ public class MagicRisingSparkParticle extends SpriteTexturedParticle {
         float f = ((float)this.age + scale) / (float)this.maxAge;
         return this.particleScale * (1.0F - f * f * 0.5F);
     }
+
 
     @Override
     public void tick() {
@@ -85,8 +86,7 @@ public class MagicRisingSparkParticle extends SpriteTexturedParticle {
 
         @Override
         public Particle makeParticle(BasicParticleType typeIn, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            MagicRisingSparkParticle particle = new MagicRisingSparkParticle(world, x, y, z, xSpeed, ySpeed, zSpeed);
-            particle.selectSpriteWithAge(spriteSet);
+            MagicRisingSparkParticle particle = new MagicRisingSparkParticle(world, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
             return particle;
         }
     }
