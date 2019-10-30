@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
@@ -26,7 +27,7 @@ public class MagicSmokeParticle extends SpriteTexturedParticle {
         this.motionX = this.motionX * 0.009999999776482582d;
         this.motionY = this.motionY * 0.009999999776482582d;
         this.motionZ = this.motionZ * 0.009999999776482582d;
-        this.particleScale = 0.75f;
+        this.particleScale = 0.3f;
         this.particleGravity = 0.002f;
         this.particleRed = (float) motionX;
         this.particleGreen = (float) motionY;
