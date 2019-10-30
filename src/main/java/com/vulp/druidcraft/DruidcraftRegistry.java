@@ -252,7 +252,8 @@ public class DruidcraftRegistry {
         ParticleRegistryEvent.getRegistry().registerAll
                 (
                         ParticleRegistry.magic_smoke.setRegistryName("magic_smoke"),
-                        ParticleRegistry.magic_rising_spark.setRegistryName("magic_rising_spark")
+                        ParticleRegistry.fiery_glow.setRegistryName("fiery_glow"),
+                        ParticleRegistry.fiery_spark.setRegistryName("fiery_spark")
                 );
 
         LOGGER.info("Particles registered.");

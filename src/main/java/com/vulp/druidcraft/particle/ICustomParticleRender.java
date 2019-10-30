@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 public interface ICustomParticleRender extends IParticleRenderType {
 
-    IParticleRenderType PARTICLE_SHEET_TRANSLUCENT_GLOW = new IParticleRenderType() {
+    ICustomParticleRender PARTICLE_SHEET_TRANSLUCENT_GLOW = new ICustomParticleRender() {
         public void beginRender(BufferBuilder buffer, TextureManager textureManager) {
             RenderHelper.disableStandardItemLighting();
             GlStateManager.depthMask(true);
@@ -26,6 +26,24 @@ public interface ICustomParticleRender extends IParticleRenderType {
         }
         public String toString() {
             return "PARTICLE_SHEET_TRANSLUCENT_GLOW";
+        }
+    };
+
+    ICustomParticleRender CUSTOM = new ICustomParticleRender() {
+        public void beginRender(BufferBuilder p_217600_1_, TextureManager p_217600_2_) {
+            RenderHelper.disableStandardItemLighting();
+            GlStateManager.disableBlend();
+            GlStateManager.depthMask(true);
+            p_217600_2_.bindTexture(AtlasTexture.LOCATION_PARTICLES_TEXTURE);
+            p_217600_1_.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+        }
+
+        public void finishRender(Tessellator p_217599_1_) {
+            p_217599_1_.draw();
+        }
+
+        public String toString() {
+            return "CUSTOM";
         }
     };
 }

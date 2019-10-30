@@ -95,23 +95,18 @@ public class WallFieryTorchBlock extends FieryTorchBlock {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        Direction direction = (Direction)stateIn.get(HORIZONTAL_FACING);
-        double d0 = (double)pos.getX() + 0.5D;
-        double d1 = (double)pos.getY() + 0.7D;
-        double d2 = (double)pos.getZ() + 0.5D;
+        Direction direction = (Direction) stateIn.get(HORIZONTAL_FACING);
+        double d0 = (double) pos.getX() + 0.5D;
+        double d1 = (double) pos.getY() + 0.7D;
+        double d2 = (double) pos.getZ() + 0.5D;
         double d3 = 0.22D;
         double d4 = 0.27D;
         Direction direction1 = direction.getOpposite();
-        float limit = 0.1f;
-        int colorVariation = 30;
-        for (int i = 0; i <= 2; i++) {
-            float j0 = Math.min(colorVariation, Math.max(-colorVariation, rand.nextFloat()));
-            float j1 = Math.min(colorVariation, Math.max(-colorVariation, rand.nextFloat()));
-            float j2 = Math.min(colorVariation, Math.max(-colorVariation, rand.nextFloat()));
-            float offset0 = Math.min(limit, Math.max(-limit, rand.nextFloat() - 0.5f));
-            float offset1 = Math.min(limit, Math.max(-limit, rand.nextFloat() - 0.5f));
-            float offset2 = Math.min(limit, Math.max(-limit, rand.nextFloat() - 0.5f));
-            worldIn.addParticle(ParticleRegistry.magic_rising_spark, false, d0 + offset0 + d4 * (double)direction1.getXOffset(), d1 + offset1 + d3, d2 + offset2 + d4 * (double)direction1.getZOffset(), (255 + j0) / 255F, (140 + j1) / 255F, (30 + j2) / 255F);
-        }
+        float limit = 0.05f;
+        float offset0 = Math.min(limit, Math.max(-limit, rand.nextFloat() - 0.5f));
+        float offset1 = Math.min(limit, Math.max(-limit, rand.nextFloat() - 0.5f));
+        float offset2 = Math.min(limit, Math.max(-limit, rand.nextFloat() - 0.5f));
+        worldIn.addParticle(ParticleRegistry.fiery_spark, false, d0 + offset0 + d4 * (double) direction1.getXOffset(), d1 + offset1 + d3, d2 + offset2 + d4 * (double) direction1.getZOffset(), 0F, 0F, 0F);
+        worldIn.addParticle(ParticleRegistry.fiery_glow, false, d0 + d4 * (double) direction1.getXOffset(), d1 + d3 - 0.1D, d2 + d4 * (double) direction1.getZOffset(), 0F, 0F, 0F);
     }
 }

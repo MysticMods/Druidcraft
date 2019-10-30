@@ -1,0 +1,12 @@
+{
+    "variants": {
+        "facing=east": { "model": "druidcraft:block/wall_fiery_torch" },
+        "facing=south": { "model": "druidcraft:block/wall_fiery_torch", "y": 90 },
+        "facing=west": { "model": "druidcraft:block/wall_fiery_torch", "y": 180 },
+        "facing=north": { "model": "druidcraft:block/wall_fiery_torch", "y": 270 },
+		"facing=east": { "model": "druidcraft:block/wall_fiery_torch" },
+        "facing=south": { "model": "druidcraft:block/wall_fiery_torch", "y": 90 },
+        "facing=west": { "model": "druidcraft:block/wall_fiery_torch", "y": 180 },
+        "facing=north": { "model": "druidcraft:block/wall_fiery_torch", "y": 270 }
+    }
+}

@@ -87,12 +87,11 @@ public class FieryTorchBlock extends TorchBlock implements IBucketPickupHandler,
         double d0 = (double) pos.getX() + 0.5D;
         double d1 = (double) pos.getY() + 0.7D;
         double d2 = (double) pos.getZ() + 0.5D;
-        float limit = 0.1f;
-        for (int i = 0; i <= 2; i++) {
-            float offset0 = Math.min(limit, Math.max(-limit, rand.nextFloat() - 0.5f));
-            float offset1 = Math.min(limit, Math.max(-limit, rand.nextFloat() - 0.5f));
-            float offset2 = Math.min(limit, Math.max(-limit, rand.nextFloat() - 0.5f));
-            worldIn.addParticle(ParticleRegistry.magic_rising_spark, false, d0 + offset0, d1 + offset1, d2 + offset2, 0, 0, 0);
-        }
+        float limit = 0.05f;
+        float offset0 = Math.min(limit, Math.max(-limit, rand.nextFloat() - 0.5f));
+        float offset1 = Math.min(limit, Math.max(-limit, rand.nextFloat() - 0.5f));
+        float offset2 = Math.min(limit, Math.max(-limit, rand.nextFloat() - 0.5f));
+        worldIn.addParticle(ParticleRegistry.fiery_spark, false, d0 + offset0, d1 + offset1, d2 + offset2, 0F, 0F, 0F);
+        worldIn.addParticle(ParticleRegistry.fiery_glow, false, d0 , d1 - 0.1D , d2 , 0F, 0F, 0F);
     }
 }
