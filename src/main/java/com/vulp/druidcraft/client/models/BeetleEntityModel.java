@@ -200,5 +200,11 @@ public class BeetleEntityModel<T extends BeetleEntity> extends EntityModel<T> {
         this.leg_L_middle.rotateAngleY += -f4;
         this.leg_R_back.rotateAngleY += f5;
         this.leg_L_back.rotateAngleY += -f5;
+
+        if (entity.isTamed()) {
+            float j1 = (float) Math.abs(((entity.getHealth() / entity.getMaxHealth()) - 1) * 0.75);
+            this.rotationAngles(this.antennae_L, j1, 0.0F, 0.0F);
+            this.rotationAngles(this.antennae_R, j1, 0.0F, 0.0F);
+        }
     }
 }

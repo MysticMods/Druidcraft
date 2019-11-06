@@ -1,18 +1,19 @@
 package com.vulp.druidcraft.entities;
 
 import com.vulp.druidcraft.entities.AI.goals.NonTamedTargetGoalMonster;
+import com.vulp.druidcraft.entities.AI.goals.OwnerHurtByTargetGoalMonster;
+import com.vulp.druidcraft.entities.AI.goals.OwnerHurtTargetGoalMonster;
 import com.vulp.druidcraft.events.EventFactory;
 import com.vulp.druidcraft.inventory.container.BeetleInventoryContainer;
 import com.vulp.druidcraft.registry.ItemRegistry;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.KeyboardListener;
-import net.minecraft.client.gui.widget.list.KeyBindingList;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.client.util.InputMappings;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.passive.IFlyingAnimal;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
+import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -21,6 +22,7 @@ import net.minecraft.inventory.IInventoryChangedListener;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
@@ -28,18 +30,10 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.ClimberPathNavigator;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.potion.Effects;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.KeybindTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.settings.KeyBindingMap;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -73,9 +67,11 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
-        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(2, new NonTamedTargetGoalMonster<>(this, PlayerEntity.class, false, null));
-        this.targetSelector.addGoal(3, new NonTamedTargetGoalMonster<>(this, IronGolemEntity.class, false));
+        this.targetSelector.addGoal(1, new OwnerHurtByTargetGoalMonster(this));
+        this.targetSelector.addGoal(2, new OwnerHurtTargetGoalMonster(this));
+        this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(4, new NonTamedTargetGoalMonster<>(this, PlayerEntity.class, false, null));
+        this.targetSelector.addGoal(5, new NonTamedTargetGoalMonster<>(this, IronGolemEntity.class, false));
     }
 
 
@@ -85,7 +81,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(20.0d);
         this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0d);
         this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.5d);
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4d);
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.1d);
         this.getAttribute(SharedMonsterAttributes.ATTACK_KNOCKBACK).setBaseValue(1.5d);
         this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8.0d);
     }
@@ -199,6 +195,35 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         return true;
     }
 
+    @Override
+    public boolean shouldAttackEntity(LivingEntity target, LivingEntity owner) {
+        if (!(target instanceof CreeperEntity)) {
+            if (target instanceof TameableFlyingMonsterEntity) {
+                TameableFlyingMonsterEntity monsterEntity = (TameableFlyingMonsterEntity) target;
+                if (monsterEntity.isTamed() && monsterEntity.getOwner() == this.getOwner()) {
+                    return false;
+                }
+            }
+
+            if (target instanceof TameableEntity) {
+                TameableEntity tameableEntity = (TameableEntity) target;
+                if (tameableEntity.isTamed() && tameableEntity.getOwner() == this.getOwner()) {
+                    return false;
+                }
+            }
+
+            if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity) owner).canAttackPlayer((PlayerEntity) target)) {
+                return false;
+            } else if (target instanceof AbstractHorseEntity && ((AbstractHorseEntity) target).isTame()) {
+                return false;
+            } else {
+                return !(target instanceof CatEntity) || !((CatEntity) target).isTamed();
+            }
+        } else {
+            return false;
+        }
+    }
+
     private void updateBeetleSlots() {
         if (!this.world.isRemote) {
             this.setSaddled(!this.beetleChest.getStackInSlot(0).isEmpty() && this.canBeSaddled());
@@ -208,11 +233,20 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
     @Override
     public boolean processInteract(PlayerEntity player, Hand hand) {
         ItemStack itemstack = player.getHeldItem(hand);
+        Item item = itemstack.getItem();
         if (this.isTamed() && player.isSneaking()) {
             this.openGUI(player);
             return true;
         }
         if (!itemstack.isEmpty()) {
+            if (item == Items.APPLE && (Float) this.getHealth() < this.getMaxHealth()) {
+                if (!player.abilities.isCreativeMode) {
+                    itemstack.shrink(1);
+                }
+
+                this.heal(8f);
+                return true;
+            }
             if (!this.isTamed() || itemstack.getItem() == Items.NAME_TAG) {
                 if (itemstack.getItem() == Items.GOLDEN_APPLE) {
                     if (!player.abilities.isCreativeMode) {
@@ -391,7 +425,6 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         if (this.isAlive()) {
             if (this.isBeingRidden() && this.canBeSteered() && this.hasSaddle()) {
                 LivingEntity livingentity = (LivingEntity) this.getControllingPassenger();
-                this.limbSwingAmount /= 2;
                 this.rotationYaw = livingentity.rotationYaw;
                 this.prevRotationYaw = this.rotationYaw;
                 this.rotationPitch = livingentity.rotationPitch * 0.5F;
@@ -399,8 +432,8 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
                 this.renderYawOffset = this.rotationYaw;
                 this.rotationYawHead = this.renderYawOffset;
                 this.stepHeight = 1.0F;
-                float f = livingentity.moveStrafing * 0.5F;
-                float f1 = livingentity.moveForward;
+                float f = livingentity.moveStrafing * 0.2F;
+                float f1 = livingentity.moveForward * 0.4F;
 
                 if (this.canPassengerSteer()) {
                     this.setAIMoveSpeed((float)this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue());
@@ -410,7 +443,6 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
                 }
             } else {
                 this.stepHeight = 0.5F;
-                this.jumpMovementFactor = 0.02F;
                 super.travel(p_213352_1_);
             }
         }

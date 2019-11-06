@@ -11,7 +11,7 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.passive.WolfEntity;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 @SuppressWarnings("unchecked")
-public class DreadfishEntity extends TameableAirSwimMonsterEntityEntity
+public class DreadfishEntity extends TameableMonsterEntity
 {
     private static final Predicate<LivingEntity> isPlayer;
     private static final DataParameter<Integer> SMOKE_COLOR = EntityDataManager.createKey(DreadfishEntity.class, DataSerializers.VARINT);
@@ -61,7 +61,7 @@ public class DreadfishEntity extends TameableAirSwimMonsterEntityEntity
         DYE_COLOR_MAP.put(DyeColor.WHITE, new int[]{215, 215, 215});
     }
 
-    public DreadfishEntity(EntityType<? extends TameableMonsterEntity> type, World worldIn)
+    public DreadfishEntity(EntityType<? extends TameableFlyingMonsterEntity> type, World worldIn)
     {
         super(type, worldIn);
         this.navigator = (FlyingPathNavigator) this.createNavigator(worldIn);
@@ -103,12 +103,6 @@ public class DreadfishEntity extends TameableAirSwimMonsterEntityEntity
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return 0.2F;
-    }
-
-    static class TargetGoal<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
-        TargetGoal(DreadfishEntity dreadfishEntity, Class<T> classTarget) {
-            super(dreadfishEntity, classTarget, true);
-        }
     }
 
     @Override
@@ -184,47 +178,47 @@ public class DreadfishEntity extends TameableAirSwimMonsterEntityEntity
     }
 
     static class SwimGoal extends RandomFlyingGoal {
-        private final DreadfishEntity dreadfish;
+        private final DreadfishEntity dreadfishEntity;
 
-        public SwimGoal(DreadfishEntity dreadfish) {
-            super(dreadfish, 0.8D, 40);
-            this.dreadfish = dreadfish;
+        public SwimGoal(DreadfishEntity dreadfishEntity) {
+            super(dreadfishEntity, 0.8D, 40);
+            this.dreadfishEntity = dreadfishEntity;
         }
 
         @Override
         public boolean shouldExecute() {
-            return this.dreadfish.execute() && super.shouldExecute();
+            return this.dreadfishEntity.execute() && super.shouldExecute();
         }
     }
 
 
     static class MoveHelperController extends MovementController {
-        private final DreadfishEntity dreadfish;
+        private final DreadfishEntity dreadfishEntity;
 
-        MoveHelperController(DreadfishEntity dreadfish) {
-            super(dreadfish);
-            this.dreadfish = dreadfish;
+        MoveHelperController(DreadfishEntity dreadfishEntity) {
+            super(dreadfishEntity);
+            this.dreadfishEntity = dreadfishEntity;
         }
 
         @Override
         public void tick() {
 
-            this.dreadfish.setMotion(this.dreadfish.getMotion().add(0.0D, 0.0D, 0.0D));
+            this.dreadfishEntity.setMotion(this.dreadfishEntity.getMotion().add(0.0D, 0.0D, 0.0D));
 
-            if (this.action == Action.MOVE_TO && !this.dreadfish.getNavigator().noPath()) {
-                double d0 = this.posX - this.dreadfish.posX;
-                double d1 = this.posY - this.dreadfish.posY;
-                double d2 = this.posZ - this.dreadfish.posZ;
+            if (this.action == Action.MOVE_TO && !this.dreadfishEntity.getNavigator().noPath()) {
+                double d0 = this.posX - this.dreadfishEntity.posX;
+                double d1 = this.posY - this.dreadfishEntity.posY;
+                double d2 = this.posZ - this.dreadfishEntity.posZ;
                 double d3 = (double) MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
                 d1 /= d3;
                 float f = (float)(MathHelper.atan2(d2, d0) * 57.2957763671875D) - 90.0F;
-                this.dreadfish.rotationYaw = this.limitAngle(this.dreadfish.rotationYaw, f, 90.0F);
-                this.dreadfish.renderYawOffset = this.dreadfish.rotationYaw;
-                float f1 = (float)(this.speed * this.dreadfish.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue());
-                this.dreadfish.setAIMoveSpeed(MathHelper.lerp(1.5F, this.dreadfish.getAIMoveSpeed(), f1));
-                this.dreadfish.setMotion(this.dreadfish.getMotion().add(0.0D, (double)this.dreadfish.getAIMoveSpeed() * d1 * 0.01D, 0.0D));
+                this.dreadfishEntity.rotationYaw = this.limitAngle(this.dreadfishEntity.rotationYaw, f, 90.0F);
+                this.dreadfishEntity.renderYawOffset = this.dreadfishEntity.rotationYaw;
+                float f1 = (float)(this.speed * this.dreadfishEntity.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue());
+                this.dreadfishEntity.setAIMoveSpeed(MathHelper.lerp(1.5F, this.dreadfishEntity.getAIMoveSpeed(), f1));
+                this.dreadfishEntity.setMotion(this.dreadfishEntity.getMotion().add(0.0D, (double)this.dreadfishEntity.getAIMoveSpeed() * d1 * 0.01D, 0.0D));
             } else {
-                this.dreadfish.setAIMoveSpeed(0.0F);
+                this.dreadfishEntity.setAIMoveSpeed(0.0F);
             }
         }
     }
@@ -331,26 +325,26 @@ public class DreadfishEntity extends TameableAirSwimMonsterEntityEntity
     @Override
     public boolean shouldAttackEntity(LivingEntity target, LivingEntity owner) {
         if (!(target instanceof CreeperEntity)) {
-            if (target instanceof WolfEntity) {
-                WolfEntity wolfentity = (WolfEntity)target;
-                if (wolfentity.isTamed() && wolfentity.getOwner() == owner) {
+            if (target instanceof TameableFlyingMonsterEntity) {
+                TameableFlyingMonsterEntity monsterEntity = (TameableFlyingMonsterEntity) target;
+                if (monsterEntity.isTamed() && monsterEntity.getOwner() == this.getOwner()) {
                     return false;
                 }
             }
 
-            if (target instanceof DreadfishEntity) {
-                DreadfishEntity dreadfishentity = (DreadfishEntity) target;
-                if (dreadfishentity.isTamed() && dreadfishentity.getOwner() == owner) {
+            if (target instanceof TameableEntity) {
+                TameableEntity tameableEntity = (TameableEntity) target;
+                if (tameableEntity.isTamed() && tameableEntity.getOwner() == this.getOwner()) {
                     return false;
                 }
             }
 
-            if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity)owner).canAttackPlayer((PlayerEntity)target)) {
+            if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity) owner).canAttackPlayer((PlayerEntity) target)) {
                 return false;
-            } else if (target instanceof AbstractHorseEntity && ((AbstractHorseEntity)target).isTame()) {
+            } else if (target instanceof AbstractHorseEntity && ((AbstractHorseEntity) target).isTame()) {
                 return false;
             } else {
-                return !(target instanceof CatEntity) || !((CatEntity)target).isTamed();
+                return !(target instanceof CatEntity) || !((CatEntity) target).isTamed();
             }
         } else {
             return false;
@@ -389,7 +383,7 @@ public class DreadfishEntity extends TameableAirSwimMonsterEntityEntity
         if (this.world.isRemote) {
             int[] color = getSmokeColorArray();
 
-            world.addParticle(ParticleRegistry.magic_smoke, false, this.posX - 0.2, this.posY + (((rand.nextDouble() - 0.5) + 0.2) / 3) + 0.2, this.posZ + (((rand.nextDouble() - 0.5) + 0.2) / 3), color[0] / 255.f, color[1] / 255.f, color[2] / 255.f);
+            world.addParticle(ParticleRegistry.magic_smoke, false, this.posX, this.posY + (((rand.nextDouble() - 0.5) + 0.2) / 3) + 0.2, this.posZ + (((rand.nextDouble() - 0.5) + 0.2) / 3), color[0] / 255.f, color[1] / 255.f, color[2] / 255.f);
         }
 
         if (!this.world.isRemote && this.getAttackTarget() == null && this.isHostile()) {

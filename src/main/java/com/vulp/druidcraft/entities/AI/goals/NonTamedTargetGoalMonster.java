@@ -1,7 +1,6 @@
 package com.vulp.druidcraft.entities.AI.goals;
 
-import com.vulp.druidcraft.entities.TameableAirSwimMonsterEntityEntity;
-import com.vulp.druidcraft.entities.TameableMonsterEntity;
+import com.vulp.druidcraft.entities.TameableFlyingMonsterEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 
@@ -9,14 +8,14 @@ import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
 public class NonTamedTargetGoalMonster<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
-    private final TameableMonsterEntity tameable;
+    private final TameableFlyingMonsterEntity tameable;
 
-    public NonTamedTargetGoalMonster(TameableMonsterEntity entity, Class<T> target, boolean p_i48571_3_, @Nullable Predicate<LivingEntity> p_i48571_4_) {
+    public NonTamedTargetGoalMonster(TameableFlyingMonsterEntity entity, Class<T> target, boolean p_i48571_3_, @Nullable Predicate<LivingEntity> p_i48571_4_) {
         super(entity, target, 10, p_i48571_3_, false, p_i48571_4_);
         this.tameable = entity;
     }
 
-    public NonTamedTargetGoalMonster(TameableMonsterEntity entity, Class<T> target, boolean p_i48571_3_) {
+    public NonTamedTargetGoalMonster(TameableFlyingMonsterEntity entity, Class<T> target, boolean p_i48571_3_) {
         super(entity, target, 10, p_i48571_3_, false, null);
         this.tameable = entity;
     }
