@@ -37,7 +37,7 @@ public class FieryGlowParticle extends SpriteTexturedParticle {
     public float getScale(float p_217561_1_) {
         double f;
         if (age / maxAge <= 0.25) {
-            f = MathHelper.cos(age/2) * -0.065 + 0.30;
+            f = MathHelper.cos(age/2) * -0.060 + 0.25;
         } else {
             f = this.getFizzleScale() * ((age / maxAge) / this.getFizzleAge());
         }
