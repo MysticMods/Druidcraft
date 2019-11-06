@@ -1,0 +1,13 @@
+{
+    "type": "druidcraft:water_crafting",
+	"pattern": [
+        "##",
+		"##"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:dirt"
+        }
+    },
+    "result": { "item": "druidcraft:wet_mud_bricks", "count": 3 }
+}

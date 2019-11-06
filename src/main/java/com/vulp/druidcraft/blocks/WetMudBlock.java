@@ -1,17 +1,30 @@
 package com.vulp.druidcraft.blocks;
 
+import javafx.geometry.Pos;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.FallingBlock;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.fluid.IFluidState;
+import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathType;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class WetMudBlock extends Block {
@@ -34,11 +47,32 @@ public class WetMudBlock extends Block {
     @Override
     public void randomTick(BlockState state, World worldIn, BlockPos pos, Random random) {
         super.randomTick(state, worldIn, pos, random);
-        if ((!worldIn.isRemote && worldIn.rand.nextInt(4) == 0) || maxTicks >= 5) {
-            worldIn.setBlockState(pos, block.getDefaultState());
+        if (!isNextToWater(worldIn, pos)) {
+            if (!worldIn.isRemote && (worldIn.rand.nextInt(6) == 0 || maxTicks >= 10)) {
+                worldIn.setBlockState(pos, block.getDefaultState());
+            } else ++maxTicks;
         }
-        else ++maxTicks;
     }
+
+    @OnlyIn(Dist.CLIENT)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+        this.getBlock().addInformation(stack, worldIn, tooltip, flagIn);
+    }
+
+    private boolean isNextToWater(IBlockReader p_203943_1_, BlockPos p_203943_2_) {
+        Direction[] var3 = Direction.values();
+
+        for (Direction direction : var3) {
+            IFluidState ifluidstate = p_203943_1_.getFluidState(p_203943_2_.offset(direction));
+            if (ifluidstate.isTagged(FluidTags.WATER)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     @SuppressWarnings("deprecation")
     @Override

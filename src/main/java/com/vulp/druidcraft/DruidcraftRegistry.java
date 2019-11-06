@@ -13,6 +13,7 @@ import com.vulp.druidcraft.blocks.trees.DarkwoodTree;
 import com.vulp.druidcraft.items.ItemProperties;
 import com.vulp.druidcraft.items.PlantableItem;
 import com.vulp.druidcraft.items.SickleItem;
+import com.vulp.druidcraft.recipes.WaterDependentRecipe;
 import com.vulp.druidcraft.registry.*;
 import com.vulp.druidcraft.world.biomes.DarkwoodForest;
 import net.minecraft.block.*;
@@ -22,6 +23,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.*;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.particles.ParticleType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
@@ -33,6 +37,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -257,6 +262,16 @@ public class DruidcraftRegistry {
                 );
 
         LOGGER.info("Particles registered.");
+    }
+
+    // RECIPE REGISTRATION
+    @SubscribeEvent
+    public static void onRecipeRegistry(final RegistryEvent.Register<IRecipeSerializer<?>> RecipeRegistryEvent)
+    {
+
+        RecipeRegistry.register(RecipeRegistryEvent);
+
+        LOGGER.info("Recipes registered.");
     }
 
     // GUI REGISTRATION
