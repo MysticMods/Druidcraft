@@ -2,7 +2,6 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "X",
-    "X",
     "#"
   ],
   "key": {
@@ -10,10 +9,11 @@
       "tag": "forge:rods/wooden"
     },
     "X": {
-      "item": "minecraft:bone"
+      "tag": "druidcraft:fiery_glass"
     }
   },
   "result": {
-    "item": "druidcraft:bone_sword"
+    "item": "druidcraft:fiery_torch",
+    "count": 4
   }
 }

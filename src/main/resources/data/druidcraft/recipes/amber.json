@@ -6,5 +6,5 @@
       "tag": "forge:amber_blocks"
     }
   ],
-  "result": { "item": "druidcraft:amber" }
+  "result": { "item": "druidcraft:amber", "count": 9 }
 }

@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "X",
-    "X",
+    "#",
     "#"
   ],
   "key": {
@@ -10,10 +10,10 @@
       "tag": "forge:rods/wooden"
     },
     "X": {
-      "item": "minecraft:bone"
+      "tag": "druidcraft:moonstone"
     }
   },
   "result": {
-    "item": "druidcraft:bone_sword"
+    "item": "druidcraft:moonstone_shovel"
   }
 }

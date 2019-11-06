@@ -114,6 +114,9 @@
   "biome.druidcraft.darkwood_forest": "Darkwood Forest",
 
   "itemGroup.druidcraft": "Druidcraft",
+
+  "druidcraft.crafting.requires_water": "This must be crafted while standing in %s.",
+  "druidcraft.crafting.requires_water.water": "water",
   
   "advancements.druidcraft.root.title": "Druidcraft",
   "advancements.druidcraft.root.description": "Forage through grass for some hemp seeds",

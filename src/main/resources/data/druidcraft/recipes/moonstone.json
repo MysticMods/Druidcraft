@@ -6,5 +6,5 @@
       "tag": "forge:moonstone_blocks"
     }
   ],
-  "result": { "item": "druidcraft:moonstone" }
+  "result": { "item": "druidcraft:moonstone", "count": 9 }
 }

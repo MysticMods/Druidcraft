@@ -6,5 +6,5 @@
       "tag": "druidcraft:fiery_glass_blocks"
     }
   ],
-  "result": { "item": "druidcraft:fiery_glass" }
+  "result": { "item": "druidcraft:fiery_glass", "count": 9 }
 }
