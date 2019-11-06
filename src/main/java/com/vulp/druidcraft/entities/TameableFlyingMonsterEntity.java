@@ -1,6 +1,6 @@
 package com.vulp.druidcraft.entities;
 
-import com.vulp.druidcraft.advancements.CriteriaTriggers;
+import com.vulp.druidcraft.advancements.DruidcraftAdvancements;
 import com.vulp.druidcraft.entities.AI.goals.SitGoalMonster;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
@@ -220,7 +220,7 @@ public class TameableFlyingMonsterEntity extends CreatureEntity {
         this.setTamed(true);
         this.setOwnerId(player.getUniqueID());
         if (player instanceof ServerPlayerEntity) {
-            CriteriaTriggers.TAME_MONSTER((ServerPlayerEntity)player, this);
+            DruidcraftAdvancements.TAME_MONSTER.trigger((ServerPlayerEntity)player, this);
         }
 
     }

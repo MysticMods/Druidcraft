@@ -13,7 +13,7 @@ public class TameableMonsterEntity extends TameableFlyingMonsterEntity {
 
     @Override
     public FlyingPathNavigator getNavigator() {
-        if (this.isPassenger() && this.getRidingEntity() instanceof TameableMonsterEntity) {
+        if (this.isPassenger() && this.getRidingEntity() instanceof TameableFlyingMonsterEntity) {
             MobEntity mobentity = (MobEntity)this.getRidingEntity();
             return (FlyingPathNavigator) mobentity.getNavigator();
         } else {
