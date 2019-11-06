@@ -33,6 +33,31 @@
   "item.druidcraft.bone_leggings": "Bone Leggings",
   "item.druidcraft.bone_boots": "Bone Boots",
 
+  "item.druidcraft.diamond_sickle": "Diamond Sickle",
+  "item.druidcraft.gold_sickle": "Golden Sickle",
+  "item.druidcraft.wooden_sickle": "Wooden Sickle",
+  "item.druidcraft.stone_sickle": "Stone Sickle",
+  "item.druidcraft.iron_sickle": "Iron Sickle",
+  "item.druidcraft.bone_sickle":  "Bone Sickle",
+  "item.druidcraft.moonstone_sickle": "Moonstone Sickle",
+
+  "item.druidcraft.moonstone_helmet": "Moonstone Helmet",
+  "item.druidcraft.moonstone_leggings": "Moonstone Leggings",
+  "item.druidcraft.moonstone_boots": "Moonstone Boots",
+  "item.druidcraft.moonstone_chestplate":  "Moonstone Chestplate",
+
+  "item.druidcraft.moonstone_pickaxe": "Moonstone Pickaxe",
+  "item.druidcraft.moonstone_sword":  "Moonstone Sword",
+  "item.druidcraft.moonstone_shovel":  "Moonstone Shovel",
+  "item.druidcraft.moonstone_hoe":  "Moonstone Hoe",
+  "item.druidcraft.moonstone_axe":  "Moonstone Axe",
+
+  "item.druidcraft.chitin": "Chitin",
+  "item.druidcraft.chitin_helmet": "Chitin Helmet",
+  "item.druidcraft.chitin_leggings":  "Chitin Leggings",
+  "item.druidcraft.chitin_boots":  "Chitin Boots",
+  "item.druidcraft.chitin_chestplate":  "Chitin Chestplate",
+
   "block.druidcraft.darkwood_log": "Darkwood Log",
   "block.druidcraft.stripped_darkwood_log": "Stripped Darkwood Log",
   "block.druidcraft.darkwood_leaves": "Darkwood Leaves",
@@ -79,6 +104,9 @@
   "block.druidcraft.magenta_soulfire": "Magenta Soulfire",
   "block.druidcraft.orange_soulfire": "Orange Soulfire",
   "block.druidcraft.white_soulfire": "White Soulfire",
+  "block.druidcraft.wet_mud_bricks": "Wet Mud Bricks",
+  "block.druidcraft.dry_mud_bricks": "Dry Mud Bricks",
+  "block.druidcraft.fiery_torch": "Fiery Torch",
 
   "entity.druidcraft.dreadfish": "Dreadfish",
   "entity.druidcraft.beetle": "Beetle",
