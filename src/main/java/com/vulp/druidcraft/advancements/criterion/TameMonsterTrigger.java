@@ -12,6 +12,7 @@ import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -70,7 +71,7 @@ public class TameMonsterTrigger implements ICriterionTrigger<TameMonsterTrigger>
         return new TameMonsterTrigger(entitypredicate);
     }
 
-    public void trigger(ServerPlayerEntity player, MonsterEntity entity) {
+    public void trigger(ServerPlayerEntity player, MobEntity entity) {
         TameMonsterTrigger.Listeners tamemonstertrigger$listeners = this.listeners.get(player.getAdvancements());
         if (tamemonstertrigger$listeners != null) {
             tamemonstertrigger$listeners.trigger(player, entity);
@@ -94,7 +95,7 @@ public class TameMonsterTrigger implements ICriterionTrigger<TameMonsterTrigger>
             return new TameMonsterTrigger(p_215124_0_);
         }
 
-        private boolean test(ServerPlayerEntity player, MonsterEntity entity) {
+        private boolean test(ServerPlayerEntity player, MobEntity entity) {
             return this.entity.test(player, entity);
         }
 
@@ -126,7 +127,7 @@ public class TameMonsterTrigger implements ICriterionTrigger<TameMonsterTrigger>
             this.listeners.remove(listener);
         }
 
-        public void trigger(ServerPlayerEntity player, MonsterEntity entity) {
+        public void trigger(ServerPlayerEntity player, MobEntity entity) {
             List<ICriterionTrigger.Listener<TameMonsterTrigger>> list = null;
 
             for(ICriterionTrigger.Listener<TameMonsterTrigger> listener : this.listeners) {
@@ -148,7 +149,7 @@ public class TameMonsterTrigger implements ICriterionTrigger<TameMonsterTrigger>
         }
     }
 
-    private boolean test(ServerPlayerEntity player, MonsterEntity entity) {
+    private boolean test(ServerPlayerEntity player, MobEntity entity) {
         return this.entity.test(player, entity);
     }
 }
