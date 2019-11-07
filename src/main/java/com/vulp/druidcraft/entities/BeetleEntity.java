@@ -62,8 +62,8 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new SwimGoal(this));
-        this.goalSelector.addGoal(3, new LeapAtTargetGoal(this, 0.4F));
-        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 0.5d, false));
+        this.goalSelector.addGoal(3, new LeapAtTargetGoal(this, 0.2F));
+        this.goalSelector.addGoal(4, new AttackGoal(this));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
@@ -81,7 +81,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(20.0d);
         this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0d);
         this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.5d);
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.1d);
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.15d);
         this.getAttribute(SharedMonsterAttributes.ATTACK_KNOCKBACK).setBaseValue(1.5d);
         this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8.0d);
     }
@@ -198,8 +198,8 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
     @Override
     public boolean shouldAttackEntity(LivingEntity target, LivingEntity owner) {
         if (!(target instanceof CreeperEntity)) {
-            if (target instanceof TameableFlyingMonsterEntity) {
-                TameableFlyingMonsterEntity monsterEntity = (TameableFlyingMonsterEntity) target;
+            if (target instanceof TameableMonsterEntity) {
+                TameableMonsterEntity monsterEntity = (TameableMonsterEntity) target;
                 if (monsterEntity.isTamed() && monsterEntity.getOwner() == this.getOwner()) {
                     return false;
                 }
@@ -411,7 +411,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
 
     @Override
     public double getMountedYOffset() {
-        return (double) (this.getHeight() - 0.5d);
+        return (double) (this.getHeight() - 0.15d);
     }
 
     @Override
@@ -432,8 +432,8 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
                 this.renderYawOffset = this.rotationYaw;
                 this.rotationYawHead = this.renderYawOffset;
                 this.stepHeight = 1.0F;
-                float f = livingentity.moveStrafing * 0.2F;
-                float f1 = livingentity.moveForward * 0.4F;
+                float f = livingentity.moveStrafing * 0.5F;
+                float f1 = livingentity.moveForward * 1F;
 
                 if (this.canPassengerSteer()) {
                     this.setAIMoveSpeed((float)this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue());
@@ -445,6 +445,16 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
                 this.stepHeight = 0.5F;
                 super.travel(p_213352_1_);
             }
+        }
+    }
+
+    static class AttackGoal extends MeleeAttackGoal {
+        public AttackGoal(BeetleEntity beetle) {
+            super(beetle, 0.85D, true);
+        }
+
+        protected double getAttackReachSqr(LivingEntity attackTarget) {
+            return (double)(4.0F + attackTarget.getWidth());
         }
     }
 }

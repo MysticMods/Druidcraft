@@ -1,10 +1,12 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "group": "rockroots",
   "ingredients": [
     {
-      "tag": "druidcraft:rockroot_blocks"
+      "item": "druidcraft:rockroot_block"
     }
   ],
-  "result": { "item": "druidcraft:rockroot" }
+  "result": {
+    "item": "druidcraft:rockroot",
+    "count": 9
+  }
 }

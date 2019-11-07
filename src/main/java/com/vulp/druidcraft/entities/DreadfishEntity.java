@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 @SuppressWarnings("unchecked")
-public class DreadfishEntity extends TameableMonsterEntity
+public class DreadfishEntity extends TameableFlyingMonsterEntity
 {
     private static final Predicate<LivingEntity> isPlayer;
     private static final DataParameter<Integer> SMOKE_COLOR = EntityDataManager.createKey(DreadfishEntity.class, DataSerializers.VARINT);
@@ -325,8 +325,8 @@ public class DreadfishEntity extends TameableMonsterEntity
     @Override
     public boolean shouldAttackEntity(LivingEntity target, LivingEntity owner) {
         if (!(target instanceof CreeperEntity)) {
-            if (target instanceof TameableFlyingMonsterEntity) {
-                TameableFlyingMonsterEntity monsterEntity = (TameableFlyingMonsterEntity) target;
+            if (target instanceof TameableMonsterEntity) {
+                TameableMonsterEntity monsterEntity = (TameableMonsterEntity) target;
                 if (monsterEntity.isTamed() && monsterEntity.getOwner() == this.getOwner()) {
                     return false;
                 }

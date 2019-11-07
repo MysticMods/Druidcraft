@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.entities.AI.goals;
 
+import com.vulp.druidcraft.entities.TameableFlyingMonsterEntity;
 import com.vulp.druidcraft.entities.TameableMonsterEntity;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;

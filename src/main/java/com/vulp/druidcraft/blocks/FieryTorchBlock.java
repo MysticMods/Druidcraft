@@ -2,21 +2,27 @@ package com.vulp.druidcraft.blocks;
 
 import com.vulp.druidcraft.registry.ParticleRegistry;
 import net.minecraft.block.*;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Random;
 
 public class FieryTorchBlock extends TorchBlock implements IBucketPickupHandler, ILiquidContainer {
@@ -79,6 +85,13 @@ public class FieryTorchBlock extends TorchBlock implements IBucketPickupHandler,
         } else {
             return false;
         }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        if (worldIn == null) return;
+        tooltip.add(new TranslationTextComponent("block.druidcraft.fiery_torch.description1"));
     }
 
     @Override

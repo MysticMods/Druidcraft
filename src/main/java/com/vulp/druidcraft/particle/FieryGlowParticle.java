@@ -24,7 +24,7 @@ public class FieryGlowParticle extends SpriteTexturedParticle {
         this.posX += (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
         this.posY += (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
         this.posZ += (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
-        this.maxAge = (int)(7.0D / (Math.random() * 0.8D + 0.2D)) + 4;
+        this.maxAge = (int)(8.0D / (Math.random() * 0.8D + 0.2D)) + 4;
         this.rotSpeed = ((float)Math.random() - 0.5F) * 0.05F;
         this.fizzleAge = 0;
         this.fizzleScale = 0;
@@ -36,8 +36,8 @@ public class FieryGlowParticle extends SpriteTexturedParticle {
     @Override
     public float getScale(float p_217561_1_) {
         double f;
-        if (age / maxAge <= 0.25) {
-            f = MathHelper.cos(age/2) * -0.060 + 0.25;
+        if (age / maxAge <= 0.3 || !(this.fizzleAge == 0)) {
+            f = MathHelper.cos(age/2) * -0.035 + 0.125;
         } else {
             f = this.getFizzleScale() * ((age / maxAge) / this.getFizzleAge());
         }
@@ -79,7 +79,7 @@ public class FieryGlowParticle extends SpriteTexturedParticle {
             this.motionX *= 0.9599999785423279D;
             this.motionY *= 0.9599999785423279D;
             this.motionZ *= 0.9599999785423279D;
-            if (this.age / this.maxAge <= 0.25 && fizzleTriggered == false) {
+            if (this.age / this.maxAge <= 0.3 && fizzleTriggered == false) {
                 fizzleTriggered = true;
                 this.setFizzleAge(this.age);
                 this.setFizzleScale(this.particleScale);

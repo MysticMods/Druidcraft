@@ -135,7 +135,9 @@ public class WaterDependentRecipe extends ShapedRecipe {
         }
 
         PlayerEntity player = findPlayer(craftingInventory);
-        if (player.isWet()) {
+        if (player == null) {
+            return false;
+        } else if (player.isWet()) {
             return true;
         }
         return false;

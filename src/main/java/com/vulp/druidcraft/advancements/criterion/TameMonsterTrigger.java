@@ -6,6 +6,7 @@ import com.google.common.collect.Sets;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.vulp.druidcraft.Druidcraft;
 import net.minecraft.advancements.ICriterionInstance;
 import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.advancements.PlayerAdvancements;
@@ -20,7 +21,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class TameMonsterTrigger implements ICriterionTrigger<TameMonsterTrigger>, ICriterionInstance {
-    private static final ResourceLocation ID = new ResourceLocation("tame_monster");
+    private static final ResourceLocation ID = new ResourceLocation(Druidcraft.MODID + ":" + "tame_monster");
     private final Map<PlayerAdvancements, TameMonsterTrigger.Listeners> listeners = Maps.newHashMap();
     private TameMonsterTrigger entity;
 

@@ -1,0 +1,35 @@
+{
+  "parent": "druidcraft:druidcraft/root",
+  "display": {
+    "icon": {
+      "item": "druidcraft:bone_helmet"
+    },
+    "title": {
+      "translate": "advancements.druidcraft.bone_armor.title"
+    },
+    "description": {
+      "translate": "advancements.druidcraft.bone_armor.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "bone_helm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "druidcraft:bone_helmet"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "bone_helm"
+    ]
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "parent": "druidcraft:druidcraft/root",
+  "display": {
+    "icon": {
+      "item": "druidcraft:fiery_torch"
+    },
+    "title": {
+      "translate": "advancements.druidcraft.fiery_torch.title"
+    },
+    "description": {
+      "translate": "advancements.druidcraft.fiery_torch.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+	},
+  "criteria": {
+    "collect": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "druidcraft:fiery_torch"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "collect"
+    ]
+  ]
+}

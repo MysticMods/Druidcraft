@@ -1,10 +1,12 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "group": "amber",
   "ingredients": [
     {
-      "tag": "forge:amber_blocks"
+      "item": "druidcraft:amber_block"
     }
   ],
-  "result": { "item": "druidcraft:amber" }
+  "result": {
+    "item": "druidcraft:amber",
+    "count": 9
+  }
 }

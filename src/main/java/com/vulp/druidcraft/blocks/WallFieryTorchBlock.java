@@ -97,7 +97,7 @@ public class WallFieryTorchBlock extends FieryTorchBlock {
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
         Direction direction = (Direction) stateIn.get(HORIZONTAL_FACING);
         double d0 = (double) pos.getX() + 0.5D;
-        double d1 = (double) pos.getY() + 0.7D;
+        double d1 = (double) pos.getY() + 0.65D;
         double d2 = (double) pos.getZ() + 0.5D;
         double d3 = 0.22D;
         double d4 = 0.27D;

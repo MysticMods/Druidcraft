@@ -1,5 +1,5 @@
 {
-  "parent": "druidcraft:druidcraft/root",
+  "parent": "druidcraft:druidcraft/mud_bricks",
   "display": {
     "icon": {
       "item": "druidcraft:darkwood_sapling"

@@ -1,10 +1,12 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "group": "moonstones",
   "ingredients": [
     {
-      "tag": "forge:moonstone_blocks"
+      "item": "druidcraft:moonstone_block"
     }
   ],
-  "result": { "item": "druidcraft:moonstone" }
+  "result": {
+    "item": "druidcraft:moonstone",
+    "count": 9
+  }
 }

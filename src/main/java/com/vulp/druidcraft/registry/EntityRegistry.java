@@ -12,6 +12,11 @@ import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
+import net.minecraft.world.biome.Biomes;
+import net.minecraft.world.dimension.Dimension;
+import net.minecraft.world.dimension.DimensionType;
+import net.minecraftforge.common.BiomeManager;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.event.RegistryEvent;
 
 public class EntityRegistry
@@ -46,8 +51,8 @@ public class EntityRegistry
 
     public static void registerEntityWorldSpawns()
     {
-        registerEntityWorldSpawn(dreadfish_entity);
-        registerEntityWorldSpawn(beetle_entity);
+        registerEntityWorldSpawn(dreadfish_entity, 35, 1, 3, Biomes.SNOWY_TUNDRA, Biomes.ICE_SPIKES, Biomes.SNOWY_TAIGA, Biomes.SNOWY_TAIGA_MOUNTAINS, Biomes.FROZEN_RIVER, Biomes.SNOWY_BEACH, Biomes.MOUNTAINS, Biomes.GRAVELLY_MOUNTAINS, Biomes.WOODED_MOUNTAINS, Biomes.MODIFIED_GRAVELLY_MOUNTAINS);
+        registerEntityWorldSpawn(beetle_entity, 6, 1, 2, BiomeRegistry.darkwood_forest, Biomes.SNOWY_TAIGA, Biomes.SNOWY_TAIGA_MOUNTAINS, Biomes.WOODED_MOUNTAINS, Biomes.TAIGA, Biomes.TAIGA_MOUNTAINS, Biomes.GIANT_TREE_TAIGA, Biomes.GIANT_SPRUCE_TAIGA, Biomes.FOREST, Biomes.FLOWER_FOREST, Biomes.BIRCH_FOREST, Biomes.TALL_BIRCH_FOREST, Biomes.DARK_FOREST, Biomes.DARK_FOREST_HILLS, Biomes.SWAMP, Biomes.SWAMP_HILLS, Biomes.JUNGLE, Biomes.MODIFIED_JUNGLE, Biomes.JUNGLE_EDGE, Biomes.MODIFIED_JUNGLE_EDGE, Biomes.BAMBOO_JUNGLE, Biomes.SAVANNA, Biomes.WOODED_BADLANDS_PLATEAU, Biomes.BADLANDS_PLATEAU, Biomes.SAVANNA_PLATEAU, Biomes.MODIFIED_WOODED_BADLANDS_PLATEAU, Biomes.SHATTERED_SAVANNA_PLATEAU);
     }
 
     public static Item registerEntitySpawnEgg(EntityType<?> type, int color1, int color2, String name)
@@ -57,13 +62,11 @@ public class EntityRegistry
         return item;
     }
 
-    public static void registerEntityWorldSpawn(EntityType<?> entity, Biome... biomes)
+    public static void registerEntityWorldSpawn(EntityType<?> entity, int weight, int minGroupCountIn, int maxGroupCountIn, Biome... biomes)
     {
-        for(Biome biome : biomes)
-        {
-            if(biome != null)
-            {
-                biome.getSpawns(entity.getClassification()).add(new SpawnListEntry(entity, 10, 1, 10));
+            for (Biome biome : biomes) {
+                if (biome != null) {
+                    biome.getSpawns(entity.getClassification()).add(new SpawnListEntry(entity, weight, minGroupCountIn, maxGroupCountIn));
             }
         }
     }

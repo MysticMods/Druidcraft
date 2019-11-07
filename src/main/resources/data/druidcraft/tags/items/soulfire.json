@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "druidcraft:white_soulfire",
+    "druidcraft:orange_soulfire",
+    "druidcraft:magenta_soulfire",
+    "druidcraft:light_blue_soulfire",
+	"druidcraft:yellow_soulfire",
+    "druidcraft:lime_soulfire",
+    "druidcraft:pink_soulfire",
+    "druidcraft:gray_soulfire",
+	"druidcraft:light_gray_soulfire",
+    "druidcraft:cyan_soulfire",
+    "druidcraft:purple_soulfire",
+    "druidcraft:blue_soulfire",
+	"druidcraft:brown_soulfire",
+    "druidcraft:green_soulfire",
+    "druidcraft:red_soulfire",
+    "druidcraft:black_soulfire"
+  ]
+}

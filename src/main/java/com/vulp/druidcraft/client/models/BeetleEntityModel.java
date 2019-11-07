@@ -188,12 +188,15 @@ public class BeetleEntityModel<T extends BeetleEntity> extends EntityModel<T> {
         this.rotationAngles(this.leg_R_back, 0.0F, -0.1745F, 0.6109F);
         this.rotationAngles(this.saddle_front, 0.2618F, 0.0F, 0.0F);
         this.rotationAngles(this.saddle_back, -0.2618F, 0.0F, 0.0F);
-        float f3 = -(MathHelper.cos(entity.limbSwing * 0.6662F * 4.0F + 0.0F) * 2.0F) * entity.limbSwingAmount;
-        float f4 = -(MathHelper.cos(entity.limbSwing * 0.6662F * 4.0F + (float)Math.PI) * 2.0F) * entity.limbSwingAmount;
-        float f5 = -(MathHelper.cos(entity.limbSwing * 0.6662F * 4.0F + ((float)Math.PI / 2F)) * 2.0F) * entity.limbSwingAmount;
-        float f7 = Math.abs(MathHelper.sin(entity.limbSwing * 0.6662F + 0.0F) * 0.4F) * entity.limbSwingAmount / 2;
-        float f8 = Math.abs(MathHelper.sin(entity.limbSwing * 0.6662F + (float)Math.PI) * 0.4F) * entity.limbSwingAmount / 2;
-        float f9 = Math.abs(MathHelper.sin(entity.limbSwing * 0.6662F + ((float)Math.PI / 2F)) * 0.4F) * entity.limbSwingAmount / 2;
+        float k;
+        if (entity.isBeingRidden()) {
+            k = 8.0F;
+        } else {
+            k = 4.0F;
+        }
+        float f3 = -(MathHelper.cos(entity.limbSwing * 0.6662F * k + 0.0F) * 2.0F) * entity.limbSwingAmount;
+        float f4 = -(MathHelper.cos(entity.limbSwing * 0.6662F * k + (float)Math.PI) * 2.0F) * entity.limbSwingAmount;
+        float f5 = -(MathHelper.cos(entity.limbSwing * 0.6662F * k + ((float)Math.PI / 2F)) * 2.0F) * entity.limbSwingAmount;
         this.leg_R_front.rotateAngleY += f3;
         this.leg_L_front.rotateAngleY += -f3;
         this.leg_R_middle.rotateAngleY += f4;
