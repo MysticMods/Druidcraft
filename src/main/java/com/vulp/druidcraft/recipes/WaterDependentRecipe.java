@@ -54,8 +54,8 @@ public class WaterDependentRecipe extends ShapedRecipe {
     }
 
     private static final Field eventHandlerField = ObfuscationReflectionHelper.findField(CraftingInventory.class, "field_70465_c");
-    private static final Field containerPlayerPlayerField = ObfuscationReflectionHelper.findField(PlayerContainer.class, "player");
-    private static final Field slotCraftingPlayerField = ObfuscationReflectionHelper.findField(CraftingResultSlot.class, "player");
+    private static final Field containerPlayerPlayerField = ObfuscationReflectionHelper.findField(PlayerContainer.class, "field_82862_h");
+    private static final Field slotCraftingPlayerField = ObfuscationReflectionHelper.findField(CraftingResultSlot.class, "field_75238_b");
 
     @Nullable
     private static PlayerEntity findPlayer(CraftingInventory inventory) {
@@ -135,9 +135,7 @@ public class WaterDependentRecipe extends ShapedRecipe {
         }
 
         PlayerEntity player = findPlayer(craftingInventory);
-        if (player == null) {
-            return false;
-        } else if (player.isWet()) {
+        if (player != null && player.isWet()) {
             return true;
         }
         return false;
