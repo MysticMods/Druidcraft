@@ -83,7 +83,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.5d);
         this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.15d);
         this.getAttribute(SharedMonsterAttributes.ATTACK_KNOCKBACK).setBaseValue(1.5d);
-        this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8.0d);
+        this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0d);
     }
 
     public boolean hasSaddle() {
@@ -421,7 +421,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
     }
 
     @Override
-    public void travel(Vec3d p_213352_1_) {
+    public void travel(Vec3d vec) {
         if (this.isAlive()) {
             if (this.isBeingRidden() && this.canBeSteered() && this.hasSaddle()) {
                 LivingEntity livingentity = (LivingEntity) this.getControllingPassenger();
@@ -437,13 +437,13 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
 
                 if (this.canPassengerSteer()) {
                     this.setAIMoveSpeed((float)this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue());
-                    super.travel(new Vec3d((double)f, p_213352_1_.y, (double)f1));
+                    super.travel(new Vec3d((double)f, vec.y, (double)f1));
                 } else if (livingentity instanceof PlayerEntity) {
                     this.setMotion(Vec3d.ZERO);
                 }
             } else {
                 this.stepHeight = 0.5F;
-                super.travel(p_213352_1_);
+                super.travel(vec);
             }
         }
     }
