@@ -22,6 +22,7 @@ public class Configuration
         WorldGenConfig.init(server_builder, client_builder);
         DropRateConfig.init(server_builder, client_builder);
         HarvestConfig.init(server_builder, client_builder);
+        EntitySpawnConfig.init(server_builder, client_builder);
 
         server_config = server_builder.build();
         client_config = client_builder.build();

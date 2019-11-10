@@ -13,7 +13,7 @@ public enum ArmorMaterialRegistry implements IArmorMaterial
 {
     bone("bone", 15, new int[] {1, 4, 5, 2}, 18, Items.BONE, "item.armor.equip.gold", 0.0f),
     chitin("chitin", 24, new int[] {3, 5, 7, 3}, 12, ItemRegistry.chitin, "item.armor.equip.leather", 1.0f),
-    moonstone("moonstone", 1, new int[] {3, 7, 9, 4}, 15, ItemRegistry.moonstone, "item.armor.equip.diamond", 3.0f);
+    moonstone("moonstone", 40, new int[] {3, 7, 9, 4}, 15, ItemRegistry.moonstone, "item.armor.equip.diamond", 3.0f);
 
     private static final int[] max_damage_array = new int[]{13, 15, 16, 11};
     private String name, equipSound;
