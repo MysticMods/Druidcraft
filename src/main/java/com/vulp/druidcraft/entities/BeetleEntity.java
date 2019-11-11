@@ -92,7 +92,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0d);
     }
 
-    public static boolean placement(EntityType<? extends MonsterEntity> type, IWorld worldIn, SpawnReason reason, BlockPos pos, Random randomIn) {
+    public static boolean placement(EntityType<?> type, IWorld worldIn, SpawnReason reason, BlockPos pos, Random randomIn) {
         Block block = worldIn.getBlockState(pos.down()).getBlock();
         return worldIn.getDifficulty() != Difficulty.PEACEFUL && block == Blocks.GRASS_BLOCK;
     }
