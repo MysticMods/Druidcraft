@@ -4,7 +4,9 @@ import com.vulp.druidcraft.entities.AI.goals.*;
 import com.vulp.druidcraft.events.EventFactory;
 import com.vulp.druidcraft.pathfinding.FlyingPathNavigator;
 import com.vulp.druidcraft.registry.ParticleRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.*;
@@ -26,11 +28,15 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.function.Predicate;
 
 @SuppressWarnings("unchecked")
@@ -100,6 +106,11 @@ public class DreadfishEntity extends TameableFlyingMonsterEntity
         this.dataManager.register(SMOKE_COLOR, DyeColor.PURPLE.getId());
     }
 
+    public static boolean placement(EntityType<?> type, IWorld worldIn, SpawnReason reason, BlockPos pos, Random randomIn) {
+        Block block = worldIn.getBlockState(pos.down()).getBlock();
+        return worldIn.getDifficulty() != Difficulty.PEACEFUL && isValidLightLevel(worldIn, pos, randomIn);
+    }
+
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return 0.2F;
@@ -107,6 +118,15 @@ public class DreadfishEntity extends TameableFlyingMonsterEntity
 
     @Override
     public void fall(float distance, float damageMultiplier) {
+    }
+
+    private static boolean isValidLightLevel(IWorld world, BlockPos pos, Random rand) {
+        if (world.getLightFor(LightType.SKY, pos) > rand.nextInt(32)) {
+            return false;
+        } else {
+            int i = world.getWorld().isThundering() ? world.getNeighborAwareLightSubtracted(pos, 10) : world.getLight(pos);
+            return i <= rand.nextInt(8);
+        }
     }
 
     @Override
