@@ -9,7 +9,9 @@ import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
@@ -18,6 +20,7 @@ import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.DimensionManager;
@@ -29,7 +32,6 @@ import java.util.*;
 
 public class EntityRegistry
 {
-    private List<String> biomes;
 
     public EntityRegistry() {
     }
@@ -62,13 +64,13 @@ public class EntityRegistry
 
     public static List<String> getBiomes(ForgeConfigSpec.ConfigValue<String> biomes) {
         String values = biomes.get();
-        return Arrays.asList(values.split(","));
+        return Arrays.asList(values.split("|"));
     }
 
     public static void registerEntityWorldSpawns()
     {
-        registerEntityWorldSpawn(EntitySpawnConfig.dreadfish_spawn, dreadfish_entity, EntitySpawnConfig.dreadfish_weight.get(), EntitySpawnConfig.dreadfish_min_group.get(), EntitySpawnConfig.dreadfish_max_group.get(), getBiomes(EntitySpawnConfig.dreadfish_biome_types));
-        registerEntityWorldSpawn(EntitySpawnConfig.beetle_spawn, beetle_entity, EntitySpawnConfig.beetle_weight.get(), EntitySpawnConfig.beetle_min_group.get(), EntitySpawnConfig.beetle_max_group.get(), getBiomes(EntitySpawnConfig.beetle_biome_types));
+        registerEntityWorldSpawn(EntitySpawnConfig.dreadfish_spawn, dreadfish_entity, EntityClassification.MONSTER, EntitySpawnConfig.dreadfish_weight.get(), EntitySpawnConfig.dreadfish_min_group.get(), EntitySpawnConfig.dreadfish_max_group.get(), getBiomes(EntitySpawnConfig.dreadfish_biome_types));
+        registerEntityWorldSpawn(EntitySpawnConfig.beetle_spawn, beetle_entity, EntityClassification.AMBIENT, EntitySpawnConfig.beetle_weight.get(), EntitySpawnConfig.beetle_min_group.get(), EntitySpawnConfig.beetle_max_group.get(), getBiomes(EntitySpawnConfig.beetle_biome_types));
     }
 
 
@@ -79,16 +81,19 @@ public class EntityRegistry
         return item;
     }
 
-    public static void registerEntityWorldSpawn(ForgeConfigSpec.BooleanValue spawnEnabled, EntityType<?> entity, int weight, int minGroupCountIn, int maxGroupCountIn, List<String> biomes) {
+    public static void registerEntityWorldSpawn(ForgeConfigSpec.BooleanValue spawnEnabled, EntityType<?> entity, EntityClassification classification, int weight, int minGroupCountIn, int maxGroupCountIn, List<String> biomes) {
         Set<Biome> biomeSet = new HashSet<>();
 
         if (spawnEnabled.get()) {
             for (String biomeName : biomes) {
                 biomeSet.addAll(BiomeDictionary.getBiomes(BiomeDictionary.Type.getType(biomeName)));
             }
-            biomeSet.forEach(biome -> biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(entity, weight, minGroupCountIn, maxGroupCountIn)));
+            biomeSet.forEach(biome -> biome.getSpawns(classification).add(new Biome.SpawnListEntry(entity, weight, minGroupCountIn, maxGroupCountIn)));
         }
 
         biomeSet.clear();
+
+        EntitySpawnPlacementRegistry.register(dreadfish_entity, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                AnimalEntity::func_223316_b);
     }
 }
