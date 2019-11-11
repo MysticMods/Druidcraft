@@ -6,10 +6,12 @@ import com.vulp.druidcraft.entities.AI.goals.OwnerHurtTargetGoalMonster;
 import com.vulp.druidcraft.events.EventFactory;
 import com.vulp.druidcraft.inventory.container.BeetleInventoryContainer;
 import com.vulp.druidcraft.registry.ItemRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -32,13 +34,17 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class BeetleEntity extends TameableMonsterEntity implements IInventoryChangedListener, INamedContainerProvider {
     private static final DataParameter<Boolean> SADDLE = EntityDataManager.createKey(BeetleEntity.class, DataSerializers.BOOLEAN);
@@ -84,6 +90,11 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.15d);
         this.getAttribute(SharedMonsterAttributes.ATTACK_KNOCKBACK).setBaseValue(1.5d);
         this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0d);
+    }
+
+    public static boolean placement(EntityType<? extends MonsterEntity> type, IWorld worldIn, SpawnReason reason, BlockPos pos, Random randomIn) {
+        Block block = worldIn.getBlockState(pos.down()).getBlock();
+        return worldIn.getDifficulty() != Difficulty.PEACEFUL && block == Blocks.GRASS_BLOCK;
     }
 
     public boolean hasSaddle() {
