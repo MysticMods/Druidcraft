@@ -33,24 +33,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class RopeBlock extends SixWayBlock {
-
-    public static final BooleanProperty NORTH = BooleanProperty.create("north");
-    public static final BooleanProperty EAST = BooleanProperty.create("east");
-    public static final BooleanProperty SOUTH = BooleanProperty.create("south");
-    public static final BooleanProperty WEST = BooleanProperty.create("west");
-    public static final BooleanProperty UP = BooleanProperty.create("up");
-    public static final BooleanProperty DOWN = BooleanProperty.create("down");
-    public static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = Util.make(Maps.newEnumMap(Direction.class), (map) -> {
-        map.put(Direction.NORTH, NORTH);
-        map.put(Direction.EAST, EAST);
-        map.put(Direction.SOUTH, SOUTH);
-        map.put(Direction.WEST, WEST);
-        map.put(Direction.UP, UP);
-        map.put(Direction.DOWN, DOWN);
-    });
-
-
-    protected RopeBlock(float apothem, Properties properties) {
+    public RopeBlock(Properties properties) {
         super(0.0625F, properties);
         this.setDefaultState(this.getDefaultState()
                 .with(NORTH, false)
@@ -71,26 +54,25 @@ public class RopeBlock extends SixWayBlock {
         return getState(getDefaultState(), ctx.getWorld(), ctx.getPos());
     }
 
-    private boolean hasNode(World world, BlockPos pos, BlockState state, Direction direction) {
-        if (getDirection() != BlockDirection.NONE && state.get(getDirection().getProperty()).getOpposite() == direction) {
-            return false;
-        }
+       private BlockState getState(BlockState currentState, World world, BlockPos pos) {
 
-        TileEntity tile = world.getTileEntity(pos);
-        if (tile == null) {
-            return false;
-        }
+        BlockState northState = world.getBlockState(pos.offset(Direction.NORTH));
+        boolean north = northState.func_224755_d(world, pos.offset(Direction.NORTH), Direction.NORTH.getOpposite()) || northState.getBlock() == this;
 
-        return tile.getCapability(NetworkNodeProxyCapability.NETWORK_NODE_PROXY_CAPABILITY, direction).isPresent();
-    }
+        BlockState eastState = world.getBlockState(pos.offset(Direction.EAST));
+        boolean east = eastState.func_224755_d(world, pos.offset(Direction.EAST), Direction.EAST.getOpposite()) || eastState.getBlock() == this;
 
-    private BlockState getState(BlockState currentState, World world, BlockPos pos) {
-        boolean north = hasNode(world, pos.offset(Direction.NORTH), currentState, Direction.SOUTH);
-        boolean east = hasNode(world, pos.offset(Direction.EAST), currentState, Direction.WEST);
-        boolean south = hasNode(world, pos.offset(Direction.SOUTH), currentState, Direction.NORTH);
-        boolean west = hasNode(world, pos.offset(Direction.WEST), currentState, Direction.EAST);
-        boolean up = hasNode(world, pos.offset(Direction.UP), currentState, Direction.DOWN);
-        boolean down = hasNode(world, pos.offset(Direction.DOWN), currentState, Direction.UP);
+        BlockState southState = world.getBlockState(pos.offset(Direction.SOUTH));
+        boolean south = southState.func_224755_d(world, pos.offset(Direction.SOUTH), Direction.SOUTH.getOpposite()) || southState.getBlock() == this;
+
+        BlockState westState = world.getBlockState(pos.offset(Direction.WEST));
+        boolean west = westState.func_224755_d(world, pos.offset(Direction.WEST), Direction.WEST.getOpposite()) || westState.getBlock() == this;
+
+        BlockState upState = world.getBlockState(pos.offset(Direction.UP));
+        boolean up = upState.func_224755_d(world, pos.offset(Direction.UP), Direction.UP.getOpposite()) || upState.getBlock() == this;
+
+        BlockState downState = world.getBlockState(pos.offset(Direction.DOWN));
+        boolean down = downState.func_224755_d(world, pos.offset(Direction.DOWN), Direction.DOWN.getOpposite()) || downState.getBlock() == this;
 
         return currentState
                 .with(NORTH, north)
@@ -99,13 +81,5 @@ public class RopeBlock extends SixWayBlock {
                 .with(WEST, west)
                 .with(UP, up)
                 .with(DOWN, down);
-    }
-
-    @Override
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        if (worldIn.getBlockState(facingPos) == BlockRegistry.rope.getDefaultState())
-
-        BooleanProperty property = FACING_TO_PROPERTY_MAP.get(facing);
-        return stateIn.with(property, createConnection(worldIn, facingPos));
     }
 }
