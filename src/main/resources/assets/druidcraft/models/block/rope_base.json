@@ -1,0 +1,23 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "druidcraft:block/rope",
+		"particle": "druidcraft:block/rope"
+	},
+	"elements": [
+		{
+			"name": "base",
+			"from": [7, 7, 7],
+			"to": [9, 9, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9, 8]},
+			"faces": {
+				"north": {"uv": [7, 8, 9, 10], "rotation": 90, "texture": "#0"},
+				"east": {"uv": [4, 1, 6, 3], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [2, 1, 4, 3], "texture": "#0"},
+				"west": {"uv": [7, 8, 9, 10], "rotation": 90, "texture": "#0"},
+				"up": {"uv": [0, 0, 2, 2], "texture": "#0"},
+				"down": {"uv": [7, 6, 9, 8], "texture": "#0"}
+			}
+		}
+	]
+}

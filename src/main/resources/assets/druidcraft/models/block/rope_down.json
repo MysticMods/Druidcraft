@@ -1,0 +1,21 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "druidcraft:block/rope",
+		"particle": "druidcraft:block/rope"
+	},
+	"elements": [
+		{
+			"name": "down_end",
+			"from": [7, 0, 7],
+			"to": [9, 7, 9],
+			"faces": {
+				"north": {"uv": [13, 9, 15, 16], "texture": "#0"},
+				"east": {"uv": [11, 9, 13, 16], "texture": "#0"},
+				"south": {"uv": [9, 9, 11, 16], "texture": "#0"},
+				"west": {"uv": [11, 9, 13, 16], "texture": "#0"},
+				"down": {"uv": [4, 0, 6, 2], "texture": "#0"}
+			}
+		}
+	]
+}

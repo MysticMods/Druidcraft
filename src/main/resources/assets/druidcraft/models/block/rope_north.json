@@ -1,0 +1,22 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "druidcraft:block/rope",
+		"particle": "druidcraft:block/rope"
+	},
+	"elements": [
+		{
+			"name": "north_end",
+			"from": [7, 7, 9],
+			"to": [9, 9, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9, 8]},
+			"faces": {
+				"east": {"uv": [7, 0, 9, 7], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [4, 0, 6, 2], "texture": "#0"},
+				"west": {"uv": [8, 0, 10, 7], "rotation": 90, "texture": "#0"},
+				"up": {"uv": [5, 0, 7, 7], "texture": "#0"},
+				"down": {"uv": [6, 0, 8, 7], "texture": "#0"}
+			}
+		}
+	]
+}

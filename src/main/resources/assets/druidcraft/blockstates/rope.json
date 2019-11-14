@@ -1,0 +1,28 @@
+{
+    "multipart": [
+		{   "when": { "knotted": "true" },
+            "apply": { "model": "druidcraft:block/rope_knot" }
+        },
+		{   "when": { "knotted": "false" },
+            "apply": { "model": "druidcraft:block/rope_base" }
+        },
+        {   "when": { "north": "true" },
+            "apply": { "model": "druidcraft:block/rope_north" }
+        },
+        {   "when": { "east": "true" },
+            "apply": { "model": "druidcraft:block/rope_east" }
+        },
+        {   "when": { "south": "true" },
+            "apply": { "model": "druidcraft:block/rope_south" }
+        },
+        {   "when": { "west": "true" },
+            "apply": { "model": "druidcraft:block/rope_west" }
+        },
+		{   "when": { "up": "true" },
+            "apply": { "model": "druidcraft:block/rope_up" }
+        },
+		{   "when": { "down": "true" },
+            "apply": { "model": "druidcraft:block/rope_down" }
+        }
+    ]
+}

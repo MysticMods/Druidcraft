@@ -12,7 +12,6 @@
 
   "item.druidcraft.hemp": "Hemp",
   "item.druidcraft.hemp_seeds": "Hemp Seeds",
-  "item.druidcraft.rope": "Rope",
   "item.druidcraft.amber": "Amber",
   "item.druidcraft.moonstone": "Moonstone",
   "item.druidcraft.fiery_glass": "Fiery Glass",
@@ -106,6 +105,7 @@
   "block.druidcraft.dry_mud_bricks": "Dry Mud Bricks",
   "block.druidcraft.fiery_torch": "Fiery Torch",
   "block.druidcraft.fiery_torch.description1": "§6A little bit brighter than a regular torch. Waterproof too!",
+  "block.druidcraft.rope": "Rope",
 
   "entity.druidcraft.dreadfish": "Dreadfish",
   "entity.druidcraft.beetle": "Beetle",

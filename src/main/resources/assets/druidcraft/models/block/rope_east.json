@@ -1,0 +1,22 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "druidcraft:block/rope",
+		"particle": "druidcraft:block/rope"
+	},
+	"elements": [
+		{
+			"name": "east_end",
+			"from": [0, 7, 7],
+			"to": [7, 9, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9, 8]},
+			"faces": {
+				"north": {"uv": [9, 7, 16, 9], "texture": "#0"},
+				"south": {"uv": [9, 10, 16, 12], "texture": "#0"},
+				"west": {"uv": [4, 0, 6, 2], "texture": "#0"},
+				"up": {"uv": [9, 8, 16, 10], "texture": "#0"},
+				"down": {"uv": [9, 12, 16, 14], "texture": "#0"}
+			}
+		}
+	]
+}
