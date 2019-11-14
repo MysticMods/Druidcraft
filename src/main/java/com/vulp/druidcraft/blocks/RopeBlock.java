@@ -2,10 +2,7 @@ package com.vulp.druidcraft.blocks;
 
 import com.google.common.collect.Maps;
 import com.vulp.druidcraft.registry.BlockRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.DirectionalBlock;
-import net.minecraft.block.SixWayBlock;
+import net.minecraft.block.*;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
@@ -32,7 +29,11 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class RopeBlock extends SixWayBlock {
+@SuppressWarnings("deprecation")
+public class RopeBlock extends SixWayBlock implements IWaterLoggable {
+    public static final BooleanProperty KNOT = BooleanProperty.create("knot");
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+
     public RopeBlock(Properties properties) {
         super(0.0625F, properties);
         this.setDefaultState(this.getDefaultState()
@@ -46,7 +47,7 @@ public class RopeBlock extends SixWayBlock {
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN);
+        builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN, KNOT, WATERLOGGED);
     }
 
     @Override
@@ -54,8 +55,27 @@ public class RopeBlock extends SixWayBlock {
         return getState(getDefaultState(), ctx.getWorld(), ctx.getPos());
     }
 
-       private BlockState getState(BlockState currentState, World world, BlockPos pos) {
+    private BlockState calculateKnot (BlockState currentState) {
+      int count = 0;
 
+      for (Direction dir : Direction.values()) {
+        BooleanProperty prop = FACING_TO_PROPERTY_MAP.get(dir);
+        if (prop != null) {
+          if (currentState.get(prop)) {
+            count++;
+          }
+        }
+      }
+
+      return currentState.with(KNOT, count >= 3);
+    }
+
+  @Override
+  public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+      return getState(stateIn, worldIn, facingPos);
+  }
+
+  private BlockState getState(BlockState currentState, IWorld world, BlockPos pos) {
         BlockState northState = world.getBlockState(pos.offset(Direction.NORTH));
         boolean north = northState.func_224755_d(world, pos.offset(Direction.NORTH), Direction.NORTH.getOpposite()) || northState.getBlock() == this;
 
@@ -74,12 +94,12 @@ public class RopeBlock extends SixWayBlock {
         BlockState downState = world.getBlockState(pos.offset(Direction.DOWN));
         boolean down = downState.func_224755_d(world, pos.offset(Direction.DOWN), Direction.DOWN.getOpposite()) || downState.getBlock() == this;
 
-        return currentState
+        return calculateKnot(currentState
                 .with(NORTH, north)
                 .with(EAST, east)
                 .with(SOUTH, south)
                 .with(WEST, west)
                 .with(UP, up)
-                .with(DOWN, down);
+                .with(DOWN, down));
     }
 }
