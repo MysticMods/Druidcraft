@@ -6,6 +6,9 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.FireBlock;
 import net.minecraft.item.AxeItem;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.Tag;
+import net.minecraftforge.common.data.ForgeBlockTagsProvider;
 
 public class VanillaIntegrationRegistry {
 
@@ -50,8 +53,6 @@ public class VanillaIntegrationRegistry {
         addFlammables(BlockRegistry.darkwood_panels, 5, 20);
         addFlammables(BlockRegistry.jungle_panels, 5, 20);
         addFlammables(BlockRegistry.spruce_panels, 5, 20);
-
-
 
     }
 

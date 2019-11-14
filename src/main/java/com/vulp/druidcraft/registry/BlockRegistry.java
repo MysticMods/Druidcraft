@@ -47,6 +47,7 @@ public class BlockRegistry
     public static Block dry_mud_bricks;
     public static Block fiery_torch;
     public static Block wall_fiery_torch;
+    public static Block rope;
     public static Block black_soulfire;
     public static Block red_soulfire;
     public static Block green_soulfire;
