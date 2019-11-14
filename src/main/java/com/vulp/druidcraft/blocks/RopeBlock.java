@@ -1,6 +1,7 @@
 package com.vulp.druidcraft.blocks;
 
 import net.minecraft.block.*;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -65,7 +66,11 @@ public class RopeBlock extends SixWayBlock implements IWaterLoggable {
 
   @Override
   public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
-      return calculateState(state, world, facingPos);
+      if (state.get(WATERLOGGED)) {
+         world.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+      }
+
+      return calculateKnot(state.with(FACING_TO_PROPERTY_MAP.get(facing), facingState.func_224755_d(world, facingPos, facing.getOpposite()) || world.getBlockState(facingPos).getBlock() == this));
   }
 
   private BlockState calculateState(BlockState currentState, IWorld world, BlockPos pos) {
