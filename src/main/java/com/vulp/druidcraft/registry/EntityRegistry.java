@@ -64,7 +64,7 @@ public class EntityRegistry
 
     public static List<String> getBiomes(ForgeConfigSpec.ConfigValue<String> biomes) {
         String values = biomes.get();
-        return Arrays.asList(values.split("|"));
+        return Arrays.asList(values.split("\\|"));
     }
 
     public static void registerEntityWorldSpawns()
