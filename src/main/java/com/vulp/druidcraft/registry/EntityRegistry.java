@@ -17,6 +17,7 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.biome.Biomes;
@@ -28,9 +29,11 @@ import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.network.FMLPlayMessages;
 
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.function.BiFunction;
 
 public class EntityRegistry
 {
@@ -40,16 +43,25 @@ public class EntityRegistry
     public static final EntityType<DreadfishEntity> dreadfish_entity = createEntity(DreadfishEntity::new, EntityClassification.MONSTER, "dreadfish", 0.8f, 0.4f);
     public static final EntityType<BeetleEntity> beetle_entity = createEntity(BeetleEntity::new, EntityClassification.MONSTER, "beetle", 1.5f, 1.5f);
 
-    public static final EntityType<BoatEntity> boat_entity = createEntity(BoatEntity::new, EntityClassification.MISC, "boat", 1.375F, 0.5625F);
+    public static final EntityType<BoatEntity> boat_entity = createEntity(BoatEntity::new, EntityClassification.MISC, "boat", 1.375F, 0.5625F, BoatEntity::new);
 
     private static <T extends Entity> EntityType<T> createEntity(EntityType.IFactory<T> factory, EntityClassification entityClassification, String name, float width, float height) {
+        return createEntity(factory, entityClassification, name, width, height, null);
+    }
+
+    private static <T extends Entity> EntityType<T> createEntity(EntityType.IFactory<T> factory, EntityClassification entityClassification, String name, float width, float height, BiFunction<FMLPlayMessages.SpawnEntity, World, T> customClientFactory) {
         ResourceLocation location = new ResourceLocation(Druidcraft.MODID, name);
 
-        EntityType<T> entity = EntityType.Builder.create(factory, entityClassification)
+        EntityType.Builder<T> builder = EntityType.Builder.create(factory, entityClassification)
                 .size(width, height).setTrackingRange(64)
                 .setShouldReceiveVelocityUpdates(true)
-                .setUpdateInterval(3)
-                .build(location.toString());
+                .setUpdateInterval(3);
+
+        if (customClientFactory != null) {
+            builder.setCustomClientFactory(customClientFactory);
+        }
+
+        EntityType<T> entity = builder.build(location.toString());
 
         entity.setRegistryName(location);
 
