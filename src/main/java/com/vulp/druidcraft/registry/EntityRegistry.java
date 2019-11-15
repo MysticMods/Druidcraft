@@ -68,8 +68,6 @@ public class EntityRegistry
             builder.setTrackingRange(trackingRange);
         }
 
-        EntityType
-
         EntityType<T> entity = builder.build(location.toString());
 
         entity.setRegistryName(location);
