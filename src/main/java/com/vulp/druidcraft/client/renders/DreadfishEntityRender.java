@@ -1,6 +1,7 @@
 package com.vulp.druidcraft.client.renders;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.DruidcraftRegistry;
 import com.vulp.druidcraft.client.models.DreadfishEntityModel;
 import com.vulp.druidcraft.entities.DreadfishEntity;
@@ -16,10 +17,10 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 @OnlyIn(Dist.CLIENT)
 public class DreadfishEntityRender extends MobRenderer<DreadfishEntity, DreadfishEntityModel>
 {
-    private static final ResourceLocation DREADFISH_HEALTH_FULL = new ResourceLocation(DruidcraftRegistry.MODID + ":textures/entity/dreadfish/dreadfish_0.png");
-    private static final ResourceLocation DREADFISH_HEALTH_HIGH = new ResourceLocation(DruidcraftRegistry.MODID + ":textures/entity/dreadfish/dreadfish_1.png");
-    private static final ResourceLocation DREADFISH_HEALTH_MEDIUM = new ResourceLocation(DruidcraftRegistry.MODID + ":textures/entity/dreadfish/dreadfish_2.png");
-    private static final ResourceLocation DREADFISH_HEALTH_LOW = new ResourceLocation(DruidcraftRegistry.MODID + ":textures/entity/dreadfish/dreadfish_3.png");
+    private static final ResourceLocation DREADFISH_HEALTH_FULL = new ResourceLocation(Druidcraft.MODID + "textures/entity/dreadfish/dreadfish_0.png");
+    private static final ResourceLocation DREADFISH_HEALTH_HIGH = new ResourceLocation(Druidcraft.MODID + "textures/entity/dreadfish/dreadfish_1.png");
+    private static final ResourceLocation DREADFISH_HEALTH_MEDIUM = new ResourceLocation(Druidcraft.MODID + "textures/entity/dreadfish/dreadfish_2.png");
+    private static final ResourceLocation DREADFISH_HEALTH_LOW = new ResourceLocation(Druidcraft.MODID + "textures/entity/dreadfish/dreadfish_3.png");
 
     public DreadfishEntityRender(EntityRendererManager manager)
     {

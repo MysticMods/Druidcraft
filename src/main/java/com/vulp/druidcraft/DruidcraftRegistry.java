@@ -7,9 +7,13 @@ import com.vulp.druidcraft.blocks.PressurePlateBlock;
 import com.vulp.druidcraft.blocks.SaplingBlock;
 import com.vulp.druidcraft.blocks.StairsBlock;
 import com.vulp.druidcraft.blocks.FieryTorchBlock;
+import com.vulp.druidcraft.blocks.StandingSignBlock;
 import com.vulp.druidcraft.blocks.TrapDoorBlock;
+import com.vulp.druidcraft.blocks.WallSignBlock;
 import com.vulp.druidcraft.blocks.WoodButtonBlock;
 import com.vulp.druidcraft.blocks.trees.DarkwoodTree;
+import com.vulp.druidcraft.entities.BoatEntity;
+import com.vulp.druidcraft.items.BoatItem;
 import com.vulp.druidcraft.items.ItemProperties;
 import com.vulp.druidcraft.items.PlantableItem;
 import com.vulp.druidcraft.items.SickleItem;
@@ -20,6 +24,7 @@ import com.vulp.druidcraft.world.biomes.DarkwoodForest;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.ContainerType;
@@ -28,6 +33,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.particles.ParticleType;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
@@ -63,6 +69,7 @@ public class DruidcraftRegistry {
                         ItemRegistry.fiery_glass = new SmeltableItem(new Item.Properties().group(DRUIDCRAFT), 2400).setRegistryName(location("fiery_glass")),
                         ItemRegistry.rockroot = new Item(new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("rockroot")),
                         ItemRegistry.chitin = new Item(new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("chitin")),
+                        ItemRegistry.darkwood_boat = new BoatItem(BoatEntity.Type.DARKWOOD, new Item.Properties().maxStackSize(1).group(DRUIDCRAFT)).setRegistryName(location("darkwood_boat")),
 
                         //Tools & Armour:
                         ItemRegistry.bone_sword = new SwordItem(ToolMaterialRegistry.bone, 3, -2.4f, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("bone_sword")),
@@ -123,6 +130,8 @@ public class DruidcraftRegistry {
                         ItemRegistry.darkwood_button = new BlockItem(BlockRegistry.darkwood_button, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_button.getRegistryName()),
                         ItemRegistry.darkwood_trapdoor = new BlockItem(BlockRegistry.darkwood_trapdoor, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_trapdoor.getRegistryName()),
                         ItemRegistry.darkwood_door = new BlockItem(BlockRegistry.darkwood_door, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_door.getRegistryName()),
+                        ItemRegistry.darkwood_sign = new WallOrFloorItem(BlockRegistry.darkwood_sign, BlockRegistry.darkwood_wall_sign, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_sign.getRegistryName()),
+
                         ItemRegistry.oak_beam = new BlockItem(BlockRegistry.oak_beam, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.oak_beam.getRegistryName()),
                         ItemRegistry.spruce_beam = new BlockItem(BlockRegistry.spruce_beam, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.spruce_beam.getRegistryName()),
                         ItemRegistry.birch_beam = new BlockItem(BlockRegistry.birch_beam, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.birch_beam.getRegistryName()),
@@ -197,6 +206,9 @@ public class DruidcraftRegistry {
                         BlockRegistry.darkwood_button = new WoodButtonBlock(WoodButtonBlock.Properties.create(Material.WOOD).hardnessAndResistance(0.5f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("darkwood_button")),
                         BlockRegistry.darkwood_trapdoor = new TrapDoorBlock(TrapDoorBlock.Properties.create(Material.WOOD).hardnessAndResistance(3.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("darkwood_trapdoor")),
                         BlockRegistry.darkwood_door = new DoorBlock(DoorBlock.Properties.create(Material.WOOD).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("darkwood_door")),
+                        BlockRegistry.darkwood_sign = new StandingSignBlock(StandingSignBlock.Properties.create(Material.WOOD).hardnessAndResistance(1.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD).doesNotBlockMovement()).setRegistryName(location("darkwood_sign")),
+                        BlockRegistry.darkwood_wall_sign = new WallSignBlock(WallSignBlock.Properties.create(Material.WOOD).hardnessAndResistance(1.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD).doesNotBlockMovement().lootFrom(BlockRegistry.darkwood_sign)).setRegistryName(location("darkwood_wall_sign")),
+
                         BlockRegistry.oak_beam = new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("oak_beam")),
                         BlockRegistry.spruce_beam = new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("spruce_beam")),
                         BlockRegistry.birch_beam = new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("birch_beam")),
@@ -245,11 +257,25 @@ public class DruidcraftRegistry {
         EntityRegistryEvent.getRegistry().registerAll
                 (
                         EntityRegistry.dreadfish_entity,
-                        EntityRegistry.beetle_entity
+                        EntityRegistry.beetle_entity,
+
+                        EntityRegistry.boat_entity
                 );
 
         EntityRegistry.registerEntityWorldSpawns();
         LOGGER.info("Entities registered.");
+    }
+
+    // TILE ENTITY REGISTRATION
+    @SubscribeEvent
+    public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> TileEntityRegistryEvent)
+    {
+        TileEntityRegistryEvent.getRegistry().registerAll
+                (
+                        TileEntityRegistry.sign_te
+                );
+
+        LOGGER.info("Tile entities registered.");
     }
 
     // PARTICLE REGISTRATION

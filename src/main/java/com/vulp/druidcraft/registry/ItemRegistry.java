@@ -84,6 +84,8 @@ public class ItemRegistry
     public static Item darkwood_button;
     public static Item darkwood_trapdoor;
     public static Item darkwood_door;
+    public static Item darkwood_sign;
+    public static Item darkwood_boat;
 
     public static Item oak_beam;
     public static Item spruce_beam;
@@ -108,5 +110,4 @@ public class ItemRegistry
     public static Item iron_sickle;
     public static Item gold_sickle;
     public static Item diamond_sickle;
-
 }

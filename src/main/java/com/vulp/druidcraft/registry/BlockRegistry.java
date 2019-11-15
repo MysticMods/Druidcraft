@@ -29,6 +29,8 @@ public class BlockRegistry
     public static Block darkwood_button;
     public static Block darkwood_trapdoor;
     public static Block darkwood_door;
+    public static Block darkwood_sign;
+    public static Block darkwood_wall_sign;
     public static Block oak_beam;
     public static Block spruce_beam;
     public static Block birch_beam;

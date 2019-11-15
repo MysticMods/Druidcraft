@@ -2,6 +2,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "druidcraft:block/rope",
+		"1": "druidcraft:block/rope_overlay",
 		"particle": "druidcraft:block/rope"
 	},
 	"elements": [
@@ -16,6 +17,19 @@
 				"west": {"uv": [8, 9, 10, 16], "rotation": 90, "texture": "#0"},
 				"up": {"uv": [7, 9, 9, 16], "texture": "#0"},
 				"down": {"uv": [10, 9, 12, 16], "texture": "#0"}
+			}
+		},
+		{
+			"name": "north_end_overlay",
+			"from": [6.8, 6.8, 0.8],
+			"to": [9.2, 9.2, 7.2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9, 8]},
+			"faces": {
+				"north": {"uv": [4, 0, 6, 2], "texture": "#1"},
+				"east": {"uv": [13, 10, 15, 16], "rotation": 90, "texture": "#1"},
+				"west": {"uv": [8, 10, 10, 16], "rotation": 90, "texture": "#1"},
+				"up": {"uv": [7, 10, 9, 16], "texture": "#1"},
+				"down": {"uv": [10, 10, 12, 16], "texture": "#1"}
 			}
 		}
 	]
