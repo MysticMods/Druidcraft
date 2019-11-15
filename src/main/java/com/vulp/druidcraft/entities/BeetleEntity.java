@@ -464,6 +464,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
             super(beetle, 0.85D, true);
         }
 
+        @Override
         protected double getAttackReachSqr(LivingEntity attackTarget) {
             return (double)(4.0F + attackTarget.getWidth());
         }

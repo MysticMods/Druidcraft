@@ -73,31 +73,38 @@ public class WaterDependentRecipe extends ShapedRecipe {
         }
     }
 
+    @Override
     public ResourceLocation getId() {
         return this.id;
     }
 
+    @Override
     public IRecipeSerializer<?> getSerializer() {
         return RecipeRegistry.WATER_CRAFTING.serializer;
     }
 
+    @Override
     public String getGroup() {
         return this.group;
     }
 
+    @Override
     public ItemStack getRecipeOutput() {
         return this.recipeOutput;
     }
 
+    @Override
     public NonNullList<Ingredient> getIngredients() {
         return this.recipeItems;
     }
 
 
+    @Override
     public boolean canFit(int width, int height) {
         return width >= this.recipeWidth && height >= this.recipeHeight;
     }
 
+    @Override
     public boolean matches(CraftingInventory inv, World worldIn) {
         for(int i = 0; i <= inv.getWidth() - this.recipeWidth; ++i) {
             for(int j = 0; j <= inv.getHeight() - this.recipeHeight; ++j) {
@@ -141,6 +148,7 @@ public class WaterDependentRecipe extends ShapedRecipe {
         return false;
     }
 
+    @Override
     public int getWidth() {
         return this.recipeWidth;
     }
@@ -150,6 +158,7 @@ public class WaterDependentRecipe extends ShapedRecipe {
         return getWidth();
     }
 
+    @Override
     public int getHeight() {
         return this.recipeHeight;
     }
@@ -301,6 +310,7 @@ public class WaterDependentRecipe extends ShapedRecipe {
 
     public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>>  implements IRecipeSerializer<WaterDependentRecipe> {
         private static final ResourceLocation NAME = new ResourceLocation(Druidcraft.MODID, "water_crafting");
+        @Override
         public WaterDependentRecipe read(ResourceLocation recipeId, JsonObject json) {
             String s = JSONUtils.getString(json, "group", "");
             Map<String, Ingredient> map = WaterDependentRecipe.deserializeKey(JSONUtils.getJsonObject(json, "key"));
@@ -312,6 +322,7 @@ public class WaterDependentRecipe extends ShapedRecipe {
             return new WaterDependentRecipe(recipeId, s, i, j, nonnulllist, itemstack);
         }
 
+        @Override
         public WaterDependentRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
             int i = buffer.readVarInt();
             int j = buffer.readVarInt();
@@ -326,6 +337,7 @@ public class WaterDependentRecipe extends ShapedRecipe {
             return new WaterDependentRecipe(recipeId, s, i, j, nonnulllist, itemstack);
         }
 
+        @Override
         public void write(PacketBuffer buffer, WaterDependentRecipe recipe) {
             buffer.writeVarInt(recipe.recipeWidth);
             buffer.writeVarInt(recipe.recipeHeight);

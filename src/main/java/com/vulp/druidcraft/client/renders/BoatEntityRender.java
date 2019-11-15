@@ -23,6 +23,7 @@ public class BoatEntityRender extends EntityRenderer<BoatEntity> {
         this.shadowSize = 0.8F;
     }
 
+    @Override
     public void doRender(BoatEntity entity, double x, double y, double z, float entityYaw, float partialTicks) {
         GlStateManager.pushMatrix();
         this.setupTranslation(x, y, z);
@@ -76,14 +77,17 @@ public class BoatEntityRender extends EntityRenderer<BoatEntity> {
         GlStateManager.translatef((float)x, (float)y + 0.375F, (float)z);
     }
 
+    @Override
     protected ResourceLocation getEntityTexture(BoatEntity entity) {
         return BOAT_TEXTURES[entity.getBoatType().ordinal()];
     }
 
+    @Override
     public boolean isMultipass() {
         return true;
     }
 
+    @Override
     public void renderMultipass(BoatEntity entityIn, double x, double y, double z, float entityYaw, float partialTicks) {
         GlStateManager.pushMatrix();
         this.setupTranslation(x, y, z);

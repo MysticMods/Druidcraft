@@ -89,10 +89,12 @@ public class BoatEntity extends Entity {
         this.prevPosZ = z;
     }
 
+    @Override
     protected boolean canTriggerWalking() {
         return false;
     }
 
+    @Override
     protected void registerData() {
         this.dataManager.register(TIME_SINCE_HIT, 0);
         this.dataManager.register(FORWARD_DIRECTION, 1);
@@ -103,24 +105,29 @@ public class BoatEntity extends Entity {
         this.dataManager.register(ROCKING_TICKS, 0);
     }
 
+    @Override
     @Nullable
     public AxisAlignedBB getCollisionBox(Entity entityIn) {
         return entityIn.canBePushed() ? entityIn.getBoundingBox() : null;
     }
 
+    @Override
     @Nullable
     public AxisAlignedBB getCollisionBoundingBox() {
         return this.getBoundingBox();
     }
 
+    @Override
     public boolean canBePushed() {
         return true;
     }
 
+    @Override
     public double getMountedYOffset() {
         return -0.1D;
     }
 
+    @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
         if (this.isInvulnerableTo(source)) {
             return false;
@@ -148,6 +155,7 @@ public class BoatEntity extends Entity {
         }
     }
 
+    @Override
     public void onEnterBubbleColumnWithAirAbove(boolean downwards) {
         if (!this.world.isRemote) {
             this.rocking = true;
@@ -164,6 +172,7 @@ public class BoatEntity extends Entity {
 
     }
 
+    @Override
     public void applyEntityCollision(Entity entityIn) {
         if (entityIn instanceof BoatEntity) {
             if (entityIn.getBoundingBox().minY < this.getBoundingBox().maxY) {
@@ -183,6 +192,7 @@ public class BoatEntity extends Entity {
         }
     }
 
+    @Override
     @OnlyIn(Dist.CLIENT)
     public void performHurtAnimation() {
         this.setForwardDirection(-this.getForwardDirection());
@@ -190,10 +200,12 @@ public class BoatEntity extends Entity {
         this.setDamageTaken(this.getDamageTaken() * 11.0F);
     }
 
+    @Override
     public boolean canBeCollidedWith() {
         return !this.removed;
     }
 
+    @Override
     @OnlyIn(Dist.CLIENT)
     public void setPositionAndRotationDirect(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport) {
         this.lerpX = x;
@@ -204,10 +216,12 @@ public class BoatEntity extends Entity {
         this.lerpSteps = 10;
     }
 
+    @Override
     public Direction getAdjustedHorizontalFacing() {
         return this.getHorizontalFacing().rotateY();
     }
 
+    @Override
     public void tick() {
         this.previousStatus = this.status;
         this.status = this.getBoatStatus();
@@ -597,6 +611,7 @@ public class BoatEntity extends Entity {
         }
     }
 
+    @Override
     public void updatePassenger(Entity passenger) {
         if (this.isPassenger(passenger)) {
             float f = 0.0F;
@@ -637,15 +652,18 @@ public class BoatEntity extends Entity {
         entityToUpdate.setRotationYawHead(entityToUpdate.rotationYaw);
     }
 
+    @Override
     @OnlyIn(Dist.CLIENT)
     public void applyOrientationToEntity(Entity entityToUpdate) {
         this.applyYawToEntity(entityToUpdate);
     }
 
+    @Override
     protected void writeAdditional(CompoundNBT compound) {
         compound.putString("Type", this.getBoatType().getName());
     }
 
+    @Override
     protected void readAdditional(CompoundNBT compound) {
         if (compound.contains("Type", 8)) {
             this.setBoatType(BoatEntity.Type.getTypeFromString(compound.getString("Type")));
@@ -653,6 +671,7 @@ public class BoatEntity extends Entity {
 
     }
 
+    @Override
     public boolean processInitialInteract(PlayerEntity player, Hand hand) {
         if (player.isSneaking()) {
             return false;
@@ -665,6 +684,7 @@ public class BoatEntity extends Entity {
         }
     }
 
+    @Override
     protected void updateFallState(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
         this.lastYd = this.getMotion().y;
         if (!this.isPassenger()) {
@@ -747,10 +767,12 @@ public class BoatEntity extends Entity {
         return BoatEntity.Type.byId(this.dataManager.get(BOAT_TYPE));
     }
 
+    @Override
     protected boolean canFitPassenger(Entity passenger) {
         return this.getPassengers().size() < 2 && !this.areEyesInFluid(FluidTags.WATER);
     }
 
+    @Override
     @Nullable
     public Entity getControllingPassenger() {
         List<Entity> list = this.getPassengers();
@@ -765,6 +787,7 @@ public class BoatEntity extends Entity {
         this.backInputDown = p_184442_4_;
     }
 
+    @Override
     public IPacket<?> createSpawnPacket() {
         return new SSpawnObjectPacket(this);
     }

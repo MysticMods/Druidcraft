@@ -30,6 +30,7 @@ public class SickleItem extends ToolItem implements RadialToolItem, EffectiveSic
         this.radius = builder.getRadius();
     }
 
+    @Override
     public int getRadius() {
         return radius;
     }
@@ -51,10 +52,12 @@ public class SickleItem extends ToolItem implements RadialToolItem, EffectiveSic
         return super.onBlockDestroyed(stack, world, state, pos, entity);
     }
 
+    @Override
     public Set<Block> getEffectiveBlocks() {
         return EFFECTIVE_ON;
     }
 
+    @Override
     public Set<Material> getEffectiveMaterials() {
         return EFFECTIVE_MATERIALS;
     }

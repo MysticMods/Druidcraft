@@ -53,6 +53,7 @@ public class BoatEntityModel extends EntityModel<BoatEntity> {
         this.noWater.rotateAngleX = ((float)Math.PI / 2F);
     }
 
+    @Override
     public void render(BoatEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         GlStateManager.rotatef(90.0F, 0.0F, 1.0F, 0.0F);
         this.setRotationAngles(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
