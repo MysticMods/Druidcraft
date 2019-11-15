@@ -45,21 +45,30 @@ public class EntityRegistry
 
     public static final EntityType<BoatEntity> boat_entity = createEntity(BoatEntity::new, EntityClassification.MISC, "boat", 1.375F, 0.5625F, BoatEntity::new);
 
-    private static <T extends Entity> EntityType<T> createEntity(EntityType.IFactory<T> factory, EntityClassification entityClassification, String name, float width, float height) {
-        return createEntity(factory, entityClassification, name, width, height, null);
+    private static <T extends Entity> EntityType<T> createEntity(EntityType.IFactory<T> factory, EntityClassification entityClassification, String name, float width, float height, BiFunction<FMLPlayMessages.SpawnEntity, World, T> customClientFactory) {
+        return createEntity(factory, entityClassification, name, width, height, -1, customClientFactory);
     }
 
-    private static <T extends Entity> EntityType<T> createEntity(EntityType.IFactory<T> factory, EntityClassification entityClassification, String name, float width, float height, BiFunction<FMLPlayMessages.SpawnEntity, World, T> customClientFactory) {
+    private static <T extends Entity> EntityType<T> createEntity(EntityType.IFactory<T> factory, EntityClassification entityClassification, String name, float width, float height) {
+        return createEntity(factory, entityClassification, name, width, height, -1, null);
+    }
+
+    private static <T extends Entity> EntityType<T> createEntity(EntityType.IFactory<T> factory, EntityClassification entityClassification, String name, float width, float height, int trackingRange,  BiFunction<FMLPlayMessages.SpawnEntity, World, T> customClientFactory) {
         ResourceLocation location = new ResourceLocation(Druidcraft.MODID, name);
 
         EntityType.Builder<T> builder = EntityType.Builder.create(factory, entityClassification)
-                .size(width, height).setTrackingRange(64)
+                .size(width, height)
                 .setShouldReceiveVelocityUpdates(true)
                 .setUpdateInterval(3);
 
         if (customClientFactory != null) {
             builder.setCustomClientFactory(customClientFactory);
         }
+        if (trackingRange != -1) {
+            builder.setTrackingRange(trackingRange);
+        }
+
+        EntityType
 
         EntityType<T> entity = builder.build(location.toString());
 
