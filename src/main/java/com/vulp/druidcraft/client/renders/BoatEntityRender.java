@@ -15,7 +15,7 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 @OnlyIn(Dist.CLIENT)
 public class BoatEntityRender extends EntityRenderer<BoatEntity> {
-    private static final ResourceLocation[] BOAT_TEXTURES = new ResourceLocation[]{new ResourceLocation(DruidcraftRegistry.MODID + "textures/entity/boat/darkwood.png")};
+    private static final ResourceLocation[] BOAT_TEXTURES = new ResourceLocation[]{new ResourceLocation(DruidcraftRegistry.MODID, "textures/entity/boat/darkwood.png")};
     protected final BoatEntityModel field_76998_a = new BoatEntityModel();
 
     public BoatEntityRender(EntityRendererManager renderManagerIn) {
