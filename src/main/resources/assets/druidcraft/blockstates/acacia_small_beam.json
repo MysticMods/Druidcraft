@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "axis=y":    { "model": "druidcraft:block/acacia_small_beam" },
+        "axis=z":     { "model": "druidcraft:block/acacia_small_beam", "x": 90 },
+        "axis=x":     { "model": "druidcraft:block/acacia_small_beam", "x": 90, "y": 90 }
+    }
+}

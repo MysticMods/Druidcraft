@@ -1,0 +1,7 @@
+{
+    "parent": "druidcraft:block/small_beam",
+    "textures": {
+        "end": "druidcraft:block/darkwood_small_beam_top",
+        "side": "druidcraft:block/darkwood_beam"
+    }
+}

@@ -1,4 +1,4 @@
-package com.vulp.druidcraft.entities.tileentity;
+package com.vulp.druidcraft.tileentity;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.vulp.druidcraft.registry.TileEntityRegistry;
@@ -10,8 +10,6 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
@@ -26,7 +24,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.function.Function;
 
-public class SignTileEntity extends TileEntity {
+ public class SignTileEntity extends net.minecraft.tileentity.SignTileEntity {
     public final ITextComponent[] signText = new ITextComponent[]{new StringTextComponent(""), new StringTextComponent(""), new StringTextComponent(""), new StringTextComponent("")};
     @OnlyIn(Dist.CLIENT)
     private boolean field_214070_b;
@@ -39,11 +37,11 @@ public class SignTileEntity extends TileEntity {
     private DyeColor textColor;
 
     public SignTileEntity() {
-        super(TileEntityRegistry.sign_te);
-        this.textColor = DyeColor.BLACK;
+    //    super(TileEntityRegistry.sign_te);
+    //    this.textColor = DyeColor.BLACK;
     }
 
-    public CompoundNBT write(CompoundNBT p_189515_1_) {
+    /* public CompoundNBT write(CompoundNBT p_189515_1_) {
         super.write(p_189515_1_);
 
         for(int lvt_2_1_ = 0; lvt_2_1_ < 4; ++lvt_2_1_) {
@@ -205,5 +203,5 @@ public class SignTileEntity extends TileEntity {
     @OnlyIn(Dist.CLIENT)
     public int func_214067_u() {
         return this.field_214072_h;
-    }
+    } */
 }

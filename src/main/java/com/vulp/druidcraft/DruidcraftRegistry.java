@@ -1,5 +1,6 @@
 package com.vulp.druidcraft;
 
+import com.mojang.datafixers.types.templates.Tag;
 import com.vulp.druidcraft.blocks.*;
 import com.vulp.druidcraft.blocks.DoorBlock;
 import com.vulp.druidcraft.blocks.OreBlock;
@@ -13,11 +14,8 @@ import com.vulp.druidcraft.blocks.WallSignBlock;
 import com.vulp.druidcraft.blocks.WoodButtonBlock;
 import com.vulp.druidcraft.blocks.trees.DarkwoodTree;
 import com.vulp.druidcraft.entities.BoatEntity;
+import com.vulp.druidcraft.items.*;
 import com.vulp.druidcraft.items.BoatItem;
-import com.vulp.druidcraft.items.ItemProperties;
-import com.vulp.druidcraft.items.PlantableItem;
-import com.vulp.druidcraft.items.SickleItem;
-import com.vulp.druidcraft.items.SmeltableItem;
 import com.vulp.druidcraft.recipes.WaterDependentRecipe;
 import com.vulp.druidcraft.registry.*;
 import com.vulp.druidcraft.world.biomes.DarkwoodForest;
@@ -33,13 +31,11 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.particles.ParticleType;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.BiomeManager;
-import net.minecraftforge.common.PlantType;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.*;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -69,7 +65,9 @@ public class DruidcraftRegistry {
                         ItemRegistry.fiery_glass = new SmeltableItem(new Item.Properties().group(DRUIDCRAFT), 2400).setRegistryName(location("fiery_glass")),
                         ItemRegistry.rockroot = new Item(new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("rockroot")),
                         ItemRegistry.chitin = new Item(new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("chitin")),
-                        ItemRegistry.darkwood_boat = new BoatItem(BoatEntity.Type.DARKWOOD, new Item.Properties().maxStackSize(1).group(DRUIDCRAFT)).setRegistryName(location("darkwood_boat")),
+                        // ItemRegistry.darkwood_boat = new BoatItem(BoatEntity.Type.DARKWOOD, new Item.Properties().maxStackSize(1).group(DRUIDCRAFT)).setRegistryName(location("darkwood_boat")),
+
+                        ItemRegistry.knife = new KnifeItem(new Item.Properties().group(DRUIDCRAFT).maxStackSize(1)).setRegistryName(location("knife")),
 
                         //Tools & Armour:
                         ItemRegistry.bone_sword = new SwordItem(ToolMaterialRegistry.bone, 3, -2.4f, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("bone_sword")),
@@ -130,7 +128,7 @@ public class DruidcraftRegistry {
                         ItemRegistry.darkwood_button = new BlockItem(BlockRegistry.darkwood_button, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_button.getRegistryName()),
                         ItemRegistry.darkwood_trapdoor = new BlockItem(BlockRegistry.darkwood_trapdoor, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_trapdoor.getRegistryName()),
                         ItemRegistry.darkwood_door = new BlockItem(BlockRegistry.darkwood_door, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_door.getRegistryName()),
-                        ItemRegistry.darkwood_sign = new WallOrFloorItem(BlockRegistry.darkwood_sign, BlockRegistry.darkwood_wall_sign, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_sign.getRegistryName()),
+                        // ItemRegistry.darkwood_sign = new WallOrFloorItem(BlockRegistry.darkwood_sign, BlockRegistry.darkwood_wall_sign, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_sign.getRegistryName()),
 
                         ItemRegistry.oak_beam = new BlockItem(BlockRegistry.oak_beam, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.oak_beam.getRegistryName()),
                         ItemRegistry.spruce_beam = new BlockItem(BlockRegistry.spruce_beam, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.spruce_beam.getRegistryName()),
@@ -139,6 +137,13 @@ public class DruidcraftRegistry {
                         ItemRegistry.acacia_beam = new BlockItem(BlockRegistry.acacia_beam, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.acacia_beam.getRegistryName()),
                         ItemRegistry.dark_oak_beam = new BlockItem(BlockRegistry.dark_oak_beam, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.dark_oak_beam.getRegistryName()),
                         ItemRegistry.darkwood_beam = new BlockItem(BlockRegistry.darkwood_beam, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_beam.getRegistryName()),
+                        ItemRegistry.oak_small_beam = new BlockItem(BlockRegistry.oak_small_beam, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.oak_small_beam.getRegistryName()),
+                        ItemRegistry.spruce_small_beam = new BlockItem(BlockRegistry.spruce_small_beam, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.spruce_small_beam.getRegistryName()),
+                        ItemRegistry.birch_small_beam = new BlockItem(BlockRegistry.birch_small_beam, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.birch_small_beam.getRegistryName()),
+                        ItemRegistry.jungle_small_beam = new BlockItem(BlockRegistry.jungle_small_beam, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.jungle_small_beam.getRegistryName()),
+                        ItemRegistry.acacia_small_beam = new BlockItem(BlockRegistry.acacia_small_beam, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.acacia_small_beam.getRegistryName()),
+                        ItemRegistry.dark_oak_small_beam = new BlockItem(BlockRegistry.dark_oak_small_beam, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.dark_oak_small_beam.getRegistryName()),
+                        ItemRegistry.darkwood_small_beam = new BlockItem(BlockRegistry.darkwood_small_beam, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_small_beam.getRegistryName()),
                         ItemRegistry.oak_panels = new BlockItem(BlockRegistry.oak_panels, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.oak_panels.getRegistryName()),
                         ItemRegistry.spruce_panels = new BlockItem(BlockRegistry.spruce_panels, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.spruce_panels.getRegistryName()),
                         ItemRegistry.birch_panels = new BlockItem(BlockRegistry.birch_panels, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.birch_panels.getRegistryName()),
@@ -206,8 +211,8 @@ public class DruidcraftRegistry {
                         BlockRegistry.darkwood_button = new WoodButtonBlock(WoodButtonBlock.Properties.create(Material.WOOD).hardnessAndResistance(0.5f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("darkwood_button")),
                         BlockRegistry.darkwood_trapdoor = new TrapDoorBlock(TrapDoorBlock.Properties.create(Material.WOOD).hardnessAndResistance(3.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("darkwood_trapdoor")),
                         BlockRegistry.darkwood_door = new DoorBlock(DoorBlock.Properties.create(Material.WOOD).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("darkwood_door")),
-                        BlockRegistry.darkwood_sign = new StandingSignBlock(StandingSignBlock.Properties.create(Material.WOOD).hardnessAndResistance(1.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD).doesNotBlockMovement()).setRegistryName(location("darkwood_sign")),
-                        BlockRegistry.darkwood_wall_sign = new WallSignBlock(WallSignBlock.Properties.create(Material.WOOD).hardnessAndResistance(1.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD).doesNotBlockMovement().lootFrom(BlockRegistry.darkwood_sign)).setRegistryName(location("darkwood_wall_sign")),
+                        // BlockRegistry.darkwood_sign = new StandingSignBlock(StandingSignBlock.Properties.create(Material.WOOD).hardnessAndResistance(1.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD).doesNotBlockMovement()).setRegistryName(location("darkwood_sign")),
+                        // BlockRegistry.darkwood_wall_sign = new WallSignBlock(WallSignBlock.Properties.create(Material.WOOD).hardnessAndResistance(1.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD).doesNotBlockMovement().lootFrom(BlockRegistry.darkwood_sign)).setRegistryName(location("darkwood_wall_sign")),
 
                         BlockRegistry.oak_beam = new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("oak_beam")),
                         BlockRegistry.spruce_beam = new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("spruce_beam")),
@@ -216,6 +221,13 @@ public class DruidcraftRegistry {
                         BlockRegistry.acacia_beam = new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("acacia_beam")),
                         BlockRegistry.dark_oak_beam = new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("dark_oak_beam")),
                         BlockRegistry.darkwood_beam = new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("darkwood_beam")),
+                        BlockRegistry.oak_small_beam = new SmallBeamBlock(SmallBeamBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("oak_small_beam")),
+                        BlockRegistry.spruce_small_beam = new SmallBeamBlock(SmallBeamBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("spruce_small_beam")),
+                        BlockRegistry.birch_small_beam = new SmallBeamBlock(SmallBeamBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("birch_small_beam")),
+                        BlockRegistry.jungle_small_beam = new SmallBeamBlock(SmallBeamBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("jungle_small_beam")),
+                        BlockRegistry.acacia_small_beam = new SmallBeamBlock(SmallBeamBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("acacia_small_beam")),
+                        BlockRegistry.dark_oak_small_beam = new SmallBeamBlock(SmallBeamBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("dark_oak_small_beam")),
+                        BlockRegistry.darkwood_small_beam = new SmallBeamBlock(SmallBeamBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("darkwood_small_beam")),
                         BlockRegistry.oak_panels = new Block(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f, 3.0f).harvestTool(ToolType.AXE)).setRegistryName(location("oak_panels")),
                         BlockRegistry.spruce_panels = new Block(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f, 3.0f).harvestTool(ToolType.AXE)).setRegistryName(location("spruce_panels")),
                         BlockRegistry.birch_panels = new Block(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f, 3.0f).harvestTool(ToolType.AXE)).setRegistryName(location("birch_panels")),
@@ -257,9 +269,9 @@ public class DruidcraftRegistry {
         EntityRegistryEvent.getRegistry().registerAll
                 (
                         EntityRegistry.dreadfish_entity,
-                        EntityRegistry.beetle_entity,
+                        EntityRegistry.beetle_entity
 
-                        EntityRegistry.boat_entity
+                        // EntityRegistry.boat_entity
                 );
 
         EntityRegistry.registerEntityWorldSpawns();
@@ -272,7 +284,7 @@ public class DruidcraftRegistry {
     {
         TileEntityRegistryEvent.getRegistry().registerAll
                 (
-                        TileEntityRegistry.sign_te
+                        // TileEntityRegistry.sign_te
                 );
 
         LOGGER.info("Tile entities registered.");

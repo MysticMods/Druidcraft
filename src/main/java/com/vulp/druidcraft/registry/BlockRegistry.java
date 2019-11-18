@@ -1,6 +1,10 @@
 package com.vulp.druidcraft.registry;
 
+import com.vulp.druidcraft.Druidcraft;
 import net.minecraft.block.Block;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.Tag;
+import net.minecraft.util.ResourceLocation;
 
 public class BlockRegistry
 {
@@ -38,6 +42,13 @@ public class BlockRegistry
     public static Block acacia_beam;
     public static Block dark_oak_beam;
     public static Block darkwood_beam;
+    public static Block oak_small_beam;
+    public static Block spruce_small_beam;
+    public static Block birch_small_beam;
+    public static Block jungle_small_beam;
+    public static Block acacia_small_beam;
+    public static Block dark_oak_small_beam;
+    public static Block darkwood_small_beam;
     public static Block oak_panels;
     public static Block spruce_panels;
     public static Block birch_panels;

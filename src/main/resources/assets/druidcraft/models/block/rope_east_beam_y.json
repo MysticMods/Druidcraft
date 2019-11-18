@@ -1,0 +1,64 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "druidcraft:block/rope",
+		"1": "druidcraft:block/rope_overlay",
+		"2": "druidcraft:block/rope_connector_2",
+		"particle": "druidcraft:block/rope"
+	},
+	"elements": [
+		{
+			"name": "east_end",
+			"from": [9, 7, 7],
+			"to": [21, 9, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9, 8]},
+			"faces": {
+				"north": {"uv": [4, 7, 15, 9], "texture": "#0"},
+				"south": {"uv": [0, 12, 11, 14], "texture": "#0"},
+				"up": {"uv": [0, 10, 11, 12], "texture": "#0"},
+				"down": {"uv": [0, 14, 11, 16], "texture": "#0"}
+			}
+		},
+		{
+			"name": "east_end_overlay",
+			"from": [8.8, 6.8, 6.8],
+			"to": [21.2, 9.2, 9.2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9, 8]},
+			"faces": {
+				"north": {"uv": [4, 7, 15, 9], "texture": "#1"},
+				"south": {"uv": [0, 12, 11, 14], "texture": "#1"},
+				"west": {"uv": [0, 0, 0, 0], "texture": "#1"},
+				"up": {"uv": [0, 10, 11, 12], "texture": "#1"},
+				"down": {"uv": [0, 14, 11, 16], "texture": "#1"}
+			}
+		},
+		{
+			"name": "tied",
+			"from": [20, 4, 4],
+			"to": [28, 12, 12],
+			"rotation": {"angle": 0, "axis": "z", "origin": [24, 8, 24]},
+			"faces": {
+				"north": {"uv": [0, 8, 8, 16], "texture": "#2"},
+				"east": {"uv": [0, 8, 8, 16], "texture": "#2"},
+				"south": {"uv": [0, 8, 8, 16], "texture": "#2"},
+				"west": {"uv": [0, 8, 8, 16], "texture": "#2"},
+				"up": {"uv": [0, 0, 8, 8], "texture": "#2"},
+				"down": {"uv": [0, 0, 8, 8], "texture": "#2"}
+			}
+		},
+		{
+			"name": "tied_overlay",
+			"from": [19.8, 3.8, 3.8],
+			"to": [28.2, 12.2, 12.2],
+			"rotation": {"angle": 0, "axis": "z", "origin": [24, 8, 8]},
+			"faces": {
+				"north": {"uv": [8, 8, 16, 16], "texture": "#2"},
+				"east": {"uv": [8, 8, 16, 16], "texture": "#2"},
+				"south": {"uv": [8, 8, 16, 16], "texture": "#2"},
+				"west": {"uv": [8, 8, 16, 16], "texture": "#2"},
+				"up": {"uv": [8, 0, 16, 8], "texture": "#2"},
+				"down": {"uv": [8, 0, 16, 8], "texture": "#2"}
+			}
+		}
+	]
+}

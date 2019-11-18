@@ -1,7 +1,10 @@
 package com.vulp.druidcraft.registry;
 
+import com.google.common.collect.ImmutableSet;
 import com.vulp.druidcraft.Druidcraft;
-import com.vulp.druidcraft.entities.tileentity.SignTileEntity;
+import com.vulp.druidcraft.tileentity.SignTileEntity;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 
@@ -9,12 +12,13 @@ import java.util.function.Supplier;
 
 public class TileEntityRegistry {
 
-    public static TileEntityType<?> sign_te = createTileEntity(SignTileEntity::new);
+//    public static TileEntityType<SignTileEntity> sign_te = createTileEntity(SignTileEntity::new, "sign", BlockRegistry.darkwood_sign);
 
 
-    private static <T extends TileEntity> TileEntityType<?> createTileEntity(Supplier<? extends T> factory) {
+    private static <T extends TileEntity> TileEntityType<?> createTileEntity(Supplier<T> factory, String name, Block... validBlocks) {
 
-        TileEntityType<?> type = TileEntityType.Builder.create(factory).build(null).setRegistryName(Druidcraft.MODID, "sign");
+        TileEntityType<T> type = TileEntityType.Builder.create(factory, validBlocks).build(null);
+        type.setRegistryName(Druidcraft.MODID, name);
 
         return type;
     }

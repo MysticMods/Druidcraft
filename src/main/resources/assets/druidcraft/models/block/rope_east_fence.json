@@ -1,0 +1,62 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "druidcraft:block/rope",
+		"1": "druidcraft:block/rope_overlay",
+		"2": "druidcraft:block/rope_connector_1",
+		"particle": "druidcraft:block/rope"
+	},
+	"elements": [
+		{
+			"name": "east_end",
+			"from": [9, 7, 7],
+			"to": [21, 9, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9, 8]},
+			"faces": {
+				"north": {"uv": [4, 7, 15, 9], "texture": "#0"},
+				"south": {"uv": [0, 12, 11, 14], "texture": "#0"},
+				"up": {"uv": [0, 10, 11, 12], "texture": "#0"},
+				"down": {"uv": [0, 14, 11, 16], "texture": "#0"}
+			}
+		},
+		{
+			"name": "east_end_overlay",
+			"from": [8.8, 6.8, 6.8],
+			"to": [21.2, 9.2, 9.2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9, 8]},
+			"faces": {
+				"north": {"uv": [4, 7, 15, 9], "texture": "#1"},
+				"south": {"uv": [0, 12, 11, 14], "texture": "#1"},
+				"west": {"uv": [0, 0, 0, 0], "texture": "#1"},
+				"up": {"uv": [0, 10, 11, 12], "texture": "#1"},
+				"down": {"uv": [0, 14, 11, 16], "texture": "#1"}
+			}
+		},
+		{
+			"name": "tied",
+			"from": [21, 4, 5],
+			"to": [27, 12, 11],
+			"faces": {
+				"north": {"uv": [0, 6, 6, 14], "texture": "#2"},
+				"east": {"uv": [0, 6, 6, 14], "texture": "#2"},
+				"south": {"uv": [0, 6, 6, 14], "texture": "#2"},
+				"west": {"uv": [0, 6, 6, 14], "texture": "#2"},
+				"up": {"uv": [0, 0, 6, 6], "texture": "#2"},
+				"down": {"uv": [0, 0, 6, 6], "texture": "#2"}
+			}
+		},
+		{
+			"name": "tied_overlay",
+			"from": [20.8, 3.8, 4.8],
+			"to": [27.2, 12.2, 11.2],
+			"faces": {
+				"north": {"uv": [6, 6, 12, 14], "texture": "#2"},
+				"east": {"uv": [6, 6, 12, 14], "texture": "#2"},
+				"south": {"uv": [6, 6, 12, 14], "texture": "#2"},
+				"west": {"uv": [6, 6, 12, 14], "texture": "#2"},
+				"up": {"uv": [6, 0, 12, 6], "texture": "#2"},
+				"down": {"uv": [6, 0, 12, 6], "texture": "#2"}
+			}
+		}
+	]
+}

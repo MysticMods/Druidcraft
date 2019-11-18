@@ -4,7 +4,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.blocks.StandingSignBlock;
 import com.vulp.druidcraft.blocks.WallSignBlock;
-import com.vulp.druidcraft.entities.tileentity.SignTileEntity;
+import com.vulp.druidcraft.tileentity.SignTileEntity;
 import com.vulp.druidcraft.registry.BlockRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -13,15 +13,12 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.RenderComponentsUtil;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.model.SignModel;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 import java.util.List;
 

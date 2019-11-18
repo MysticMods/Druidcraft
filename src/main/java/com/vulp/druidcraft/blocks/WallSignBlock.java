@@ -1,7 +1,6 @@
 package com.vulp.druidcraft.blocks;
 
-import com.vulp.druidcraft.entities.tileentity.SignTileEntity;
-import com.vulp.druidcraft.registry.TileEntityRegistry;
+import com.vulp.druidcraft.tileentity.SignTileEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeItem;
@@ -12,7 +11,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.common.extensions.IForgeBlock;
 
 import javax.annotation.Nullable;
 

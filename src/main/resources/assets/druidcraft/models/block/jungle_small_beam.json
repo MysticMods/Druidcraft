@@ -1,0 +1,7 @@
+{
+    "parent": "druidcraft:block/small_beam",
+    "textures": {
+        "end": "druidcraft:block/jungle_small_beam_top",
+        "side": "druidcraft:block/jungle_beam"
+    }
+}

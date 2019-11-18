@@ -59,6 +59,8 @@ public class ItemRegistry
     public static Item moonstone_leggings;
     public static Item moonstone_boots;
 
+    public static Item knife;
+
     public static Item hemp_crop;
     public static Item amber_ore;
     public static Item moonstone_ore;
@@ -94,6 +96,13 @@ public class ItemRegistry
     public static Item acacia_beam;
     public static Item dark_oak_beam;
     public static Item darkwood_beam;
+    public static Item oak_small_beam;
+    public static Item spruce_small_beam;
+    public static Item birch_small_beam;
+    public static Item jungle_small_beam;
+    public static Item acacia_small_beam;
+    public static Item dark_oak_small_beam;
+    public static Item darkwood_small_beam;
     public static Item oak_panels;
     public static Item spruce_panels;
     public static Item birch_panels;
