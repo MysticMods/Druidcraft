@@ -1,5 +1,4 @@
 {
-  "block.druidcraft.hemp_crop": "Hemp Crop",
   "block.druidcraft.amber_ore": "Amber Ore",
   "block.druidcraft.moonstone_ore": "Moonstone Ore",
   "block.druidcraft.fiery_glass_ore": "Fiery Glass Ore",
@@ -37,6 +36,9 @@
   "item.druidcraft.bone_chestplate": "Bone Chestplate",
   "item.druidcraft.bone_leggings": "Bone Leggings",
   "item.druidcraft.bone_boots": "Bone Boots",
+  
+  "item.druidcraft.knife": "Knife",
+  "item.druidcraft.knife.description1": "Used to configure rope blocks. (WIP)",
 
   "item.druidcraft.moonstone_sword": "Moonstone Sword",
   "item.druidcraft.moonstone_shovel": "Moonstone Shovel",
@@ -77,6 +79,13 @@
   "block.druidcraft.acacia_beam": "Acacia Beam",
   "block.druidcraft.dark_oak_beam": "Dark Oak Beam",
   "block.druidcraft.darkwood_beam": "Darkwood Beam",
+  "block.druidcraft.oak_small_beam": "Small Oak Beam",
+  "block.druidcraft.spruce_small_beam": "Small Spruce Beam",
+  "block.druidcraft.birch_small_beam": "Small Birch Beam",
+  "block.druidcraft.jungle_small_beam": "Small Jungle Beam",
+  "block.druidcraft.acacia_small_beam": "Small Acacia Beam",
+  "block.druidcraft.dark_oak_small_beam": "Small Dark Oak Beam",
+  "block.druidcraft.darkwood_small_beam": "Small Darkwood Beam",
   "block.druidcraft.oak_panels": "Oak Panels",
   "block.druidcraft.spruce_panels": "Spruce Panels",
   "block.druidcraft.birch_panels": "Birch Panels",
@@ -128,6 +137,9 @@
   "advancements.druidcraft.fiery_torch.description": "Get superior torches",
   "advancements.druidcraft.darkwood_forest.title": "Dark Times",
   "advancements.druidcraft.darkwood_forest.description": "Stumble into a darkwood forest",
+  "advancements.druidcraft.place_rope.title": "Roped In",
+  "advancements.druidcraft.place_rope.description": "Try placing down some rope",
   "advancements.druidcraft.collector.title": "Collector",
-  "advancements.druidcraft.collector.description": "Collect enough ore to create a block from it."
+  "advancements.druidcraft.collector.description": "Collect a moonstone, fiery glass, rockroot and amber block"
+  
 }

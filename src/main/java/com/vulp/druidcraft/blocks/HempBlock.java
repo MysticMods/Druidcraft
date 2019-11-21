@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.blocks;
 
+import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.registry.BlockRegistry;
 import com.vulp.druidcraft.registry.ItemRegistry;
 import net.minecraft.block.Block;

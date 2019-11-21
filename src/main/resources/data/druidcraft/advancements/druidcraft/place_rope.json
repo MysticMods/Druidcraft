@@ -1,0 +1,31 @@
+{
+  "parent": "druidcraft:druidcraft/grow_hemp",
+  "display": {
+    "icon": {
+      "item": "druidcraft:rope"
+    },
+    "title": {
+      "translate": "advancements.druidcraft.place_rope.title"
+    },
+    "description": {
+      "translate": "advancements.druidcraft.place_rope.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "rope": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "druidcraft:rope"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "rope"
+    ]
+  ]
+}

@@ -4,25 +4,25 @@ import com.google.common.collect.Maps;
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.api.IKnifeable;
 import com.vulp.druidcraft.api.RopeConnectionType;
+import com.vulp.druidcraft.registry.BlockRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.*;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.IProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Util;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -316,7 +316,7 @@ public class RopeBlock extends SixWayBlock implements IBucketPickupHandler, ILiq
 
         RopeConnectionType downType = RopeConnectionType.NONE;
         BlockState downState = world.getBlockState(pos.offset(Direction.DOWN));
-        if (downState.func_224755_d(world, pos.offset(Direction.DOWN), Direction.DOWN.getOpposite()) || downState.getBlock() == this || downState.getBlock().isIn(BlockTags.FENCES)) {
+        if (downState.func_224755_d(world, pos.offset(Direction.DOWN), Direction.DOWN.getOpposite()) || downState.getBlock() == this || downState.getBlock().isIn(BlockTags.FENCES) || downState.getBlock() instanceof RopeLanternBlock) {
             downType = RopeConnectionType.REGULAR;
         } else if (downState.getBlock() instanceof SmallBeamBlock) {
             downType = beamChecker(downState, RopeConnectionType.TIED_BEAM_2, RopeConnectionType.REGULAR, RopeConnectionType.TIED_BEAM_1);
@@ -329,6 +329,23 @@ public class RopeBlock extends SixWayBlock implements IBucketPickupHandler, ILiq
                 .with(WEST, westType)
                 .with(UP, upType)
                 .with(DOWN, downType));
+    }
+
+    @Override
+    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        ItemStack itemstack = player.getHeldItem(handIn);
+        Item item = itemstack.getItem();
+
+        if (item == Items.LANTERN && hit.getFace() == Direction.DOWN && worldIn.getBlockState(pos.down()).getMaterial().isReplaceable()) {
+            if (!player.abilities.isCreativeMode) {
+                itemstack.shrink(1);
+            }
+            worldIn.setBlockState(pos.down(), BlockRegistry.rope_lantern.getDefaultState());
+            worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_LANTERN_PLACE, SoundCategory.BLOCKS, 1.0F, 0.88F, true);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

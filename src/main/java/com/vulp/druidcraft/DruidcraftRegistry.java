@@ -1,6 +1,5 @@
 package com.vulp.druidcraft;
 
-import com.mojang.datafixers.types.templates.Tag;
 import com.vulp.druidcraft.blocks.*;
 import com.vulp.druidcraft.blocks.DoorBlock;
 import com.vulp.druidcraft.blocks.OreBlock;
@@ -8,30 +7,22 @@ import com.vulp.druidcraft.blocks.PressurePlateBlock;
 import com.vulp.druidcraft.blocks.SaplingBlock;
 import com.vulp.druidcraft.blocks.StairsBlock;
 import com.vulp.druidcraft.blocks.FieryTorchBlock;
-import com.vulp.druidcraft.blocks.StandingSignBlock;
 import com.vulp.druidcraft.blocks.TrapDoorBlock;
-import com.vulp.druidcraft.blocks.WallSignBlock;
 import com.vulp.druidcraft.blocks.WoodButtonBlock;
 import com.vulp.druidcraft.blocks.trees.DarkwoodTree;
-import com.vulp.druidcraft.entities.BoatEntity;
+import com.vulp.druidcraft.blocks.trees.ElderTree;
 import com.vulp.druidcraft.items.*;
-import com.vulp.druidcraft.items.BoatItem;
-import com.vulp.druidcraft.recipes.WaterDependentRecipe;
 import com.vulp.druidcraft.registry.*;
 import com.vulp.druidcraft.world.biomes.DarkwoodForest;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.*;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.particles.ParticleType;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
@@ -40,7 +31,6 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -130,6 +120,11 @@ public class DruidcraftRegistry {
                         ItemRegistry.darkwood_door = new BlockItem(BlockRegistry.darkwood_door, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_door.getRegistryName()),
                         // ItemRegistry.darkwood_sign = new WallOrFloorItem(BlockRegistry.darkwood_sign, BlockRegistry.darkwood_wall_sign, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_sign.getRegistryName()),
 
+
+                        ItemRegistry.elder_sapling = new BlockItem(BlockRegistry.elder_sapling, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.elder_sapling.getRegistryName()),
+                        // ItemRegistry.elder_crop = new BlockItem(BlockRegistry.elder_crop, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.elder_crop.getRegistryName()),
+
+
                         ItemRegistry.oak_beam = new BlockItem(BlockRegistry.oak_beam, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.oak_beam.getRegistryName()),
                         ItemRegistry.spruce_beam = new BlockItem(BlockRegistry.spruce_beam, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.spruce_beam.getRegistryName()),
                         ItemRegistry.birch_beam = new BlockItem(BlockRegistry.birch_beam, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.birch_beam.getRegistryName()),
@@ -214,6 +209,12 @@ public class DruidcraftRegistry {
                         // BlockRegistry.darkwood_sign = new StandingSignBlock(StandingSignBlock.Properties.create(Material.WOOD).hardnessAndResistance(1.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD).doesNotBlockMovement()).setRegistryName(location("darkwood_sign")),
                         // BlockRegistry.darkwood_wall_sign = new WallSignBlock(WallSignBlock.Properties.create(Material.WOOD).hardnessAndResistance(1.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD).doesNotBlockMovement().lootFrom(BlockRegistry.darkwood_sign)).setRegistryName(location("darkwood_wall_sign")),
 
+
+                        BlockRegistry.elder_sapling = new SaplingBlock(new ElderTree(), SaplingBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).doesNotBlockMovement().sound(SoundType.PLANT)).setRegistryName(location("elder_sapling")),
+                        // BlockRegistry.elder_crop = new LeavesCropBlock(LeavesCropBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).doesNotBlockMovement().sound(SoundType.PLANT)).setRegistryName(location("elder_crop")),
+
+
+
                         BlockRegistry.oak_beam = new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("oak_beam")),
                         BlockRegistry.spruce_beam = new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("spruce_beam")),
                         BlockRegistry.birch_beam = new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("birch_beam")),
@@ -238,8 +239,10 @@ public class DruidcraftRegistry {
                         BlockRegistry.dry_mud_bricks = new Block(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(2.0F, 4.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0)).setRegistryName(location("dry_mud_bricks")),
                         BlockRegistry.wet_mud_bricks = new WetMudBlock(BlockRegistry.dry_mud_bricks, WetMudBlock.Properties.create(Material.EARTH).sound(SoundType.SLIME).hardnessAndResistance(0.8f).harvestTool(ToolType.SHOVEL).tickRandomly()).setRegistryName(location("wet_mud_bricks")),
                         BlockRegistry.fiery_torch = new FieryTorchBlock(FieryTorchBlock.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).lightValue(15).sound(SoundType.BAMBOO)).setRegistryName((location("fiery_torch"))),
-                        BlockRegistry.wall_fiery_torch = new WallFieryTorchBlock(WallFieryTorchBlock.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).lightValue(15).sound(SoundType.BAMBOO).lootFrom(BlockRegistry.fiery_torch)).setRegistryName((location("wall_fiery_torch"))),
+                        BlockRegistry.wall_fiery_torch = new WallFieryTorchBlock(WallFieryTorchBlock.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).lightValue(15).sound(SoundType.BAMBOO).lootFrom(BlockRegistry.fiery_torch)).setRegistryName(location("wall_fiery_torch")),
                         BlockRegistry.rope = new RopeBlock(RopeBlock.Properties.create(Material.WOOL).sound(SoundType.CLOTH).hardnessAndResistance(0.0f)).setRegistryName(location("rope")),
+                        BlockRegistry.rope_lantern = new RopeLanternBlock(RopeLanternBlock.Properties.create(Material.IRON).hardnessAndResistance(3.5F).sound(SoundType.LANTERN).lightValue(15).lootFrom(Blocks.LANTERN)).setRegistryName(location("rope_lantern")),
+
 
                         BlockRegistry.black_soulfire = new SoulfireBlock(DyeColor.BLACK, SoulfireBlock.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f).doesNotBlockMovement().lightValue(13)).setRegistryName(location("black_soulfire")),
                         BlockRegistry.red_soulfire = new SoulfireBlock(DyeColor.RED, SoulfireBlock.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f).doesNotBlockMovement().lightValue(13)).setRegistryName(location("red_soulfire")),

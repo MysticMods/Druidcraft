@@ -89,6 +89,23 @@ public class ItemRegistry
     public static Item darkwood_sign;
     public static Item darkwood_boat;
 
+    public static Item elder_log;
+    public static Item stripped_elder_log;
+    public static Item elder_leaves;
+    public static Item elder_sapling;
+    public static Item elder_planks;
+    public static Item stripped_elder_wood;
+    public static Item elder_wood;
+    public static Item elder_slab;
+    public static Item elder_stairs;
+    public static Item elder_fence;
+    public static Item elder_fence_gate;
+    public static Item elder_pressure_plate;
+    public static Item elder_button;
+    public static Item elder_trapdoor;
+    public static Item elder_door;
+    public static Item elder_crop;
+
     public static Item oak_beam;
     public static Item spruce_beam;
     public static Item birch_beam;

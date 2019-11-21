@@ -35,6 +35,25 @@ public class BlockRegistry
     public static Block darkwood_door;
     public static Block darkwood_sign;
     public static Block darkwood_wall_sign;
+
+    public static Block elder_log;
+    public static Block stripped_elder_log;
+    public static Block elder_leaves;
+    public static Block elder_sapling;
+    public static Block potted_elder_sapling;
+    public static Block elder_planks;
+    public static Block stripped_elder_wood;
+    public static Block elder_wood;
+    public static Block elder_slab;
+    public static Block elder_stairs;
+    public static Block elder_fence;
+    public static Block elder_fence_gate;
+    public static Block elder_pressure_plate;
+    public static Block elder_button;
+    public static Block elder_trapdoor;
+    public static Block elder_door;
+    public static Block elder_crop;
+
     public static Block oak_beam;
     public static Block spruce_beam;
     public static Block birch_beam;
@@ -77,4 +96,5 @@ public class BlockRegistry
     public static Block magenta_soulfire;
     public static Block orange_soulfire;
     public static Block white_soulfire;
+    public static Block rope_lantern;
 }
