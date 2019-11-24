@@ -94,6 +94,9 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
 
     public static boolean placement(EntityType<?> type, IWorld worldIn, SpawnReason reason, BlockPos pos, Random randomIn) {
         Block block = worldIn.getBlockState(pos.down()).getBlock();
+        if (worldIn.getLight(pos) >= 8 && randomIn.nextInt(5) == 0) {
+            return false;
+        }
         return worldIn.getDifficulty() != Difficulty.PEACEFUL && block == Blocks.GRASS_BLOCK;
     }
 
