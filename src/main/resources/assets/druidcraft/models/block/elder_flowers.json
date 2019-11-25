@@ -1,7 +1,0 @@
-{
-    "parent": "block/vine_1",
-    "textures": {
-        "particle": "druidcraft:block/elder_flowers",
-        "vine": "druidcraft:block/elder_flowers"
-    }
-}

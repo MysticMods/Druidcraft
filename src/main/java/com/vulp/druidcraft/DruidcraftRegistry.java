@@ -122,7 +122,7 @@ public class DruidcraftRegistry {
 
 
                         ItemRegistry.elder_sapling = new BlockItem(BlockRegistry.elder_sapling, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.elder_sapling.getRegistryName()),
-                        // ItemRegistry.elder_crop = new BlockItem(BlockRegistry.elder_crop, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.elder_crop.getRegistryName()),
+                        ItemRegistry.elder_fruit = new BlockItem(BlockRegistry.elder_fruit, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.elder_fruit.getRegistryName()),
 
 
                         ItemRegistry.oak_beam = new BlockItem(BlockRegistry.oak_beam, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.oak_beam.getRegistryName()),
@@ -211,7 +211,7 @@ public class DruidcraftRegistry {
 
 
                         BlockRegistry.elder_sapling = new SaplingBlock(new ElderTree(), SaplingBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).doesNotBlockMovement().sound(SoundType.PLANT)).setRegistryName(location("elder_sapling")),
-                        // BlockRegistry.elder_crop = new LeavesCropBlock(LeavesCropBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).doesNotBlockMovement().sound(SoundType.PLANT)).setRegistryName(location("elder_crop")),
+                        BlockRegistry.elder_fruit = new ElderFruitBlock(ElderFruitBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).doesNotBlockMovement().sound(SoundType.PLANT)).setRegistryName(location("elder_fruit")),
 
 
 

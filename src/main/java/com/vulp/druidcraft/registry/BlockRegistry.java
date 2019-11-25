@@ -52,7 +52,7 @@ public class BlockRegistry
     public static Block elder_button;
     public static Block elder_trapdoor;
     public static Block elder_door;
-    public static Block elder_crop;
+    public static Block elder_fruit;
 
     public static Block oak_beam;
     public static Block spruce_beam;

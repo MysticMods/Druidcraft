@@ -1,0 +1,16 @@
+{
+    "variants": {
+        "facing=south":
+		[ { "model": "druidcraft:block/elder_fruit" } ],
+		"facing=north":
+		[ { "model": "druidcraft:block/elder_fruit", "y": 180 } ],
+		"facing=east":
+		[ { "model": "druidcraft:block/elder_fruit", "y": 270 } ],
+		"facing=west":
+		[ { "model": "druidcraft:block/elder_fruit", "y": 90 } ],
+		"facing=up":
+		[ { "model": "druidcraft:block/elder_fruit", "x": 90 } ],
+		"facing=down":
+		[ { "model": "druidcraft:block/elder_fruit", "x": 270 } ]
+	}
+}

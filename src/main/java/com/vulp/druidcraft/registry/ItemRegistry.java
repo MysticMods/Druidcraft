@@ -104,7 +104,7 @@ public class ItemRegistry
     public static Item elder_button;
     public static Item elder_trapdoor;
     public static Item elder_door;
-    public static Item elder_crop;
+    public static Item elder_fruit;
 
     public static Item oak_beam;
     public static Item spruce_beam;
