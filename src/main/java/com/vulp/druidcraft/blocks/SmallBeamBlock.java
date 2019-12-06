@@ -77,10 +77,10 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         IFluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
         if (context.getFace().getAxis() == Direction.Axis.X) {
-            return this.calculateState(getDefaultState(), context.getWorld(), context.getPos(), false).with(X_AXIS, true).with(DEFAULT_AXIS, Direction.Axis.X).with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
+            return this.calculateState(getDefaultState(), context.getWorld(), context.getPos(), false, null).with(X_AXIS, true).with(DEFAULT_AXIS, Direction.Axis.X).with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
         } else if (context.getFace().getAxis() == Direction.Axis.Z) {
-            return this.calculateState(getDefaultState(), context.getWorld(), context.getPos(), false).with(Z_AXIS, true).with(DEFAULT_AXIS, Direction.Axis.Z).with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
-        } else return this.calculateState(getDefaultState(), context.getWorld(), context.getPos(), false).with(Y_AXIS, true).with(DEFAULT_AXIS, Direction.Axis.Y).with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
+            return this.calculateState(getDefaultState(), context.getWorld(), context.getPos(), false, null).with(Z_AXIS, true).with(DEFAULT_AXIS, Direction.Axis.Z).with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
+        } else return this.calculateState(getDefaultState(), context.getWorld(), context.getPos(), false, null).with(Y_AXIS, true).with(DEFAULT_AXIS, Direction.Axis.Y).with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
         return !state.get(WATERLOGGED);
     }
 
-    private BlockState calculateState (BlockState currentState, World world, BlockPos pos, boolean isUpdate) {
+    private BlockState calculateState (BlockState currentState, World world, BlockPos pos, boolean isUpdate, @Nullable Direction.Axis checkAxis) {
         boolean xBool = false;
         boolean yBool = false;
         boolean zBool = false;
@@ -100,18 +100,24 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
 
         Direction.Axis defaultAxis = currentState.get(DEFAULT_AXIS);
         Direction.Axis newAxis = Direction.Axis.Y;
-        if (!currentState.get(X_AXIS) && ((world.getBlockState(pos.offset(Direction.EAST)).getBlock() == this && world.getBlockState(pos.offset(Direction.EAST)).get(X_AXIS)) || (world.getBlockState(pos.offset(Direction.WEST)).getBlock() == this && world.getBlockState(pos.offset(Direction.WEST)).get(X_AXIS)))) {
-            xBool = true;
-        } else if (currentState.get(DEFAULT_AXIS) == Direction.Axis.X) {
-            defaultAxis = Direction.Axis.Y;
+        if (!isUpdate || checkAxis == Direction.Axis.Z) {
+            if (!currentState.get(X_AXIS) && ((world.getBlockState(pos.offset(Direction.EAST)).getBlock() == this && world.getBlockState(pos.offset(Direction.EAST)).get(X_AXIS)) || (world.getBlockState(pos.offset(Direction.WEST)).getBlock() == this && world.getBlockState(pos.offset(Direction.WEST)).get(X_AXIS)))) {
+                xBool = true;
+            } else if (currentState.get(DEFAULT_AXIS) == Direction.Axis.X) {
+                defaultAxis = Direction.Axis.Y;
+            }
         }
-        if (!currentState.get(Y_AXIS) && ((world.getBlockState(pos.offset(Direction.UP)).getBlock() == this && world.getBlockState(pos.offset(Direction.UP)).get(Y_AXIS)) || (world.getBlockState(pos.offset(Direction.DOWN)).getBlock() == this && world.getBlockState(pos.offset(Direction.DOWN)).get(Y_AXIS)))) {
-            yBool = true;
-        } else if (currentState.get(DEFAULT_AXIS) == Direction.Axis.Y) {
-            defaultAxis = Direction.Axis.Z;
+        if (!isUpdate || checkAxis == Direction.Axis.Y) {
+            if (!currentState.get(Y_AXIS) && ((world.getBlockState(pos.offset(Direction.UP)).getBlock() == this && world.getBlockState(pos.offset(Direction.UP)).get(Y_AXIS)) || (world.getBlockState(pos.offset(Direction.DOWN)).getBlock() == this && world.getBlockState(pos.offset(Direction.DOWN)).get(Y_AXIS)))) {
+                yBool = true;
+            } else if (currentState.get(DEFAULT_AXIS) == Direction.Axis.Y) {
+                defaultAxis = Direction.Axis.Z;
+            }
         }
-        if (!currentState.get(Z_AXIS) && ((world.getBlockState(pos.offset(Direction.NORTH)).getBlock() == this && world.getBlockState(pos.offset(Direction.NORTH)).get(Z_AXIS)) || (world.getBlockState(pos.offset(Direction.SOUTH)).getBlock() == this && world.getBlockState(pos.offset(Direction.SOUTH)).get(Z_AXIS)))) {
-            zBool = true;
+        if (!isUpdate || checkAxis == Direction.Axis.Z) {
+            if (!currentState.get(Z_AXIS) && ((world.getBlockState(pos.offset(Direction.NORTH)).getBlock() == this && world.getBlockState(pos.offset(Direction.NORTH)).get(Z_AXIS)) || (world.getBlockState(pos.offset(Direction.SOUTH)).getBlock() == this && world.getBlockState(pos.offset(Direction.SOUTH)).get(Z_AXIS)))) {
+                zBool = true;
+            }
         }
 
         int count = 0;
@@ -181,7 +187,7 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
             world.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
 
-        return calculateState(state, (World) world, currentPos, true);
+        return calculateState(state, (World) world, currentPos, true, facing.getAxis());
     }
 
     @Override
