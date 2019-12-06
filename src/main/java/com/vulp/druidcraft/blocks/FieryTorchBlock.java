@@ -1,5 +1,7 @@
 package com.vulp.druidcraft.blocks;
 
+import com.vulp.druidcraft.Druidcraft;
+import com.vulp.druidcraft.api.CropLifeStageType;
 import com.vulp.druidcraft.registry.ParticleRegistry;
 import net.minecraft.block.*;
 import net.minecraft.client.util.ITooltipFlag;

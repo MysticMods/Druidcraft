@@ -61,7 +61,8 @@ public class ItemRegistry
 
     public static Item knife;
 
-    public static Item hemp_crop;
+    public static Item blueberries;
+
     public static Item amber_ore;
     public static Item moonstone_ore;
     public static Item fiery_glass_ore;

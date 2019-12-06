@@ -1,16 +1,603 @@
 {
     "variants": {
-        "facing=south":
-		[ { "model": "druidcraft:block/elder_fruit" } ],
-		"facing=north":
-		[ { "model": "druidcraft:block/elder_fruit", "y": 180 } ],
-		"facing=east":
-		[ { "model": "druidcraft:block/elder_fruit", "y": 270 } ],
-		"facing=west":
-		[ { "model": "druidcraft:block/elder_fruit", "y": 90 } ],
-		"facing=up":
-		[ { "model": "druidcraft:block/elder_fruit", "x": 90 } ],
-		"facing=down":
-		[ { "model": "druidcraft:block/elder_fruit", "x": 270 } ]
+		"age=0,facing=south,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a" },
+		  { "model": "druidcraft:block/elder_fruit_stage0b" },
+		  { "model": "druidcraft:block/elder_fruit_stage0c" } ],
+		"age=0,facing=north,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "y": 180 } ],  
+		"age=0,facing=east,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "y": 270 } ],
+		"age=0,facing=west,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "y": 90 } ],
+		"age=0,facing=up,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "x": 90 } ],
+		"age=0,facing=down,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "x": 270 } ],
+		  
+		"age=1,facing=south,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a" },
+		  { "model": "druidcraft:block/elder_fruit_stage1b" },
+		  { "model": "druidcraft:block/elder_fruit_stage1c" } ],
+		"age=1,facing=north,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "y": 180 } ],  
+		"age=1,facing=east,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "y": 270 } ],
+		"age=1,facing=west,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "y": 90 } ],
+		"age=1,facing=up,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "x": 90 } ],
+		"age=1,facing=down,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "x": 270 } ],
+		  
+		"age=2,facing=south,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a" },
+		  { "model": "druidcraft:block/elder_fruit_stage2b" },
+		  { "model": "druidcraft:block/elder_fruit_stage2c" } ],
+		"age=2,facing=north,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "y": 180 } ],  
+		"age=2,facing=east,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "y": 270 } ],
+		"age=2,facing=west,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "y": 90 } ],
+		"age=2,facing=up,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "x": 90 } ],
+		"age=2,facing=down,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "x": 270 } ],
+		  
+		"age=3,facing=south,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a" },
+		  { "model": "druidcraft:block/elder_fruit_stage3b" },
+		  { "model": "druidcraft:block/elder_fruit_stage3c" } ],
+		"age=3,facing=north,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "y": 180 } ],  
+		"age=3,facing=east,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "y": 270 } ],
+		"age=3,facing=west,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "y": 90 } ],
+		"age=3,facing=up,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "x": 90 } ],
+		"age=3,facing=down,life_stage=none,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "x": 270 } ],
+		  
+		"age=0,facing=south,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a" },
+		  { "model": "druidcraft:block/elder_fruit_stage0b" },
+		  { "model": "druidcraft:block/elder_fruit_stage0c" } ],
+		"age=0,facing=north,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "y": 180 } ],  
+		"age=0,facing=east,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "y": 270 } ],
+		"age=0,facing=west,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "y": 90 } ],
+		"age=0,facing=up,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "x": 90 } ],
+		"age=0,facing=down,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "x": 270 } ],
+		  
+		"age=1,facing=south,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a" },
+		  { "model": "druidcraft:block/elder_fruit_stage1b" },
+		  { "model": "druidcraft:block/elder_fruit_stage1c" } ],
+		"age=1,facing=north,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "y": 180 } ],  
+		"age=1,facing=east,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "y": 270 } ],
+		"age=1,facing=west,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "y": 90 } ],
+		"age=1,facing=up,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "x": 90 } ],
+		"age=1,facing=down,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "x": 270 } ],
+		  
+		"age=2,facing=south,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a" },
+		  { "model": "druidcraft:block/elder_fruit_stage2b" },
+		  { "model": "druidcraft:block/elder_fruit_stage2c" } ],
+		"age=2,facing=north,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "y": 180 } ],  
+		"age=2,facing=east,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "y": 270 } ],
+		"age=2,facing=west,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "y": 90 } ],
+		"age=2,facing=up,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "x": 90 } ],
+		"age=2,facing=down,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "x": 270 } ],
+		  
+		"age=3,facing=south,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a" },
+		  { "model": "druidcraft:block/elder_fruit_stage3b" },
+		  { "model": "druidcraft:block/elder_fruit_stage3c" } ],
+		"age=3,facing=north,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "y": 180 } ],  
+		"age=3,facing=east,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "y": 270 } ],
+		"age=3,facing=west,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "y": 90 } ],
+		"age=3,facing=up,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "x": 90 } ],
+		"age=3,facing=down,life_stage=none,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "x": 270 } ],
+	
+		"age=0,facing=south,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a" },
+		  { "model": "druidcraft:block/elder_fruit_stage0b" },
+		  { "model": "druidcraft:block/elder_fruit_stage0c" } ],
+		"age=0,facing=north,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "y": 180 } ],  
+		"age=0,facing=east,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "y": 270 } ],
+		"age=0,facing=west,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "y": 90 } ],
+		"age=0,facing=up,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "x": 90 } ],
+		"age=0,facing=down,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "x": 270 } ],
+		  
+		"age=1,facing=south,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a" },
+		  { "model": "druidcraft:block/elder_fruit_stage1b" },
+		  { "model": "druidcraft:block/elder_fruit_stage1c" } ],
+		"age=1,facing=north,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "y": 180 } ],  
+		"age=1,facing=east,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "y": 270 } ],
+		"age=1,facing=west,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "y": 90 } ],
+		"age=1,facing=up,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "x": 90 } ],
+		"age=1,facing=down,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "x": 270 } ],
+		  
+		"age=2,facing=south,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a" },
+		  { "model": "druidcraft:block/elder_fruit_stage2b" },
+		  { "model": "druidcraft:block/elder_fruit_stage2c" } ],
+		"age=2,facing=north,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "y": 180 } ],  
+		"age=2,facing=east,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "y": 270 } ],
+		"age=2,facing=west,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "y": 90 } ],
+		"age=2,facing=up,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "x": 90 } ],
+		"age=2,facing=down,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "x": 270 } ],
+		  
+		"age=3,facing=south,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a" },
+		  { "model": "druidcraft:block/elder_fruit_stage3b" },
+		  { "model": "druidcraft:block/elder_fruit_stage3c" } ],
+		"age=3,facing=north,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "y": 180 } ],  
+		"age=3,facing=east,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "y": 270 } ],
+		"age=3,facing=west,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "y": 90 } ],
+		"age=3,facing=up,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "x": 90 } ],
+		"age=3,facing=down,life_stage=flower,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "x": 270 } ],
+		  
+		"age=0,facing=south,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a" },
+		  { "model": "druidcraft:block/elder_fruit_stage0b" },
+		  { "model": "druidcraft:block/elder_fruit_stage0c" } ],
+		"age=0,facing=north,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "y": 180 } ],  
+		"age=0,facing=east,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "y": 270 } ],
+		"age=0,facing=west,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "y": 90 } ],
+		"age=0,facing=up,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "x": 90 } ],
+		"age=0,facing=down,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "x": 270 } ],
+		  
+		"age=1,facing=south,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a" },
+		  { "model": "druidcraft:block/elder_fruit_stage1b" },
+		  { "model": "druidcraft:block/elder_fruit_stage1c" } ],
+		"age=1,facing=north,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "y": 180 } ],  
+		"age=1,facing=east,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "y": 270 } ],
+		"age=1,facing=west,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "y": 90 } ],
+		"age=1,facing=up,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "x": 90 } ],
+		"age=1,facing=down,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "x": 270 } ],
+		  
+		"age=2,facing=south,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a" },
+		  { "model": "druidcraft:block/elder_fruit_stage2b" },
+		  { "model": "druidcraft:block/elder_fruit_stage2c" } ],
+		"age=2,facing=north,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "y": 180 } ],  
+		"age=2,facing=east,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "y": 270 } ],
+		"age=2,facing=west,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "y": 90 } ],
+		"age=2,facing=up,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "x": 90 } ],
+		"age=2,facing=down,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "x": 270 } ],
+		  
+		"age=3,facing=south,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a" },
+		  { "model": "druidcraft:block/elder_fruit_stage3b" },
+		  { "model": "druidcraft:block/elder_fruit_stage3c" } ],
+		"age=3,facing=north,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "y": 180 } ],  
+		"age=3,facing=east,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "y": 270 } ],
+		"age=3,facing=west,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "y": 90 } ],
+		"age=3,facing=up,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "x": 90 } ],
+		"age=3,facing=down,life_stage=flower,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage3a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage3b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage3c", "x": 270 } ],
+		  
+		"age=0,facing=south,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a" },
+		  { "model": "druidcraft:block/elder_fruit_stage0b" },
+		  { "model": "druidcraft:block/elder_fruit_stage0c" } ],
+		"age=0,facing=north,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "y": 180 } ],  
+		"age=0,facing=east,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "y": 270 } ],
+		"age=0,facing=west,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "y": 90 } ],
+		"age=0,facing=up,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "x": 90 } ],
+		"age=0,facing=down,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "x": 270 } ],
+		  
+		"age=1,facing=south,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a" },
+		  { "model": "druidcraft:block/elder_fruit_stage1b" },
+		  { "model": "druidcraft:block/elder_fruit_stage1c" } ],
+		"age=1,facing=north,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "y": 180 } ],  
+		"age=1,facing=east,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "y": 270 } ],
+		"age=1,facing=west,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "y": 90 } ],
+		"age=1,facing=up,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "x": 90 } ],
+		"age=1,facing=down,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "x": 270 } ],
+		  
+		"age=2,facing=south,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a" },
+		  { "model": "druidcraft:block/elder_fruit_stage2b" },
+		  { "model": "druidcraft:block/elder_fruit_stage2c" } ],
+		"age=2,facing=north,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "y": 180 } ],  
+		"age=2,facing=east,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "y": 270 } ],
+		"age=2,facing=west,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "y": 90 } ],
+		"age=2,facing=up,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "x": 90 } ],
+		"age=2,facing=down,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "x": 270 } ],
+		  
+		"age=3,facing=south,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage5a" },
+		  { "model": "druidcraft:block/elder_fruit_stage5b" },
+		  { "model": "druidcraft:block/elder_fruit_stage5c" } ],
+		"age=3,facing=north,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage5a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage5b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage5c", "y": 180 } ],  
+		"age=3,facing=east,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage5a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage5b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage5c", "y": 270 } ],
+		"age=3,facing=west,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage5a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage5b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage5c", "y": 90 } ],
+		"age=3,facing=up,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage5a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage5b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage5c", "x": 90 } ],
+		"age=3,facing=down,life_stage=berry,mid_berry=false":
+		[ { "model": "druidcraft:block/elder_fruit_stage5a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage5b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage5c", "x": 270 } ],
+		  
+		"age=0,facing=south,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a" },
+		  { "model": "druidcraft:block/elder_fruit_stage0b" },
+		  { "model": "druidcraft:block/elder_fruit_stage0c" } ],
+		"age=0,facing=north,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "y": 180 } ],  
+		"age=0,facing=east,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "y": 270 } ],
+		"age=0,facing=west,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "y": 90 } ],
+		"age=0,facing=up,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "x": 90 } ],
+		"age=0,facing=down,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage0a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage0c", "x": 270 } ],
+		  
+		"age=1,facing=south,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a" },
+		  { "model": "druidcraft:block/elder_fruit_stage1b" },
+		  { "model": "druidcraft:block/elder_fruit_stage1c" } ],
+		"age=1,facing=north,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "y": 180 } ],  
+		"age=1,facing=east,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "y": 270 } ],
+		"age=1,facing=west,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "y": 90 } ],
+		"age=1,facing=up,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "x": 90 } ],
+		"age=1,facing=down,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage1a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage1c", "x": 270 } ],
+		  
+		"age=2,facing=south,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a" },
+		  { "model": "druidcraft:block/elder_fruit_stage2b" },
+		  { "model": "druidcraft:block/elder_fruit_stage2c" } ],
+		"age=2,facing=north,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "y": 180 } ],  
+		"age=2,facing=east,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "y": 270 } ],
+		"age=2,facing=west,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "y": 90 } ],
+		"age=2,facing=up,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "x": 90 } ],
+		"age=2,facing=down,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage2a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage2c", "x": 270 } ],
+		  
+		"age=3,facing=south,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage4a" },
+		  { "model": "druidcraft:block/elder_fruit_stage4b" },
+		  { "model": "druidcraft:block/elder_fruit_stage4c" } ],
+		"age=3,facing=north,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage4a", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage4b", "y": 180 },
+		  { "model": "druidcraft:block/elder_fruit_stage4c", "y": 180 } ],  
+		"age=3,facing=east,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage4a", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage4b", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage4c", "y": 270 } ],
+		"age=3,facing=west,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage4a", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage4b", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage4c", "y": 90 } ],
+		"age=3,facing=up,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage4a", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage4b", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit_stage4c", "x": 90 } ],
+		"age=3,facing=down,life_stage=berry,mid_berry=true":
+		[ { "model": "druidcraft:block/elder_fruit_stage4a", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage4b", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit_stage4c", "x": 270 } ]
 	}
 }

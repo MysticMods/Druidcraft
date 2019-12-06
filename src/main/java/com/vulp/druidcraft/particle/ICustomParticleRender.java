@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import org.lwjgl.opengl.GL11;
 
 public interface ICustomParticleRender extends IParticleRenderType {
 
@@ -15,16 +16,25 @@ public interface ICustomParticleRender extends IParticleRenderType {
         @Override
         public void beginRender(BufferBuilder buffer, TextureManager textureManager) {
             RenderHelper.disableStandardItemLighting();
-            GlStateManager.depthMask(true);
-            textureManager.bindTexture(AtlasTexture.LOCATION_PARTICLES_TEXTURE);
+            GlStateManager.enableAlphaTest();
             GlStateManager.enableBlend();
+            GlStateManager.depthMask(false);
+            textureManager.bindTexture(AtlasTexture.LOCATION_PARTICLES_TEXTURE);
             GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
             GlStateManager.alphaFunc(516, 0.003921569F);
-            buffer.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+            GlStateManager.disableCull();
+            buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
         }
         @Override
         public void finishRender(Tessellator tess) {
             tess.draw();
+            GlStateManager.enableDepthTest();
+            GlStateManager.enableCull();
+            GlStateManager.depthMask(true);
+            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+            GlStateManager.disableBlend();
+            GlStateManager.alphaFunc(516, 0.1F);
+            GlStateManager.enableAlphaTest();
         }
         public String toString() {
             return "PARTICLE_SHEET_TRANSLUCENT_GLOW";

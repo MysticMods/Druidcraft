@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "druidcraft:block/blueberry_bush_stage0"
+    }
+}

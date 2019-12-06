@@ -133,11 +133,6 @@ public class RopeBlock extends SixWayBlock implements IBucketPickupHandler, ILiq
     }
 
     @Override
-    public boolean isSolid(BlockState state) {
-        return true;
-    }
-
-    @Override
     public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT;
     }
@@ -187,18 +182,19 @@ public class RopeBlock extends SixWayBlock implements IBucketPickupHandler, ILiq
     }
 
     private BlockState calculateKnot (BlockState currentState) {
-      int count = 0;
+        int count = 0;
 
-      for (Direction dir : Direction.values()) {
-        EnumProperty<RopeConnectionType> prop = FACING_TO_PROPERTY_MAP.get(dir);
-        if (prop != null) {
-          if (currentState.get(prop) != RopeConnectionType.NONE) {
-            count++;
-          }
+        for (Direction dir : Direction.values()) {
+            EnumProperty<RopeConnectionType> prop = FACING_TO_PROPERTY_MAP.get(dir);
+            if (prop != null) {
+                if (currentState.get(prop) != RopeConnectionType.NONE) {
+                count++;
+                }
+            }
         }
-      }
 
-      return currentState.with(KNOTTED, count >= 3);
+        boolean doKnot = count >= 3 || count == 0;
+        return currentState.with(KNOTTED, doKnot);
     }
 
     @Override
@@ -250,17 +246,50 @@ public class RopeBlock extends SixWayBlock implements IBucketPickupHandler, ILiq
         return calculateState(state, world, currentPos);
     }
 
-    public static RopeConnectionType beamChecker(BlockState directionState, RopeConnectionType xConnection, RopeConnectionType yConnection, RopeConnectionType zConnection) {
-        RopeConnectionType directionType = null;
-        if (directionState.get(SmallBeamBlock.AXIS) == Direction.Axis.X) {
-            directionType = xConnection;
-        } if (directionState.get(SmallBeamBlock.AXIS) == Direction.Axis.Y) {
-            directionType = yConnection;
-        } if (directionState.get(SmallBeamBlock.AXIS) == Direction.Axis.Z) {
-            directionType = zConnection;
+    public static RopeConnectionType beamChecker(BlockState directionState, Direction direction) {
+        if (direction == Direction.NORTH || direction == Direction.SOUTH) {
+            if (directionState.get(SmallBeamBlock.X_AXIS)) {
+                if (!directionState.get(SmallBeamBlock.Z_AXIS)) {
+                    return RopeConnectionType.TIED_BEAM_2;
+                } else return RopeConnectionType.REGULAR;
+            } if (directionState.get(SmallBeamBlock.Y_AXIS)) {
+                if (!directionState.get(SmallBeamBlock.Z_AXIS)) {
+                    return RopeConnectionType.TIED_BEAM_1;
+                } else return RopeConnectionType.REGULAR;
+            } if (directionState.get(SmallBeamBlock.Z_AXIS)) {
+                return RopeConnectionType.REGULAR;
+            }
         }
 
-        return directionType;
+        if (direction == Direction.EAST || direction == Direction.WEST) {
+            if (directionState.get(SmallBeamBlock.X_AXIS)) {
+                return RopeConnectionType.REGULAR;
+            } if (directionState.get(SmallBeamBlock.Y_AXIS)) {
+                if (!directionState.get(SmallBeamBlock.X_AXIS)) {
+                    return RopeConnectionType.TIED_BEAM_1;
+                } else return RopeConnectionType.REGULAR;
+            } if (directionState.get(SmallBeamBlock.Z_AXIS)) {
+                if (!directionState.get(SmallBeamBlock.X_AXIS)) {
+                    return RopeConnectionType.TIED_BEAM_2;
+                } else return RopeConnectionType.REGULAR;
+            }
+        }
+
+        if (direction == Direction.UP || direction == Direction.DOWN) {
+            if (directionState.get(SmallBeamBlock.X_AXIS)) {
+                if (!directionState.get(SmallBeamBlock.Y_AXIS)) {
+                    return RopeConnectionType.TIED_BEAM_2;
+                } else return RopeConnectionType.REGULAR;
+            } if (directionState.get(SmallBeamBlock.Y_AXIS)) {
+                return RopeConnectionType.REGULAR;
+            } if (directionState.get(SmallBeamBlock.Z_AXIS)) {
+                if (!directionState.get(SmallBeamBlock.Y_AXIS)) {
+                    return RopeConnectionType.TIED_BEAM_1;
+                } else return RopeConnectionType.REGULAR;
+            }
+        }
+
+        return RopeConnectionType.NONE;
     }
 
     private BlockState calculateState(BlockState currentState, IWorld world, BlockPos pos) {
@@ -272,7 +301,7 @@ public class RopeBlock extends SixWayBlock implements IBucketPickupHandler, ILiq
         } else if (northState.getBlock().isIn(BlockTags.FENCES)) {
             northType = RopeConnectionType.TIED_FENCE;
         } else if (northState.getBlock() instanceof SmallBeamBlock) {
-            northType = beamChecker(northState, RopeConnectionType.TIED_BEAM_2, RopeConnectionType.TIED_BEAM_1, RopeConnectionType.REGULAR);
+            northType = beamChecker(northState, Direction.NORTH);
         }
 
         RopeConnectionType eastType = RopeConnectionType.NONE;
@@ -282,7 +311,7 @@ public class RopeBlock extends SixWayBlock implements IBucketPickupHandler, ILiq
         } else if (eastState.getBlock().isIn(BlockTags.FENCES)) {
             eastType = RopeConnectionType.TIED_FENCE;
         } else if (eastState.getBlock() instanceof SmallBeamBlock) {
-            eastType = beamChecker(eastState, RopeConnectionType.REGULAR, RopeConnectionType.TIED_BEAM_1, RopeConnectionType.TIED_BEAM_2);
+            eastType = beamChecker(eastState, Direction.EAST);
         }
 
 
@@ -293,7 +322,7 @@ public class RopeBlock extends SixWayBlock implements IBucketPickupHandler, ILiq
         } else if (southState.getBlock().isIn(BlockTags.FENCES)) {
             southType = RopeConnectionType.TIED_FENCE;
         } else if (southState.getBlock() instanceof SmallBeamBlock) {
-            southType = beamChecker(southState, RopeConnectionType.TIED_BEAM_2, RopeConnectionType.TIED_BEAM_1, RopeConnectionType.REGULAR);
+            southType = beamChecker(southState, Direction.SOUTH);
         }
 
         RopeConnectionType westType = RopeConnectionType.NONE;
@@ -303,7 +332,7 @@ public class RopeBlock extends SixWayBlock implements IBucketPickupHandler, ILiq
         } else if (westState.getBlock().isIn(BlockTags.FENCES)) {
             westType = RopeConnectionType.TIED_FENCE;
         } else if (westState.getBlock() instanceof SmallBeamBlock) {
-            westType = beamChecker(westState, RopeConnectionType.REGULAR, RopeConnectionType.TIED_BEAM_1, RopeConnectionType.TIED_BEAM_2);
+            westType = beamChecker(westState, Direction.WEST);
         }
 
         RopeConnectionType upType = RopeConnectionType.NONE;
@@ -311,7 +340,7 @@ public class RopeBlock extends SixWayBlock implements IBucketPickupHandler, ILiq
         if (upState.func_224755_d(world, pos.offset(Direction.UP), Direction.UP.getOpposite()) || upState.getBlock() == this || upState.getBlock().isIn(BlockTags.FENCES)) {
             upType = RopeConnectionType.REGULAR;
         } else if (upState.getBlock() instanceof SmallBeamBlock) {
-            upType = beamChecker(upState, RopeConnectionType.TIED_BEAM_2, RopeConnectionType.REGULAR, RopeConnectionType.TIED_BEAM_1);
+            upType = beamChecker(upState, Direction.UP);
         }
 
         RopeConnectionType downType = RopeConnectionType.NONE;
@@ -319,7 +348,7 @@ public class RopeBlock extends SixWayBlock implements IBucketPickupHandler, ILiq
         if (downState.func_224755_d(world, pos.offset(Direction.DOWN), Direction.DOWN.getOpposite()) || downState.getBlock() == this || downState.getBlock().isIn(BlockTags.FENCES) || downState.getBlock() instanceof RopeLanternBlock) {
             downType = RopeConnectionType.REGULAR;
         } else if (downState.getBlock() instanceof SmallBeamBlock) {
-            downType = beamChecker(downState, RopeConnectionType.TIED_BEAM_2, RopeConnectionType.REGULAR, RopeConnectionType.TIED_BEAM_1);
+            downType = beamChecker(downState, Direction.DOWN);
         }
 
         return calculateKnot(currentState

@@ -24,9 +24,9 @@ import java.util.function.Function;
 
 public class ElderTreeFeature extends AbstractTreeFeature<NoFeatureConfig> {
 
-    private static final BlockState TRUNK = Blocks.DARK_OAK_LOG.getDefaultState();
-    private static final BlockState BASE = Blocks.DARK_OAK_WOOD.getDefaultState();
-    private static final BlockState LEAF = Blocks.BIRCH_LEAVES.getDefaultState();
+    private static final BlockState TRUNK = BlockRegistry.elder_log.getDefaultState();
+    private static final BlockState BASE = BlockRegistry.elder_wood.getDefaultState();
+    private static final BlockState LEAF = BlockRegistry.elder_leaves.getDefaultState();
 
     public ElderTreeFeature(Function<Dynamic<?>, ? extends NoFeatureConfig> config, boolean doBlockNotifyOnPlace) {
         super(config, doBlockNotifyOnPlace);
@@ -186,10 +186,10 @@ public class ElderTreeFeature extends AbstractTreeFeature<NoFeatureConfig> {
                     for (int leafLayer1and3Z = -3; leafLayer1and3Z <= 3; ++leafLayer1and3Z) {
                         if (!((leafLayer1and3X == 3 || leafLayer1and3X == -3) && (leafLayer1and3Z == 3 || leafLayer1and3Z == -3))) {
                             if ((leafLayer1and3X == -3 && (leafLayer1and3Z == -2 || leafLayer1and3Z == 2)) || (leafLayer1and3X == 3 && (leafLayer1and3Z == -2 || leafLayer1and3Z == 2)) || (leafLayer1and3Z == -3 && (leafLayer1and3X == -2 || leafLayer1and3X == 2)) || (leafLayer1and3Z == 3 && (leafLayer1and3X == -2 || leafLayer1and3X == 2))) {
-                                if (rand.nextBoolean()) {
+                                if (rand.nextBoolean() || rand.nextBoolean()) {
                                     this.placeLeafAt(changedBlocks, worldIn, blockpos2.add(leafLayer1and3X, 0, leafLayer1and3Z), boundsIn);
                                 }
-                                if (rand.nextBoolean()) {
+                                if (rand.nextBoolean() || rand.nextBoolean()) {
                                     this.placeLeafAt(changedBlocks, worldIn, blockpos2.add(leafLayer1and3X, -2, leafLayer1and3Z), boundsIn);
                                 }
                             } else {
@@ -230,17 +230,6 @@ public class ElderTreeFeature extends AbstractTreeFeature<NoFeatureConfig> {
                             this.placeLeafAt(changedBlocks, worldIn, blockpos2.add(leafLayer2X, 0, leafLayer2Z), boundsIn);
                     }
                 }
-
-                if (height == 8) {
-                    blockpos2 = blockpos2.down(2);
-                    for (int leafLayer0X = -1; leafLayer0X <= 1; ++leafLayer0X) {
-                        for (int leafLayer0Z = -1; leafLayer0Z <= 1; ++leafLayer0Z) {
-                            if (!((leafLayer0X == -1 || leafLayer0X == 1) && (leafLayer0Z == -1 || leafLayer0Z == 1)))
-                                this.placeLeafAt(changedBlocks, worldIn, blockpos2.add(leafLayer0X, 0, leafLayer0Z), boundsIn);
-                        }
-                    }
-                }
-
                 return true;
             } else {
                 return false;

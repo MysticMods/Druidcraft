@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "druidcraft:block/elder_log",
+        "side": "druidcraft:block/elder_log"
+    }
+}

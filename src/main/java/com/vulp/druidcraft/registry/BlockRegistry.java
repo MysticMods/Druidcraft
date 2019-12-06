@@ -54,6 +54,8 @@ public class BlockRegistry
     public static Block elder_door;
     public static Block elder_fruit;
 
+    public static Block blueberry_bush;
+
     public static Block oak_beam;
     public static Block spruce_beam;
     public static Block birch_beam;

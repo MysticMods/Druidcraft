@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "druidcraft:darkwood_leaves"
+    "druidcraft:darkwood_leaves",
+	"druidcraft:elder_leaves"
   ]
 }

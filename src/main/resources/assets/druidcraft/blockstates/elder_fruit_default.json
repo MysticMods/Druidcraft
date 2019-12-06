@@ -1,0 +1,33 @@
+{
+    "variants": {
+        "facing=south":
+		[ { "model": "druidcraft:block/elder_fruit1" },
+          { "model": "druidcraft:block/elder_fruit2" },
+          { "model": "druidcraft:block/elder_fruit3" } ],
+		  
+		"facing=north":
+		[ { "model": "druidcraft:block/elder_fruit1", "y": 180 },
+          { "model": "druidcraft:block/elder_fruit2", "y": 180 },
+          { "model": "druidcraft:block/elder_fruit3", "y": 180 } ],
+		
+		"facing=east":
+		[ { "model": "druidcraft:block/elder_fruit1", "y": 270 },
+	      { "model": "druidcraft:block/elder_fruit2", "y": 270 },
+		  { "model": "druidcraft:block/elder_fruit3", "y": 270 } ],
+		  
+		"facing=west":
+		[ { "model": "druidcraft:block/elder_fruit1", "y": 90 },
+	      { "model": "druidcraft:block/elder_fruit2", "y": 90 },
+		  { "model": "druidcraft:block/elder_fruit3", "y": 90 } ],
+		  
+		"facing=up":
+		[ { "model": "druidcraft:block/elder_fruit1", "x": 90 },
+	      { "model": "druidcraft:block/elder_fruit2", "x": 90 },
+		  { "model": "druidcraft:block/elder_fruit3", "x": 90 } ],
+		  
+		"facing=down":
+		[ { "model": "druidcraft:block/elder_fruit1", "x": 270 },
+	      { "model": "druidcraft:block/elder_fruit2", "x": 270 },
+		  { "model": "druidcraft:block/elder_fruit3", "x": 270 } ]
+	}
+}
