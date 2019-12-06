@@ -129,9 +129,11 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
             newAxis = defaultAxis;
         }
 
-        xBool = newAxis == Direction.Axis.X;
-        yBool = newAxis == Direction.Axis.Y;
-        zBool = newAxis == Direction.Axis.Z;
+        if (isUpdate) {
+            xBool = newAxis == Direction.Axis.X;
+            yBool = newAxis == Direction.Axis.Y;
+            zBool = newAxis == Direction.Axis.Z;
+        }
 
         return currentState.with(X_AXIS, xBool).with(Y_AXIS, yBool).with(Z_AXIS, zBool).with(CONNECTIONS, count).with(DEFAULT_AXIS, newAxis);
     }
