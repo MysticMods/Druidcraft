@@ -20,7 +20,7 @@ import net.minecraftforge.common.ToolType;
 import java.util.Set;
 
 public class SickleItem extends ToolItem implements RadialToolItem, EffectiveSickleItem {
-    private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT);
+    private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.GRASS);
     private static final Set<Material> EFFECTIVE_MATERIALS = ImmutableSet.of(Material.PLANTS, Material.OCEAN_PLANT, Material.TALL_PLANTS);
 
     private final int radius;

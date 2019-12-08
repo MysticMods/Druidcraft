@@ -93,12 +93,11 @@ public class RopeBlock extends SixWayBlock implements IBucketPickupHandler, ILiq
     @SuppressWarnings("unchecked")
     private <T extends Comparable<T>> BlockState cycleProperty(BlockState state, IProperty<T> propertyIn, ItemUseContext context) {
         T value = getAdjacentValue(propertyIn.getAllowedValues(), state.get(propertyIn));
-        if (value == RopeConnectionType.REGULAR || value == RopeConnectionType.TIED_BEAM_1 || value == RopeConnectionType.TIED_BEAM_2 || value == RopeConnectionType.TIED_FENCE) {
-            value = (T) RopeConnectionType.NONE;
-        } else if (value == RopeConnectionType.NONE) {
-            value = (T) RopeConnectionType.REGULAR;
-        }
-        return calculateKnot(state.with(propertyIn, value));
+        if (value != RopeConnectionType.NONE) {
+            return calculateKnot(state.with(propertyIn, (T) RopeConnectionType.NONE));
+        } else if (!state.get(KNOTTED) && context.getPlayer().isSneaking()) {
+            return state.with(KNOTTED, true);
+        } else return calculateState(state, context.getWorld(), context.getPos());
     }
 
     private static <T> T getAdjacentValue(Iterable<T> p_195959_0_, @Nullable T p_195959_1_) {

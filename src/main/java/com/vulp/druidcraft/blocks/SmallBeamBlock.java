@@ -7,6 +7,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.*;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.ActionResultType;
@@ -22,7 +23,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiquidContainer, IKnifeable {
+public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiquidContainer {
 
     public static final BooleanProperty X_AXIS = BooleanProperty.create("x_axis");
     public static final BooleanProperty Y_AXIS = BooleanProperty.create("y_axis");
@@ -40,17 +41,6 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
                 .with(CONNECTIONS, 0)
                 .with(WATERLOGGED, false)
                 .with(DEFAULT_AXIS, Direction.Axis.Y));
-    }
-
-    @Nullable
-    private static Direction.Axis getClickedConnection(Vec3d relative) {
-        if (relative.x < 0.25 || relative.x > 0.75)
-            return Direction.Axis.X;
-        if (relative.y < 0.25 || relative.y < 0.75)
-            return Direction.Axis.Y;
-        if (relative.z < 0.25 || relative.z > 0.75)
-            return Direction.Axis.Z;
-        return null;
     }
 
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
@@ -80,7 +70,7 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         IFluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
-        return this.calculateState(getDefaultState(), context.getWorld(), context.getPos()).with(DEFAULT_AXIS, context.getFace().getAxis()).with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
+        return this.calculateState(getDefaultState(), context.getWorld(), context.getPos(), context.getFace().getAxis()).with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
     }
 
     @Override
@@ -88,11 +78,11 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
         return !state.get(WATERLOGGED);
     }
 
-    private BlockState calculateState (BlockState currentState, World world, BlockPos pos) {
+    private BlockState calculateState (BlockState currentState, World world, BlockPos pos, Direction.Axis defaultAxis) {
 
-        boolean xBool = currentState.get(DEFAULT_AXIS) == Direction.Axis.X;
-        boolean yBool = currentState.get(DEFAULT_AXIS) == Direction.Axis.Y;
-        boolean zBool = currentState.get(DEFAULT_AXIS) == Direction.Axis.Z;
+        boolean xBool = defaultAxis == Direction.Axis.X;
+        boolean yBool = defaultAxis == Direction.Axis.Y;
+        boolean zBool = defaultAxis == Direction.Axis.Z;
 
         BlockState northState = world.getBlockState(pos.offset(Direction.NORTH));
         BlockState eastState = world.getBlockState(pos.offset(Direction.EAST));
@@ -142,7 +132,7 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
             count++;
         }
 
-        return currentState.with(X_AXIS, xBool).with(Y_AXIS, yBool).with(Z_AXIS, zBool).with(CONNECTIONS, count);
+        return currentState.with(X_AXIS, xBool).with(Y_AXIS, yBool).with(Z_AXIS, zBool).with(CONNECTIONS, count).with(DEFAULT_AXIS, defaultAxis);
     }
 
 
@@ -188,11 +178,11 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
             world.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
 
-        return calculateState(state, (World) world, currentPos);
+        return calculateState(state, (World) world, currentPos, state.get(DEFAULT_AXIS));
     }
 
     @Override
-    public ActionResultType onKnife(ItemUseContext context) {
-        return null;
+    public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
+        return false;
     }
 }

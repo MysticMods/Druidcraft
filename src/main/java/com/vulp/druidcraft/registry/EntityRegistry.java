@@ -91,10 +91,6 @@ public class EntityRegistry
         return item;
     }
 
-    public static void registerEntityWorldSpawn(boolean spawnEnabled, EntityType<?> entity, EntityClassification classification, int weight, int minGroupCountIn, int maxGroupCountIn, List<String> biomes) {
-        registerEntityWorldSpawn(spawnEnabled, entity, classification, weight, minGroupCountIn, maxGroupCountIn, biomes, new ArrayList<>());
-    }
-
     public static void registerEntityWorldSpawn(boolean spawnEnabled, EntityType<?> entity, EntityClassification classification, int weight, int minGroupCountIn, int maxGroupCountIn, List<String> biomes, List<String> exclusions) {
         Set<Biome> biomeSet = new HashSet<>();
 

@@ -10,7 +10,7 @@ public class BiomeRegistry
 {
     public static Biome darkwood_forest;
 
-    public static void registerBiome(IForgeRegistry<Biome> registry, Biome biome, String name, int weight, boolean spawn, BiomeManager.BiomeType type, BiomeDictionary.Type... types)
+    public static Biome registerBiome(IForgeRegistry<Biome> registry, Biome biome, String name, int weight, boolean spawn, BiomeManager.BiomeType type, BiomeDictionary.Type... types)
     {
         registry.register(biome.setRegistryName(Druidcraft.MODID, name));
         BiomeManager.addBiome(type, new BiomeManager.BiomeEntry(biome, weight));
@@ -18,5 +18,6 @@ public class BiomeRegistry
             BiomeManager.addSpawnBiome(biome);
         }
         BiomeDictionary.addTypes(biome, types);
+        return biome;
     }
 }

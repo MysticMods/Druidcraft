@@ -14,6 +14,7 @@ import com.vulp.druidcraft.blocks.trees.ElderTree;
 import com.vulp.druidcraft.items.*;
 import com.vulp.druidcraft.registry.*;
 import com.vulp.druidcraft.world.biomes.DarkwoodForest;
+import com.vulp.druidcraft.world.features.ElderTreeFeature;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
@@ -26,6 +27,9 @@ import net.minecraft.particles.ParticleType;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.gen.feature.ScatteredPlantFeature;
 import net.minecraftforge.common.*;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -331,13 +335,26 @@ public class DruidcraftRegistry {
         LOGGER.info("GUI registered.");
     }
 
+    // FEATURE REGISTRATION
+    @SubscribeEvent
+    public static void onFeatureRegistry(final RegistryEvent.Register<Feature<?>> FeatureRegistryEvent)
+    {
+        IForgeRegistry<Feature<?>> registry = FeatureRegistryEvent.getRegistry();
+
+        FeatureRegistry.elder_tree = FeatureRegistry.register(registry, new ElderTreeFeature(NoFeatureConfig::deserialize, true), "elder_tree");
+        FeatureRegistry.blueberry_bush = FeatureRegistry.register(registry, new ScatteredPlantFeature(NoFeatureConfig::deserialize, BlockRegistry.blueberry_bush.getDefaultState().with(BerryBushBlock.AGE, 3)), "blueberry_bush");
+
+        FeatureRegistry.spawnFeatures();
+        LOGGER.info("Features registered.");
+    }
+
     // BIOME REGISTRATION
     @SubscribeEvent
     public static void onBiomeRegistry(final RegistryEvent.Register<Biome> BiomeRegistryEvent)
     {
         IForgeRegistry<Biome> registry = BiomeRegistryEvent.getRegistry();
 
-        BiomeRegistry.registerBiome(registry, new DarkwoodForest(), "darkwood_forest", 6, false, BiomeManager.BiomeType.COOL, BiomeDictionary.Type.CONIFEROUS);
+        BiomeRegistry.darkwood_forest = BiomeRegistry.registerBiome(registry, new DarkwoodForest(), "darkwood_forest", 6, false, BiomeManager.BiomeType.COOL, BiomeDictionary.Type.CONIFEROUS);
 
         LOGGER.info("Biomes registered.");
     }
