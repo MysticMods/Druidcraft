@@ -33,8 +33,6 @@ public class BlockRegistry
     public static Block darkwood_button;
     public static Block darkwood_trapdoor;
     public static Block darkwood_door;
-    public static Block darkwood_sign;
-    public static Block darkwood_wall_sign;
 
     public static Block elder_log;
     public static Block stripped_elder_log;

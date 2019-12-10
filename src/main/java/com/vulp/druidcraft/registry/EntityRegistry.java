@@ -4,8 +4,8 @@ import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.DruidcraftRegistry;
 import com.vulp.druidcraft.config.EntitySpawnConfig;
 import com.vulp.druidcraft.entities.BeetleEntity;
-import com.vulp.druidcraft.entities.BoatEntity;
 import com.vulp.druidcraft.entities.DreadfishEntity;
+import com.vulp.druidcraft.entities.LunarMothEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
@@ -17,7 +17,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.network.FMLPlayMessages;
 
@@ -32,12 +31,7 @@ public class EntityRegistry
     }
     public static final EntityType<DreadfishEntity> dreadfish_entity = createEntity(DreadfishEntity::new, EntityClassification.MONSTER, "dreadfish", 0.8f, 0.4f);
     public static final EntityType<BeetleEntity> beetle_entity = createEntity(BeetleEntity::new, EntityClassification.MONSTER, "beetle", 1.5f, 1.5f);
-
-    public static final EntityType<BoatEntity> boat_entity = createEntity(BoatEntity::new, EntityClassification.MISC, "boat", 1.375F, 0.5625F, BoatEntity::new);
-
-    private static <T extends Entity> EntityType<T> createEntity(EntityType.IFactory<T> factory, EntityClassification entityClassification, String name, float width, float height, BiFunction<FMLPlayMessages.SpawnEntity, World, T> customClientFactory) {
-        return createEntity(factory, entityClassification, name, width, height, -1, customClientFactory);
-    }
+    public static final EntityType<LunarMothEntity> lunar_moth_entity = createEntity(LunarMothEntity::new, EntityClassification.CREATURE, "lunar_moth", 0.5f, 0.5f);
 
     private static <T extends Entity> EntityType<T> createEntity(EntityType.IFactory<T> factory, EntityClassification entityClassification, String name, float width, float height) {
         return createEntity(factory, entityClassification, name, width, height, -1, null);
@@ -70,7 +64,8 @@ public class EntityRegistry
         event.getRegistry().registerAll
                 (
                         ItemRegistry.dreadfish_spawn_egg = registerEntitySpawnEgg(dreadfish_entity, 0xE2E2D9, 0xA775FF, "dreadfish_spawn_egg"),
-                        ItemRegistry.beetle_spawn_egg = registerEntitySpawnEgg(beetle_entity, 0x57E5DC, 0x227589, "beetle_spawn_egg")
+                        ItemRegistry.beetle_spawn_egg = registerEntitySpawnEgg(beetle_entity, 0x57E5DC, 0x227589, "beetle_spawn_egg"),
+                        ItemRegistry.lunar_moth_spawn_egg = registerEntitySpawnEgg(lunar_moth_entity, 0x4AFFC2, 0x00CE89, "lunar_moth_spawn_egg")
                 );
 
     }

@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#S#",
+        "XAX"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:wheat"
+        },
+        "S": {
+            "item": "minecraft:sugar"
+        },
+        "X": {
+            "item": "druidcraft:elderberries"
+        },
+        "A": {
+            "item": "minecraft:apple"
+        }
+    },
+    "result": {
+        "item": "druidcraft:apple_elderberry_crumble",
+        "count": 1
+    }
+}

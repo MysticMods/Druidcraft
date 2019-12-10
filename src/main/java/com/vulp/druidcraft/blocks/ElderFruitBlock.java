@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.sun.scenario.effect.Crop;
 import com.vulp.druidcraft.api.CropLifeStageType;
 import com.vulp.druidcraft.registry.BlockRegistry;
+import com.vulp.druidcraft.registry.ItemRegistry;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.RavagerEntity;
@@ -116,6 +117,18 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
     }
 
     @Override
+    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+        super.onBlockHarvested(worldIn, pos, state, player);
+        if (state.get(AGE) == getMaxAge()) {
+            if (state.get(LIFE_STAGE) == CropLifeStageType.FLOWER) {
+                spawnAsEntity(worldIn, pos, new ItemStack(ItemRegistry.elderflower, 1 + worldIn.rand.nextInt(1)));
+            } else if (state.get(LIFE_STAGE) == CropLifeStageType.BERRY && !state.get(MID_BERRY)) {
+                spawnAsEntity(worldIn, pos, new ItemStack(ItemRegistry.elderberries, 1 + worldIn.rand.nextInt(2)));
+            }
+        }
+    }
+
+    @Override
     public IntegerProperty getAgeProperty() {
         return AGE;
     }
@@ -175,7 +188,7 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
             if (CropLifeStageType.checkCropLife(worldIn) == CropLifeStageType.NONE) {
                     worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
                     if (worldIn.rand.nextInt(4) == 0) {
-                        spawnDrops(state, worldIn, pos);
+                        spawnAsEntity(worldIn, pos, new ItemStack(ItemRegistry.elderberries, 1));
                 }
             }
         }

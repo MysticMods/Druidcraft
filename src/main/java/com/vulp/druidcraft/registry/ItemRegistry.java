@@ -14,6 +14,7 @@ public class ItemRegistry
 
     public static Item dreadfish_spawn_egg;
     public static Item beetle_spawn_egg;
+    public static Item lunar_moth_spawn_egg;
     public static Item black_soulfire;
     public static Item red_soulfire;
     public static Item green_soulfire;
@@ -62,6 +63,11 @@ public class ItemRegistry
     public static Item knife;
 
     public static Item blueberries;
+    public static Item elderflower;
+    public static Item elderberries;
+    public static Item blueberry_muffin;
+    public static Item elderflower_cordial;
+    public static Item apple_elderberry_crumble;
 
     public static Item amber_ore;
     public static Item moonstone_ore;
@@ -87,8 +93,6 @@ public class ItemRegistry
     public static Item darkwood_button;
     public static Item darkwood_trapdoor;
     public static Item darkwood_door;
-    public static Item darkwood_sign;
-    public static Item darkwood_boat;
 
     public static Item elder_log;
     public static Item stripped_elder_log;

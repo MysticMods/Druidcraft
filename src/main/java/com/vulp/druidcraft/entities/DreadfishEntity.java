@@ -2,11 +2,10 @@ package com.vulp.druidcraft.entities;
 
 import com.vulp.druidcraft.entities.AI.goals.*;
 import com.vulp.druidcraft.events.EventFactory;
-import com.vulp.druidcraft.pathfinding.FlyingPathNavigator;
+import com.vulp.druidcraft.pathfinding.FlyingFishPathNavigator;
 import com.vulp.druidcraft.registry.ParticleRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.*;
@@ -45,7 +44,7 @@ public class DreadfishEntity extends TameableFlyingMonsterEntity
     private static final Predicate<LivingEntity> isPlayer;
     private static final DataParameter<Integer> SMOKE_COLOR = EntityDataManager.createKey(DreadfishEntity.class, DataSerializers.VARINT);
     private static final Map<DyeColor, int[]> DYE_COLOR_MAP = new HashMap<>();
-    private FlyingPathNavigator navigator;
+    private FlyingFishPathNavigator navigator;
     private DyeColor smokeColor = null;
 
     static {
@@ -70,7 +69,7 @@ public class DreadfishEntity extends TameableFlyingMonsterEntity
     public DreadfishEntity(EntityType<? extends TameableFlyingMonsterEntity> type, World worldIn)
     {
         super(type, worldIn);
-        this.navigator = (FlyingPathNavigator) this.createNavigator(worldIn);
+        this.navigator = (FlyingFishPathNavigator) this.createNavigator(worldIn);
         this.setTamed(false);
         this.moveController = new DreadfishEntity.MoveHelperController(this);
     }
@@ -179,7 +178,7 @@ public class DreadfishEntity extends TameableFlyingMonsterEntity
 
     @Override
     protected PathNavigator createNavigator(World worldIn) {
-        return new FlyingPathNavigator(this, worldIn);
+        return new FlyingFishPathNavigator(this, worldIn);
     }
 
     @Override

@@ -28,13 +28,6 @@ public interface ICustomParticleRender extends IParticleRenderType {
         @Override
         public void finishRender(Tessellator tess) {
             tess.draw();
-            GlStateManager.enableDepthTest();
-            GlStateManager.enableCull();
-            GlStateManager.depthMask(true);
-            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-            GlStateManager.disableBlend();
-            GlStateManager.alphaFunc(516, 0.1F);
-            GlStateManager.enableAlphaTest();
         }
         public String toString() {
             return "PARTICLE_SHEET_TRANSLUCENT_GLOW";

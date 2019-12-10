@@ -1,11 +1,11 @@
 package com.vulp.druidcraft.registry;
 
 import com.vulp.druidcraft.client.renders.BeetleEntityRender;
-import com.vulp.druidcraft.client.renders.BoatEntityRender;
 import com.vulp.druidcraft.client.renders.DreadfishEntityRender;
+import com.vulp.druidcraft.client.renders.LunarMothEntityRender;
 import com.vulp.druidcraft.entities.BeetleEntity;
-import com.vulp.druidcraft.entities.BoatEntity;
 import com.vulp.druidcraft.entities.DreadfishEntity;
+import com.vulp.druidcraft.entities.LunarMothEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -17,7 +17,6 @@ public class RenderRegistry
     {
         RenderingRegistry.registerEntityRenderingHandler(DreadfishEntity.class, new DreadfishEntityRender.RenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(BeetleEntity.class, new BeetleEntityRender.RenderFactory());
-
-        RenderingRegistry.registerEntityRenderingHandler(BoatEntity.class, new BoatEntityRender.RenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(LunarMothEntity.class, new LunarMothEntityRender.RenderFactory());
     }
 }

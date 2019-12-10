@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:sugar"
+        },
+        {
+            "item": "druidcraft:elderflower"
+        },
+        {
+            "item": "minecraft:potion"
+        }
+    ],
+    "result": {
+        "item": "druidcraft:elderflower_cordial",
+        "count": 1
+    }
+}

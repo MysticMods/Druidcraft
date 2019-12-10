@@ -25,6 +25,7 @@
 
   "item.druidcraft.dreadfish_spawn_egg": "Dreadfish Spawn Egg",
   "item.druidcraft.beetle_spawn_egg": "Beetle Spawn Egg",
+  "item.druidcraft.lunar_moth_spawn_egg": "Lunar Moth Spawn Egg",
 
   "item.druidcraft.bone_sword": "Bone Sword",
   "item.druidcraft.bone_shovel": "Bone Shovel",
@@ -39,6 +40,14 @@
   
   "item.druidcraft.knife": "Knife",
   "item.druidcraft.knife.description1": "Used to configure rope blocks. (WIP)",
+
+  "item.druidcraft.blueberries": "Blueberries",
+  "item.druidcraft.elderberries": "Elderberries",
+  "item.druidcraft.elderflower": "Elderflower",
+  "item.druidcraft.blueberry_muffin": "Blueberry Muffin",
+  "item.druidcraft.apple_elderberry_crumble": "Apple-Elderberry Crumble",
+  "item.druidcraft.elderflower_cordial": "Elderflower Cordial",
+  "item.druidcraft.elderflower_cordial.description1": "WIP (Doesn't give hunger back)",
 
   "item.druidcraft.moonstone_sword": "Moonstone Sword",
   "item.druidcraft.moonstone_shovel": "Moonstone Shovel",
@@ -115,9 +124,14 @@
   "block.druidcraft.fiery_torch": "Fiery Torch",
   "block.druidcraft.fiery_torch.description1": "§6A little bit brighter than a regular torch. Waterproof too!",
   "block.druidcraft.rope": "Rope",
+  "block.druidcraft.elder_log": "Elder Log",
+  "block.druidcraft.elder_leaves": "Elder Leaves",
+  "block.druidcraft.elder_sapling": "Elder Sapling",
+  "block.druidcraft.elder_wood": "Elder Wood",
 
   "entity.druidcraft.dreadfish": "Dreadfish",
   "entity.druidcraft.beetle": "Beetle",
+  "entity.druidcraft.lunar_moth": "Lunar Moth",
 
   "biome.druidcraft.darkwood_forest": "Darkwood Forest",
 

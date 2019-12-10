@@ -2,7 +2,6 @@ package com.vulp.druidcraft.world.features;
 
 import com.mojang.datafixers.Dynamic;
 import com.vulp.druidcraft.registry.BlockRegistry;
-import com.vulp.druidcraft.util.IBlockPosQuery;
 import net.minecraft.block.*;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.Direction;

@@ -11,9 +11,9 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class FlyingPathNavigator extends SwimmerPathNavigator {
+public class FlyingFishPathNavigator extends SwimmerPathNavigator {
 
-    public FlyingPathNavigator(MobEntity entitylivingIn, World worldIn) {
+    public FlyingFishPathNavigator(MobEntity entitylivingIn, World worldIn) {
         super(entitylivingIn, worldIn);
     }
 

@@ -1,7 +1,7 @@
 package com.vulp.druidcraft.entities.AI.goals;
 
 import com.vulp.druidcraft.entities.TameableFlyingMonsterEntity;
-import com.vulp.druidcraft.pathfinding.FlyingPathNavigator;
+import com.vulp.druidcraft.pathfinding.FlyingFishPathNavigator;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
@@ -18,7 +18,7 @@ public class FollowOwnerGoalMonster extends Goal {
     private LivingEntity owner;
     protected final IWorldReader world;
     private final double followSpeed;
-    private final FlyingPathNavigator navigator;
+    private final FlyingFishPathNavigator navigator;
     private int timeToRecalcPath;
     private final float maxDist;
     private final float minDist;

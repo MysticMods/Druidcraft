@@ -19,7 +19,7 @@ public class BeetleEntityRender extends MobRenderer<BeetleEntity, BeetleEntityMo
 
     public BeetleEntityRender(EntityRendererManager manager)
     {
-        super(manager, new BeetleEntityModel<>(), 0.4f);
+        super(manager, new BeetleEntityModel<>(), 1.2f);
     }
 
     @Override

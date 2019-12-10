@@ -1,6 +1,6 @@
 package com.vulp.druidcraft.entities;
 
-import com.vulp.druidcraft.pathfinding.FlyingPathNavigator;
+import com.vulp.druidcraft.pathfinding.FlyingFishPathNavigator;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.world.World;
@@ -12,12 +12,12 @@ public class TameableFlyingMonsterEntity extends TameableMonsterEntity {
     }
 
     @Override
-    public FlyingPathNavigator getNavigator() {
+    public FlyingFishPathNavigator getNavigator() {
         if (this.isPassenger() && this.getRidingEntity() instanceof TameableFlyingMonsterEntity) {
             MobEntity mobentity = (MobEntity)this.getRidingEntity();
-            return (FlyingPathNavigator) mobentity.getNavigator();
+            return (FlyingFishPathNavigator) mobentity.getNavigator();
         } else {
-            return (FlyingPathNavigator) this.navigator;
+            return (FlyingFishPathNavigator) this.navigator;
         }
     }
 }
