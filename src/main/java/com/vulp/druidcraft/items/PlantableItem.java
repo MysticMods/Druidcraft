@@ -59,7 +59,7 @@ public class PlantableItem extends Item implements IPlantable
     @Override
     public boolean itemInteractionForEntity(ItemStack itemstack, PlayerEntity player, LivingEntity entity, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
-        if (!entity.world.isRemote && !entity.isChild() && (int) ((AgeableEntity) entity).getGrowingAge() == 0) {
+        if (!entity.world.isRemote && !entity.isChild() && ((AgeableEntity) entity).getGrowingAge() == 0) {
             if (entity instanceof ChickenEntity) {
                 if (((ChickenEntity) entity).isInLove()) {
                     return false;

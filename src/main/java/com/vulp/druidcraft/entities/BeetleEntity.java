@@ -101,7 +101,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
     }
 
     public boolean hasSaddle() {
-        return (boolean) this.dataManager.get(SADDLE);
+        return this.dataManager.get(SADDLE);
     }
 
     private void setSaddled(boolean saddled) {
@@ -109,7 +109,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
     }
 
     public boolean hasChest() {
-        return (boolean) this.dataManager.get(CHEST);
+        return this.dataManager.get(CHEST);
     }
 
     private void setChested(boolean chested) {
@@ -253,7 +253,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
             return true;
         }
         if (!itemstack.isEmpty()) {
-            if (item == Items.APPLE && (Float) this.getHealth() < this.getMaxHealth()) {
+            if (item == Items.APPLE && this.getHealth() < this.getMaxHealth()) {
                 if (!player.abilities.isCreativeMode) {
                     itemstack.shrink(1);
                 }
@@ -272,7 +272,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
                             this.playTameEffect(true);
                             this.setTamedBy(player);
                             this.navigator.clearPath();
-                            this.setAttackTarget((LivingEntity) null);
+                            this.setAttackTarget(null);
                             this.setHealth(32.0F);
                             this.world.setEntityState(this, (byte) 7);
                         } else {
@@ -425,7 +425,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
 
     @Override
     public double getMountedYOffset() {
-        return (double) (this.getHeight() - 0.15d);
+        return (this.getHeight() - 0.15d);
     }
 
     @Override

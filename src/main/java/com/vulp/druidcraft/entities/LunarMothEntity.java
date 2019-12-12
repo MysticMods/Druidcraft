@@ -90,11 +90,11 @@ public class LunarMothEntity extends AnimalEntity {
 
                 if (this.world.getClosestPlayer(entityPredicate, this) != null) {
                     this.setMothResting(false);
-                    this.world.playEvent((PlayerEntity)null, 1025, blockpos, 0);
+                    this.world.playEvent(null, 1025, blockpos, 0);
                 }
             } else {
                 this.setMothResting(false);
-                this.world.playEvent((PlayerEntity)null, 1025, blockpos, 0);
+                this.world.playEvent(null, 1025, blockpos, 0);
             }
         } else {
             if (this.spawnPosition != null && (!this.world.isAirBlock(this.spawnPosition) || this.spawnPosition.getY() < 1)) {

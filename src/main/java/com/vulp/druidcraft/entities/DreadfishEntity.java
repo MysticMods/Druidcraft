@@ -287,7 +287,7 @@ public class DreadfishEntity extends TameableFlyingMonsterEntity
         Item item = itemstack.getItem();
         if (this.isTamed()) {
             if (!itemstack.isEmpty()) {
-                if (item == Items.BONE && (Float) this.getHealth() < this.getMaxHealth()) {
+                if (item == Items.BONE && this.getHealth() < this.getMaxHealth()) {
                     if (!player.abilities.isCreativeMode) {
                         itemstack.shrink(1);
                     }
@@ -312,7 +312,7 @@ public class DreadfishEntity extends TameableFlyingMonsterEntity
                 this.sitGoal.setSitting(!this.isSitting());
                 this.isJumping = false;
                 this.navigator.clearPath();
-                this.setAttackTarget((LivingEntity) null);
+                this.setAttackTarget(null);
             }
         }
         else if (item == Items.PRISMARINE_CRYSTALS) {
@@ -325,7 +325,7 @@ public class DreadfishEntity extends TameableFlyingMonsterEntity
                     this.playTameEffect(true);
                     this.setTamedBy(player);
                     this.navigator.clearPath();
-                    this.setAttackTarget((LivingEntity)null);
+                    this.setAttackTarget(null);
                     this.sitGoal.setSitting(true);
                     this.setHealth(24.0F);
                     this.world.setEntityState(this, (byte)7);
@@ -383,11 +383,11 @@ public class DreadfishEntity extends TameableFlyingMonsterEntity
     }
 
     public boolean isHostile() {
-        return ((Byte)this.dataManager.get(TAMED) & 2) != 0;
+        return (this.dataManager.get(TAMED) & 2) != 0;
     }
 
     public void setHostile(boolean hostile) {
-        byte b0 = (Byte)this.dataManager.get(TAMED);
+        byte b0 = this.dataManager.get(TAMED);
         if (hostile) {
             this.dataManager.set(TAMED, (byte)(b0 | 2));
         } else {

@@ -37,7 +37,7 @@ public class MagicGlitterParticle extends SpriteTexturedParticle {
         this.prevPosZ = this.posZ;
         if (this.age++ < this.maxAge && this.particleScale > 0.0F) {
             this.selectSpriteRandomly(this.spriteSet);
-            this.particleScale = (float) ((float)this.age / (float)this.maxAge) * 0.3f;
+            this.particleScale = ((float)this.age / (float)this.maxAge) * 0.3f;
             this.motionX += this.rand.nextFloat() / 1000.0F * (float) (this.rand.nextBoolean() ? 1 : -1);
             this.motionZ += this.rand.nextFloat() / 1000.0F * (float) (this.rand.nextBoolean() ? 1 : -1);
             this.motionY -= this.rand.nextFloat() / 5000.0F;
