@@ -19,12 +19,14 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import java.util.function.Supplier;
+
 public class BerryBushBlock extends SweetBerryBushBlock {
 
-    private final Item item;
-    private final Boolean thorns;
+    private final Supplier<Item> item;
+    private final boolean thorns;
 
-    public BerryBushBlock(Item berryItem, Boolean hasThorns, Properties properties) {
+    public BerryBushBlock(Supplier<Item> berryItem, boolean hasThorns, Properties properties) {
         super(properties);
         this.item = berryItem;
         this.thorns = hasThorns;
@@ -32,7 +34,7 @@ public class BerryBushBlock extends SweetBerryBushBlock {
 
     @Override
     public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
-        return new ItemStack(this.item);
+        return new ItemStack(this.item.get());
     }
 
     @Override
@@ -43,7 +45,7 @@ public class BerryBushBlock extends SweetBerryBushBlock {
             return false;
         } else if (i > 1) {
             int j = 1 + worldIn.rand.nextInt(2);
-            spawnAsEntity(worldIn, pos, new ItemStack(this.item, j + (flag ? 1 : 0)));
+            spawnAsEntity(worldIn, pos, new ItemStack(this.item.get(), j + (flag ? 1 : 0)));
             worldIn.playSound(null, pos, SoundEvents.ITEM_SWEET_BERRIES_PICK_FROM_BUSH, SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
             worldIn.setBlockState(pos, state.with(AGE, 1), 2);
             return true;
