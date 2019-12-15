@@ -71,6 +71,13 @@ public class ItemRegistry
     public static Item crate;
     public static Item ceramic_lantern;
 
+    public static Item lunar_moth_jar_turquoise;
+    public static Item lunar_moth_jar_orange;
+    public static Item lunar_moth_jar_white;
+    public static Item lunar_moth_jar_yellow;
+    public static Item lunar_moth_jar_lime;
+    public static Item lunar_moth_jar_pink;
+
     public static Item amber_ore;
     public static Item moonstone_ore;
     public static Item fiery_glass_ore;
