@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.items;
 
+import com.google.common.collect.Maps;
 import com.vulp.druidcraft.entities.LunarMothColors;
 import com.vulp.druidcraft.entities.LunarMothEntity;
 import com.vulp.druidcraft.registry.EntityRegistry;
@@ -12,6 +13,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.Items;
 import net.minecraft.tileentity.MobSpawnerTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -20,15 +22,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.spawner.AbstractSpawner;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class LunarMothJarItem extends Item {
-
-    public final LunarMothColors MOTH_COLOR;
+    private static Map<LunarMothColors, LunarMothJarItem> map = Maps.newEnumMap(LunarMothColors.class);
 
     public LunarMothJarItem(Properties properties, LunarMothColors color) {
         super(properties);
-        this.MOTH_COLOR = color;
+        map.put(color, this);
     }
 
     public ActionResultType onItemUse(ItemUseContext context) {
@@ -48,25 +50,25 @@ public class LunarMothJarItem extends Item {
                 blockpos1 = blockpos.offset(direction);
             }
 
-            if (EntityRegistry.lunar_moth_entity.spawn(world, itemstack, context.getPlayer(), blockpos1, SpawnReason.SPAWN_EGG, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP) != null) {
-                mothJarToBottle(itemstack, context.getPlayer(), itemstack);
+            PlayerEntity player = context.getPlayer();
+
+            if (EntityRegistry.lunar_moth_entity.spawn(world, itemstack, player, blockpos1, SpawnReason.SPAWN_EGG, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP) != null) {
+                itemstack.shrink(1);
+                ItemStack bottle = new ItemStack(Items.GLASS_BOTTLE);
+                if (!player.inventory.addItemStackToInventory(bottle)) {
+                    player.dropItem(bottle, false);
+                }
             }
 
             return ActionResultType.SUCCESS;
         }
     }
 
-    protected ItemStack mothJarToBottle(ItemStack itemstack, PlayerEntity player, ItemStack stack) {
-        itemstack.shrink(1);
-        if (itemstack.isEmpty()) {
-            return stack;
-        } else {
-            if (!player.inventory.addItemStackToInventory(stack)) {
-                player.dropItem(stack, false);
-            }
-
-            return itemstack;
-        }
+    public static LunarMothJarItem getItemByColor (LunarMothColors color) {
+        return map.get(color);
     }
 
+    public static ItemStack getItemStackByColor (LunarMothColors color) {
+        return new ItemStack(getItemByColor(color));
+    }
 }
