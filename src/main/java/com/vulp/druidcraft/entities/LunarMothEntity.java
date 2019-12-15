@@ -1,5 +1,7 @@
 package com.vulp.druidcraft.entities;
 
+import com.vulp.druidcraft.items.LunarMothJarItem;
+import com.vulp.druidcraft.registry.ItemRegistry;
 import com.vulp.druidcraft.registry.ParticleRegistry;
 import com.vulp.druidcraft.registry.SoundEventRegistry;
 import net.minecraft.block.BlockState;
@@ -54,30 +56,22 @@ public class LunarMothEntity extends AnimalEntity {
         Item item = itemstack.getItem();
         if (item == Items.GLASS_BOTTLE) {
             player.getEntityWorld().playSound(player, player.posX, player.posY, player.posZ, SoundEventRegistry.fill_bottle, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-            this.bottleToMothJar(itemstack, player, new ItemStack(Items.DRAGON_BREATH));
+            this.bottleToMothJar(itemstack, player);
             return true;
         }
         return super.processInteract(player, hand);
     }
 
-    protected Item getMothJarType() {
-        switch(this.getColor()) {
-            case TURQUOISE:
-                return
-
-        }
-    }
-
-    protected ItemStack bottleToMothJar(ItemStack itemstack, PlayerEntity player, ItemStack stack) {
+    protected void bottleToMothJar(ItemStack itemstack, PlayerEntity player) {
         itemstack.shrink(1);
-        if (itemstack.isEmpty()) {
-            return stack;
-        } else {
-            if (!player.inventory.addItemStackToInventory(stack)) {
-                player.dropItem(stack, false);
-            }
 
-            return itemstack;
+        ItemStack stack = LunarMothJarItem.getItemStackByColor(getColor());
+        CompoundNBT entityData = new CompoundNBT();
+        writeAdditional(entityData);
+        stack.getOrCreateTag().put("EntityData", entityData);
+
+        if (!player.inventory.addItemStackToInventory(stack)) {
+            player.dropItem(stack, false);
         }
     }
 
