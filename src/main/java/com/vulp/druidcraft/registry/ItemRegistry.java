@@ -68,6 +68,8 @@ public class ItemRegistry
     public static Item blueberry_muffin;
     public static Item elderflower_cordial;
     public static Item apple_elderberry_crumble;
+    public static Item crate;
+    public static Item ceramic_lantern;
 
     public static Item amber_ore;
     public static Item moonstone_ore;

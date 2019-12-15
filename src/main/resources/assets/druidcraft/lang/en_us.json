@@ -128,10 +128,14 @@
   "block.druidcraft.elder_leaves": "Elder Leaves",
   "block.druidcraft.elder_sapling": "Elder Sapling",
   "block.druidcraft.elder_wood": "Elder Wood",
+  "block.druidcraft.crate": "Crate",
+  "block.druidcraft.ceramic_lantern": "Ceramic Lantern",
 
   "entity.druidcraft.dreadfish": "Dreadfish",
   "entity.druidcraft.beetle": "Beetle",
   "entity.druidcraft.lunar_moth": "Lunar Moth",
+
+  "container.druidcraft.crate": "Crate",
 
   "biome.druidcraft.darkwood_forest": "Darkwood Forest",
 

@@ -1,18 +1,20 @@
 package com.vulp.druidcraft.entities;
 
 import com.vulp.druidcraft.registry.ParticleRegistry;
+import com.vulp.druidcraft.registry.SoundEventRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.GlassBottleItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -23,7 +25,7 @@ import javax.annotation.Nullable;
 public class LunarMothEntity extends AnimalEntity {
     private static final DataParameter<Boolean> RESTING = EntityDataManager.createKey(LunarMothEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Direction> IDLING = EntityDataManager.createKey(LunarMothEntity.class, DataSerializers.DIRECTION);
-    private static final DataParameter<Integer> COLOR = EntityDataManager.createKey(LunarMothEntity.class, DataSerializers.VARINT);
+    public static final DataParameter<Integer> COLOR = EntityDataManager.createKey(LunarMothEntity.class, DataSerializers.VARINT);
     private static final EntityPredicate entityPredicate = (new EntityPredicate()).setDistance(4.0D).allowFriendlyFire();
     public int timeUntilDropGlowstone;
     private BlockPos spawnPosition;
@@ -44,6 +46,39 @@ public class LunarMothEntity extends AnimalEntity {
         this.dataManager.register(RESTING, false);
         this.dataManager.register(IDLING, Direction.NORTH);
         this.dataManager.register(COLOR, LunarMothColors.colorToInt(LunarMothColors.randomColor(rand)));
+    }
+
+    @Override
+    public boolean processInteract(PlayerEntity player, Hand hand) {
+        ItemStack itemstack = player.getHeldItem(hand);
+        Item item = itemstack.getItem();
+        if (item == Items.GLASS_BOTTLE) {
+            player.getEntityWorld().playSound(player, player.posX, player.posY, player.posZ, SoundEventRegistry.fill_bottle, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+            this.bottleToMothJar(itemstack, player, new ItemStack(Items.DRAGON_BREATH));
+            return true;
+        }
+        return super.processInteract(player, hand);
+    }
+
+    protected Item getMothJarType() {
+        switch(this.getColor()) {
+            case TURQUOISE:
+                return
+
+        }
+    }
+
+    protected ItemStack bottleToMothJar(ItemStack itemstack, PlayerEntity player, ItemStack stack) {
+        itemstack.shrink(1);
+        if (itemstack.isEmpty()) {
+            return stack;
+        } else {
+            if (!player.inventory.addItemStackToInventory(stack)) {
+                player.dropItem(stack, false);
+            }
+
+            return itemstack;
+        }
     }
 
     public boolean getMothResting() {

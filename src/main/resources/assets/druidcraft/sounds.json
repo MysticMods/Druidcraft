@@ -1,0 +1,7 @@
+{
+	"fill_bottle": {
+		"sounds": [ "druidcraft:items/fill_bottle1",
+					"druidcraft:items/fill_bottle2" ],
+		"subtitle": "subtitles.druidcraft.item.bottle.fill"
+	}
+}

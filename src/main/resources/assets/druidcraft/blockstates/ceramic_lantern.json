@@ -1,0 +1,13 @@
+{
+    "variants": {
+        "hanging=true,roped=true":
+		[ { "model": "druidcraft:block/rope_ceramic_lantern_1" },
+		{ "model": "druidcraft:block/rope_ceramic_lantern_2" } ],
+		"hanging=true,roped=false":
+		[ { "model": "druidcraft:block/hanging_ceramic_lantern" },
+		{ "model": "druidcraft:block/hanging_ceramic_lantern", "y": 90 } ],
+		"hanging=false":
+		[ { "model": "druidcraft:block/ceramic_lantern" },
+		{ "model": "druidcraft:block/ceramic_lantern", "y": 90 } ]
+  }
+}

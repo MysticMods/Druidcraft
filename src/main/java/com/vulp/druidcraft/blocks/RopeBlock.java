@@ -344,7 +344,7 @@ public class RopeBlock extends SixWayBlock implements IBucketPickupHandler, ILiq
 
         RopeConnectionType downType = RopeConnectionType.NONE;
         BlockState downState = world.getBlockState(pos.offset(Direction.DOWN));
-        if (downState.func_224755_d(world, pos.offset(Direction.DOWN), Direction.DOWN.getOpposite()) || downState.getBlock() == this || downState.getBlock().isIn(BlockTags.FENCES) || downState.getBlock() instanceof RopeLanternBlock) {
+        if (downState.func_224755_d(world, pos.offset(Direction.DOWN), Direction.DOWN.getOpposite()) || downState.getBlock() == this || downState.getBlock().isIn(BlockTags.FENCES) || downState.getBlock() instanceof RopeLanternBlock || (downState.getBlock() instanceof RopeableLanternBlock && downState.get(RopeableLanternBlock.HANGING) && downState.get(RopeableLanternBlock.ROPED))) {
             downType = RopeConnectionType.REGULAR;
         } else if (downState.getBlock() instanceof SmallBeamBlock) {
             downType = beamChecker(downState, Direction.DOWN);

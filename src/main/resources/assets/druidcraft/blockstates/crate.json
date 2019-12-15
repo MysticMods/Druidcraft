@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "open=false": { "model": "druidcraft:block/crate" },
+        "open=true": { "model": "druidcraft:block/crate_open" }
+    }
+}

@@ -53,6 +53,8 @@ public class BlockRegistry
     public static Block elder_fruit;
 
     public static Block blueberry_bush;
+    public static Block crate;
+    public static Block ceramic_lantern;
 
     public static Block oak_beam;
     public static Block spruce_beam;

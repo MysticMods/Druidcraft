@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "druidcraft:block/crate_side",
+        "down": "druidcraft:block/crate_top_open",
+        "up": "druidcraft:block/crate_top_open",
+        "north": "druidcraft:block/crate_front",
+        "east": "druidcraft:block/crate_side",
+        "south": "druidcraft:block/crate_front",
+        "west": "druidcraft:block/crate_side"
+    }
+}
