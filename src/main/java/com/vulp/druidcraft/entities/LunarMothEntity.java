@@ -68,7 +68,7 @@ public class LunarMothEntity extends AnimalEntity {
         ItemStack stack = LunarMothJarItem.getItemStackByColor(getColor());
         CompoundNBT entityData = new CompoundNBT();
         writeAdditional(entityData);
-        stack.getOrCreateTag().put("EntityData", entityData);
+        stack.getOrCreateTag().put("EntityTag", entityData);
 
         if (!player.inventory.addItemStackToInventory(stack)) {
             player.dropItem(stack, false);
