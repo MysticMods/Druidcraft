@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "X#X",
+		"# #",
+		"X#X"
+    ],
+    "key": {
+        "#": {
+            "tag": "minecraft:wooden_slabs"
+        },
+		"X": {
+		"tag": "minecraft:planks"
+		}
+	},
+    "result": { "item": "druidcraft:crate", "count": 1 }
+}

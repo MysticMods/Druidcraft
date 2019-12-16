@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " # ",
+		"#O#",
+		" # "
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:brick"
+        },
+		"O": [
+			{
+			"item": "minecraft:coal"
+			},
+			{
+			"item": "minecraft:charcoal"
+			}
+		]
+    },
+    "result": { "item": "druidcraft:ceramic_lantern", "count": 1 }
+}
