@@ -36,6 +36,7 @@ public class DrinkableItem extends Item {
       return new ItemStack(Items.GLASS_BOTTLE);
     }
 
+    @Override
     public UseAction getUseAction(ItemStack stack) {
         return UseAction.DRINK;
     }
