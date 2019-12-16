@@ -11,6 +11,7 @@ import com.vulp.druidcraft.blocks.TrapDoorBlock;
 import com.vulp.druidcraft.blocks.WoodButtonBlock;
 import com.vulp.druidcraft.blocks.trees.DarkwoodTree;
 import com.vulp.druidcraft.blocks.trees.ElderTree;
+import com.vulp.druidcraft.entities.LunarMothColors;
 import com.vulp.druidcraft.entities.tileentities.CrateTileEntity;
 import com.vulp.druidcraft.items.*;
 import com.vulp.druidcraft.registry.*;
@@ -100,6 +101,14 @@ public class DruidcraftRegistry {
                         ItemRegistry.iron_sickle = new SickleItem(new ItemProperties().attackDamage(0).attackSpeed(-1.5f).tier(ItemTier.IRON).radius(3).setGroup(ItemGroup.TOOLS)).setRegistryName(location("iron_sickle")),
                         ItemRegistry.gold_sickle = new SickleItem(new ItemProperties().attackDamage(0).attackSpeed(-1.5f).tier(ItemTier.GOLD).radius(1).setGroup(ItemGroup.TOOLS)).setRegistryName(location("gold_sickle")),
                         ItemRegistry.diamond_sickle = new SickleItem(new ItemProperties().attackDamage(0).attackSpeed(-1.5f).tier(ItemTier.DIAMOND).radius(4).setGroup(ItemGroup.TOOLS)).setRegistryName(location("diamond_sickle")),
+
+                        ItemRegistry.lunar_moth_jar_turquoise = new LunarMothJarItem(new LunarMothJarItem.Properties().group(DRUIDCRAFT), LunarMothColors.TURQUOISE).setRegistryName(location("turquoise_lunar_moth_jar")),
+                        ItemRegistry.lunar_moth_jar_white = new LunarMothJarItem(new LunarMothJarItem.Properties().group(DRUIDCRAFT), LunarMothColors.WHITE).setRegistryName(location("white_lunar_moth_jar")),
+                        ItemRegistry.lunar_moth_jar_lime = new LunarMothJarItem(new LunarMothJarItem.Properties().group(DRUIDCRAFT), LunarMothColors.LIME).setRegistryName(location("lime_lunar_moth_jar")),
+                        ItemRegistry.lunar_moth_jar_yellow = new LunarMothJarItem(new LunarMothJarItem.Properties().group(DRUIDCRAFT), LunarMothColors.YELLOW).setRegistryName(location("yellow_lunar_moth_jar")),
+                        ItemRegistry.lunar_moth_jar_orange = new LunarMothJarItem(new LunarMothJarItem.Properties().group(DRUIDCRAFT), LunarMothColors.ORANGE).setRegistryName(location("orange_lunar_moth_jar")),
+                        ItemRegistry.lunar_moth_jar_pink = new LunarMothJarItem(new LunarMothJarItem.Properties().group(DRUIDCRAFT), LunarMothColors.PINK).setRegistryName(location("pink_lunar_moth_jar")),
+
 
                         // Item-blocks:
                         ItemRegistry.amber_ore = new BlockItem(BlockRegistry.amber_ore, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.amber_ore.getRegistryName()),
