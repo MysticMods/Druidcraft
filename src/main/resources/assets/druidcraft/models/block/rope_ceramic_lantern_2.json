@@ -87,6 +87,7 @@
 			"name": "flames_top",
 			"from": [6, 10, 6],
 			"to": [10, 10, 10],
+			"shade": false,
 			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9, 8]},
 			"faces": {
 				"north": {"uv": [0, 6, 6, 8], "texture": "#0"},
@@ -100,6 +101,7 @@
 			"name": "flames",
 			"from": [3.2, 3.2, 3.2],
 			"to": [12.8, 8.8, 12.8],
+			"shade": false,
 			"faces": {
 				"north": {"uv": [0, 0, 10, 6], "texture": "#0"},
 				"east": {"uv": [0, 0, 10, 6], "texture": "#0"},
