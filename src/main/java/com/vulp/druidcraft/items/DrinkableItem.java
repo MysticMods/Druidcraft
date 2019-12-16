@@ -46,10 +46,4 @@ public class DrinkableItem extends Item {
         return 32;
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        if (worldIn == null) return;
-        tooltip.add(new TranslationTextComponent("item.druidcraft.elderflower_cordial.description1"));
-    }
 }
