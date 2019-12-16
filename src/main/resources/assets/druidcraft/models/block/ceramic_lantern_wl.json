@@ -1,0 +1,105 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "druidcraft:block/ceramic_lantern_1_wl",
+		"1": "druidcraft:block/ceramic_lantern_2",
+		"particle": "druidcraft:block/ceramic_lantern_2"
+	},
+	"elements": [
+		{
+			"name": "ceramic_mid",
+			"from": [3, 2, 3],
+			"to": [13, 8, 13],
+			"faces": {
+				"north": {"uv": [0, 8, 10, 14], "texture": "#0"},
+				"east": {"uv": [0, 8, 10, 14], "texture": "#0"},
+				"south": {"uv": [0, 8, 10, 14], "texture": "#0"},
+				"west": {"uv": [0, 8, 10, 14], "texture": "#0"},
+				"up": {"uv": [0, 0, 10, 10], "texture": "#1"},
+				"down": {"uv": [0, 10, 5, 15], "texture": "#1"}
+			}
+		},
+		{
+			"name": "ceramic_bottom",
+			"from": [4, 0, 4],
+			"to": [12, 2, 12],
+			"faces": {
+				"north": {"uv": [0, 14, 8, 16], "texture": "#0"},
+				"east": {"uv": [0, 14, 8, 16], "texture": "#0"},
+				"south": {"uv": [0, 14, 8, 16], "texture": "#0"},
+				"west": {"uv": [0, 14, 8, 16], "texture": "#0"},
+				"down": {"uv": [1, 1, 9, 9], "texture": "#1"}
+			}
+		},
+		{
+			"name": "ceramic_top",
+			"from": [6, 8, 5],
+			"to": [11, 10, 6],
+			"faces": {
+				"north": {"uv": [0, 6, 5, 8], "texture": "#0"},
+				"east": {"uv": [0, 6, 1, 8], "texture": "#0"},
+				"south": {"uv": [0, 6, 5, 8], "texture": "#0"},
+				"up": {"uv": [10, 0, 15, 1], "texture": "#1"}
+			}
+		},
+		{
+			"name": "ceramic_top",
+			"from": [5, 8, 10],
+			"to": [10, 10, 11],
+			"faces": {
+				"north": {"uv": [0, 6, 5, 8], "texture": "#0"},
+				"south": {"uv": [0, 6, 5, 8], "texture": "#0"},
+				"west": {"uv": [0, 6, 1, 8], "texture": "#0"},
+				"up": {"uv": [10, 0, 15, 1], "texture": "#1"}
+			}
+		},
+		{
+			"name": "ceramic_top",
+			"from": [10, 8, 6],
+			"to": [11, 10, 11],
+			"faces": {
+				"east": {"uv": [0, 6, 5, 8], "texture": "#0"},
+				"south": {"uv": [0, 6, 1, 8], "texture": "#0"},
+				"west": {"uv": [0, 6, 5, 8], "texture": "#0"},
+				"up": {"uv": [10, 0, 11, 5], "texture": "#1"}
+			}
+		},
+		{
+			"name": "ceramic_top",
+			"from": [5, 8, 5],
+			"to": [6, 10, 10],
+			"faces": {
+				"north": {"uv": [0, 6, 1, 8], "texture": "#0"},
+				"east": {"uv": [0, 6, 5, 8], "texture": "#0"},
+				"west": {"uv": [0, 6, 5, 8], "texture": "#0"},
+				"up": {"uv": [10, 0, 11, 5], "texture": "#1"}
+			}
+		},
+		{
+			"name": "flames_top",
+			"from": [6, 10, 6],
+			"to": [10, 10, 10],
+			"faces": {
+				"north": {"uv": [0, 6, 6, 8], "texture": "#0"},
+				"east": {"uv": [0, 6, 6, 8], "texture": "#0"},
+				"south": {"uv": [0, 6, 6, 8], "texture": "#0"},
+				"west": {"uv": [0, 6, 6, 8], "texture": "#0"},
+				"up": {"uv": [12, 6, 16, 10], "texture": "#1"}
+			}
+		},
+		{
+			"name": "handle",
+			"from": [8, 10, 4],
+			"to": [8, 13, 12],
+			"rotation": {"angle": -45, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 5], "texture": "#missing"},
+				"east": {"uv": [12, 9, 15, 16], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [0, 0, 0, 5], "texture": "#missing"},
+				"west": {"uv": [12, 9, 15, 16], "rotation": 90, "texture": "#0"},
+				"up": {"uv": [0, 0, 0, 7], "texture": "#missing"},
+				"down": {"uv": [0, 0, 0, 7], "texture": "#missing"}
+			}
+		}
+	]
+}
