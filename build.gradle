@@ -13,6 +13,9 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
+import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
+
 version = '1.14-0.3.0'
 group = 'com.vulp.druidcraft' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Druidcraft'
@@ -124,6 +127,27 @@ jar {
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
+}
+
+processResources {
+
+	doLast {
+	
+	    def jsonMinifyStart = System.currentTimeMillis()
+	    def jsonMinified = 0
+		def jsonBytesSaved = 0
+		
+	    fileTree(dir: outputs.files.asPath, include: '**/*.json').each {
+		
+			File file = it
+			jsonMinified++
+			def oldLength = file.length()
+			file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
+			jsonBytesSaved += oldLength - file.length()
+		}
+		
+		println('Minified ' + jsonMinified + ' json files. Saved ' + jsonBytesSaved + ' bytes. Took ' + (System.currentTimeMillis() - jsonMinifyStart) + 'ms.')
+	}
 }
 
 // Example configuration to allow publishing using the maven-publish task
