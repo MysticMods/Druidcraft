@@ -10,14 +10,13 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.MobSpawnerTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.spawner.AbstractSpawner;
@@ -27,10 +26,24 @@ import java.util.Objects;
 
 public class LunarMothJarItem extends Item {
     private static Map<LunarMothColors, LunarMothJarItem> map = Maps.newEnumMap(LunarMothColors.class);
+    private final LunarMothColors color;
 
     public LunarMothJarItem(Properties properties, LunarMothColors color) {
         super(properties);
         map.put(color, this);
+        this.color = color;
+    }
+
+    @Override
+    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
+      if (this.isInGroup(group)) {
+          ItemStack stack = new ItemStack(this);
+          CompoundNBT tag = stack.getOrCreateTag();
+          CompoundNBT entityData = new CompoundNBT();
+          entityData.putInt("Color", LunarMothColors.colorToInt(color));
+          tag.put("EntityData", entityData);
+          items.add(stack);
+      }
     }
 
     public ActionResultType onItemUse(ItemUseContext context) {
