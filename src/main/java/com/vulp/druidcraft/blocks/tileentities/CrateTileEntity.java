@@ -1,7 +1,8 @@
-package com.vulp.druidcraft.entities.tileentities;
+package com.vulp.druidcraft.blocks.tileentities;
 
-import com.vulp.druidcraft.blocks.CrateBlock;
+import com.vulp.druidcraft.blocks.CrateTempBlock;
 import com.vulp.druidcraft.registry.BlockRegistry;
+import com.vulp.druidcraft.registry.SoundEventRegistry;
 import com.vulp.druidcraft.registry.TileEntityRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,7 +18,6 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
@@ -128,9 +128,9 @@ public class CrateTileEntity extends LockableLootTileEntity {
 
             ++this.field_213967_b;
             BlockState blockstate = this.getBlockState();
-            boolean flag = blockstate.get(CrateBlock.PROPERTY_OPEN);
+            boolean flag = blockstate.get(CrateTempBlock.PROPERTY_OPEN);
             if (!flag) {
-                this.func_213965_a(blockstate, SoundEvents.BLOCK_BARREL_OPEN);
+                this.func_213965_a(blockstate, SoundEventRegistry.open_crate);
                 this.func_213963_a(blockstate, true);
             }
 
@@ -152,14 +152,14 @@ public class CrateTileEntity extends LockableLootTileEntity {
             this.func_213964_r();
         } else {
             BlockState blockstate = this.getBlockState();
-            if (blockstate.getBlock() != BlockRegistry.crate) {
+            if (blockstate.getBlock() != BlockRegistry.crate_temp) {
                 this.remove();
                 return;
             }
 
-            boolean flag = blockstate.get(CrateBlock.PROPERTY_OPEN);
+            boolean flag = blockstate.get(CrateTempBlock.PROPERTY_OPEN);
             if (flag) {
-                this.func_213965_a(blockstate, SoundEvents.BLOCK_BARREL_CLOSE);
+                this.func_213965_a(blockstate, SoundEventRegistry.close_crate);
                 this.func_213963_a(blockstate, false);
             }
         }
@@ -174,13 +174,13 @@ public class CrateTileEntity extends LockableLootTileEntity {
     }
 
     private void func_213963_a(BlockState p_213963_1_, boolean p_213963_2_) {
-        this.world.setBlockState(this.getPos(), p_213963_1_.with(CrateBlock.PROPERTY_OPEN, Boolean.valueOf(p_213963_2_)), 3);
+        this.world.setBlockState(this.getPos(), p_213963_1_.with(CrateTempBlock.PROPERTY_OPEN, Boolean.valueOf(p_213963_2_)), 3);
     }
 
     private void func_213965_a(BlockState p_213965_1_, SoundEvent p_213965_2_) {
         double d0 = (double)this.pos.getX() + 0.5D;
         double d1 = (double)this.pos.getY() + 0.5D;
         double d2 = (double)this.pos.getZ() + 0.5D;
-        this.world.playSound((PlayerEntity)null, d0, d1, d2, p_213965_2_, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
+        this.world.playSound((PlayerEntity)null, d0, d1, d2, p_213965_2_, SoundCategory.BLOCKS, 0.65F, this.world.rand.nextFloat() * 0.1F + 0.9F);
     }
 }

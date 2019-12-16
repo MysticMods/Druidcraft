@@ -1,6 +1,6 @@
 package com.vulp.druidcraft.blocks;
 
-import com.vulp.druidcraft.entities.tileentities.CrateTileEntity;
+import com.vulp.druidcraft.blocks.tileentities.CrateTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -25,10 +25,10 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class CrateBlock extends ContainerBlock {
+public class CrateTempBlock extends ContainerBlock {
     public static final BooleanProperty PROPERTY_OPEN;
 
-    public CrateBlock(Properties properties) {
+    public CrateTempBlock(Properties properties) {
         super(properties);
         this.setDefaultState(this.stateContainer.getBaseState().with(PROPERTY_OPEN, false));
     }
