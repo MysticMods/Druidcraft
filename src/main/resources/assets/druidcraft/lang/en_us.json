@@ -40,6 +40,12 @@
   
   "item.druidcraft.knife": "Knife",
   "item.druidcraft.knife.description1": "Used to configure rope blocks. (WIP)",
+  "item.druidcraft.turquoise_lunar_moth_jar": "Turquoise Lunar Moth Jar",
+  "item.druidcraft.lime_lunar_moth_jar": "Lime Lunar Moth Jar",
+  "item.druidcraft.orange_lunar_moth_jar": "Orange Lunar Moth Jar",
+  "item.druidcraft.yellow_lunar_moth_jar": "Yellow Lunar Moth Jar",
+  "item.druidcraft.white_lunar_moth_jar": "White Lunar Moth Jar",
+  "item.druidcraft.pink_lunar_moth_jar": "Pink Lunar Moth Jar",
 
   "item.druidcraft.blueberries": "Blueberries",
   "item.druidcraft.elderberries": "Elderberries",
@@ -47,7 +53,6 @@
   "item.druidcraft.blueberry_muffin": "Blueberry Muffin",
   "item.druidcraft.apple_elderberry_crumble": "Apple-Elderberry Crumble",
   "item.druidcraft.elderflower_cordial": "Elderflower Cordial",
-  "item.druidcraft.elderflower_cordial.description1": "WIP (Doesn't give hunger back)",
 
   "item.druidcraft.moonstone_sword": "Moonstone Sword",
   "item.druidcraft.moonstone_shovel": "Moonstone Shovel",
@@ -138,6 +143,10 @@
   "container.druidcraft.crate": "Crate",
 
   "biome.druidcraft.darkwood_forest": "Darkwood Forest",
+
+  "subtitles.druidcraft.item.bottle.fill": "Bottle fills",
+  "subtitles.druidcraft.block.crate.open": "Crate opens",
+  "subtitles.druidcraft.block.crate.close": "Crate closes",
 
   "itemGroup.druidcraft": "Druidcraft",
   
