@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.vulp.druidcraft.entities.LunarMothColors;
 import com.vulp.druidcraft.entities.LunarMothEntity;
 import com.vulp.druidcraft.registry.EntityRegistry;
+import com.vulp.druidcraft.registry.SoundEventRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -17,6 +18,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
