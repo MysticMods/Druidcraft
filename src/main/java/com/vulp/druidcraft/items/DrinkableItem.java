@@ -32,22 +32,12 @@ public class DrinkableItem extends Item {
 
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-        PlayerEntity playerentity = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
-        if (playerentity == null || !playerentity.abilities.isCreativeMode) {
-            stack.shrink(1);
-        }
+      super.onItemUseFinish(stack, worldIn, entityLiving);
+      return new ItemStack(Items.GLASS_BOTTLE);
+    }
 
-        if (playerentity == null || !playerentity.abilities.isCreativeMode) {
-            if (stack.isEmpty()) {
-                return new ItemStack(Items.GLASS_BOTTLE);
-            }
-
-            if (playerentity != null) {
-                playerentity.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
-            }
-        }
-
-        return stack;
+    public UseAction getUseAction(ItemStack stack) {
+        return UseAction.DRINK;
     }
 
     @Override
