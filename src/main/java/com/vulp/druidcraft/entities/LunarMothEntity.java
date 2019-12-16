@@ -57,6 +57,7 @@ public class LunarMothEntity extends AnimalEntity {
         if (item == Items.GLASS_BOTTLE) {
             player.getEntityWorld().playSound(player, player.posX, player.posY, player.posZ, SoundEventRegistry.fill_bottle, SoundCategory.NEUTRAL, 1.0F, 1.0F);
             this.bottleToMothJar(itemstack, player);
+            remove();
             return true;
         }
         return super.processInteract(player, hand);
