@@ -5,26 +5,33 @@ import com.vulp.druidcraft.blocks.LunarMothJarBlock;
 import com.vulp.druidcraft.entities.LunarMothColors;
 import com.vulp.druidcraft.registry.BlockRegistry;
 import com.vulp.druidcraft.registry.EntityRegistry;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.SoundType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.IProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.Map;
 import java.util.Objects;
 
-public class LunarMothJarItem extends Item {
+public class LunarMothJarItem extends BlockItem {
     private static Map<LunarMothColors, LunarMothJarItem> map = Maps.newEnumMap(LunarMothColors.class);
     private final LunarMothColors color;
 
-    public LunarMothJarItem(Properties properties, LunarMothColors color) {
-        super(properties);
+    public LunarMothJarItem(Block block, LunarMothColors color, Properties properties) {
+        super(block, properties);
         map.put(color, this);
         this.color = color;
     }
@@ -41,7 +48,18 @@ public class LunarMothJarItem extends Item {
         }
     }
 
+    @Override
     public ActionResultType onItemUse(ItemUseContext context) {
+        if (context.getPlayer().isSneaking()) {
+            ActionResultType actionresulttype1 = this.tryPlace(new BlockItemUseContext(context));
+            return actionresulttype1 != ActionResultType.SUCCESS ? this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType() : actionresulttype1;
+        } else {
+            ActionResultType actionresulttype2 = this.tryRelease(new BlockItemUseContext(context));
+            return actionresulttype2 != ActionResultType.SUCCESS ? this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType() : actionresulttype2;
+        }
+    }
+
+    public ActionResultType tryRelease(ItemUseContext context) {
         World world = context.getWorld();
         if (world.isRemote) {
             return ActionResultType.SUCCESS;
@@ -51,12 +69,6 @@ public class LunarMothJarItem extends Item {
             Direction direction = context.getFace();
             BlockState blockstate = world.getBlockState(blockpos);
             BlockPos blockpos1;
-
-            if (context.getPlayer().isSneaking()) {
-                world.setBlockState(blockpos.offset(direction.getOpposite()), BlockRegistry.turquoise_lunar_moth_jar.getDefaultState().with(LunarMothJarBlock.COLOR, LunarMothColors.colorToInt(this.color)));
-                itemstack.shrink(1);
-                return ActionResultType.SUCCESS;
-            }
 
             if (blockstate.getCollisionShape(world, blockpos).isEmpty()) {
                 blockpos1 = blockpos;
