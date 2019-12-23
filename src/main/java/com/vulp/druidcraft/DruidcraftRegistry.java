@@ -266,19 +266,12 @@ public class DruidcraftRegistry {
                         BlockRegistry.blueberry_bush = new BerryBushBlock(() -> ItemRegistry.blueberries, false, BerryBushBlock.Properties.create(Material.PLANTS).tickRandomly().doesNotBlockMovement().sound(SoundType.SWEET_BERRY_BUSH)).setRegistryName(location("blueberry_bush")),
                         BlockRegistry.crate_temp = new CrateTempBlock(CrateTempBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("crate")),
                         BlockRegistry.ceramic_lantern = new RopeableLanternBlock(RopeableLanternBlock.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(2.0f).lightValue(13).harvestTool(ToolType.PICKAXE)).setRegistryName(location("ceramic_lantern")),
-                        BlockRegistry.turquoise_lunar_moth_jar = new LunarMothJarBlock(LunarMothJarBlock.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(1.0f).lightValue(10), 1).setRegistryName(location("turquoise_lunar_moth_lantern")),
-                        BlockRegistry.white_lunar_moth_jar = new LunarMothJarBlock(LunarMothJarBlock.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(1.0f).lightValue(10), 1).setRegistryName(location("white_lunar_moth_lantern")),
-                        BlockRegistry.lime_lunar_moth_jar = new LunarMothJarBlock(LunarMothJarBlock.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(1.0f).lightValue(10), 1).setRegistryName(location("lime_lunar_moth_lantern")),
-                        BlockRegistry.yellow_lunar_moth_jar = new LunarMothJarBlock(LunarMothJarBlock.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(1.0f).lightValue(10), 1).setRegistryName(location("yellow_lunar_moth_lantern")),
-                        BlockRegistry.orange_lunar_moth_jar = new LunarMothJarBlock(LunarMothJarBlock.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(1.0f).lightValue(10), 1).setRegistryName(location("orange_lunar_moth_lantern")),
-                        BlockRegistry.pink_lunar_moth_jar = new LunarMothJarBlock(LunarMothJarBlock.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(1.0f).lightValue(10), 1).setRegistryName(location("pink_lunar_moth_lantern")),
-
-
-
-
-
-
-
+                        BlockRegistry.turquoise_lunar_moth_jar = new LunarMothJarBlock(LunarMothJarBlock.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(1.0f).lightValue(10).tickRandomly(), 1).setRegistryName(location("turquoise_lunar_moth_lantern")),
+                        BlockRegistry.white_lunar_moth_jar = new LunarMothJarBlock(LunarMothJarBlock.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(1.0f).lightValue(10).tickRandomly(), 1).setRegistryName(location("white_lunar_moth_lantern")),
+                        BlockRegistry.lime_lunar_moth_jar = new LunarMothJarBlock(LunarMothJarBlock.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(1.0f).lightValue(10).tickRandomly(), 1).setRegistryName(location("lime_lunar_moth_lantern")),
+                        BlockRegistry.yellow_lunar_moth_jar = new LunarMothJarBlock(LunarMothJarBlock.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(1.0f).lightValue(10).tickRandomly(), 1).setRegistryName(location("yellow_lunar_moth_lantern")),
+                        BlockRegistry.orange_lunar_moth_jar = new LunarMothJarBlock(LunarMothJarBlock.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(1.0f).lightValue(10).tickRandomly(), 1).setRegistryName(location("orange_lunar_moth_lantern")),
+                        BlockRegistry.pink_lunar_moth_jar = new LunarMothJarBlock(LunarMothJarBlock.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(1.0f).lightValue(10).tickRandomly(), 1).setRegistryName(location("pink_lunar_moth_lantern")),
 
 
                         BlockRegistry.black_soulfire = new SoulfireBlock(DyeColor.BLACK, SoulfireBlock.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f).doesNotBlockMovement().lightValue(13)).setRegistryName(location("black_soulfire")),

@@ -7,7 +7,6 @@ import com.vulp.druidcraft.registry.*;
 import com.vulp.druidcraft.world.OreGeneration;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -55,8 +54,7 @@ public class Druidcraft {
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        RenderRegistry.registryEntityRenders();
-        ScreenRegistry.registryScreenRenders();
+        RenderRegistry.registryRenders();
         LOGGER.info("Client registry method registered.");
     }
 
