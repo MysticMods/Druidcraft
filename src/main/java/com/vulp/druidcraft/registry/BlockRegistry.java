@@ -55,6 +55,12 @@ public class BlockRegistry
     public static Block blueberry_bush;
     public static Block crate_temp;
     public static Block ceramic_lantern;
+    public static Block turquoise_lunar_moth_jar;
+    public static Block white_lunar_moth_jar;
+    public static Block lime_lunar_moth_jar;
+    public static Block yellow_lunar_moth_jar;
+    public static Block orange_lunar_moth_jar;
+    public static Block pink_lunar_moth_jar;
 
     public static Block oak_beam;
     public static Block spruce_beam;

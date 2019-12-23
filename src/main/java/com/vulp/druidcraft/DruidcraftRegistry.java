@@ -9,6 +9,7 @@ import com.vulp.druidcraft.blocks.StairsBlock;
 import com.vulp.druidcraft.blocks.FieryTorchBlock;
 import com.vulp.druidcraft.blocks.TrapDoorBlock;
 import com.vulp.druidcraft.blocks.WoodButtonBlock;
+import com.vulp.druidcraft.blocks.tileentities.LunarMothJarTileEntity;
 import com.vulp.druidcraft.blocks.trees.DarkwoodTree;
 import com.vulp.druidcraft.blocks.trees.ElderTree;
 import com.vulp.druidcraft.entities.LunarMothColors;
@@ -264,7 +265,13 @@ public class DruidcraftRegistry {
                         BlockRegistry.rope_lantern = new RopeLanternBlock(RopeLanternBlock.Properties.create(Material.IRON).hardnessAndResistance(3.5F).sound(SoundType.LANTERN).lightValue(15).lootFrom(Blocks.LANTERN)).setRegistryName(location("rope_lantern")),
                         BlockRegistry.blueberry_bush = new BerryBushBlock(() -> ItemRegistry.blueberries, false, BerryBushBlock.Properties.create(Material.PLANTS).tickRandomly().doesNotBlockMovement().sound(SoundType.SWEET_BERRY_BUSH)).setRegistryName(location("blueberry_bush")),
                         BlockRegistry.crate_temp = new CrateTempBlock(CrateTempBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("crate")),
-                        BlockRegistry.ceramic_lantern = new RopeableLanternBlock(RopeableLanternBlock.Properties.create(Material.MISCELLANEOUS).sound(SoundType.STONE).hardnessAndResistance(2.0f).lightValue(13).harvestTool(ToolType.PICKAXE)).setRegistryName(location("ceramic_lantern")),
+                        BlockRegistry.ceramic_lantern = new RopeableLanternBlock(RopeableLanternBlock.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(2.0f).lightValue(13).harvestTool(ToolType.PICKAXE)).setRegistryName(location("ceramic_lantern")),
+                        BlockRegistry.turquoise_lunar_moth_jar = new LunarMothJarBlock(LunarMothJarBlock.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(1.0f).lightValue(10), 1).setRegistryName(location("turquoise_lunar_moth_lantern")),
+
+
+
+
+
 
                         BlockRegistry.black_soulfire = new SoulfireBlock(DyeColor.BLACK, SoulfireBlock.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f).doesNotBlockMovement().lightValue(13)).setRegistryName(location("black_soulfire")),
                         BlockRegistry.red_soulfire = new SoulfireBlock(DyeColor.RED, SoulfireBlock.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f).doesNotBlockMovement().lightValue(13)).setRegistryName(location("red_soulfire")),
@@ -360,7 +367,10 @@ public class DruidcraftRegistry {
     {
         TileEntityRegistryEvent.getRegistry().registerAll
                 (
-                        TileEntityRegistry.crate = TileEntityRegistry.register("crate", TileEntityType.Builder.create(CrateTileEntity::new, BlockRegistry.crate_temp))
+                        TileEntityRegistry.crate = TileEntityRegistry.register("crate", TileEntityType.Builder.create(CrateTileEntity::new, BlockRegistry.crate_temp)),
+
+                        TileEntityRegistry.lunar_moth_jar = TileEntityRegistry.register("lunar_moth_jar", TileEntityType.Builder.create(LunarMothJarTileEntity::new,
+                                BlockRegistry.turquoise_lunar_moth_jar))
                 );
 
         LOGGER.info("Tile Entities registered.");

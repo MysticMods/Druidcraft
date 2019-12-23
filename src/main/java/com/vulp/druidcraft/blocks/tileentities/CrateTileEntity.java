@@ -147,7 +147,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
         int i = this.pos.getX();
         int j = this.pos.getY();
         int k = this.pos.getZ();
-        this.field_213967_b = ChestTileEntity.func_213976_a(this.world, this, i, j, k);
+        this.field_213967_b = ChestTileEntity.calculatePlayersUsing(this.world, this, i, j, k);
         if (this.field_213967_b > 0) {
             this.func_213964_r();
         } else {

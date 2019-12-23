@@ -1,24 +1,18 @@
 package com.vulp.druidcraft.items;
 
 import com.google.common.collect.Maps;
+import com.vulp.druidcraft.blocks.LunarMothJarBlock;
 import com.vulp.druidcraft.entities.LunarMothColors;
-import com.vulp.druidcraft.entities.LunarMothEntity;
+import com.vulp.druidcraft.registry.BlockRegistry;
 import com.vulp.druidcraft.registry.EntityRegistry;
-import com.vulp.druidcraft.registry.SoundEventRegistry;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.MobSpawnerTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -37,14 +31,14 @@ public class LunarMothJarItem extends Item {
 
     @Override
     public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-      if (this.isInGroup(group)) {
-          ItemStack stack = new ItemStack(this);
-          CompoundNBT tag = stack.getOrCreateTag();
-          CompoundNBT entityData = new CompoundNBT();
-          entityData.putInt("Color", LunarMothColors.colorToInt(color));
-          tag.put("EntityData", entityData);
-          items.add(stack);
-      }
+        if (this.isInGroup(group)) {
+            ItemStack stack = new ItemStack(this);
+            CompoundNBT tag = stack.getOrCreateTag();
+            CompoundNBT entityData = new CompoundNBT();
+            entityData.putInt("Color", LunarMothColors.colorToInt(color));
+            tag.put("EntityData", entityData);
+            items.add(stack);
+        }
     }
 
     public ActionResultType onItemUse(ItemUseContext context) {
@@ -57,6 +51,12 @@ public class LunarMothJarItem extends Item {
             Direction direction = context.getFace();
             BlockState blockstate = world.getBlockState(blockpos);
             BlockPos blockpos1;
+
+            if (context.getPlayer().isSneaking()) {
+                world.setBlockState(blockpos.offset(direction.getOpposite()), BlockRegistry.turquoise_lunar_moth_jar.getDefaultState().with(LunarMothJarBlock.COLOR, LunarMothColors.colorToInt(this.color)));
+                itemstack.shrink(1);
+                return ActionResultType.SUCCESS;
+            }
 
             if (blockstate.getCollisionShape(world, blockpos).isEmpty()) {
                 blockpos1 = blockpos;

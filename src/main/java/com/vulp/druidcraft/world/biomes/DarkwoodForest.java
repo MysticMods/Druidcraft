@@ -35,7 +35,7 @@ public class DarkwoodForest extends Biome {
         BiomeFeatures.addDarkwoodTrees(this);
         BiomeFeatures.addDarkwoodShrubs(this);
         DefaultBiomeFeatures.addDefaultFlowers(this);
-        DefaultBiomeFeatures.func_222319_X(this);
+        DefaultBiomeFeatures.addTaigaGrassAndMushrooms(this);
         DefaultBiomeFeatures.addMushrooms(this);
         DefaultBiomeFeatures.addReedsAndPumpkins(this);
         DefaultBiomeFeatures.addSprings(this);

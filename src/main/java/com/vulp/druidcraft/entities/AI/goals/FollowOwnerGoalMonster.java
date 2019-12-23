@@ -115,6 +115,6 @@ public class FollowOwnerGoalMonster extends Goal {
 
     private boolean canTeleportToBlock(BlockPos pos) {
         BlockState blockstate = this.world.getBlockState(pos);
-        return blockstate.func_215682_a(this.world, pos, this.tameable) && this.world.isAirBlock(pos.up(2)) && this.world.isAirBlock(pos.up(3));
+        return blockstate.isTopSolid(this.world, pos, this.tameable) && this.world.isAirBlock(pos.up(2)) && this.world.isAirBlock(pos.up(3));
     }
 }
