@@ -3,6 +3,7 @@ package com.vulp.druidcraft.items;
 import com.google.common.collect.Maps;
 import com.vulp.druidcraft.blocks.LunarMothJarBlock;
 import com.vulp.druidcraft.entities.LunarMothColors;
+import com.vulp.druidcraft.entities.LunarMothEntity;
 import com.vulp.druidcraft.registry.BlockRegistry;
 import com.vulp.druidcraft.registry.EntityRegistry;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -12,6 +13,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.IProperty;
@@ -78,11 +80,22 @@ public class LunarMothJarItem extends BlockItem {
 
             PlayerEntity player = context.getPlayer();
 
-            if (EntityRegistry.lunar_moth_entity.spawn(world, itemstack, player, blockpos1, SpawnReason.SPAWN_EGG, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP) != null) {
+            LunarMothEntity moth = (LunarMothEntity) EntityRegistry.lunar_moth_entity.spawn(world, itemstack, player, blockpos1, SpawnReason.SPAWN_EGG, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP);
+            if (moth != null) {
+                if (itemstack.getTag() != null) {
+                    CompoundNBT tag = itemstack.getTag();
+                    if (tag.contains("EntityData")) {
+                        moth.readAdditional(tag.getCompound("EntityData"));
+                    }
+                }
                 itemstack.shrink(1);
                 ItemStack bottle = new ItemStack(Items.GLASS_BOTTLE);
-                if (!player.inventory.addItemStackToInventory(bottle)) {
-                    player.dropItem(bottle, false);
+                if (player != null) {
+                    if (!player.inventory.addItemStackToInventory(bottle)) {
+                        player.dropItem(bottle, false);
+                    }
+                } else {
+                    InventoryHelper.spawnItemStack(world, blockpos1.getX() + 0.5, blockpos1.getY() + 0.5, blockpos1.getZ() + 0.5, bottle);
                 }
             }
 
