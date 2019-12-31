@@ -24,9 +24,7 @@ public class LunarMothJarTileEntityRender extends TileEntityRenderer<LunarMothJa
     private final LunarMothJarTileEntityModel modelMoth = new LunarMothJarTileEntityModel();
     private static boolean rotationDir = true;
 
-    public LunarMothJarTileEntityRender() {
-    }
-
+    @Override
     public void render(LunarMothJarTileEntity tileEntityIn, double x, double y, double z, float partialTicks, int destroyStage) {
         GlStateManager.pushMatrix();
         GlStateManager.translatef((float)x + tileEntityIn.positionX, (float)y + tileEntityIn.positionY, (float)z + tileEntityIn.positionZ);

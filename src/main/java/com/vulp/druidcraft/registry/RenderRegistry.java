@@ -1,6 +1,7 @@
 package com.vulp.druidcraft.registry;
 
 import com.vulp.druidcraft.blocks.tileentities.LunarMothJarTileEntity;
+import com.vulp.druidcraft.blocks.tileentities.lunarmothjar.LunarMothJarTileEntityTurquoise;
 import com.vulp.druidcraft.client.gui.screen.inventory.BeetleInventoryScreen;
 import com.vulp.druidcraft.client.renders.BeetleEntityRender;
 import com.vulp.druidcraft.client.renders.DreadfishEntityRender;
@@ -26,7 +27,7 @@ public class RenderRegistry
         RenderingRegistry.registerEntityRenderingHandler(LunarMothEntity.class, new LunarMothEntityRender.RenderFactory());
 
         // TILE ENTITIES
-        ClientRegistry.bindTileEntitySpecialRenderer(LunarMothJarTileEntity.class, new LunarMothJarTileEntityRender());
+        ClientRegistry.bindTileEntitySpecialRenderer(LunarMothJarTileEntityTurquoise.class, new LunarMothJarTileEntityRender());
 
         // SCREENS
         ScreenManager.registerFactory(GUIRegistry.beetle_inv, BeetleInventoryScreen::new);

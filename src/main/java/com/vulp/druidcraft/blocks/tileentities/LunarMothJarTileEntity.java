@@ -28,21 +28,15 @@ public class LunarMothJarTileEntity extends TileEntity implements ITickableTileE
     public boolean angleFlag;
     public boolean lanternHanging;
 
-    public LunarMothJarTileEntity(Integer color, boolean hanging) {
-        super(TileEntityRegistry.lunar_moth_jar);
-        this.color = color;
-        this.lanternHanging = hanging;
-    }
-
-    public LunarMothJarTileEntity() {
-        super(TileEntityRegistry.lunar_moth_jar);
+    public LunarMothJarTileEntity(TileEntityType<?> tileEntityType) {
+        super(tileEntityType);
     }
 
     public CompoundNBT write(CompoundNBT compound) {
         super.write(compound);
         compound.putInt("Color", this.color);
+        compound.putInt("AnimationAge", this.ageInTicks);
         compound.putBoolean("Hanging", this.lanternHanging);
-        compound.putInt("AnimationAge", ageInTicks);
 
         return compound;
     }
