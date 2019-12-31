@@ -1,19 +1,10 @@
 package com.vulp.druidcraft.blocks.tileentities;
 
-import com.vulp.druidcraft.entities.LunarMothColors;
 import com.vulp.druidcraft.registry.TileEntityRegistry;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.INameable;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-
-import javax.annotation.Nullable;
-import java.util.Random;
 
 public class LunarMothJarTileEntity extends TileEntity implements ITickableTileEntity {
     public int ageInTicks;
@@ -28,8 +19,13 @@ public class LunarMothJarTileEntity extends TileEntity implements ITickableTileE
     public boolean angleFlag;
     public boolean lanternHanging;
 
-    public LunarMothJarTileEntity(TileEntityType<?> tileEntityType) {
-        super(tileEntityType);
+    public LunarMothJarTileEntity () {
+        super(TileEntityRegistry.lunar_moth_jar);
+    }
+
+    public LunarMothJarTileEntity(int color) {
+        this();
+        this.color = color;
     }
 
     public CompoundNBT write(CompoundNBT compound) {

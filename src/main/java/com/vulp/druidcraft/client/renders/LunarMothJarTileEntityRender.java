@@ -21,13 +21,15 @@ public class LunarMothJarTileEntityRender extends TileEntityRenderer<LunarMothJa
     private static final ResourceLocation MOTH_ORANGE = new ResourceLocation(Druidcraft.MODID, "textures/entity/lunar_moth/lunar_moth_mini_orange.png");
     private static final ResourceLocation MOTH_PINK = new ResourceLocation(Druidcraft.MODID, "textures/entity/lunar_moth/lunar_moth_mini_pink.png");
     private static final ResourceLocation MOTH_YELLOW = new ResourceLocation(Druidcraft.MODID, "textures/entity/lunar_moth/lunar_moth_mini_yellow.png");
-    private final LunarMothJarTileEntityModel modelMoth = new LunarMothJarTileEntityModel();
+    private static LunarMothJarTileEntityModel modelMoth = new LunarMothJarTileEntityModel();
     private static boolean rotationDir = true;
 
     @Override
     public void render(LunarMothJarTileEntity tileEntityIn, double x, double y, double z, float partialTicks, int destroyStage) {
         GlStateManager.pushMatrix();
-        GlStateManager.translatef((float)x + tileEntityIn.positionX, (float)y + tileEntityIn.positionY, (float)z + tileEntityIn.positionZ);
+        GlStateManager.translated(x, y, z);
+        // It's already at the tile entity's position
+        // ((float)x + tileEntityIn.positionX, (float)y + tileEntityIn.positionY, (float)z + tileEntityIn.positionZ);
         if (getWorld().rand.nextInt(30) == 0) {
             rotationDir = !rotationDir;
         }
@@ -54,7 +56,7 @@ public class LunarMothJarTileEntityRender extends TileEntityRenderer<LunarMothJa
         }
 
         GlStateManager.enableCull();
-        this.modelMoth.render(tileEntityIn, 1.0f);
+        modelMoth.render(tileEntityIn, 1.0f);
         GlStateManager.popMatrix();
     }
 }

@@ -2,7 +2,6 @@ package com.vulp.druidcraft.blocks;
 
 import com.vulp.druidcraft.blocks.tileentities.CrateTileEntity;
 import com.vulp.druidcraft.blocks.tileentities.LunarMothJarTileEntity;
-import com.vulp.druidcraft.blocks.tileentities.lunarmothjar.LunarMothJarTileEntityTurquoise;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -47,7 +46,7 @@ public class LunarMothJarBlock extends RopeableLanternBlock {
 
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new LunarMothJarTileEntityTurquoise();
+        return new LunarMothJarTileEntity(state.get(COLOR));
     }
 
     @Override
