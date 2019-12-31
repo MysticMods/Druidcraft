@@ -1,6 +1,8 @@
 package com.vulp.druidcraft.blocks;
 
+import com.vulp.druidcraft.blocks.tileentities.CrateTileEntity;
 import com.vulp.druidcraft.blocks.tileentities.LunarMothJarTileEntity;
+import com.vulp.druidcraft.blocks.tileentities.lunarmothjar.LunarMothJarTileEntityTurquoise;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -21,11 +23,9 @@ import javax.annotation.Nullable;
 public class LunarMothJarBlock extends RopeableLanternBlock {
 
     public static IntegerProperty COLOR = IntegerProperty.create("color", 1, 6);
-    public final TileEntity TILE_ENTITY;
 
-    public LunarMothJarBlock(Block.Properties properties, int mothColor, TileEntity tileEntity) {
+    public LunarMothJarBlock(Block.Properties properties, int mothColor) {
         super(properties);
-        this.TILE_ENTITY = tileEntity;
         this.setDefaultState(this.stateContainer.getBaseState().with(HANGING, false).with(ROPED, false).with(WATERLOGGED, false).with(COLOR, mothColor));
     }
 
@@ -41,25 +41,18 @@ public class LunarMothJarBlock extends RopeableLanternBlock {
     }
 
     @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+
+    @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return this.TILE_ENTITY;
+        return new LunarMothJarTileEntityTurquoise();
     }
 
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
-    }
-
-    @Override
-    public boolean eventReceived(BlockState state, World worldIn, BlockPos pos, int id, int param) {
-        super.eventReceived(state, worldIn, pos, id, param);
-        TileEntity tileentity = worldIn.getTileEntity(pos);
-        return tileentity == null ? false : tileentity.receiveClientEvent(id, param);
-    }
-
-    @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
     }
 
     @Override
