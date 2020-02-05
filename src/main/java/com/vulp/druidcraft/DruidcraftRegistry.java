@@ -29,6 +29,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.particles.ParticleType;
+import net.minecraft.potion.Effects;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -188,6 +189,7 @@ public class DruidcraftRegistry {
                         ItemRegistry.rope = new BlockItem(BlockRegistry.rope, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.rope.getRegistryName()),
                         ItemRegistry.crate = new BlockItem(BlockRegistry.crate_temp, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.crate_temp.getRegistryName()),
                         ItemRegistry.ceramic_lantern = new BlockItem(BlockRegistry.ceramic_lantern, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.ceramic_lantern.getRegistryName()),
+                        ItemRegistry.lavender = new BlockItem(BlockRegistry.lavender, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.lavender.getRegistryName()),
 
                         ItemRegistry.black_soulfire = new BlockItem(BlockRegistry.black_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.black_soulfire.getRegistryName()),
                         ItemRegistry.red_soulfire = new BlockItem(BlockRegistry.red_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.red_soulfire.getRegistryName()),
@@ -229,11 +231,11 @@ public class DruidcraftRegistry {
                         BlockRegistry.darkwood_log = new LogBlock(MaterialColor.WOOD, LogBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("darkwood_log")),
                         BlockRegistry.stripped_darkwood_log = new LogBlock(MaterialColor.WOOD, LogBlock.Properties.from(BlockRegistry.darkwood_log)).setRegistryName(location("stripped_darkwood_log")),
                         BlockRegistry.darkwood_leaves = new LeavesBlock(LeavesBlock.Properties.create(Material.LEAVES).hardnessAndResistance(0.2f).tickRandomly().sound(SoundType.PLANT)).setRegistryName(location("darkwood_leaves")),
-                        BlockRegistry.darkwood_sapling = new SaplingBlock(new DarkwoodTree(), SaplingBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).doesNotBlockMovement().sound(SoundType.PLANT)).setRegistryName(location("darkwood_sapling")),
+                        BlockRegistry.darkwood_sapling = new SaplingBlock(new DarkwoodTree(), SaplingBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).tickRandomly().doesNotBlockMovement().sound(SoundType.PLANT)).setRegistryName(location("darkwood_sapling")),
                         BlockRegistry.potted_darkwood_sapling = new FlowerPotBlock(BlockRegistry.darkwood_sapling, FlowerPotBlock.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.0f).sound(SoundType.STONE)).setRegistryName(location("potted_darkwood_sapling")),
                         BlockRegistry.darkwood_planks = new Block(Block.Properties.create(Material.WOOD).hardnessAndResistance(2.0F, 3.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("darkwood_planks")),
                         BlockRegistry.stripped_darkwood_wood = new RotatedPillarBlock(RotatedPillarBlock.Properties.from(BlockRegistry.darkwood_log)).setRegistryName(location("stripped_darkwood_wood")),
-                        BlockRegistry.darkwood_wood = new RotatedPillarBlock(RotatedPillarBlock.Properties.from(BlockRegistry.darkwood_log)).setRegistryName(location("darkwood_wood")),
+                        BlockRegistry.darkwood_wood = new WoodBlock(() -> ItemRegistry.darkwood_log, WoodBlock.Properties.from(BlockRegistry.darkwood_log)).setRegistryName(location("darkwood_wood")),
                         BlockRegistry.darkwood_slab = new SlabBlock(SlabBlock.Properties.from(BlockRegistry.darkwood_planks)).setRegistryName(location("darkwood_slab")),
                         BlockRegistry.darkwood_stairs = new StairsBlock(BlockRegistry.darkwood_planks.getDefaultState(), StairsBlock.Properties.from(BlockRegistry.darkwood_planks)).setRegistryName(location("darkwood_stairs")),
                         BlockRegistry.darkwood_fence = new FenceBlock(FenceBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0f, 3.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("darkwood_fence")),
@@ -246,11 +248,11 @@ public class DruidcraftRegistry {
                         BlockRegistry.elder_log = new LogBlock(MaterialColor.WOOD, LogBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("elder_log")),
                         BlockRegistry.stripped_elder_log = new LogBlock(MaterialColor.WOOD, LogBlock.Properties.from(BlockRegistry.elder_log)).setRegistryName(location("stripped_elder_log")),
                         BlockRegistry.elder_leaves = new ElderLeavesBlock(ElderLeavesBlock.Properties.create(Material.LEAVES).hardnessAndResistance(0.2f).tickRandomly().sound(SoundType.PLANT)).setRegistryName(location("elder_leaves")),
-                        BlockRegistry.elder_sapling = new SaplingBlock(new ElderTree(), SaplingBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).doesNotBlockMovement().sound(SoundType.PLANT)).setRegistryName(location("elder_sapling")),
+                        BlockRegistry.elder_sapling = new SaplingBlock(new ElderTree(), SaplingBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).tickRandomly().doesNotBlockMovement().sound(SoundType.PLANT)).setRegistryName(location("elder_sapling")),
                         BlockRegistry.potted_elder_sapling = new FlowerPotBlock(BlockRegistry.elder_sapling, FlowerPotBlock.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.0f).sound(SoundType.STONE)).setRegistryName(location("potted_elder_sapling")),
                         BlockRegistry.elder_planks = new Block(Block.Properties.create(Material.WOOD).hardnessAndResistance(2.0F, 3.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("elder_planks")),
                         BlockRegistry.stripped_elder_wood = new RotatedPillarBlock(RotatedPillarBlock.Properties.from(BlockRegistry.elder_log)).setRegistryName(location("stripped_elder_wood")),
-                        BlockRegistry.elder_wood = new RotatedPillarBlock(RotatedPillarBlock.Properties.from(BlockRegistry.elder_log)).setRegistryName(location("elder_wood")),
+                        BlockRegistry.elder_wood = new WoodBlock(() -> ItemRegistry.elder_log, WoodBlock.Properties.from(BlockRegistry.elder_log)).setRegistryName(location("elder_wood")),
                         BlockRegistry.elder_slab = new SlabBlock(SlabBlock.Properties.from(BlockRegistry.elder_planks)).setRegistryName(location("elder_slab")),
                         BlockRegistry.elder_stairs = new StairsBlock(BlockRegistry.elder_planks.getDefaultState(), StairsBlock.Properties.from(BlockRegistry.elder_planks)).setRegistryName(location("elder_stairs")),
                         BlockRegistry.elder_fence = new FenceBlock(FenceBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0f, 3.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("elder_fence")),
@@ -260,6 +262,9 @@ public class DruidcraftRegistry {
                         BlockRegistry.elder_trapdoor = new TrapDoorBlock(TrapDoorBlock.Properties.create(Material.WOOD).hardnessAndResistance(3.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("elder_trapdoor")),
                         BlockRegistry.elder_door = new DoorBlock(DoorBlock.Properties.create(Material.WOOD).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("elder_door")),
                         BlockRegistry.elder_fruit = new ElderFruitBlock(ElderFruitBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).doesNotBlockMovement().sound(SoundType.PLANT).tickRandomly()).setRegistryName(location("elder_fruit")),
+                        BlockRegistry.lavender = new FlowerBlock(Effects.HASTE, 8, FlowerBlock.Properties.create(Material.PLANTS).doesNotBlockMovement().hardnessAndResistance(0.0f).sound(SoundType.PLANT)).setRegistryName(location("lavender")),
+                        BlockRegistry.potted_lavender = new FlowerPotBlock(BlockRegistry.lavender, FlowerPotBlock.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.0f).sound(SoundType.STONE)).setRegistryName(location("potted_lavender")),
+
 
                         BlockRegistry.oak_beam = new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("oak_beam")),
                         BlockRegistry.spruce_beam = new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("spruce_beam")),
