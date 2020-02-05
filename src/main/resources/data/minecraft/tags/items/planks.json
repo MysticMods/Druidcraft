@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "druidcraft:darkwood_planks"
+    "druidcraft:darkwood_planks",
+	"druidcraft:elder_planks"
   ]
 }

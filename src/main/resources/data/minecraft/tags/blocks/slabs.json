@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "druidcraft:darkwood_slab"
+    "druidcraft:darkwood_slab",
+	"druidcraft:elder_slab",
+	"druidcraft:dry_mud_brick_slab"
   ]
 }

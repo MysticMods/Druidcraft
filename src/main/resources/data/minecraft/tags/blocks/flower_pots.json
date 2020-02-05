@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "druidcraft:potted_darkwood_sapling"
+    "druidcraft:potted_darkwood_sapling",
+	"druidcraft:potted_elder_sapling",
+	"druidcraft:potted_lavender"
   ]
 }

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "druidcraft:darkwood_pressure_plate"
+    "druidcraft:darkwood_pressure_plate",
+	"druidcraft:elder_pressure_plate"
   ]
 }

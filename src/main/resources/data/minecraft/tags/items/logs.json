@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "druidcraft:darkwood_log"
+    "druidcraft:darkwood_log",
+	"druidcraft:elder_log"
   ]
 }

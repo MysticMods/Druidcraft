@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "druidcraft:darkwood_trapdoor"
+    "druidcraft:darkwood_trapdoor",
+	"druidcraft:elder_trapdoor"
   ]
 }

@@ -1,8 +1,8 @@
 {
     "parent": "block/inner_stairs",
     "textures": {
-        "bottom": "druidcraft:block/dry_mud_brick",
-        "top": "druidcraft:block/dry_mud_brick",
-        "side": "druidcraft:block/dry_mud_brick"
+        "bottom": "druidcraft:block/dry_mud_bricks",
+        "top": "druidcraft:block/dry_mud_bricks",
+        "side": "druidcraft:block/dry_mud_bricks"
     }
 }

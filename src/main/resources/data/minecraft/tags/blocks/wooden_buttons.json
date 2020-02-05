@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "druidcraft:darkwood_button"
+    "druidcraft:darkwood_button",
+	"druidcraft:elder_button"
   ]
 }

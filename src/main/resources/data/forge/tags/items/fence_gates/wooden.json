@@ -1,0 +1,8 @@
+  
+{
+  "replace": false,
+  "values": [
+    "druidcraft:darkwood_fence_gate",
+	"druidcraft:elder_fence_gate"
+  ]
+}

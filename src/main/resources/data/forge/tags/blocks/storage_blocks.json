@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:storage_blocks/amber",
+    "#forge:storage_blocks/moonstone"
+  ]
+}
