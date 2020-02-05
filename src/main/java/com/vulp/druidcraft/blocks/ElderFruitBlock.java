@@ -109,23 +109,14 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
                 blockstate = this.getDefaultState().with(FACING, Direction.WEST);
             }
 
+            this.setDefaultState(blockstate.with(this.getAgeProperty(), 0).with(LIFE_STAGE, CropLifeStageType.FLOWER).with(MID_BERRY, false));
+
             if (context.getWorld().getBlockState(context.getPos()).getBlock() instanceof ElderLeavesBlock) {
                 return blockstate;
+
             }
         }
         return null;
-    }
-
-    @Override
-    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
-        super.onBlockHarvested(worldIn, pos, state, player);
-        if (state.get(AGE) == getMaxAge()) {
-            if (state.get(LIFE_STAGE) == CropLifeStageType.FLOWER) {
-                spawnAsEntity(worldIn, pos, new ItemStack(ItemRegistry.elderflower, 1 + worldIn.rand.nextInt(1)));
-            } else if (state.get(LIFE_STAGE) == CropLifeStageType.BERRY && !state.get(MID_BERRY)) {
-                spawnAsEntity(worldIn, pos, new ItemStack(ItemRegistry.elderberries, 1 + worldIn.rand.nextInt(2)));
-            }
-        }
     }
 
     @Override
