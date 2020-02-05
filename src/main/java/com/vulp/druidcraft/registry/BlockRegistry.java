@@ -91,6 +91,8 @@ public class BlockRegistry
     public static Block dry_mud_brick_slab;
     public static Block dry_mud_brick_stairs;
     public static Block dry_mud_brick_wall;
+    public static Block lavender;
+    public static Block potted_lavender;
 
     public static Block fiery_torch;
     public static Block wall_fiery_torch;
