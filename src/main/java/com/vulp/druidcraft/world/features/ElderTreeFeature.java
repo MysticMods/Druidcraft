@@ -1,6 +1,7 @@
 package com.vulp.druidcraft.world.features;
 
 import com.mojang.datafixers.Dynamic;
+import com.vulp.druidcraft.blocks.WoodBlock;
 import com.vulp.druidcraft.registry.BlockRegistry;
 import net.minecraft.block.*;
 import net.minecraft.state.BooleanProperty;
@@ -25,7 +26,7 @@ import java.util.function.Function;
 public class ElderTreeFeature extends AbstractTreeFeature<NoFeatureConfig> {
 
     private static final BlockState TRUNK = BlockRegistry.elder_log.getDefaultState();
-    private static final BlockState BASE = BlockRegistry.elder_wood.getDefaultState();
+    private static final BlockState BASE = BlockRegistry.elder_wood.getDefaultState().with(WoodBlock.dropSelf, false);
     private static final BlockState LEAF = BlockRegistry.elder_leaves.getDefaultState();
 
     public ElderTreeFeature(Function<Dynamic<?>, ? extends NoFeatureConfig> config, boolean doBlockNotifyOnPlace) {
