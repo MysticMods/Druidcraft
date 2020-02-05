@@ -1,0 +1,8 @@
+{
+    "parent": "block/slab",
+    "textures": {
+        "bottom": "druidcraft:block/dry_mud_brick",
+        "top": "druidcraft:block/dry_mud_brick",
+        "side": "druidcraft:block/dry_mud_brick"
+    }
+}

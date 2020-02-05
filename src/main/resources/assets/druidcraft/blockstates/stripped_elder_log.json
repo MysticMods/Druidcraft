@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "axis=y":    { "model": "druidcraft:block/stripped_elder_log" },
+        "axis=z":     { "model": "druidcraft:block/stripped_elder_log", "x": 90 },
+        "axis=x":     { "model": "druidcraft:block/stripped_elder_log", "x": 90, "y": 90 }
+    }
+}

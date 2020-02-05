@@ -1,30 +1,31 @@
 package com.vulp.druidcraft.blocks;
 
-import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.registry.BlockRegistry;
 import com.vulp.druidcraft.registry.ItemRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.CropsBlock;
 import net.minecraft.state.IProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.PlantType;
 
 import java.util.Random;
 
-public class HempBlock extends CropBlock {
-    private static final IntegerProperty HEMP_AGE;
+public class HempBlock extends CropsBlock {
+
+    private static boolean topBlockValid;
+    public static final IntegerProperty AGE = BlockStateProperties.AGE_0_3;
 
     public HempBlock(Properties properties) {
         super(properties);
@@ -32,7 +33,7 @@ public class HempBlock extends CropBlock {
 
     @Override
     public IntegerProperty getAgeProperty () {
-        return HEMP_AGE;
+        return AGE;
     }
 
     @Override
@@ -40,25 +41,10 @@ public class HempBlock extends CropBlock {
         return 3;
     }
 
-    boolean topBlockValid;
-
-    @Override
-    protected int getBonemealAgeIncrease(World world) {
-        return MathHelper.nextInt(world.rand, 1, 3);
-    }
-
-    @Override
-    public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos) {
-        return isValidGround(state, world, pos);
-    }
-
     @Override
     protected boolean isValidGround(BlockState state, IBlockReader world, BlockPos pos) {
-        Block block = world.getBlockState(pos.down()).getBlock();
-        if (block == Blocks.FARMLAND || block == BlockRegistry.hemp_crop) {
-            return true;
-        }
-        else return false;
+        BlockState blockState = world.getBlockState(pos.down());
+        return (blockState.getBlock() == Blocks.FARMLAND || blockState == BlockRegistry.hemp_crop.getDefaultState().with(AGE, 3));
     }
 
     @Override
@@ -74,9 +60,10 @@ public class HempBlock extends CropBlock {
 
     @Override
     public void tick(BlockState state, World world, BlockPos pos, Random random) {
-
+        if (!isValidGround(state, world, pos)) {
+            world.destroyBlock(pos, true);
+        }
         super.tick(state, world, pos, random);
-        isValidPosition(state, world, pos);
 
         if ((world.getBlockState(pos.down()).getBlock() != this) && (world.isAirBlock(pos.up()))) {
             topBlockValid = true;
@@ -119,16 +106,17 @@ public class HempBlock extends CropBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader blockReader, BlockPos pos, ISelectionContext selectionContext) {
-        return Block.makeCuboidShape(4, 0, 4, 12.0d, 4.0d * (state.get(getAgeProperty()) + 1), 12.0d);
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(new IProperty[]{AGE});
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new IProperty[]{HEMP_AGE});
+    public PlantType getPlantType(IBlockReader world, BlockPos pos) {
+        return PlantType.Crop;
     }
 
-    static {
-        HEMP_AGE = BlockStateProperties.AGE_0_3;
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader blockReader, BlockPos pos, ISelectionContext selectionContext) {
+        return Block.makeCuboidShape(4, 0, 4, 12.0d, 4.0d * (state.get(getAgeProperty()) + 1), 12.0d);
     }
 }

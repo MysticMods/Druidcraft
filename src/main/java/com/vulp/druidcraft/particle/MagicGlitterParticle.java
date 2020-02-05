@@ -16,12 +16,12 @@ public class MagicGlitterParticle extends SpriteTexturedParticle {
         this.motionX = this.motionX * 0.009999999776482582d;
         this.motionY = this.motionY * 0.009999999776482582d;
         this.motionZ = this.motionZ * 0.009999999776482582d;
-        this.particleScale = 0.3f;
+        this.particleScale = 0.2f;
         this.particleGravity = 0.002f;
         this.particleRed = (float) motionX;
         this.particleGreen = (float) motionY;
         this.particleBlue = (float) motionZ;
-        this.maxAge = this.rand.nextInt(10) + 10;
+        this.maxAge = (int)(8.0D / (Math.random() * 0.8D + 0.2D)) + 4;
         this.selectSpriteRandomly(sprite);
     }
 
@@ -31,13 +31,17 @@ public class MagicGlitterParticle extends SpriteTexturedParticle {
     }
 
     @Override
+    public float getScale(float scale) {
+        float f = ((float)this.age + scale) / (float)this.maxAge;
+        return this.particleScale * (1.0F - f * f * 0.5F);
+    }
+
+    @Override
     public void tick() {
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
-        if (this.age++ < this.maxAge && this.particleScale > 0.0F) {
-            this.selectSpriteRandomly(this.spriteSet);
-            this.particleScale = ((float)this.age / (float)this.maxAge) * 0.3f;
+        if (this.age++ < this.maxAge) {
             this.motionX += this.rand.nextFloat() / 1000.0F * (float) (this.rand.nextBoolean() ? 1 : -1);
             this.motionZ += this.rand.nextFloat() / 1000.0F * (float) (this.rand.nextBoolean() ? 1 : -1);
             this.motionY -= this.rand.nextFloat() / 5000.0F;
@@ -50,18 +54,17 @@ public class MagicGlitterParticle extends SpriteTexturedParticle {
 
     @Override
     public int getBrightnessForRender(float partialTick) {
-        float f = ((float) this.age + partialTick) / (float) this.maxAge;
+        float f = ((float)this.age + partialTick) / (float)this.maxAge;
         f = MathHelper.clamp(f, 0.0F, 1.0F);
         int i = super.getBrightnessForRender(partialTick);
         int j = i & 255;
         int k = i >> 16 & 255;
-        j += (int) (f * 15.0F * 16.0F);
+        j += (int)(f * 15.0F * 16.0F);
         if (j > 240) {
             j = 240;
         }
 
-
-        return this.age / this.maxAge * (j | k << 16);
+        return j | k << 16;
     }
 
     @OnlyIn(Dist.CLIENT)

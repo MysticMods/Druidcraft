@@ -1,0 +1,125 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "druidcraft:block/jar",
+		"1": "druidcraft:block/jar_moth_lime_1inv",
+		"4": "druidcraft:block/jar_moth_lime_1",
+		"2_1": "druidcraft:block/rope_overlay",
+		"particle": "druidcraft:block/rope",
+		"1_0": "druidcraft:block/rope"
+	},
+	"elements": [
+		{
+			"from": [4.5, 1.5, 4.5],
+			"to": [4.5, 8.5, 11.5],
+			"shade": false,
+			"faces": {
+				"east": {"uv": [0, 0, 7, 7], "texture": "#1"},
+				"west": {"uv": [9, 0, 16, 7], "texture": "#4"}
+			}
+		},
+		{
+			"from": [11.5, 1.5, 4.5],
+			"to": [11.5, 8.5, 11.5],
+			"shade": false,
+			"faces": {
+				"east": {"uv": [9, 9, 16, 16], "texture": "#4"},
+				"west": {"uv": [0, 9, 7, 16], "texture": "#1"}
+			}
+		},
+		{
+			"from": [4.5, 1.5, 11.5],
+			"to": [11.5, 8.5, 11.5],
+			"shade": false,
+			"faces": {
+				"north": {"uv": [9, 9, 16, 16], "texture": "#1"},
+				"south": {"uv": [0, 9, 7, 16], "texture": "#4"}
+			}
+		},
+		{
+			"from": [4.5, 1.5, 4.5],
+			"to": [11.5, 8.5, 4.5],
+			"shade": false,
+			"faces": {
+				"north": {"uv": [0, 0, 7, 7], "texture": "#4"},
+				"south": {"uv": [9, 0, 16, 7], "texture": "#1"}
+			}
+		},
+		{
+			"from": [4, 1, 4],
+			"to": [12, 9, 12],
+			"faces": {
+				"north": {"uv": [0, 8, 8, 16], "texture": "#0"},
+				"east": {"uv": [8, 8, 16, 16], "texture": "#0"},
+				"south": {"uv": [0, 8, 8, 16], "texture": "#0"},
+				"west": {"uv": [8, 8, 16, 16], "texture": "#0"},
+				"up": {"uv": [8, 8, 16, 16], "texture": "#0"},
+				"down": {"uv": [8, 8, 16, 16], "texture": "#0"}
+			}
+		},
+		{
+			"from": [5, 8, 5],
+			"to": [11, 11, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 6, 3], "texture": "#0"},
+				"east": {"uv": [0, 0, 6, 3], "texture": "#0"},
+				"south": {"uv": [0, 0, 6, 3], "texture": "#0"},
+				"west": {"uv": [0, 0, 6, 3], "texture": "#0"},
+				"up": {"uv": [0, 2, 6, 8], "texture": "#0"},
+				"down": {"uv": [0, 2, 6, 8], "texture": "#0"}
+			}
+		},
+		{
+			"from": [8, 9, 2.8],
+			"to": [8, 14, 13.2],
+			"rotation": {"angle": -45, "axis": "y", "origin": [8, 7, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 5], "texture": "#0"},
+				"east": {"uv": [6, 0, 16, 5], "texture": "#0"},
+				"south": {"uv": [0, 0, 0, 5], "texture": "#0"},
+				"west": {"uv": [6, 0, 16, 5], "texture": "#0"},
+				"up": {"uv": [0, 0, 0, 5], "texture": "#0"},
+				"down": {"uv": [0, 0, 0, 5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "rope",
+			"from": [7, 12, 7],
+			"to": [9, 16, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9, 8]},
+			"faces": {
+				"north": {"uv": [8, 1, 10, 5], "texture": "#1_0"},
+				"east": {"uv": [10, 1, 12, 5], "texture": "#1_0"},
+				"south": {"uv": [8, 5, 10, 9], "texture": "#1_0"},
+				"west": {"uv": [7, 4, 9, 8], "texture": "#1_0"},
+				"down": {"uv": [4, 0, 6, 2], "texture": "#1_0"}
+			}
+		},
+		{
+			"name": "rope_overlay",
+			"from": [6.8, 11.8, 6.8],
+			"to": [9.2, 16.2, 9.2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9, 8]},
+			"faces": {
+				"north": {"uv": [10, 3, 12, 7], "texture": "#2_1"},
+				"east": {"uv": [14, 1, 16, 5], "texture": "#2_1"},
+				"south": {"uv": [9, 0, 11, 4], "texture": "#2_1"},
+				"west": {"uv": [9, 6, 11, 10], "texture": "#2_1"}
+			}
+		}
+	],
+	"groups": [0, 1, 2, 3, 4, 5,
+		{
+			"name": "rope_jar",
+			"origin": [8, 8, 8],
+			"children": [6,
+				{
+					"name": "rope_lantern",
+					"origin": [8, 8, 8],
+					"children": [7, 8]
+				}
+			]
+		}
+	]
+}

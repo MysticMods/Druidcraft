@@ -1,0 +1,27 @@
+{
+    "multipart": [
+		{   "when":	{ "connections": "2" },
+            "apply": { "model": "druidcraft:block/elder_small_beam_center" }
+        },
+		
+		{   "when":	{ "connections": "0|1", "x_axis": "true" },
+            "apply": { "model": "druidcraft:block/elder_small_beam_full_x" }
+        },
+		{   "when":	{ "connections": "0|1", "y_axis": "true" },
+            "apply": { "model": "druidcraft:block/elder_small_beam_full_y" }
+        },
+		{   "when":	{ "connections": "0|1", "z_axis": "true" },
+            "apply": { "model": "druidcraft:block/elder_small_beam_full_z" }
+        },
+		
+		{   "when":	{ "connections": "2|3", "x_axis": "true" },
+            "apply": { "model": "druidcraft:block/elder_small_beam_parts_x" }
+        },
+		{   "when":	{ "connections": "2|3", "y_axis": "true" },
+            "apply": { "model": "druidcraft:block/elder_small_beam_parts_y" }
+        },
+		{   "when":	{ "connections": "2|3", "z_axis": "true" },
+            "apply": { "model": "druidcraft:block/elder_small_beam_parts_z" }
+        }
+    ]
+}

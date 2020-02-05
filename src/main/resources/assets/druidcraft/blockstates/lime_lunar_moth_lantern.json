@@ -1,0 +1,13 @@
+{
+    "variants": {
+        "hanging=true,roped=true":
+		[ { "model": "druidcraft:block/rope_lunar_moth_jar_lime_1" },
+		{ "model": "druidcraft:block/rope_lunar_moth_jar_lime_2" } ],
+		"hanging=true,roped=false":
+		[ { "model": "druidcraft:block/hanging_lunar_moth_jar_lime_1" },
+		{ "model": "druidcraft:block/hanging_lunar_moth_jar_lime_2" } ],
+		"hanging=false":
+		[ { "model": "druidcraft:block/lunar_moth_jar_lime_1" },
+		{ "model": "druidcraft:block/lunar_moth_jar_lime_2" } ]
+	}
+}

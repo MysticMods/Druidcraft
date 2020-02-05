@@ -1,0 +1,6 @@
+{
+    "parent": "block/template_wall_post",
+    "textures": {
+        "wall": "druidcraft:block/dry_mud_bricks"
+    }
+}

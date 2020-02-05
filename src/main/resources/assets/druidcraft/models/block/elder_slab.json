@@ -1,0 +1,8 @@
+{
+    "parent": "block/slab",
+    "textures": {
+        "bottom": "druidcraft:block/elder_planks",
+        "top": "druidcraft:block/elder_planks",
+        "side": "druidcraft:block/elder_planks"
+    }
+}

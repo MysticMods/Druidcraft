@@ -1,3 +1,6 @@
 {
-	"parent": "druidcraft:block/ceramic_lantern"
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "druidcraft:item/ceramic_lantern"
+    }
 }

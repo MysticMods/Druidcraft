@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "powered=false": { "model": "druidcraft:block/elder_pressure_plate" },
+        "powered=true": { "model": "druidcraft:block/elder_pressure_plate_down" }
+    }
+}

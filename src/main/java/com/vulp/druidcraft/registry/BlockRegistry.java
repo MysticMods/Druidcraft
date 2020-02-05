@@ -69,6 +69,7 @@ public class BlockRegistry
     public static Block acacia_beam;
     public static Block dark_oak_beam;
     public static Block darkwood_beam;
+    public static Block elder_beam;
     public static Block oak_small_beam;
     public static Block spruce_small_beam;
     public static Block birch_small_beam;
@@ -76,6 +77,7 @@ public class BlockRegistry
     public static Block acacia_small_beam;
     public static Block dark_oak_small_beam;
     public static Block darkwood_small_beam;
+    public static Block elder_small_beam;
     public static Block oak_panels;
     public static Block spruce_panels;
     public static Block birch_panels;
@@ -83,8 +85,13 @@ public class BlockRegistry
     public static Block acacia_panels;
     public static Block dark_oak_panels;
     public static Block darkwood_panels;
+    public static Block elder_panels;
     public static Block wet_mud_bricks;
     public static Block dry_mud_bricks;
+    public static Block dry_mud_brick_slab;
+    public static Block dry_mud_brick_stairs;
+    public static Block dry_mud_brick_wall;
+
     public static Block fiery_torch;
     public static Block wall_fiery_torch;
     public static Block rope;
