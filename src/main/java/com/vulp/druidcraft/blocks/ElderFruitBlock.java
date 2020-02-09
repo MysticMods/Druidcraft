@@ -177,7 +177,7 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
         super.randomTick(state, worldIn, pos, random);
         if (!worldIn.isRemote && (worldIn.rand.nextInt(8) == 0)) {
             if (CropLifeStageType.checkCropLife(worldIn) == CropLifeStageType.NONE) {
-                    worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
+                    worldIn.destroyBlock(pos, false);
                     if (worldIn.rand.nextInt(4) == 0) {
                         spawnAsEntity(worldIn, pos, new ItemStack(ItemRegistry.elderberries, 1));
                 }

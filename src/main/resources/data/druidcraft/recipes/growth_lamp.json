@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_fence",
+  "pattern": [
+    "OWO",
+    "W#W",
+	"OWO"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:blaze_powder"
+    },
+    "W": {
+      "item": "minecraft:emerald"
+    },
+	"O": {
+      "item": "druidcraft:rockroot"
+    }
+  },
+  "result": {
+    "item": "druidcraft:growth_lamp",
+    "count": 1
+  }
+}

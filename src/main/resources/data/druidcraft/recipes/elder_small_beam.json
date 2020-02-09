@@ -1,0 +1,14 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#",
+		"#"
+    ],
+    "key": {
+        "#": {
+            "item": "druidcraft:elder_log"
+        }
+    },
+    "result": { "item": "druidcraft:elder_small_beam", "count": 2 },
+    "group": "small_beams"
+}

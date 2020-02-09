@@ -78,6 +78,15 @@ public class ItemRegistry
     public static Item lunar_moth_jar_lime;
     public static Item lunar_moth_jar_pink;
 
+    public static Item lunar_moth_egg_turquoise;
+    public static Item lunar_moth_egg_orange;
+    public static Item lunar_moth_egg_white;
+    public static Item lunar_moth_egg_yellow;
+    public static Item lunar_moth_egg_lime;
+    public static Item lunar_moth_egg_pink;
+
+    public static Item growth_lamp;
+
     public static Item amber_ore;
     public static Item moonstone_ore;
     public static Item fiery_glass_ore;

@@ -8,7 +8,7 @@
     ],
     "key": {
         "#": {
-            "tag": "forge:moonstones"
+            "item": "druidcraft:moonstone"
         }
     },
     "result": { "item": "druidcraft:moonstone_block" }

@@ -1,0 +1,13 @@
+{
+    "type": "minecraft:crafting_shaped",
+	"pattern": [
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "druidcraft:elder_log"
+        }
+    },
+    "result": { "item": "druidcraft:elder_beam", "count": 3 },
+	"group": "beams"
+}

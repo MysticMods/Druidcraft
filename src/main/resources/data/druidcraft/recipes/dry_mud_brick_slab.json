@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "druidcraft:dry_mud_bricks"
+    }
+  },
+  "result": {
+    "item": "druidcraft:dry_mud_brick_slab",
+    "count": 6
+  }
+}

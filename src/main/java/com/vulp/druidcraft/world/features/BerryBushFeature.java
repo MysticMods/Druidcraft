@@ -21,15 +21,19 @@ public class BerryBushFeature extends ScatteredPlantFeature {
 
     @Override
     public boolean place(IWorld worldIn, ChunkGenerator<? extends GenerationSettings> generator, Random rand, BlockPos pos, NoFeatureConfig config) {
-        int i = 0;
-        for(int j = 0; j < 64; ++j) {
-            BlockPos blockpos = pos.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(8) - rand.nextInt(8));
-            if (worldIn.isAirBlock(blockpos) && worldIn.getBlockState(blockpos.down()).getBlock() == Blocks.GRASS_BLOCK) {
-                worldIn.setBlockState(blockpos, this.plant, 2);
-                ++i;
+        if (rand.nextBoolean()) {
+            int i = 0;
+            for (int j = 0; j < 32; ++j) {
+                BlockPos blockpos = pos.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(8) - rand.nextInt(8));
+                if (worldIn.isAirBlock(blockpos) && worldIn.getBlockState(blockpos.down()).getBlock() == Blocks.GRASS_BLOCK) {
+                    worldIn.setBlockState(blockpos, this.plant, 2);
+                    ++i;
+                }
             }
-        }
 
-        return i > 0;
+            return i > 0;
+        } else {
+            return true;
+        }
     }
 }

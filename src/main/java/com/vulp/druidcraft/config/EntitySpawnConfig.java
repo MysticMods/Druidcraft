@@ -21,6 +21,13 @@ public class EntitySpawnConfig {
     public static ForgeConfigSpec.ConfigValue<List<String>> beetle_biome_types;
     public static ForgeConfigSpec.ConfigValue<List<String>> beetle_biome_exclusions;
 
+    public static ForgeConfigSpec.BooleanValue lunar_moth_spawn;
+    public static ForgeConfigSpec.IntValue lunar_moth_weight;
+    public static ForgeConfigSpec.IntValue lunar_moth_min_group;
+    public static ForgeConfigSpec.IntValue lunar_moth_max_group;
+    public static ForgeConfigSpec.ConfigValue<List<String>> lunar_moth_biome_types;
+    public static ForgeConfigSpec.ConfigValue<List<String>> lunar_moth_biome_exclusions;
+
     public EntitySpawnConfig() {
     }
         public static void init(ForgeConfigSpec.Builder server, ForgeConfigSpec.Builder client)
@@ -41,5 +48,12 @@ public class EntitySpawnConfig {
             beetle_max_group = server.comment("Maximum size of the group when spawned.").defineInRange("entityspawning.beetle_max_group_size", 2, 1, 200);
             beetle_biome_types = server.comment("List of biome types from the biome dictionary that the beetle can spawn in. Define as strings with \"s and separate with a comma.").define("entityspawning.beetle_biomes", Arrays.asList("CONIFEROUS", "FOREST", "JUNGLE", "DENSE"));
             beetle_biome_exclusions = server.comment("List of biome types from the biome dictionary that beetles cannot spawn in. Define as strings with \"s and separate with a comma.").define("entityspawning.beetle_exclusions", Arrays.asList(""));
+
+            lunar_moth_spawn = server.comment("Allow lunar moths to spawn?").define("entityspawning.lunar_moth_spawn", true);
+            lunar_moth_weight = server.comment("Determines the rarity of the lunar moth.").defineInRange("entityspawning.lunar_moth_weight", 2, 1, 200);
+            lunar_moth_min_group = server.comment("Minimum size of the group when spawned.").defineInRange("entityspawning.lunar_moth_min_group_size", 2, 1, 200);
+            lunar_moth_max_group = server.comment("Maximum size of the group when spawned.").defineInRange("entityspawning.lunar_moth_max_group_size", 5, 1, 200);
+            lunar_moth_biome_types = server.comment("List of biome types from the biome dictionary that the lunar moth can spawn in. Define as strings with \"s and separate with a comma.").define("entityspawning.lunar_moth_biomes", Arrays.asList("FOREST", "PLAINS", "MOUNTAIN", "HILLS"));
+            lunar_moth_biome_exclusions = server.comment("List of biome types from the biome dictionary that lunar moths cannot spawn in. Define as strings with \"s and separate with a comma.").define("entityspawning.lunar_moth_exclusions", Arrays.asList("DENSE"));
     }
 }

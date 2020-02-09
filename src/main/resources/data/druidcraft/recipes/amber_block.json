@@ -8,7 +8,7 @@
     ],
     "key": {
         "#": {
-            "tag": "forge:ambers"
+            "item": "druidcraft:amber"
         }
     },
     "result": { "item": "druidcraft:amber_block" }
