@@ -178,7 +178,7 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
         if (!worldIn.isRemote && (worldIn.rand.nextInt(8) == 0)) {
             if (CropLifeStageType.checkCropLife(worldIn) == CropLifeStageType.NONE) {
                     worldIn.destroyBlock(pos, false);
-                    if (worldIn.rand.nextInt(4) == 0) {
+                    if (worldIn.rand.nextInt(10) == 0) {
                         spawnAsEntity(worldIn, pos, new ItemStack(ItemRegistry.elderberries, 1));
                 }
             }
@@ -245,6 +245,18 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
         }
 
         super.onEntityCollision(state, worldIn, pos, entityIn);
+    }
+
+    @Override
+    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if (worldIn.isRemote) {
+            return true;
+        } else {
+            if (isMaxAge(state)) {
+                worldIn.destroyBlock(pos, true);
+            }
+            return true;
+        }
     }
 
     /**
