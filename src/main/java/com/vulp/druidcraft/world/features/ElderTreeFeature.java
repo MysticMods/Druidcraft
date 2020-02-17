@@ -243,8 +243,15 @@ public class ElderTreeFeature extends AbstractTreeFeature<NoFeatureConfig> {
 
     private void placeLogAt(Set<BlockPos> setPos, IWorldWriter writer, BlockPos pos, MutableBoundingBox boundingBox, boolean isBaseWood) {
         BlockState blockType = TRUNK;
+        Random rand = new Random();
         if (isBaseWood) {
-            blockType = BASE;
+            if (rand.nextInt(3) == 0) {
+                blockType = BASE.with(WoodBlock.AXIS, Direction.Axis.X);
+            } else if (rand.nextInt(3) == 0) {
+                blockType = BASE.with(WoodBlock.AXIS, Direction.Axis.Y);
+            } else {
+                blockType = BASE.with(WoodBlock.AXIS, Direction.Axis.Z);
+            }
         }
         this.setLogState(setPos, writer, pos, blockType, boundingBox);
     }

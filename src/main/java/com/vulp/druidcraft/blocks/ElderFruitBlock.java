@@ -37,7 +37,7 @@ import java.util.Map;
 import java.util.Random;
 
 
-public class ElderFruitBlock extends CropBlock implements IGrowable {
+public class ElderFruitBlock extends BushBlock implements IGrowable {
 
     public static final DirectionProperty FACING = DirectionalBlock.FACING;
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_3;
@@ -119,22 +119,18 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
         return null;
     }
 
-    @Override
     public IntegerProperty getAgeProperty() {
         return AGE;
     }
 
-    @Override
     public int getMaxAge() {
         return 3;
     }
 
-    @Override
     protected int getAge(BlockState state) {
         return state.get(this.getAgeProperty());
     }
 
-    @Override
     public boolean isMaxAge(BlockState state) {
         return state.get(this.getAgeProperty()) >= this.getMaxAge();
     }
@@ -185,7 +181,6 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
         }
     }
 
-    @Override
     public void grow(World worldIn, BlockPos pos, BlockState state) {
         if (isGrowable(worldIn, pos)) {
             BlockState lastState = state.getBlockState();
@@ -210,7 +205,6 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
         return true;
     }
 
-    @Override
     protected int getBonemealAgeIncrease(World worldIn) {
         return 1;
     }
@@ -252,7 +246,7 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
         if (worldIn.isRemote) {
             return true;
         } else {
-            if (isMaxAge(state)) {
+            if (isMaxAge(state) && !(state.get(MID_BERRY) && state.get(LIFE_STAGE) == CropLifeStageType.BERRY)) {
                 worldIn.destroyBlock(pos, true);
             }
             return true;

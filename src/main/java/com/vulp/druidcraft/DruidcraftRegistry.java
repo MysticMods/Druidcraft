@@ -271,7 +271,7 @@ public class DruidcraftRegistry {
                         BlockRegistry.elder_button = new WoodButtonBlock(WoodButtonBlock.Properties.create(Material.WOOD).hardnessAndResistance(0.5f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("elder_button")),
                         BlockRegistry.elder_trapdoor = new TrapDoorBlock(TrapDoorBlock.Properties.create(Material.WOOD).hardnessAndResistance(3.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("elder_trapdoor")),
                         BlockRegistry.elder_door = new DoorBlock(DoorBlock.Properties.create(Material.WOOD).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("elder_door")),
-                        BlockRegistry.elder_fruit = new ElderFruitBlock(ElderFruitBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).doesNotBlockMovement().sound(SoundType.BAMBOO_SAPLING).tickRandomly()).setRegistryName(location("elder_fruit")),
+                        BlockRegistry.elder_fruit = new ElderFruitBlock(ElderFruitBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).doesNotBlockMovement().sound(SoundType.CROP).tickRandomly()).setRegistryName(location("elder_fruit")),
                         BlockRegistry.lavender = new FlowerBlock(Effects.HASTE, 8, FlowerBlock.Properties.create(Material.PLANTS).doesNotBlockMovement().hardnessAndResistance(0.0f).sound(SoundType.PLANT)).setRegistryName(location("lavender")),
                         BlockRegistry.potted_lavender = new FlowerPotBlock(BlockRegistry.lavender, FlowerPotBlock.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.0f).sound(SoundType.STONE)).setRegistryName(location("potted_lavender")),
 
