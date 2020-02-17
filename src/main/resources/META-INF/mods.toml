@@ -4,14 +4,14 @@ issueTrackerURL="https://github.com/MysticMods/Druidcraft/issues"
 
 [[mods]]
 modId="druidcraft"
-version="0.3.0"
+version="0.3.1"
 mcversion= "1.14,"
 displayName="Druidcraft"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/druidcraft"
 credits="Java, Forge, MCP, Minecraft, and the Mystic team for supporting me!"
 authors="VulpTheHorseDog"
 description='''
-A druid-focused splice-of-life mod that's currently in very early alpha, if you'd even consider it at that point yet.
+A druid-focused splice-of-life mod that's currently in very early stages.
 
 Regardless, I hope you enjoy the features as they're rolled out! :)
 '''
