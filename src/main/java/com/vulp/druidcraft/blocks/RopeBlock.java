@@ -36,7 +36,7 @@ import javax.annotation.Nullable;
 import java.util.Map;
 
 @SuppressWarnings("deprecation")
-public class RopeBlock extends SixWayBlock implements IBucketPickupHandler, ILiquidContainer, IKnifeable {
+public class RopeBlock extends SixWayBlock implements IKnifeable {
     private static final Direction[] FACING_VALUES = Direction.values();
     public static final EnumProperty<RopeConnectionType> NORTH = EnumProperty.create("north", RopeConnectionType.class);
     public static final EnumProperty<RopeConnectionType> EAST = EnumProperty.create("east", RopeConnectionType.class);
@@ -45,7 +45,6 @@ public class RopeBlock extends SixWayBlock implements IBucketPickupHandler, ILiq
     public static final EnumProperty<RopeConnectionType> UP = EnumProperty.create("up", RopeConnectionType.class);
     public static final EnumProperty<RopeConnectionType> DOWN = EnumProperty.create("down", RopeConnectionType.class);
     public static final BooleanProperty KNOTTED = BooleanProperty.create("knotted");
-    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     protected final VoxelShape[] collisionShapes;
     public static final Map<Direction, EnumProperty<RopeConnectionType>> FACING_TO_PROPERTY_MAP = Util.make(Maps.newEnumMap(Direction.class), (map) -> {
         map.put(Direction.NORTH, NORTH);
@@ -66,8 +65,7 @@ public class RopeBlock extends SixWayBlock implements IBucketPickupHandler, ILiq
                 .with(WEST, RopeConnectionType.NONE)
                 .with(UP, RopeConnectionType.NONE)
                 .with(DOWN, RopeConnectionType.NONE)
-                .with(KNOTTED, false)
-                .with(WATERLOGGED, false));
+                .with(KNOTTED, false));
     }
 
     @Override
@@ -166,7 +164,7 @@ public class RopeBlock extends SixWayBlock implements IBucketPickupHandler, ILiq
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN, KNOTTED, WATERLOGGED);
+        builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN, KNOTTED);
     }
 
     @Override
@@ -176,8 +174,7 @@ public class RopeBlock extends SixWayBlock implements IBucketPickupHandler, ILiq
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        IFluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
-        return calculateState(getDefaultState(), context.getWorld(), context.getPos()).with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
+        return calculateState(getDefaultState(), context.getWorld(), context.getPos());
     }
 
     private BlockState calculateKnot (BlockState currentState) {
@@ -197,51 +194,12 @@ public class RopeBlock extends SixWayBlock implements IBucketPickupHandler, ILiq
     }
 
     @Override
-    public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, IFluidState fluidState) {
-        if (!state.get(WATERLOGGED) && fluidState.getFluid() == Fluids.WATER) {
-            if (!worldIn.isRemote()) {
-                worldIn.setBlockState(pos, state.with(WATERLOGGED, Boolean.valueOf(true)), 3);
-                worldIn.getPendingFluidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public Fluid pickupFluid(IWorld worldIn, BlockPos pos, BlockState state) {
-        if (state.get(WATERLOGGED)) {
-            worldIn.setBlockState(pos, state.with(WATERLOGGED, Boolean.valueOf(false)), 3);
-            return Fluids.WATER;
-        } else {
-            return Fluids.EMPTY;
-        }
-    }
-
-    @Override
     public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
-        return !state.get(WATERLOGGED);
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public IFluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
-    }
-
-    @Override
-    public boolean canContainFluid(IBlockReader worldIn, BlockPos pos, BlockState state, Fluid fluid) {
-        return !state.get(WATERLOGGED) && fluid == Fluids.WATER;
+        return false;
     }
 
     @Override
     public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
-
-        if (state.get(WATERLOGGED)) {
-            world.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
-        }
-
         return calculateState(state, world, currentPos);
     }
 
