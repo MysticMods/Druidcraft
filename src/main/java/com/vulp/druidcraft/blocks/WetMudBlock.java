@@ -18,9 +18,7 @@ import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -62,7 +60,7 @@ public class WetMudBlock extends Block {
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (worldIn == null) return;
-        tooltip.add(new TranslationTextComponent("block.druidcraft.wet_mud_bricks.description1"));
+        tooltip.add(new TranslationTextComponent("block.druidcraft.wet_mud_bricks.description1").setStyle(new Style().setColor(TextFormatting.AQUA).setItalic(true)));
     }
 
     private boolean isNextToWater(IBlockReader p_203943_1_, BlockPos p_203943_2_) {

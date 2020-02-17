@@ -16,6 +16,8 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
@@ -78,7 +80,7 @@ public class FieryTorchBlock extends TorchBlock implements IWaterLoggable {
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (worldIn == null) return;
-        tooltip.add(new TranslationTextComponent("block.druidcraft.fiery_torch.description1"));
+        tooltip.add(new TranslationTextComponent("block.druidcraft.fiery_torch.description1").setStyle(new Style().setColor(TextFormatting.GOLD).setItalic(true)));
     }
 
     @Override
