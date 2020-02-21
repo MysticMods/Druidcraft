@@ -184,7 +184,7 @@ public class RopeBlock extends SixWayBlock implements IKnifeable {
             EnumProperty<RopeConnectionType> prop = FACING_TO_PROPERTY_MAP.get(dir);
             if (prop != null) {
                 if (currentState.get(prop) != RopeConnectionType.NONE) {
-                count++;
+                    count++;
                 }
             }
         }
