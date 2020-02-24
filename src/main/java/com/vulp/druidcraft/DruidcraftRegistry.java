@@ -402,7 +402,8 @@ public class DruidcraftRegistry {
     {
         ContainerRegistryEvent.getRegistry().registerAll
                 (
-                        GUIRegistry.beetle_inv
+                        GUIRegistry.beetle_inv,
+                        GUIRegistry.generic_9X9
                 );
 
         LOGGER.info("GUI registered.");
