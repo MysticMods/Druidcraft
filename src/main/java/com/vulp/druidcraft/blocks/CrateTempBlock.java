@@ -1,6 +1,6 @@
 package com.vulp.druidcraft.blocks;
 
-import com.vulp.druidcraft.blocks.tileentities.CrateTileEntity;
+import com.vulp.druidcraft.blocks.tileentities.CrateTileEntityOld;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -38,8 +38,8 @@ public class CrateTempBlock extends ContainerBlock {
             return true;
         } else {
             TileEntity tileentity = worldIn.getTileEntity(pos);
-            if (tileentity instanceof CrateTileEntity) {
-                player.openContainer((CrateTileEntity)tileentity);
+            if (tileentity instanceof CrateTileEntityOld) {
+                player.openContainer((CrateTileEntityOld)tileentity);
             }
 
             return true;
@@ -61,15 +61,15 @@ public class CrateTempBlock extends ContainerBlock {
 
     public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
         TileEntity tileentity = worldIn.getTileEntity(pos);
-        if (tileentity instanceof CrateTileEntity) {
-            ((CrateTileEntity)tileentity).func_213962_h();
+        if (tileentity instanceof CrateTileEntityOld) {
+            ((CrateTileEntityOld)tileentity).func_213962_h();
         }
 
     }
 
     @Nullable
     public TileEntity createNewTileEntity(IBlockReader worldIn) {
-        return new CrateTileEntity();
+        return new CrateTileEntityOld();
     }
 
     /** @deprecated */
@@ -80,8 +80,8 @@ public class CrateTempBlock extends ContainerBlock {
     public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         if (stack.hasDisplayName()) {
             TileEntity tileentity = worldIn.getTileEntity(pos);
-            if (tileentity instanceof CrateTileEntity) {
-                ((CrateTileEntity)tileentity).setCustomName(stack.getDisplayName());
+            if (tileentity instanceof CrateTileEntityOld) {
+                ((CrateTileEntityOld)tileentity).setCustomName(stack.getDisplayName());
             }
         }
 

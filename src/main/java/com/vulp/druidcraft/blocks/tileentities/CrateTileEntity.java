@@ -1,32 +1,47 @@
 package com.vulp.druidcraft.blocks.tileentities;
 
+import com.vulp.druidcraft.blocks.CrateBlock;
 import com.vulp.druidcraft.blocks.CrateTempBlock;
+import com.vulp.druidcraft.inventory.OctoSidedInventory;
+import com.vulp.druidcraft.inventory.QuadSidedInventory;
+import com.vulp.druidcraft.inventory.container.CrateContainer;
 import com.vulp.druidcraft.registry.BlockRegistry;
 import com.vulp.druidcraft.registry.SoundEventRegistry;
 import com.vulp.druidcraft.registry.TileEntityRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.DoubleSidedInventory;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.ChestContainer;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ChestTileEntity;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.tileentity.*;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 
-public class CrateTileEntity extends LockableLootTileEntity {
-    private NonNullList<ItemStack> field_213966_a = NonNullList.withSize(27, ItemStack.EMPTY);
-    private int field_213967_b;
+import java.util.ArrayList;
 
-    private CrateTileEntity(TileEntityType<?> p_i49963_1_) {
-        super(p_i49963_1_);
+public class CrateTileEntity extends LockableLootTileEntity implements ITickableTileEntity {
+    private NonNullList<ItemStack> contents = NonNullList.withSize(27, ItemStack.EMPTY);
+    private ArrayList<BlockPos> neighbors;
+    private int numPlayersUsing;
+    private int ticksSinceSync;
+    private net.minecraftforge.common.util.LazyOptional<net.minecraftforge.items.IItemHandlerModifiable> crateHandler;
+
+    private CrateTileEntity(TileEntityType<?> tileEntityType) {
+        super(tileEntityType);
+        this.neighbors = CrateBlock.getBlockPositions(world, pos);
     }
 
     public CrateTileEntity() {
@@ -35,8 +50,19 @@ public class CrateTileEntity extends LockableLootTileEntity {
 
     public CompoundNBT write(CompoundNBT compound) {
         super.write(compound);
+        ArrayList<Integer> x = null;
+        ArrayList<Integer> y = null;
+        ArrayList<Integer> z = null;
+        for (int i = 0; i < this.neighbors.size(); i++) {
+            x.add(this.neighbors.get(i).getX());
+            y.add(this.neighbors.get(i).getY());
+            z.add(this.neighbors.get(i).getZ());
+        }
+        compound.putIntArray("CoordX", x);
+        compound.putIntArray("CoordY", y);
+        compound.putIntArray("CoordZ", z);
         if (!this.checkLootAndWrite(compound)) {
-            ItemStackHelper.saveAllItems(compound, this.field_213966_a);
+            ItemStackHelper.saveAllItems(compound, this.contents);
         }
 
         return compound;
@@ -44,9 +70,14 @@ public class CrateTileEntity extends LockableLootTileEntity {
 
     public void read(CompoundNBT compound) {
         super.read(compound);
-        this.field_213966_a = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        ArrayList<BlockPos> neighborArray = new ArrayList<>();
+        for (int i = 0; compound.getIntArray("CoordX").length > i; i++) {
+            neighborArray.add(new BlockPos(compound.getIntArray("CoordX")[i], compound.getIntArray("CoordY")[i], compound.getIntArray("CoordZ")[i]));
+        }
+        this.neighbors = neighborArray;
+        this.contents = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
         if (!this.checkLootAndRead(compound)) {
-            ItemStackHelper.loadAllItems(compound, this.field_213966_a);
+            ItemStackHelper.loadAllItems(compound, this.contents);
         }
 
     }
@@ -59,7 +90,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
     }
 
     public boolean isEmpty() {
-        for(ItemStack itemstack : this.field_213966_a) {
+        for(ItemStack itemstack : this.contents) {
             if (!itemstack.isEmpty()) {
                 return false;
             }
@@ -72,28 +103,28 @@ public class CrateTileEntity extends LockableLootTileEntity {
      * Returns the stack in the given slot.
      */
     public ItemStack getStackInSlot(int index) {
-        return this.field_213966_a.get(index);
+        return this.contents.get(index);
     }
 
     /**
      * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
      */
     public ItemStack decrStackSize(int index, int count) {
-        return ItemStackHelper.getAndSplit(this.field_213966_a, index, count);
+        return ItemStackHelper.getAndSplit(this.contents, index, count);
     }
 
     /**
      * Removes a stack from the given slot and returns it.
      */
     public ItemStack removeStackFromSlot(int index) {
-        return ItemStackHelper.getAndRemove(this.field_213966_a, index);
+        return ItemStackHelper.getAndRemove(this.contents, index);
     }
 
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
     public void setInventorySlotContents(int index, ItemStack stack) {
-        this.field_213966_a.set(index, stack);
+        this.contents.set(index, stack);
         if (stack.getCount() > this.getInventoryStackLimit()) {
             stack.setCount(this.getInventoryStackLimit());
         }
@@ -101,15 +132,15 @@ public class CrateTileEntity extends LockableLootTileEntity {
     }
 
     public void clear() {
-        this.field_213966_a.clear();
+        this.contents.clear();
     }
 
     protected NonNullList<ItemStack> getItems() {
-        return this.field_213966_a;
+        return this.contents;
     }
 
     protected void setItems(NonNullList<ItemStack> itemsIn) {
-        this.field_213966_a = itemsIn;
+        this.contents = itemsIn;
     }
 
     protected ITextComponent getDefaultName() {
@@ -120,36 +151,100 @@ public class CrateTileEntity extends LockableLootTileEntity {
         return ChestContainer.createGeneric9X3(id, player, this);
     }
 
+    public void tick() {
+        int i = this.pos.getX();
+        int j = this.pos.getY();
+        int k = this.pos.getZ();
+        ++this.ticksSinceSync;
+        this.numPlayersUsing = calculatePlayersUsingSync(this.world, this, this.ticksSinceSync, i, j, k, this.numPlayersUsing, this.neighbors.size() > 2);
+    }
+
+    public static int calculatePlayersUsingSync(World world, LockableTileEntity lockableTileEntity, int ticksSinceSync, int posX, int posY, int posZ, int numPlayersUsing, boolean isQuadOrOcto) {
+        if (!world.isRemote && numPlayersUsing != 0 && (ticksSinceSync + posX + posY + posZ) % 200 == 0) {
+            numPlayersUsing = calculatePlayersUsing(world, lockableTileEntity, posX, posY, posZ, isQuadOrOcto);
+        }
+
+        return numPlayersUsing;
+    }
+
+    public static int calculatePlayersUsing(World world, LockableTileEntity lockableTileEntity, int posX, int posY, int posZ, boolean isQuadOrOcto) {
+        int i = 0;
+        float f = 5.0F;
+
+        for(PlayerEntity playerentity : world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB((double)((float)posX - f), (double)((float)posY - f), (double)((float)posZ - f), (double)((float)(posX + 1) + f), (double)((float)(posY + 1) + f), (double)((float)(posZ + 1) + f)))) {
+            if (playerentity.openContainer instanceof CrateContainer && isQuadOrOcto) {
+                IInventory iinventory = ((CrateContainer)playerentity.openContainer).getLowerCrateInventory();
+                if ((iinventory == lockableTileEntity || iinventory instanceof QuadSidedInventory && ((QuadSidedInventory)iinventory).isPartOfQuadCrate(lockableTileEntity)) || (iinventory == lockableTileEntity || iinventory instanceof OctoSidedInventory && ((OctoSidedInventory)iinventory).isPartOfOctoCrate(lockableTileEntity))) {
+                    ++i;
+                }
+            }
+            if (playerentity.openContainer instanceof ChestContainer && !isQuadOrOcto) {
+                IInventory iinventory = ((ChestContainer)playerentity.openContainer).getLowerChestInventory();
+                if (iinventory == lockableTileEntity || iinventory instanceof DoubleSidedInventory && ((DoubleSidedInventory)iinventory).isPartOfLargeChest(lockableTileEntity)) {
+                    ++i;
+                }
+            }
+        }
+
+        return i;
+    }
+
     public void openInventory(PlayerEntity player) {
         if (!player.isSpectator()) {
-            if (this.field_213967_b < 0) {
-                this.field_213967_b = 0;
+            if (this.numPlayersUsing < 0) {
+                this.numPlayersUsing = 0;
             }
 
-            ++this.field_213967_b;
+            ++this.numPlayersUsing;
             BlockState blockstate = this.getBlockState();
             boolean flag = blockstate.get(CrateTempBlock.PROPERTY_OPEN);
             if (!flag) {
                 this.func_213965_a(blockstate, SoundEventRegistry.open_crate);
-                this.func_213963_a(blockstate, true);
+                this.playSoundOpen(blockstate, true);
             }
 
-            this.func_213964_r();
+            this.onOpenOrClose();
         }
 
     }
 
-    private void func_213964_r() {
-        this.world.getPendingBlockTicks().scheduleTick(this.getPos(), this.getBlockState().getBlock(), 5);
+    private void onOpenOrClose() {
+        Block block = this.getBlockState().getBlock();
+        if (block instanceof CrateBlock) {
+            this.world.addBlockEvent(this.pos, block, 1, this.numPlayersUsing);
+            this.world.notifyNeighborsOfStateChange(this.pos, block);
+        }
+
+    }
+
+    public static int getPlayersUsing(IBlockReader reader, BlockPos posIn) {
+        BlockState blockstate = reader.getBlockState(posIn);
+        if (blockstate.hasTileEntity()) {
+            TileEntity tileentity = reader.getTileEntity(posIn);
+            if (tileentity instanceof CrateTileEntity) {
+                return ((CrateTileEntity)tileentity).numPlayersUsing;
+            }
+        }
+
+        return 0;
+    }
+
+    @Override
+    public void updateContainingBlockInfo() {
+        super.updateContainingBlockInfo();
+        if (this.crateHandler != null) {
+            this.crateHandler.invalidate();
+            this.crateHandler = null;
+        }
     }
 
     public void func_213962_h() {
         int i = this.pos.getX();
         int j = this.pos.getY();
         int k = this.pos.getZ();
-        this.field_213967_b = ChestTileEntity.calculatePlayersUsing(this.world, this, i, j, k);
-        if (this.field_213967_b > 0) {
-            this.func_213964_r();
+        this.numPlayersUsing = ChestTileEntity.calculatePlayersUsing(this.world, this, i, j, k);
+        if (this.numPlayersUsing > 0) {
+            this.onOpenOrClose();
         } else {
             BlockState blockstate = this.getBlockState();
             if (blockstate.getBlock() != BlockRegistry.crate_temp) {
@@ -160,21 +255,84 @@ public class CrateTileEntity extends LockableLootTileEntity {
             boolean flag = blockstate.get(CrateTempBlock.PROPERTY_OPEN);
             if (flag) {
                 this.func_213965_a(blockstate, SoundEventRegistry.close_crate);
-                this.func_213963_a(blockstate, false);
+                this.playSoundOpen(blockstate, false);
             }
         }
 
     }
 
-    public void closeInventory(PlayerEntity player) {
-        if (!player.isSpectator()) {
-            --this.field_213967_b;
+    public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> cap, @javax.annotation.Nullable net.minecraft.util.Direction side) {
+        if (!this.removed && cap == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            if (this.crateHandler == null) {
+                this.crateHandler = net.minecraftforge.common.util.LazyOptional.of(this::createHandler);
+            }
+            return this.crateHandler.cast();
         }
-
+        return super.getCapability(cap);
     }
 
-    private void func_213963_a(BlockState p_213963_1_, boolean p_213963_2_) {
-        this.world.setBlockState(this.getPos(), p_213963_1_.with(CrateTempBlock.PROPERTY_OPEN, Boolean.valueOf(p_213963_2_)), 3);
+    private net.minecraftforge.items.IItemHandlerModifiable createHandler() {
+        int size = this.neighbors.size() + 1;
+        for (int i = 0; i > this.neighbors.size(); i++) {
+            if (!(this.world.getBlockState(this.neighbors.get(i)).getBlock() instanceof CrateBlock) || size < 2) {
+                return new net.minecraftforge.items.wrapper.InvWrapper(this);
+            }
+            if (!(this.getWorld().getTileEntity(this.neighbors.get(i)) instanceof CrateTileEntity)) {
+                return new net.minecraftforge.items.wrapper.InvWrapper(this);
+            }
+        }
+        IInventory inven1 = (IInventory)this.getWorld().getTileEntity(this.neighbors.get(0));
+        IInventory inven2 = (IInventory)this.getWorld().getTileEntity(this.neighbors.get(1));
+        IInventory inven3 = (IInventory)this.getWorld().getTileEntity(this.neighbors.get(2));
+        IInventory inven4 = (IInventory)this.getWorld().getTileEntity(this.neighbors.get(3));
+        IInventory inven5 = (IInventory)this.getWorld().getTileEntity(this.neighbors.get(4));
+        IInventory inven6 = (IInventory)this.getWorld().getTileEntity(this.neighbors.get(5));
+        IInventory inven7 = (IInventory)this.getWorld().getTileEntity(this.neighbors.get(6));
+        IInventory inven8 = (IInventory)this.getWorld().getTileEntity(this.neighbors.get(7));
+        if (size == 2) {
+            return new net.minecraftforge.items.wrapper.CombinedInvWrapper(
+                    new net.minecraftforge.items.wrapper.InvWrapper(inven1),
+                    new net.minecraftforge.items.wrapper.InvWrapper(inven2));
+        }
+        if (size == 4) {
+            return new net.minecraftforge.items.wrapper.CombinedInvWrapper(
+                    new net.minecraftforge.items.wrapper.InvWrapper(inven1),
+                    new net.minecraftforge.items.wrapper.InvWrapper(inven2),
+                    new net.minecraftforge.items.wrapper.InvWrapper(inven3),
+                    new net.minecraftforge.items.wrapper.InvWrapper(inven4));
+        }
+        if (size == 8) {
+            return new net.minecraftforge.items.wrapper.CombinedInvWrapper(
+                    new net.minecraftforge.items.wrapper.InvWrapper(inven1),
+                    new net.minecraftforge.items.wrapper.InvWrapper(inven2),
+                    new net.minecraftforge.items.wrapper.InvWrapper(inven3),
+                    new net.minecraftforge.items.wrapper.InvWrapper(inven4),
+                    new net.minecraftforge.items.wrapper.InvWrapper(inven5),
+                    new net.minecraftforge.items.wrapper.InvWrapper(inven6),
+                    new net.minecraftforge.items.wrapper.InvWrapper(inven7),
+                    new net.minecraftforge.items.wrapper.InvWrapper(inven8));
+        }
+        return new net.minecraftforge.items.wrapper.InvWrapper(this);
+    }
+
+    /**
+     * invalidates a tile entity
+     */
+    @Override
+    public void remove() {
+        super.remove();
+        if (crateHandler != null)
+            crateHandler.invalidate();
+    }
+
+    public void closeInventory(PlayerEntity player) {
+        if (!player.isSpectator()) {
+            --this.numPlayersUsing;
+        }
+    }
+
+    private void playSoundOpen(BlockState state, boolean isOpening) {
+        this.world.setBlockState(this.getPos(), state.with(CrateBlock.PROPERTY_OPEN, Boolean.valueOf(isOpening)), 3);
     }
 
     private void func_213965_a(BlockState p_213965_1_, SoundEvent p_213965_2_) {

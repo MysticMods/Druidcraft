@@ -1,8 +1,31 @@
 {
     "variants": {
-        "open=false": [ { "model": "druidcraft:block/crate" },
-						{ "model": "druidcraft:block/crate", "y": 90 } ],
-        "open=true": [ { "model": "druidcraft:block/crate_open" },
-					   { "model": "druidcraft:block/crate_open", "y": 90 } ]
+        "type=single": { "model": "druidcraft:block/single_crate" },
+		"type=double_x,pos_num=1": { "model": "druidcraft:block/double_crate_x1" },
+        "type=double_x,pos_num=2": { "model": "druidcraft:block/double_crate_x2" },
+		"type=double_y,pos_num=1": { "model": "druidcraft:block/double_crate_y1" },
+		"type=double_y,pos_num=2": { "model": "druidcraft:block/double_crate_y2" },
+		"type=double_z,pos_num=1": { "model": "druidcraft:block/double_crate_z1" },
+		"type=double_z,pos_num=2": { "model": "druidcraft:block/double_crate_z2" },
+		"type=quad_x,pos_num=1": { "model": "druidcraft:block/quad_crate_x1" },
+		"type=quad_x,pos_num=2": { "model": "druidcraft:block/quad_crate_x2" },
+		"type=quad_x,pos_num=3": { "model": "druidcraft:block/quad_crate_x3" },
+		"type=quad_x,pos_num=4": { "model": "druidcraft:block/quad_crate_x4" },
+		"type=quad_y,pos_num=1": { "model": "druidcraft:block/quad_crate_y1" },
+		"type=quad_y,pos_num=2": { "model": "druidcraft:block/quad_crate_y2" },
+		"type=quad_y,pos_num=3": { "model": "druidcraft:block/quad_crate_y3" },
+		"type=quad_y,pos_num=4": { "model": "druidcraft:block/quad_crate_y4" },
+		"type=quad_z,pos_num=1": { "model": "druidcraft:block/quad_crate_z1" },
+		"type=quad_z,pos_num=2": { "model": "druidcraft:block/quad_crate_z2" },
+		"type=quad_z,pos_num=3": { "model": "druidcraft:block/quad_crate_z3" },
+		"type=quad_z,pos_num=4": { "model": "druidcraft:block/quad_crate_z4" },
+		"type=octo,pos_num=1": { "model": "druidcraft:block/octo_crate_1" },
+		"type=octo,pos_num=2": { "model": "druidcraft:block/octo_crate_2" },
+		"type=octo,pos_num=3": { "model": "druidcraft:block/octo_crate_3" },
+		"type=octo,pos_num=4": { "model": "druidcraft:block/octo_crate_4" },
+		"type=octo,pos_num=5": { "model": "druidcraft:block/octo_crate_5" },
+		"type=octo,pos_num=6": { "model": "druidcraft:block/octo_crate_6" },
+		"type=octo,pos_num=7": { "model": "druidcraft:block/octo_crate_7" },
+		"type=octo,pos_num=8": { "model": "druidcraft:block/octo_crate_8" }
     }
 }

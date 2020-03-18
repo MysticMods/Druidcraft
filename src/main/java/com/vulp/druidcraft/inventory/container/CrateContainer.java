@@ -167,7 +167,7 @@ public class CrateContainer extends Container {
     /**
      * Gets the inventory associated with this chest container.
      */
-    public IInventory getLowerChestInventory() {
+    public IInventory getLowerCrateInventory() {
         return this.mainCrateInv;
     }
 

@@ -2,6 +2,8 @@ package com.vulp.druidcraft.api;
 
 import net.minecraft.util.IStringSerializable;
 
+import java.util.Locale;
+
 public enum CrateType implements IStringSerializable {
 
     SINGLE("single"),
@@ -15,12 +17,12 @@ public enum CrateType implements IStringSerializable {
 
     private final String name;
 
-    CrateType(String name) {
-        this.name = name;
-    }
-
     @Override
     public String getName() {
-        return this.name;
+        return name().toLowerCase(Locale.ROOT);
+    }
+
+    CrateType(String name) {
+        this.name = name;
     }
 }

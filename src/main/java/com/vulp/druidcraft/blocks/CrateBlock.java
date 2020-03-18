@@ -1,54 +1,159 @@
 package com.vulp.druidcraft.blocks;
 
+import com.google.common.collect.Maps;
 import com.vulp.druidcraft.api.CrateType;
 import com.vulp.druidcraft.blocks.tileentities.CrateTileEntity;
-import com.vulp.druidcraft.registry.BlockRegistry;
+import com.vulp.druidcraft.blocks.tileentities.CrateTileEntityOld;
+import com.vulp.druidcraft.inventory.OctoSidedInventory;
+import com.vulp.druidcraft.inventory.QuadSidedInventory;
+import com.vulp.druidcraft.inventory.container.CrateContainer;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.DoubleSidedInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.inventory.container.ChestContainer;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
+import net.minecraft.state.*;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 
 public class CrateBlock extends ContainerBlock {
-    //public static final BooleanProperty PROPERTY_OPEN = BlockStateProperties.OPEN;
+    public static final BooleanProperty PROPERTY_OPEN = BlockStateProperties.OPEN;
     public static final EnumProperty TYPE = EnumProperty.create("type", CrateType.class);
-    public static final IntegerProperty POS_NUM = IntegerProperty.create("pos_num", 0, 7);
+    public static final IntegerProperty POS_NUM = IntegerProperty.create("pos_num", 1, 8);
+    public static final BooleanProperty PARENT = BooleanProperty.create("parent");
+    public static final BooleanProperty ROTATED = BooleanProperty.create("rotated");
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
     public static final BooleanProperty EAST = BooleanProperty.create("east");
     public static final BooleanProperty SOUTH = BooleanProperty.create("south");
     public static final BooleanProperty WEST = BooleanProperty.create("west");
     public static final BooleanProperty UP = BooleanProperty.create("up");
     public static final BooleanProperty DOWN = BooleanProperty.create("down");
-    public static final BooleanProperty FORCE_SINGLE = BooleanProperty.create("force_single");
-    //private static final CrateBlock.InventoryFactory<IInventory> field_220109_i;
-    //private static final CrateBlock.InventoryFactory<INamedContainerProvider> field_220110_j;
+    private static final CrateBlock.InventoryFactory<IInventory> inventoryFactory = new CrateBlock.InventoryFactory<IInventory>() {
+        public IInventory forOcto(CrateTileEntity inv1, CrateTileEntity inv2, CrateTileEntity inv3, CrateTileEntity inv4, CrateTileEntity inv5, CrateTileEntity inv6, CrateTileEntity inv7, CrateTileEntity inv8) {
+            return new OctoSidedInventory(inv1, inv2, inv3, inv4, inv5, inv6, inv7, inv8);
+        }
+
+        public IInventory forQuad(CrateTileEntity inv1, CrateTileEntity inv2, CrateTileEntity inv3, CrateTileEntity inv4) {
+            return new QuadSidedInventory(inv1, inv2, inv3, inv4);
+        }
+
+        public IInventory forDouble(CrateTileEntity inv1, CrateTileEntity inv2) {
+            return new DoubleSidedInventory(inv1, inv2);
+        }
+
+        public IInventory forSingle(CrateTileEntity tileEntity) {
+            return tileEntity;
+        }
+    };
+    private static final CrateBlock.InventoryFactory<INamedContainerProvider> guiFactory = new CrateBlock.InventoryFactory<INamedContainerProvider>() {
+
+
+        public INamedContainerProvider forOcto(final CrateTileEntity tileEntity1, final CrateTileEntity tileEntity2, final CrateTileEntity tileEntity3, final CrateTileEntity tileEntity4, final CrateTileEntity tileEntity5, final CrateTileEntity tileEntity6, final CrateTileEntity tileEntity7, final CrateTileEntity tileEntity8) {
+            final IInventory iinventory = new OctoSidedInventory(tileEntity1, tileEntity2, tileEntity3, tileEntity4, tileEntity5, tileEntity6, tileEntity7, tileEntity8);
+            return new INamedContainerProvider() {
+                @Nullable
+                public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
+                    if (tileEntity1.canOpen(p_createMenu_3_) && tileEntity2.canOpen(p_createMenu_3_)) {
+                        tileEntity1.fillWithLoot(p_createMenu_2_.player);
+                        tileEntity2.fillWithLoot(p_createMenu_2_.player);
+                        return CrateContainer.createGeneric9X24(p_createMenu_1_, p_createMenu_2_, iinventory);
+                    } else {
+                        return null;
+                    }
+                }
+
+                public ITextComponent getDisplayName() {
+                    if (tileEntity1.hasCustomName()) {
+                        return tileEntity1.getDisplayName();
+                    } else {
+                        return (ITextComponent)(tileEntity2.hasCustomName() ? tileEntity2.getDisplayName() : new TranslationTextComponent("container.crateOcto"));
+                    }
+                }
+            };
+        }
+
+        public INamedContainerProvider forQuad(final CrateTileEntity tileEntity1, final CrateTileEntity tileEntity2, final CrateTileEntity tileEntity3, final CrateTileEntity tileEntity4) {
+            final IInventory iinventory = new QuadSidedInventory(tileEntity1, tileEntity2, tileEntity3, tileEntity4);
+            return new INamedContainerProvider() {
+                @Nullable
+                public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
+                    if (tileEntity1.canOpen(p_createMenu_3_) && tileEntity2.canOpen(p_createMenu_3_)) {
+                        tileEntity1.fillWithLoot(p_createMenu_2_.player);
+                        tileEntity2.fillWithLoot(p_createMenu_2_.player);
+                        return CrateContainer.createGeneric9X12(p_createMenu_1_, p_createMenu_2_, iinventory);
+                    } else {
+                        return null;
+                    }
+                }
+
+                public ITextComponent getDisplayName() {
+                    if (tileEntity1.hasCustomName()) {
+                        return tileEntity1.getDisplayName();
+                    } else {
+                        return (ITextComponent)(tileEntity2.hasCustomName() ? tileEntity2.getDisplayName() : new TranslationTextComponent("container.crateQuad"));
+                    }
+                }
+            };
+        }
+
+        public INamedContainerProvider forDouble(final CrateTileEntity tileEntity1, final CrateTileEntity tileEntity2) {
+            final IInventory iinventory = new DoubleSidedInventory(tileEntity1, tileEntity2);
+            return new INamedContainerProvider() {
+                @Nullable
+                public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
+                    if (tileEntity1.canOpen(p_createMenu_3_) && tileEntity2.canOpen(p_createMenu_3_)) {
+                        tileEntity1.fillWithLoot(p_createMenu_2_.player);
+                        tileEntity2.fillWithLoot(p_createMenu_2_.player);
+                        return ChestContainer.createGeneric9X6(p_createMenu_1_, p_createMenu_2_, iinventory);
+                    } else {
+                        return null;
+                    }
+                }
+
+                public ITextComponent getDisplayName() {
+                    if (tileEntity1.hasCustomName()) {
+                        return tileEntity1.getDisplayName();
+                    } else {
+                        return (ITextComponent)(tileEntity2.hasCustomName() ? tileEntity2.getDisplayName() : new TranslationTextComponent("container.crateDouble"));
+                    }
+                }
+            };
+        }
+
+        public INamedContainerProvider forSingle(CrateTileEntity p_212856_1_) {
+            return p_212856_1_;
+        }
+    };
 
     public CrateBlock(Properties properties) {
         super(properties);
         this.setDefaultState(this.stateContainer.getBaseState()
-    //            .with(PROPERTY_OPEN, false)
                 .with(TYPE, CrateType.SINGLE)
-                .with(POS_NUM, 0)
+                .with(POS_NUM, 1)
+                .with(PROPERTY_OPEN, false)
+                .with(PARENT, true)
+                .with(ROTATED, false)
                 .with(NORTH, true)
                 .with(EAST, true)
                 .with(SOUTH, true)
@@ -57,440 +162,905 @@ public class CrateBlock extends ContainerBlock {
                 .with(DOWN, true));
     }
 
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(TYPE, POS_NUM, NORTH, EAST, SOUTH, WEST, UP, DOWN, FORCE_SINGLE);
+    @Nullable
+    public ArrayList<BlockPos> checkForCrates(World world, BlockPos pos) {
+
+        ArrayList<BlockPos> shapeConfig = new ArrayList<>();
+
+        // OCTO
+        if (checkCrateBlocks(world, pos.east(), pos.south(), pos.south().east(), pos.up(), pos.up().east(), pos.up().south(), pos.up().south().east())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos);
+            shapeConfig.add(pos.east());
+            shapeConfig.add(pos.south());
+            shapeConfig.add(pos.south().east());
+            shapeConfig.add(pos.up());
+            shapeConfig.add(pos.up().east());
+            shapeConfig.add(pos.up().south());
+            shapeConfig.add(pos.up().south().east());
+            if (checkIllegalCrates(world, pos, CrateType.OCTO, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+        if (checkCrateBlocks(world, pos.west(), pos.south().west(), pos.south(), pos.up().west(), pos.up(), pos.up().south().west(), pos.up().south())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos.west());
+            shapeConfig.add(pos);
+            shapeConfig.add(pos.south().west());
+            shapeConfig.add(pos.south());
+            shapeConfig.add(pos.up().west());
+            shapeConfig.add(pos.up());
+            shapeConfig.add(pos.up().south().west());
+            shapeConfig.add(pos.up().south());
+            if (checkIllegalCrates(world, pos, CrateType.OCTO, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+        if (checkCrateBlocks(world, pos.north(), pos.north().east(), pos.east(), pos.up().north(), pos.up().north().east(), pos.up(), pos.up().east())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos.north());
+            shapeConfig.add(pos.north().east());
+            shapeConfig.add(pos);
+            shapeConfig.add(pos.east());
+            shapeConfig.add(pos.up().north());
+            shapeConfig.add(pos.up().north().east());
+            shapeConfig.add(pos.up());
+            shapeConfig.add(pos.up().east());
+            if (checkIllegalCrates(world, pos, CrateType.OCTO, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+        if (checkCrateBlocks(world, pos.north().west(), pos.north(), pos.west(), pos.up().north().west(), pos.up().north(), pos.up().west(), pos.up())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos.north().west());
+            shapeConfig.add(pos.north());
+            shapeConfig.add(pos.west());
+            shapeConfig.add(pos);
+            shapeConfig.add(pos.up().north().west());
+            shapeConfig.add(pos.up().north());
+            shapeConfig.add(pos.up().west());
+            shapeConfig.add(pos.up());
+            if (checkIllegalCrates(world, pos, CrateType.OCTO, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+        if (checkCrateBlocks(world, pos.down(), pos.down().east(), pos.down().south(), pos.down().south().east(), pos.east(), pos.south(), pos.south().east())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos.down());
+            shapeConfig.add(pos.down().east());
+            shapeConfig.add(pos.down().south());
+            shapeConfig.add(pos.down().south().east());
+            shapeConfig.add(pos);
+            shapeConfig.add(pos.east());
+            shapeConfig.add(pos.south());
+            shapeConfig.add(pos.south().east());
+            if (checkIllegalCrates(world, pos, CrateType.OCTO, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+        if (checkCrateBlocks(world, pos.down().west(), pos.down(), pos.down().south().west(), pos.down().south(), pos.west(), pos.south().west(), pos.south())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos.down().west());
+            shapeConfig.add(pos.down());
+            shapeConfig.add(pos.down().south().west());
+            shapeConfig.add(pos.down().south());
+            shapeConfig.add(pos.west());
+            shapeConfig.add(pos);
+            shapeConfig.add(pos.south().west());
+            shapeConfig.add(pos.south());
+            if (checkIllegalCrates(world, pos, CrateType.OCTO, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+        if (checkCrateBlocks(world, pos.down().north(), pos.down().north().east(), pos.down(), pos.down().east(), pos.north(), pos.north().east(), pos.east())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos.down().north());
+            shapeConfig.add(pos.down().north().east());
+            shapeConfig.add(pos.down());
+            shapeConfig.add(pos.down().east());
+            shapeConfig.add(pos.north());
+            shapeConfig.add(pos.north().east());
+            shapeConfig.add(pos);
+            shapeConfig.add(pos.east());
+            if (checkIllegalCrates(world, pos, CrateType.OCTO, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+        if (checkCrateBlocks(world, pos.down().north().west(), pos.down().north(), pos.down().west(), pos.down(), pos.north().west(), pos.north(), pos.west())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos.down().north().west());
+            shapeConfig.add(pos.down().north());
+            shapeConfig.add(pos.down().west());
+            shapeConfig.add(pos.down());
+            shapeConfig.add(pos.north().west());
+            shapeConfig.add(pos.north());
+            shapeConfig.add(pos.west());
+            shapeConfig.add(pos);
+            if (checkIllegalCrates(world, pos, CrateType.OCTO, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+
+        // QUAD X
+        if (checkCrateBlocks(world, pos.south(), pos.up(), pos.up().south())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos);
+            shapeConfig.add(pos.south());
+            shapeConfig.add(pos.up());
+            shapeConfig.add(pos.up().south());
+            if (checkIllegalCrates(world, pos, CrateType.QUAD_X, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+        if (checkCrateBlocks(world, pos.north(), pos.north().up(), pos.up())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos.north());
+            shapeConfig.add(pos);
+            shapeConfig.add(pos.up().north());
+            shapeConfig.add(pos.up());
+            if (checkIllegalCrates(world, pos, CrateType.QUAD_X, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+        if (checkCrateBlocks(world, pos.down(), pos.down().south(), pos.south())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos.down());
+            shapeConfig.add(pos.down().south());
+            shapeConfig.add(pos);
+            shapeConfig.add(pos.south());
+            if (checkIllegalCrates(world, pos, CrateType.QUAD_X, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+        if (checkCrateBlocks(world, pos.down().north(), pos.down(), pos.north())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos.down().north());
+            shapeConfig.add(pos.down());
+            shapeConfig.add(pos.north());
+            shapeConfig.add(pos);
+            if (checkIllegalCrates(world, pos, CrateType.QUAD_X, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+
+        // QUAD Y
+        if (checkCrateBlocks(world, pos.east(), pos.south(), pos.south().east())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos);
+            shapeConfig.add(pos.east());
+            shapeConfig.add(pos.south());
+            shapeConfig.add(pos.south().east());
+            if (checkIllegalCrates(world, pos, CrateType.QUAD_Y, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+        if (checkCrateBlocks(world, pos.west(), pos.south(), pos.south().west())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos.west());
+            shapeConfig.add(pos);
+            shapeConfig.add(pos.south().west());
+            shapeConfig.add(pos.south());
+            if (checkIllegalCrates(world, pos, CrateType.QUAD_Y, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+        if (checkCrateBlocks(world, pos.north(), pos.east(), pos.north().east())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos.north());
+            shapeConfig.add(pos.north().east());
+            shapeConfig.add(pos);
+            shapeConfig.add(pos.east());
+            if (checkIllegalCrates(world, pos, CrateType.QUAD_Y, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+        if (checkCrateBlocks(world, pos.north(), pos.west(), pos.north().west())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos.north().west());
+            shapeConfig.add(pos.north());
+            shapeConfig.add(pos.west());
+            shapeConfig.add(pos);
+            if (checkIllegalCrates(world, pos, CrateType.QUAD_Y, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+
+        // QUAD Z
+        if (checkCrateBlocks(world, pos.east(), pos.up(), pos.up().east())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos);
+            shapeConfig.add(pos.east());
+            shapeConfig.add(pos.up());
+            shapeConfig.add(pos.up().east());
+            if (checkIllegalCrates(world, pos, CrateType.QUAD_Z, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+        if (checkCrateBlocks(world, pos.west(), pos.up().west(), pos.up())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos.west());
+            shapeConfig.add(pos);
+            shapeConfig.add(pos.up().west());
+            shapeConfig.add(pos.up());
+            if (checkIllegalCrates(world, pos, CrateType.QUAD_Z, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+        if (checkCrateBlocks(world, pos.down(), pos.down().east(), pos.east())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos.down());
+            shapeConfig.add(pos.down().east());
+            shapeConfig.add(pos);
+            shapeConfig.add(pos.east());
+            if (checkIllegalCrates(world, pos, CrateType.QUAD_Z, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+        if (checkCrateBlocks(world, pos.down().west(), pos.down(), pos.west())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos.down().west());
+            shapeConfig.add(pos.down());
+            shapeConfig.add(pos.west());
+            shapeConfig.add(pos);
+            if (checkIllegalCrates(world, pos, CrateType.QUAD_Z, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+
+        // DOUBLE X
+        if (checkCrateBlocks(world, pos.east())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos);
+            shapeConfig.add(pos.east());
+            if (checkIllegalCrates(world, pos, CrateType.DOUBLE_X, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+        if (checkCrateBlocks(world, pos.west())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos.west());
+            shapeConfig.add(pos);
+            if (checkIllegalCrates(world, pos, CrateType.DOUBLE_X, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+
+        // DOUBLE Y
+        if (checkCrateBlocks(world, pos.up())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos);
+            shapeConfig.add(pos.up());
+            if (checkIllegalCrates(world, pos, CrateType.DOUBLE_Y, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+        if (checkCrateBlocks(world, pos.down())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos.down());
+            shapeConfig.add(pos);
+            if (checkIllegalCrates(world, pos, CrateType.DOUBLE_Y, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+
+        // DOUBLE Z
+        if (checkCrateBlocks(world, pos.south())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos);
+            shapeConfig.add(pos.south());
+            if (checkIllegalCrates(world, pos, CrateType.DOUBLE_Z, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+        if (checkCrateBlocks(world, pos.north())) {
+            shapeConfig.clear();
+            shapeConfig.add(pos.north());
+            shapeConfig.add(pos);
+            if (checkIllegalCrates(world, pos, CrateType.DOUBLE_Z, shapeConfig) && checkSides(world, shapeConfig)) {
+                return shapeConfig;
+            }
+        }
+
+        shapeConfig.clear();
+        shapeConfig.add(pos);
+        return shapeConfig;
     }
 
+    public static ArrayList<BlockPos> getBlockPositions(World world, BlockPos pos) {
+        ArrayList<BlockPos> config = new ArrayList<>();
+        CrateType type = (CrateType) world.getBlockState(pos).get(TYPE);
+        int num = world.getBlockState(pos).get(POS_NUM);
 
-    private void crateGeometry(BlockState state, World worldIn, BlockPos pos) {
-        BlockState north = worldIn.getBlockState(pos.north());
-        BlockState south = worldIn.getBlockState(pos.south());
-        BlockState east = worldIn.getBlockState(pos.east());
-        BlockState west = worldIn.getBlockState(pos.west());
-        BlockState up = worldIn.getBlockState(pos.up());
-        BlockState down = worldIn.getBlockState(pos.down());
-        BlockState north_east = worldIn.getBlockState(pos.north().east());
-        BlockState north_west = worldIn.getBlockState(pos.north().west());
-        BlockState south_east = worldIn.getBlockState(pos.north().east());
-        BlockState south_west = worldIn.getBlockState(pos.north().west());
-        BlockState up_north = worldIn.getBlockState(pos.north().up());
-        BlockState up_south = worldIn.getBlockState(pos.south().up());
-        BlockState up_east = worldIn.getBlockState(pos.east().up());
-        BlockState up_west = worldIn.getBlockState(pos.west().up());
-        BlockState down_north = worldIn.getBlockState(pos.north().down());
-        BlockState down_south = worldIn.getBlockState(pos.south().down());
-        BlockState down_east = worldIn.getBlockState(pos.east().down());
-        BlockState down_west = worldIn.getBlockState(pos.west().down());
-        BlockState up_north_east = worldIn.getBlockState(pos.north().up().east());
-        BlockState up_north_west = worldIn.getBlockState(pos.north().up().west());
-        BlockState up_south_east = worldIn.getBlockState(pos.south().up().east());
-        BlockState up_south_west = worldIn.getBlockState(pos.south().up().west());
-        BlockState down_north_east = worldIn.getBlockState(pos.north().down().east());
-        BlockState down_north_west = worldIn.getBlockState(pos.north().down().west());
-        BlockState down_south_east = worldIn.getBlockState(pos.south().down().east());
-        BlockState down_south_west = worldIn.getBlockState(pos.south().down().west());
-
-        if (crateCheckOcto(state, north, east, north_east, up, up_north, up_east, up_north_east)) {
-            if (faceCheck(north, 3, Direction.SOUTH, Direction.EAST, Direction.UP) && faceCheck(east, 3, Direction.NORTH, Direction.UP, Direction.WEST)
-                    && faceCheck(north_east, 3, Direction.SOUTH, Direction.WEST, Direction.UP) && faceCheck(up, 3, Direction.NORTH, Direction.EAST, Direction.DOWN)
-                    && faceCheck(up_east, 3, Direction.DOWN, Direction.WEST, Direction.NORTH) && faceCheck(up_north, 3, Direction.DOWN, Direction.SOUTH, Direction.EAST)
-                    && faceCheck(up_north_east, 3, Direction.DOWN, Direction.SOUTH, Direction.WEST))
-                worldIn.setBlockState(pos.north(), north.with(POS_NUM, 0).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.north().east(), north_east.with(POS_NUM, 1).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos, state.with(POS_NUM, 2).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.east(), east.with(POS_NUM, 3).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.north().up(), up_north.with(POS_NUM, 4).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.north().east().up(), up_north_east.with(POS_NUM, 5).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.up(), up.with(POS_NUM, 6).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.east().up(), up_east.with(POS_NUM, 7).with(TYPE, CrateType.OCTO));
+        if (type == CrateType.OCTO) {
+            if (num == 1) {
+                config.add(pos);
+                config.add(pos.east());
+                config.add(pos.south());
+                config.add(pos.east().south());
+                config.add(pos.up());
+                config.add(pos.east().up());
+                config.add(pos.south().up());
+                config.add(pos.east().south().up());
+            }
+            if (num == 2) {
+                config.add(pos.west());
+                config.add(pos);
+                config.add(pos.south().west());
+                config.add(pos.south());
+                config.add(pos.west().up());
+                config.add(pos.up());
+                config.add(pos.south().west().up());
+                config.add(pos.south().up());
+            }
+            if (num == 3) {
+                config.add(pos.north());
+                config.add(pos.north().east());
+                config.add(pos);
+                config.add(pos.east());
+                config.add(pos.north().up());
+                config.add(pos.north().east().up());
+                config.add(pos.up());
+                config.add(pos.east().up());
+            }
+            if (num == 4) {
+                config.add(pos.north().west());
+                config.add(pos.north());
+                config.add(pos.west());
+                config.add(pos);
+                config.add(pos.north().west().up());
+                config.add(pos.north().up());
+                config.add(pos.west().up());
+                config.add(pos.up());
+            }
+            if (num == 5) {
+                config.add(pos.down());
+                config.add(pos.east().down());
+                config.add(pos.south().down());
+                config.add(pos.east().south().down());
+                config.add(pos);
+                config.add(pos.east());
+                config.add(pos.south());
+                config.add(pos.east().south());
+            }
+            if (num == 6) {
+                config.add(pos.west().down());
+                config.add(pos.down());
+                config.add(pos.south().west().down());
+                config.add(pos.south().down());
+                config.add(pos.west());
+                config.add(pos);
+                config.add(pos.south().west());
+                config.add(pos.south());
+            }
+            if (num == 7) {
+                config.add(pos.north().down());
+                config.add(pos.north().east().down());
+                config.add(pos.down());
+                config.add(pos.east().down());
+                config.add(pos.north());
+                config.add(pos.north().east());
+                config.add(pos);
+                config.add(pos.east());
+            }
+            if (num == 8) {
+                config.add(pos.north().west().down());
+                config.add(pos.north().down());
+                config.add(pos.west().down());
+                config.add(pos.down());
+                config.add(pos.north().west());
+                config.add(pos.north());
+                config.add(pos.west());
+                config.add(pos);
+            }
         }
-        if (crateCheckOcto(state, north, west, north_west, up, up_north, up_west, up_north_west)) {
-            if (faceCheck(west, 3, Direction.EAST, Direction.NORTH, Direction.UP) && faceCheck(north, 3, Direction.SOUTH, Direction.WEST, Direction.UP)
-                    && faceCheck(north_west, 3, Direction.UP, Direction.SOUTH, Direction.EAST) && faceCheck(up, 3, Direction.DOWN, Direction.NORTH, Direction.WEST)
-                    && faceCheck(up_west, 3, Direction.DOWN, Direction.EAST, Direction.NORTH) && faceCheck(up_north, 3, Direction.SOUTH, Direction.DOWN, Direction.WEST)
-                    && faceCheck(up_north_west, 3, Direction.DOWN, Direction.SOUTH, Direction.EAST))
-                worldIn.setBlockState(pos.north().west(), north_west.with(POS_NUM, 0).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.north(), north.with(POS_NUM, 1).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.west(), west.with(POS_NUM, 2).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos, state.with(POS_NUM, 3).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.north().east().up(), up_north_east.with(POS_NUM, 4).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.north().up(), up_north.with(POS_NUM, 5).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.west().up(), up_west.with(POS_NUM, 6).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.up(), up.with(POS_NUM, 7).with(TYPE, CrateType.OCTO));
+        if (type == CrateType.QUAD_X) {
+            if (num == 1) {
+                config.add(pos);
+                config.add(pos.south());
+                config.add(pos.up());
+                config.add(pos.up().south());
+            }
+            if (num == 2) {
+                config.add(pos.north());
+                config.add(pos);
+                config.add(pos.north().up());
+                config.add(pos.up());
+            }
+            if (num == 3) {
+                config.add(pos.down());
+                config.add(pos.down().south());
+                config.add(pos);
+                config.add(pos.south());
+            }
+            if (num == 4) {
+                config.add(pos.down().north());
+                config.add(pos.down());
+                config.add(pos.north());
+                config.add(pos);
+            }
         }
-        if (crateCheckOcto(state, south, east, south_east, up, up_south, up_east, up_south_east)) {
-            if (faceCheck(south, 3, Direction.NORTH, Direction.UP, Direction.EAST) && faceCheck(east, 3, Direction.WEST, Direction.UP, Direction.SOUTH)
-                    && faceCheck(south_east, 3, Direction.NORTH, Direction.WEST, Direction.UP) && faceCheck(up, 3, Direction.SOUTH, Direction.EAST, Direction.DOWN)
-                    && faceCheck(up_south, 3, Direction.DOWN, Direction.NORTH, Direction.EAST) && faceCheck(up_east, 3, Direction.WEST, Direction.DOWN, Direction.SOUTH)
-                    && faceCheck(up_south_east, 3, Direction.DOWN, Direction.WEST, Direction.NORTH))
-                worldIn.setBlockState(pos, state.with(POS_NUM, 0).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.east(), east.with(POS_NUM, 1).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.south(), south.with(POS_NUM, 2).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.south().east(), south_east.with(POS_NUM, 3).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.up(), up.with(POS_NUM, 4).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.up().east(), up_east.with(POS_NUM, 5).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.up().south(), up_south.with(POS_NUM, 6).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.up().south().east(), up_south_east.with(POS_NUM, 7).with(TYPE, CrateType.OCTO));
+        if (type == CrateType.QUAD_Y) {
+            if (num == 1) {
+                config.add(pos);
+                config.add(pos.east());
+                config.add(pos.south());
+                config.add(pos.south().east());
+            }
+            if (num == 2) {
+                config.add(pos.west());
+                config.add(pos);
+                config.add(pos.west().south());
+                config.add(pos.south());
+            }
+            if (num == 3) {
+                config.add(pos.north());
+                config.add(pos.north().east());
+                config.add(pos);
+                config.add(pos.east());
+            }
+            if (num == 4) {
+                config.add(pos.north().west());
+                config.add(pos.north());
+                config.add(pos.west());
+                config.add(pos);
+            }
         }
-        if (crateCheckOcto(state, south, west, south_west, up, up_south, up_west, up_south_west)) {
-            if (faceCheck(south, 3, Direction.NORTH, Direction.WEST, Direction.UP) && faceCheck(west, 3, Direction.EAST, Direction.UP, Direction.SOUTH)
-                    && faceCheck(south_west, 3, Direction.NORTH, Direction.EAST, Direction.UP) && faceCheck(up, 3, Direction.SOUTH, Direction.WEST, Direction.DOWN)
-                    && faceCheck(up_south, 3, Direction.NORTH, Direction.DOWN, Direction.WEST) && faceCheck(up_west, 3, Direction.SOUTH, Direction.EAST, Direction.DOWN)
-                    && faceCheck(up_south_west, 3, Direction.NORTH, Direction.EAST, Direction.DOWN))
-                worldIn.setBlockState(pos.west(), west.with(POS_NUM, 0).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos, state.with(POS_NUM, 1).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.south().west(), south_west.with(POS_NUM, 2).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.south(), south.with(POS_NUM, 3).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.up().west(), up_west.with(POS_NUM, 4).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.up(), up.with(POS_NUM, 5).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.up().south().west(), up_south_west.with(POS_NUM, 6).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.up().south(), up_south.with(POS_NUM, 7).with(TYPE, CrateType.OCTO));
+        if (type == CrateType.QUAD_Z) {
+            if (num == 1) {
+                config.add(pos);
+                config.add(pos.east());
+                config.add(pos.up());
+                config.add(pos.up().east());
+            }
+            if (num == 2) {
+                config.add(pos.west());
+                config.add(pos);
+                config.add(pos.west().up());
+                config.add(pos.up());
+            }
+            if (num == 3) {
+                config.add(pos.down());
+                config.add(pos.down().east());
+                config.add(pos);
+                config.add(pos.east());
+            }
+            if (num == 4) {
+                config.add(pos.down().west());
+                config.add(pos.down());
+                config.add(pos.west());
+                config.add(pos);
+            }
         }
-        if (crateCheckOcto(state, north, east, north_east, down, down_north, down_east, down_north_east)) {
-            if (faceCheck(north, 3, Direction.SOUTH, Direction.EAST, Direction.DOWN) && faceCheck(east, 3, Direction.NORTH, Direction.DOWN, Direction.WEST)
-                    && faceCheck(north_east, 3, Direction.SOUTH, Direction.WEST, Direction.DOWN) && faceCheck(down, 3, Direction.NORTH, Direction.EAST, Direction.UP)
-                    && faceCheck(down_east, 3, Direction.UP, Direction.WEST, Direction.NORTH) && faceCheck(down_north, 3, Direction.UP, Direction.SOUTH, Direction.EAST)
-                    && faceCheck(down_north_east, 3, Direction.UP, Direction.SOUTH, Direction.WEST))
-                worldIn.setBlockState(pos.down().north(), down_south.with(POS_NUM, 0).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.down().north().east(), down_north_east.with(POS_NUM, 1).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.down(), down.with(POS_NUM, 2).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.down().east(), down_east.with(POS_NUM, 3).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.north(), north.with(POS_NUM, 4).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.north().east(), north_east.with(POS_NUM, 5).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos, state.with(POS_NUM, 6).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.east(), east.with(POS_NUM, 7).with(TYPE, CrateType.OCTO));
+        if (type == CrateType.DOUBLE_X) {
+            if (num == 1) {
+                config.add(pos);
+                config.add(pos.east());
+            }
+            if (num == 2) {
+                config.add(pos.west());
+                config.add(pos);
+            }
         }
-        if (crateCheckOcto(state, north, west, north_west, down, down_north, down_west, down_north_west)) {
-            if (faceCheck(west, 3, Direction.EAST, Direction.NORTH, Direction.DOWN) && faceCheck(north, 3, Direction.SOUTH, Direction.WEST, Direction.DOWN)
-                    && faceCheck(north_west, 3, Direction.DOWN, Direction.SOUTH, Direction.EAST) && faceCheck(down, 3, Direction.UP, Direction.NORTH, Direction.WEST)
-                    && faceCheck(down_west, 3, Direction.UP, Direction.EAST, Direction.NORTH) && faceCheck(down_north, 3, Direction.SOUTH, Direction.UP, Direction.WEST)
-                    && faceCheck(down_north_west, 3, Direction.UP, Direction.SOUTH, Direction.EAST))
-                worldIn.setBlockState(pos.down().north().west(), down_north_west.with(POS_NUM, 0).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.down().north(), down_north.with(POS_NUM, 1).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.down().west(), down_west.with(POS_NUM, 2).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.down(), down.with(POS_NUM, 3).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.north().west(), north_west.with(POS_NUM, 4).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.north(), north.with(POS_NUM, 5).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.west(), west.with(POS_NUM, 6).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos, state.with(POS_NUM, 7).with(TYPE, CrateType.OCTO));
+        if (type == CrateType.DOUBLE_Y) {
+            if (num == 1) {
+                config.add(pos);
+                config.add(pos.up());
+            }
+            if (num == 2) {
+                config.add(pos.down());
+                config.add(pos);
+            }
         }
-        if (crateCheckOcto(state, south, east, south_east, down, down_south, down_east, down_south_east)) {
-            if (faceCheck(south, 3, Direction.NORTH, Direction.DOWN, Direction.EAST) && faceCheck(east, 3, Direction.WEST, Direction.DOWN, Direction.SOUTH)
-                    && faceCheck(south_east, 3, Direction.NORTH, Direction.WEST, Direction.DOWN) && faceCheck(down, 3, Direction.SOUTH, Direction.EAST, Direction.UP)
-                    && faceCheck(down_south, 3, Direction.UP, Direction.NORTH, Direction.EAST) && faceCheck(down_east, 3, Direction.WEST, Direction.UP, Direction.SOUTH)
-                    && faceCheck(down_south_east, 3, Direction.UP, Direction.WEST, Direction.NORTH))
-                worldIn.setBlockState(pos.down(), down.with(POS_NUM, 0).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.down().east(), down_east.with(POS_NUM, 1).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.down().south(), down_south.with(POS_NUM, 2).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.down().south().east(), down_south_east.with(POS_NUM, 3).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos, state.with(POS_NUM, 4).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.east(), east.with(POS_NUM, 5).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.south(), south.with(POS_NUM, 6).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.south().east(), south_east.with(POS_NUM, 7).with(TYPE, CrateType.OCTO));
+        if (type == CrateType.DOUBLE_Z) {
+            if (num == 1) {
+                config.add(pos);
+                config.add(pos.south());
+            }
+            if (num == 2) {
+                config.add(pos.north());
+                config.add(pos);
+            }
         }
-        if (crateCheckOcto(state, south, west, south_west, down, down_south, down_west, down_south_west)) {
-            if (faceCheck(south, 3, Direction.NORTH, Direction.WEST, Direction.DOWN) && faceCheck(west, 3, Direction.EAST, Direction.DOWN, Direction.SOUTH)
-                    && faceCheck(south_west, 3, Direction.NORTH, Direction.EAST, Direction.DOWN) && faceCheck(down, 3, Direction.SOUTH, Direction.WEST, Direction.UP)
-                    && faceCheck(down_south, 3, Direction.NORTH, Direction.UP, Direction.WEST) && faceCheck(down_west, 3, Direction.SOUTH, Direction.EAST, Direction.UP)
-                    && faceCheck(down_south_west, 3, Direction.NORTH, Direction.EAST, Direction.UP))
-                worldIn.setBlockState(pos.down().west(), down_west.with(POS_NUM, 0).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.down(), down.with(POS_NUM, 1).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.down().south().west(), down_south_west.with(POS_NUM, 2).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.down().south(), down_south.with(POS_NUM, 3).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.west(), west.with(POS_NUM, 4).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos, state.with(POS_NUM, 5).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.south().west(), south_west.with(POS_NUM, 6).with(TYPE, CrateType.OCTO));
-            worldIn.setBlockState(pos.south(), south.with(POS_NUM, 7).with(TYPE, CrateType.OCTO));
+        if (type == CrateType.SINGLE) {
+            config.add(pos);
         }
-
-        if (crateCheckQuad(state, north, east, north_east, Direction.Axis.Y)) {
-            if (faceCheck(north, 2, Direction.SOUTH, Direction.EAST, null) && faceCheck(east, 2, Direction.NORTH, Direction.WEST, null)
-                    && faceCheck(north_east, 2, Direction.SOUTH, Direction.WEST, null))
-                worldIn.setBlockState(pos.north(), north.with(POS_NUM, 0).with(TYPE, CrateType.QUAD_Y));
-            worldIn.setBlockState(pos.north().east(), north_east.with(POS_NUM, 1).with(TYPE, CrateType.QUAD_Y));
-            worldIn.setBlockState(pos, state.with(POS_NUM, 2).with(TYPE, CrateType.QUAD_Y));
-            worldIn.setBlockState(pos.east(), east.with(POS_NUM, 3).with(TYPE, CrateType.QUAD_Y));
-        }
-        if (crateCheckQuad(state, north, west, north_west, Direction.Axis.Y)) {
-            if (faceCheck(north, 2, Direction.SOUTH, Direction.WEST, null) && faceCheck(west, 2, Direction.NORTH, Direction.EAST, null)
-                    && faceCheck(north_west, 2, Direction.SOUTH, Direction.EAST, null))
-                worldIn.setBlockState(pos.north().west(), north_west.with(POS_NUM, 0).with(TYPE, CrateType.QUAD_Y));
-            worldIn.setBlockState(pos.north(), north.with(POS_NUM, 1).with(TYPE, CrateType.QUAD_Y));
-            worldIn.setBlockState(pos.west(), west.with(POS_NUM, 2).with(TYPE, CrateType.QUAD_Y));
-            worldIn.setBlockState(pos, state.with(POS_NUM, 3).with(TYPE, CrateType.QUAD_Y));
-        }
-        if (crateCheckQuad(state, south, east, south_east, Direction.Axis.Y)) {
-            if (faceCheck(south, 2, Direction.NORTH, Direction.EAST, null) && faceCheck(east, 2, Direction.WEST, Direction.SOUTH, null)
-                    && faceCheck(south_east, 2, Direction.NORTH, Direction.WEST, null))
-                worldIn.setBlockState(pos, state.with(POS_NUM, 0).with(TYPE, CrateType.QUAD_Y));
-            worldIn.setBlockState(pos.east(), east.with(POS_NUM, 1).with(TYPE, CrateType.QUAD_Y));
-            worldIn.setBlockState(pos.south(), south.with(POS_NUM, 2).with(TYPE, CrateType.QUAD_Y));
-            worldIn.setBlockState(pos.south().east(), south_east.with(POS_NUM, 3).with(TYPE, CrateType.QUAD_Y));
-        }
-        if (crateCheckQuad(state, south, west, south_west, Direction.Axis.Y)) {
-            if (faceCheck(west, 2, Direction.EAST, Direction.SOUTH, null) && faceCheck(south, 2, Direction.NORTH, Direction.WEST, null)
-                    && faceCheck(south_west, 2, Direction.NORTH, Direction.EAST, null))
-                worldIn.setBlockState(pos.west(), west.with(POS_NUM, 0).with(TYPE, CrateType.QUAD_Y));
-            worldIn.setBlockState(pos, state.with(POS_NUM, 1).with(TYPE, CrateType.QUAD_Y));
-            worldIn.setBlockState(pos.south().west(), south_west.with(POS_NUM, 2).with(TYPE, CrateType.QUAD_Y));
-            worldIn.setBlockState(pos.south(), south.with(POS_NUM, 3).with(TYPE, CrateType.QUAD_Y));
-        }
-        if (crateCheckQuad(state, east, up, up_east, Direction.Axis.Z)) {
-            if (faceCheck(east, 2, Direction.WEST, Direction.UP, null) && faceCheck(up, 2, Direction.EAST, Direction.DOWN, null)
-                    && faceCheck(up_east, 2, Direction.DOWN, Direction.WEST, null))
-                worldIn.setBlockState(pos.up(), up.with(POS_NUM, 0).with(TYPE, CrateType.QUAD_Z));
-            worldIn.setBlockState(pos.up().east(), up_east.with(POS_NUM, 1).with(TYPE, CrateType.QUAD_Z));
-            worldIn.setBlockState(pos, state.with(POS_NUM, 2).with(TYPE, CrateType.QUAD_Z));
-            worldIn.setBlockState(pos.east(), east.with(POS_NUM, 3).with(TYPE, CrateType.QUAD_Z));
-        }
-        if (crateCheckQuad(state, west, up, up_west, Direction.Axis.Z)) {
-            if (faceCheck(west, 2, Direction.UP, Direction.EAST, null) && faceCheck(up, 2, Direction.WEST, Direction.DOWN, null)
-                    && faceCheck(up_west, 2, Direction.DOWN, Direction.EAST, null))
-                worldIn.setBlockState(pos.up().west(), up_west.with(POS_NUM, 0).with(TYPE, CrateType.QUAD_Z));
-            worldIn.setBlockState(pos.up(), up.with(POS_NUM, 1).with(TYPE, CrateType.QUAD_Z));
-            worldIn.setBlockState(pos.west(), west.with(POS_NUM, 2).with(TYPE, CrateType.QUAD_Z));
-            worldIn.setBlockState(pos, state.with(POS_NUM, 3).with(TYPE, CrateType.QUAD_Z));
-        }
-        if (crateCheckQuad(state, east, down, down_east, Direction.Axis.Z)) {
-            if (faceCheck(east, 2, Direction.WEST, Direction.DOWN, null) && faceCheck(down, 2, Direction.EAST, Direction.UP, null)
-                    && faceCheck(down_east, 2, Direction.UP, Direction.WEST, null))
-                worldIn.setBlockState(pos, state.with(POS_NUM, 0).with(TYPE, CrateType.QUAD_Z));
-            worldIn.setBlockState(pos.east(), east.with(POS_NUM, 1).with(TYPE, CrateType.QUAD_Z));
-            worldIn.setBlockState(pos.down(), down.with(POS_NUM, 2).with(TYPE, CrateType.QUAD_Z));
-            worldIn.setBlockState(pos.down().east(), down_east.with(POS_NUM, 3).with(TYPE, CrateType.QUAD_Z));
-        }
-        if (crateCheckQuad(state, west, down, down_west, Direction.Axis.Z)) {
-            if (faceCheck(west, 2, Direction.EAST, Direction.DOWN, null) && faceCheck(down, 2, Direction.WEST, Direction.UP, null)
-                    && faceCheck(down_west, 2, Direction.UP, Direction.EAST, null))
-                worldIn.setBlockState(pos.west(), west.with(POS_NUM, 0).with(TYPE, CrateType.QUAD_Z));
-            worldIn.setBlockState(pos, state.with(POS_NUM, 1).with(TYPE, CrateType.QUAD_Z));
-            worldIn.setBlockState(pos.down().west(), down_west.with(POS_NUM, 2).with(TYPE, CrateType.QUAD_Z));
-            worldIn.setBlockState(pos.down(), down.with(POS_NUM, 3).with(TYPE, CrateType.QUAD_Z));
-        }
-        if (crateCheckQuad(state, north, up, up_north, Direction.Axis.X)) {
-            if (faceCheck(north, 2, Direction.UP, Direction.SOUTH, null) && faceCheck(up, 2, Direction.NORTH, Direction.DOWN, null)
-                    && faceCheck(up_north, 2, Direction.SOUTH, Direction.DOWN, null))
-                worldIn.setBlockState(pos.up().north(), up_north.with(POS_NUM, 0).with(TYPE, CrateType.QUAD_X));
-            worldIn.setBlockState(pos.up(), up.with(POS_NUM, 1).with(TYPE, CrateType.QUAD_X));
-            worldIn.setBlockState(pos.north(), north.with(POS_NUM, 2).with(TYPE, CrateType.QUAD_X));
-            worldIn.setBlockState(pos, state.with(POS_NUM, 3).with(TYPE, CrateType.QUAD_X));
-        }
-        if (crateCheckQuad(state, south, up, up_south, Direction.Axis.X)) {
-            if (faceCheck(south, 2, Direction.NORTH, Direction.UP, null) && faceCheck(up, 2, Direction.SOUTH, Direction.DOWN, null)
-                    && faceCheck(up_south, 2, Direction.DOWN, Direction.NORTH, null))
-                worldIn.setBlockState(pos.up(), up.with(POS_NUM, 0).with(TYPE, CrateType.QUAD_X));
-            worldIn.setBlockState(pos.up().south(), up_south.with(POS_NUM, 1).with(TYPE, CrateType.QUAD_X));
-            worldIn.setBlockState(pos, state.with(POS_NUM, 2).with(TYPE, CrateType.QUAD_X));
-            worldIn.setBlockState(pos.south(), south.with(POS_NUM, 3).with(TYPE, CrateType.QUAD_X));
-        }
-        if (crateCheckQuad(state, north, down, down_north, Direction.Axis.X)) {
-            if (faceCheck(north, 2, Direction.DOWN, Direction.SOUTH, null) && faceCheck(down, 2, Direction.NORTH, Direction.UP, null)
-                    && faceCheck(down_north, 2, Direction.UP, Direction.SOUTH, null))
-                worldIn.setBlockState(pos.north(), north.with(POS_NUM, 0).with(TYPE, CrateType.QUAD_X));
-            worldIn.setBlockState(pos, state.with(POS_NUM, 1).with(TYPE, CrateType.QUAD_X));
-            worldIn.setBlockState(pos.down().north(), down_north.with(POS_NUM, 2).with(TYPE, CrateType.QUAD_X));
-            worldIn.setBlockState(pos.down(), down.with(POS_NUM, 3).with(TYPE, CrateType.QUAD_X));
-        }
-        if (crateCheckQuad(state, south, down, down_south, Direction.Axis.X)) {
-            if (faceCheck(south, 2, Direction.DOWN, Direction.NORTH, null) && faceCheck(down, 2, Direction.UP, Direction.SOUTH, null)
-                    && faceCheck(down_south, 2, Direction.UP, Direction.NORTH, null))
-                worldIn.setBlockState(pos, state.with(POS_NUM, 0).with(TYPE, CrateType.QUAD_X));
-            worldIn.setBlockState(pos.south(), south.with(POS_NUM, 1).with(TYPE, CrateType.QUAD_X));
-            worldIn.setBlockState(pos.down(), down.with(POS_NUM, 2).with(TYPE, CrateType.QUAD_X));
-            worldIn.setBlockState(pos.down().south(), down_south.with(POS_NUM, 3).with(TYPE, CrateType.QUAD_X));
-        }
-
-        if (crateCheckDuo(state, east)) {
-            if (faceCheck(east, 1, Direction.WEST, null, null))
-                worldIn.setBlockState(pos, state.with(POS_NUM, 0).with(TYPE, CrateType.DOUBLE_X));
-            worldIn.setBlockState(pos.east(), east.with(POS_NUM, 1).with(TYPE, CrateType.DOUBLE_X));
-        }
-        if (crateCheckDuo(state, west)) {
-            if (faceCheck(west, 1, Direction.EAST, null, null))
-                worldIn.setBlockState(pos.west(), west.with(POS_NUM, 0).with(TYPE, CrateType.DOUBLE_X));
-            worldIn.setBlockState(pos, state.with(POS_NUM, 1).with(TYPE, CrateType.DOUBLE_X));
-        }
-        if (crateCheckDuo(state, north)) {
-            if (faceCheck(north, 1, Direction.SOUTH, null, null))
-                worldIn.setBlockState(pos.north(), north.with(POS_NUM, 0).with(TYPE, CrateType.DOUBLE_Z));
-            worldIn.setBlockState(pos, state.with(POS_NUM, 1).with(TYPE, CrateType.DOUBLE_Z));
-        }
-        if (crateCheckDuo(state, south)) {
-            if (faceCheck(south, 1, Direction.NORTH, null, null))
-                worldIn.setBlockState(pos, state.with(POS_NUM, 0).with(TYPE, CrateType.DOUBLE_Z));
-            worldIn.setBlockState(pos.south(), south.with(POS_NUM, 1).with(TYPE, CrateType.DOUBLE_Z));
-        }
-        if (crateCheckDuo(state, down)) {
-            if (faceCheck(down, 1, Direction.UP, null, null))
-                worldIn.setBlockState(pos, state.with(POS_NUM, 0).with(TYPE, CrateType.DOUBLE_Y));
-            worldIn.setBlockState(pos.down(), down.with(POS_NUM, 1).with(TYPE, CrateType.DOUBLE_Y));
-        }
-        if (crateCheckDuo(state, up)) {
-            if (faceCheck(up, 1, Direction.DOWN, null, null))
-                worldIn.setBlockState(pos.up(), up.with(POS_NUM, 0).with(TYPE, CrateType.DOUBLE_Y));
-            worldIn.setBlockState(pos, state.with(POS_NUM, 1).with(TYPE, CrateType.DOUBLE_Y));
-        }
-
+        return config;
     }
 
-    private static void convertShapeId(int shapeId) {
-        switch (shapeId) {
+    public static boolean checkBlockPositions(World world, BlockPos pos, CrateType type, ArrayList<BlockPos> posList) {
+        int num = world.getBlockState(pos).get(POS_NUM);
+
+        for (int i = 1; i > posList.size() + 1; i++) {
+            if (type == CrateType.OCTO) {
+                if (!(world.getBlockState(posList.get(i)).getBlock() instanceof CrateBlock && world.getBlockState(posList.get(i)).get(POS_NUM) == i && world.getBlockState(posList.get(i)).get(TYPE) == CrateType.OCTO)) {
+                    return false;
+                }
+            }
+            if (type == CrateType.QUAD_X) {
+                if (!(world.getBlockState(posList.get(i)).getBlock() instanceof CrateBlock && world.getBlockState(posList.get(i)).get(POS_NUM) == i && world.getBlockState(posList.get(i)).get(TYPE) == CrateType.QUAD_X)) {
+                    return false;
+                }
+            }
+            if (type == CrateType.QUAD_Y) {
+                if (!(world.getBlockState(posList.get(i)).getBlock() instanceof CrateBlock && world.getBlockState(posList.get(i)).get(POS_NUM) == i && world.getBlockState(posList.get(i)).get(TYPE) == CrateType.QUAD_Y)) {
+                    return false;
+                }
+            }
+            if (type == CrateType.QUAD_Z) {
+                if (!(world.getBlockState(posList.get(i)).getBlock() instanceof CrateBlock && world.getBlockState(posList.get(i)).get(POS_NUM) == i && world.getBlockState(posList.get(i)).get(TYPE) == CrateType.QUAD_Z)) {
+                    return false;
+                }
+            }
+            if (type == CrateType.DOUBLE_X) {
+                if (!(world.getBlockState(posList.get(i)).getBlock() instanceof CrateBlock && world.getBlockState(posList.get(i)).get(POS_NUM) == i && world.getBlockState(posList.get(i)).get(TYPE) == CrateType.DOUBLE_X)) {
+                    return false;
+                }
+            }
+            if (type == CrateType.DOUBLE_Y) {
+                if (!(world.getBlockState(posList.get(i)).getBlock() instanceof CrateBlock && world.getBlockState(posList.get(i)).get(POS_NUM) == i && world.getBlockState(posList.get(i)).get(TYPE) == CrateType.DOUBLE_Y)) {
+                    return false;
+                }
+            }
+            if (type == CrateType.DOUBLE_Z) {
+                if (!(world.getBlockState(posList.get(i)).getBlock() instanceof CrateBlock && world.getBlockState(posList.get(i)).get(POS_NUM) == i && world.getBlockState(posList.get(i)).get(TYPE) == CrateType.DOUBLE_Z)) {
+                    return false;
+                }
+            }
+            if (type == CrateType.SINGLE) {
+                if (!(world.getBlockState(posList.get(i)).getBlock() instanceof CrateBlock && world.getBlockState(posList.get(i)).get(POS_NUM) == i && world.getBlockState(posList.get(i)).get(TYPE) == CrateType.SINGLE)) {
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean checkIllegalCrates(World world, BlockPos pos, CrateType type, ArrayList<BlockPos> blockPosList) {
+        if (type == CrateType.DOUBLE_X || type == CrateType.DOUBLE_Y || type == CrateType.DOUBLE_Z) {
+            for (int i = 0; i < blockPosList.size(); i++) {
+                if (blockPosList.get(i) != pos) {
+                    if (world.getBlockState(blockPosList.get(i)).get(TYPE) != CrateType.SINGLE) {
+                        return false;
+                    }
+                }
+            }
+        }
+        if (type == CrateType.OCTO) {
+            for (int i = 0; i < blockPosList.size(); i++) {
+                if (blockPosList.get(i) != pos) {
+                    if (world.getBlockState(blockPosList.get(i)).get(TYPE) == CrateType.OCTO) {
+                        return false;
+                    }
+                }
+            }
+        }
+        if (type == CrateType.QUAD_X) {
+            for (int i = 0; i < blockPosList.size(); i++) {
+                if (blockPosList.get(i) != pos) {
+                    if ((world.getBlockState(blockPosList.get(i)).get(TYPE) == CrateType.DOUBLE_X || world.getBlockState(blockPosList.get(i)).get(TYPE) == CrateType.QUAD_X || world.getBlockState(blockPosList.get(i)).get(TYPE) == CrateType.QUAD_Y || world.getBlockState(blockPosList.get(i)).get(TYPE) == CrateType.QUAD_Z || world.getBlockState(blockPosList.get(i)).get(TYPE) == CrateType.OCTO)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        if (type == CrateType.QUAD_Y) {
+            for (int i = 0; i < blockPosList.size(); i++) {
+                if (blockPosList.get(i) != pos) {
+                    if ((world.getBlockState(blockPosList.get(i)).get(TYPE) == CrateType.DOUBLE_Y || world.getBlockState(blockPosList.get(i)).get(TYPE) == CrateType.QUAD_X || world.getBlockState(blockPosList.get(i)).get(TYPE) == CrateType.QUAD_Y || world.getBlockState(blockPosList.get(i)).get(TYPE) == CrateType.QUAD_Z || world.getBlockState(blockPosList.get(i)).get(TYPE) == CrateType.OCTO)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        if (type == CrateType.QUAD_Z) {
+            for (int i = 0; i < blockPosList.size(); i++) {
+                if (blockPosList.get(i) != pos) {
+                    if ((world.getBlockState(blockPosList.get(i)).get(TYPE) == CrateType.DOUBLE_Z || world.getBlockState(blockPosList.get(i)).get(TYPE) == CrateType.QUAD_X || world.getBlockState(blockPosList.get(i)).get(TYPE) == CrateType.QUAD_Y || world.getBlockState(blockPosList.get(i)).get(TYPE) == CrateType.QUAD_Z || world.getBlockState(blockPosList.get(i)).get(TYPE) == CrateType.OCTO)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean checkSides(World world, ArrayList<BlockPos> blockPosList) {
+        for (int i = 0; i < blockPosList.size(); i++) {
+            CrateType type = getCrateType(blockPosList);
+            int num = i + 1;
+            // OCTO
+            if (type == CrateType.OCTO && num == 1)
+                if (!world.getBlockState(blockPosList.get(i)).get(SOUTH) || !world.getBlockState(blockPosList.get(i)).get(EAST) || !world.getBlockState(blockPosList.get(i)).get(UP))
+                    return false;
+            if (type == CrateType.OCTO && num == 2)
+                if (!world.getBlockState(blockPosList.get(i)).get(SOUTH) || !world.getBlockState(blockPosList.get(i)).get(WEST) || !world.getBlockState(blockPosList.get(i)).get(UP))
+                    return false;
+            if (type == CrateType.OCTO && num == 3)
+                if (!world.getBlockState(blockPosList.get(i)).get(NORTH) || !world.getBlockState(blockPosList.get(i)).get(EAST) || !world.getBlockState(blockPosList.get(i)).get(UP))
+                    return false;
+            if (type == CrateType.OCTO && num == 4)
+                if (!world.getBlockState(blockPosList.get(i)).get(NORTH) || !world.getBlockState(blockPosList.get(i)).get(WEST) || !world.getBlockState(blockPosList.get(i)).get(UP))
+                    return false;
+            if (type == CrateType.OCTO && num == 5)
+                if (!world.getBlockState(blockPosList.get(i)).get(SOUTH) || !world.getBlockState(blockPosList.get(i)).get(EAST) || !world.getBlockState(blockPosList.get(i)).get(DOWN))
+                    return false;
+            if (type == CrateType.OCTO && num == 6)
+                if (!world.getBlockState(blockPosList.get(i)).get(SOUTH) || !world.getBlockState(blockPosList.get(i)).get(WEST) || !world.getBlockState(blockPosList.get(i)).get(DOWN))
+                    return false;
+            if (type == CrateType.OCTO && num == 7)
+                if (!world.getBlockState(blockPosList.get(i)).get(NORTH) || !world.getBlockState(blockPosList.get(i)).get(EAST) || !world.getBlockState(blockPosList.get(i)).get(DOWN))
+                    return false;
+            if (type == CrateType.OCTO && num == 8)
+                if (!world.getBlockState(blockPosList.get(i)).get(NORTH) || !world.getBlockState(blockPosList.get(i)).get(WEST) || !world.getBlockState(blockPosList.get(i)).get(DOWN))
+                    return false;
+            // QUAD X
+            if (type == CrateType.QUAD_X && num == 1)
+                if (!world.getBlockState(blockPosList.get(i)).get(SOUTH) || !world.getBlockState(blockPosList.get(i)).get(UP))
+                    return false;
+            if (type == CrateType.QUAD_X && num == 2)
+                if (!world.getBlockState(blockPosList.get(i)).get(NORTH) || !world.getBlockState(blockPosList.get(i)).get(UP))
+                    return false;
+            if (type == CrateType.QUAD_X && num == 3)
+                if (!world.getBlockState(blockPosList.get(i)).get(SOUTH) || !world.getBlockState(blockPosList.get(i)).get(DOWN))
+                    return false;
+            if (type == CrateType.QUAD_X && num == 4)
+                if (!world.getBlockState(blockPosList.get(i)).get(NORTH) || !world.getBlockState(blockPosList.get(i)).get(DOWN))
+                    return false;
+            // QUAD Y
+            if (type == CrateType.QUAD_Y && num == 1)
+                if (!world.getBlockState(blockPosList.get(i)).get(SOUTH) || !world.getBlockState(blockPosList.get(i)).get(EAST))
+                    return false;
+            if (type == CrateType.QUAD_Y && num == 2)
+                if (!world.getBlockState(blockPosList.get(i)).get(SOUTH) || !world.getBlockState(blockPosList.get(i)).get(WEST))
+                    return false;
+            if (type == CrateType.QUAD_Y && num == 3)
+                if (!world.getBlockState(blockPosList.get(i)).get(NORTH) || !world.getBlockState(blockPosList.get(i)).get(EAST))
+                    return false;
+            if (type == CrateType.QUAD_Y && num == 4)
+                if (!world.getBlockState(blockPosList.get(i)).get(NORTH) || !world.getBlockState(blockPosList.get(i)).get(WEST))
+                    return false;
+            // QUAD Z
+            if (type == CrateType.QUAD_Z && num == 1)
+                if (!world.getBlockState(blockPosList.get(i)).get(UP) || !world.getBlockState(blockPosList.get(i)).get(EAST))
+                    return false;
+            if (type == CrateType.QUAD_Z && num == 2)
+                if (!world.getBlockState(blockPosList.get(i)).get(UP) || !world.getBlockState(blockPosList.get(i)).get(WEST))
+                    return false;
+            if (type == CrateType.QUAD_Z && num == 3)
+                if (!world.getBlockState(blockPosList.get(i)).get(DOWN) || !world.getBlockState(blockPosList.get(i)).get(EAST))
+                    return false;
+            if (type == CrateType.QUAD_Z && num == 4)
+                if (!world.getBlockState(blockPosList.get(i)).get(DOWN) || !world.getBlockState(blockPosList.get(i)).get(WEST))
+                    return false;
+            // DOUBLE X
+            if (type == CrateType.DOUBLE_X && num == 1)
+                if (!world.getBlockState(blockPosList.get(i)).get(EAST))
+                    return false;
+            if (type == CrateType.DOUBLE_X && num == 2)
+                if (!world.getBlockState(blockPosList.get(i)).get(WEST))
+                    return false;
+            // DOUBLE Y
+            if (type == CrateType.DOUBLE_Y && num == 1)
+                if (!world.getBlockState(blockPosList.get(i)).get(UP))
+                    return false;
+            if (type == CrateType.DOUBLE_Y && num == 2)
+                if (!world.getBlockState(blockPosList.get(i)).get(DOWN))
+                    return false;
+            // DOUBLE Z
+            if (type == CrateType.DOUBLE_Z && num == 1)
+                if (!world.getBlockState(blockPosList.get(i)).get(SOUTH))
+                    return false;
+            if (type == CrateType.DOUBLE_Z && num == 2)
+                if (!world.getBlockState(blockPosList.get(i)).get(NORTH))
+                    return false;
+        }
+        return true;
+    }
+
+    public boolean checkCrateBlocks(World world, BlockPos pos1) {
+        if (world.getBlockState(pos1).getBlock() instanceof CrateBlock) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkCrateBlocks(World world, BlockPos pos1, BlockPos pos2, BlockPos pos3) {
+        if (world.getBlockState(pos1).getBlock() instanceof CrateBlock && world.getBlockState(pos2).getBlock() instanceof CrateBlock && world.getBlockState(pos3).getBlock() instanceof CrateBlock) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkCrateBlocks(World world, BlockPos pos1, BlockPos pos2, BlockPos pos3, BlockPos pos4, BlockPos pos5, BlockPos pos6, BlockPos pos7) {
+        if (world.getBlockState(pos1).getBlock() instanceof CrateBlock && world.getBlockState(pos2).getBlock() instanceof CrateBlock && world.getBlockState(pos3).getBlock() instanceof CrateBlock && world.getBlockState(pos4).getBlock() instanceof CrateBlock) {
+            if (world.getBlockState(pos5).getBlock() instanceof CrateBlock && world.getBlockState(pos6).getBlock() instanceof CrateBlock && world.getBlockState(pos7).getBlock() instanceof CrateBlock) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean rotateCrate(BlockPos pos) {
+        return (new Random(pos.getX() + pos.getY() + pos.getZ()).nextFloat() % 2 == 0);
+    }
+
+    public int getCrateNumber(BlockPos pos, ArrayList<BlockPos> blockPosList) {
+        for (int i = 0; i < blockPosList.size(); i++) {
+            if (blockPosList.get(i) == pos) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    public BlockPos getCrateByNumber(int num, ArrayList<BlockPos> blockPosList) {
+        return blockPosList.get(num);
+    }
+
+    public CrateType getCrateType(ArrayList<BlockPos> blockPosList) {
+        switch (blockPosList.size()) {
             case 1:
-
+                return CrateType.SINGLE;
+            case 2:
+                BlockPos pos1_2 = getCrateByNumber(0, blockPosList);
+                BlockPos pos2_2 = getCrateByNumber(1, blockPosList);
+                if (pos1_2.getX() != pos2_2.getX()) {
+                    return CrateType.DOUBLE_X;
+                }
+                if (pos1_2.getY() != pos2_2.getY()) {
+                    return CrateType.DOUBLE_Y;
+                }
+                if (pos1_2.getZ() != pos2_2.getZ()) {
+                    return CrateType.DOUBLE_Z;
+                }
+            case 4:
+                BlockPos pos1_4 = getCrateByNumber(0, blockPosList);
+                BlockPos pos2_4 = getCrateByNumber(1, blockPosList);
+                BlockPos pos3_4 = getCrateByNumber(2, blockPosList);
+                BlockPos pos4_4 = getCrateByNumber(3, blockPosList);
+                if (pos1_4.getX() == pos2_4.getX() && pos3_4.getX() == pos4_4.getX() && pos1_4.getX() == pos3_4.getX()) {
+                    return CrateType.QUAD_X;
+                }
+                if (pos1_4.getY() == pos2_4.getY() && pos3_4.getY() == pos4_4.getY() && pos1_4.getY() == pos3_4.getY()) {
+                    return CrateType.QUAD_Y;
+                }
+                if (pos1_4.getZ() == pos2_4.getZ() && pos3_4.getZ() == pos4_4.getZ() && pos1_4.getZ() == pos3_4.getZ()) {
+                    return CrateType.QUAD_Z;
+                }
+            case 8:
+                return CrateType.OCTO;
         }
+        return null;
     }
 
-    private boolean faceCheck (BlockState state, int faces, Direction dir1, Direction dir2, Direction dir3) {
-        int counter = 0;
-        if (dir3 != null && dir2 != null) {
-            if (dir1 == Direction.NORTH || dir2 == Direction.NORTH || dir3 == Direction.NORTH) {
-                if (state.get(NORTH)) {
-                    counter++;
-                }
-            }
-            if (dir1 == Direction.SOUTH || dir2 == Direction.SOUTH || dir3 == Direction.SOUTH) {
-                if (state.get(SOUTH)) {
-                    counter++;
-                }
-            }
-            if (dir1 == Direction.EAST || dir2 == Direction.EAST || dir3 == Direction.EAST) {
-                if (state.get(EAST)) {
-                    counter++;
-                }
-            }
-            if (dir1 == Direction.WEST || dir2 == Direction.WEST || dir3 == Direction.WEST) {
-                if (state.get(WEST)) {
-                    counter++;
-                }
-            }
-            if (dir1 == Direction.UP || dir2 == Direction.UP || dir3 == Direction.UP) {
-                if (state.get(UP)) {
-                    counter++;
-                }
-            }
-            if (dir1 == Direction.DOWN || dir2 == Direction.DOWN || dir3 == Direction.DOWN) {
-                if (state.get(DOWN)) {
-                    counter++;
-                }
-            }
+    public ArrayList<BlockState> calculateSides(ArrayList<BlockPos> blockPosList, World world) {
+        ArrayList<BlockState> blockStateList = new ArrayList<>();
+        for (int i = 0; i < blockPosList.size(); i++) {
+            CrateType type = getCrateType(blockPosList);
+            int num = i + 1;
+            // OCTO
+            if (type == CrateType.OCTO && num == 1)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, false).with(EAST, true).with(SOUTH, true).with(WEST, false).with(UP, true).with(DOWN, false));
+            if (type == CrateType.OCTO && num == 2)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, false).with(EAST, false).with(SOUTH, true).with(WEST, true).with(UP, true).with(DOWN, false));
+            if (type == CrateType.OCTO && num == 3)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, true).with(EAST, true).with(SOUTH, false).with(WEST, false).with(UP, true).with(DOWN, false));
+            if (type == CrateType.OCTO && num == 4)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, true).with(EAST, false).with(SOUTH, false).with(WEST, true).with(UP, true).with(DOWN, false));
+            if (type == CrateType.OCTO && num == 5)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, false).with(EAST, true).with(SOUTH, true).with(WEST, false).with(UP, false).with(DOWN, true));
+            if (type == CrateType.OCTO && num == 6)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, false).with(EAST, false).with(SOUTH, true).with(WEST, true).with(UP, false).with(DOWN, true));
+            if (type == CrateType.OCTO && num == 7)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, true).with(EAST, true).with(SOUTH, false).with(WEST, false).with(UP, false).with(DOWN, true));
+            if (type == CrateType.OCTO && num == 8)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, true).with(EAST, false).with(SOUTH, false).with(WEST, true).with(UP, false).with(DOWN, true));
+            // QUAD X
+            if (type == CrateType.QUAD_X && num == 1)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, false).with(EAST, true).with(SOUTH, true).with(WEST, true).with(UP, true).with(DOWN, false));
+            if (type == CrateType.QUAD_X && num == 2)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, true).with(EAST, true).with(SOUTH, false).with(WEST, true).with(UP, true).with(DOWN, false));
+            if (type == CrateType.QUAD_X && num == 3)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, false).with(EAST, true).with(SOUTH, true).with(WEST, true).with(UP, false).with(DOWN, true));
+            if (type == CrateType.QUAD_X && num == 4)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, true).with(EAST, true).with(SOUTH, false).with(WEST, true).with(UP, false).with(DOWN, true));
+            // QUAD Y
+            if (type == CrateType.QUAD_Y && num == 1)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, false).with(EAST, true).with(SOUTH, true).with(WEST, false).with(UP, true).with(DOWN, true));
+            if (type == CrateType.QUAD_Y && num == 2)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, false).with(EAST, false).with(SOUTH, true).with(WEST, true).with(UP, true).with(DOWN, true));
+            if (type == CrateType.QUAD_Y && num == 3)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, true).with(EAST, true).with(SOUTH, false).with(WEST, false).with(UP, true).with(DOWN, true));
+            if (type == CrateType.QUAD_Y && num == 4)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, true).with(EAST, false).with(SOUTH, false).with(WEST, true).with(UP, true).with(DOWN, true));
+            // QUAD Z
+            if (type == CrateType.QUAD_Z && num == 1)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, true).with(EAST, true).with(SOUTH, true).with(WEST, false).with(UP, true).with(DOWN, false));
+            if (type == CrateType.QUAD_Z && num == 2)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, true).with(EAST, false).with(SOUTH, true).with(WEST, true).with(UP, true).with(DOWN, false));
+            if (type == CrateType.QUAD_Z && num == 3)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, true).with(EAST, true).with(SOUTH, true).with(WEST, false).with(UP, false).with(DOWN, true));
+            if (type == CrateType.QUAD_Z && num == 4)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, true).with(EAST, false).with(SOUTH, true).with(WEST, true).with(UP, false).with(DOWN, true));
+            // DOUBLE X
+            if (type == CrateType.DOUBLE_X && num == 1)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, true).with(EAST, true).with(SOUTH, true).with(WEST, false).with(UP, true).with(DOWN, true));
+            if (type == CrateType.DOUBLE_X && num == 2)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, true).with(EAST, false).with(SOUTH, true).with(WEST, true).with(UP, true).with(DOWN, true));
+            // DOUBLE Y
+            if (type == CrateType.DOUBLE_Y && num == 1)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, true).with(EAST, true).with(SOUTH, true).with(WEST, true).with(UP, true).with(DOWN, false));
+            if (type == CrateType.DOUBLE_Y && num == 2)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, true).with(EAST, true).with(SOUTH, true).with(WEST, true).with(UP, false).with(DOWN, true));
+            // DOUBLE Z
+            if (type == CrateType.DOUBLE_Z && num == 1)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, false).with(EAST, true).with(SOUTH, true).with(WEST, true).with(UP, true).with(DOWN, true));
+            if (type == CrateType.DOUBLE_Z && num == 2)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, true).with(EAST, true).with(SOUTH, false).with(WEST, true).with(UP, true).with(DOWN, true));
+            // SINGLE
+            if (type == CrateType.SINGLE)
+                blockStateList.add(world.getBlockState(blockPosList.get(i)).with(NORTH, true).with(EAST, true).with(SOUTH, true).with(WEST, true).with(UP, true).with(DOWN, true));
         }
-        if (dir3 == null && dir2 != null) {
-            if (dir1 == Direction.NORTH || dir2 == Direction.NORTH) {
-                if (state.get(NORTH)) {
-                    counter++;
-                }
-            }
-            if (dir1 == Direction.SOUTH || dir2 == Direction.SOUTH) {
-                if (state.get(SOUTH)) {
-                    counter++;
-                }
-            }
-            if (dir1 == Direction.EAST || dir2 == Direction.EAST) {
-                if (state.get(EAST)) {
-                    counter++;
-                }
-            }
-            if (dir1 == Direction.WEST || dir2 == Direction.WEST) {
-                if (state.get(WEST)) {
-                    counter++;
-                }
-            }
-            if (dir1 == Direction.UP || dir2 == Direction.UP) {
-                if (state.get(UP)) {
-                    counter++;
-                }
-            }
-            if (dir1 == Direction.DOWN || dir2 == Direction.DOWN) {
-                if (state.get(DOWN)) {
-                    counter++;
-                }
-            }
-        }
-        if (dir3 == null && dir2 == null) {
-            if (dir1 == Direction.NORTH) {
-                if (state.get(NORTH)) {
-                    counter++;
-                }
-            }
-            if (dir1 == Direction.SOUTH) {
-                if (state.get(SOUTH)) {
-                    counter++;
-                }
-            }
-            if (dir1 == Direction.EAST) {
-                if (state.get(EAST)) {
-                    counter++;
-                }
-            }
-            if (dir1 == Direction.WEST) {
-                if (state.get(WEST)) {
-                    counter++;
-                }
-            }
-            if (dir1 == Direction.UP) {
-                if (state.get(UP)) {
-                    counter++;
-                }
-            }
-            if (dir1 == Direction.DOWN) {
-                if (state.get(DOWN)) {
-                    counter++;
-                }
-            }
-        }
-        return counter >= faces;
+        return blockStateList;
     }
 
-    private boolean crateCheckOcto (BlockState currentBlock, BlockState state1, BlockState state2, BlockState state3, BlockState state4, BlockState state5, BlockState state6, BlockState state7) {
-        if (state1.getBlock() instanceof CrateBlock
-                && state2.getBlock() instanceof CrateBlock
-                && state3.getBlock() instanceof CrateBlock
-                && state4.getBlock() instanceof CrateBlock
-                && state5.getBlock() instanceof CrateBlock
-                && state6.getBlock() instanceof CrateBlock
-                && state7.getBlock() instanceof CrateBlock
-                && currentBlock.getBlock() instanceof CrateBlock) {
-            return true;
-        }
-        return false;
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(TYPE, PROPERTY_OPEN, PARENT, ROTATED, POS_NUM, NORTH, EAST, SOUTH, WEST, UP, DOWN);
     }
 
-    private boolean crateCheckQuad (BlockState currentBlock, BlockState state1, BlockState state2, BlockState state3, Direction.Axis axis) {
-        if (state1.getBlock() instanceof CrateBlock && (state1.get(TYPE) != CrateType.QUAD_X && state1.get(TYPE) != CrateType.QUAD_Y && state1.get(TYPE) != CrateType.QUAD_Z)
-                && state2.getBlock() instanceof CrateBlock && (state2.get(TYPE) != CrateType.QUAD_X && state2.get(TYPE) != CrateType.QUAD_Y && state2.get(TYPE) != CrateType.QUAD_Z)
-                && state3.getBlock() instanceof CrateBlock && (state3.get(TYPE) != CrateType.QUAD_X && state3.get(TYPE) != CrateType.QUAD_Y && state3.get(TYPE) != CrateType.QUAD_Z)
-                && currentBlock.getBlock() instanceof CrateBlock) {
-            if (((axis == Direction.Axis.X && state1.get(TYPE) != CrateType.DOUBLE_X) || (axis == Direction.Axis.Y && state1.get(TYPE) != CrateType.DOUBLE_Y) || (axis == Direction.Axis.Z && state1.get(TYPE) != CrateType.DOUBLE_Z) || state1.get(TYPE) == CrateType.SINGLE)
-                    && ((axis == Direction.Axis.X && state2.get(TYPE) != CrateType.DOUBLE_X) || (axis == Direction.Axis.Y && state2.get(TYPE) != CrateType.DOUBLE_Y) || (axis == Direction.Axis.Z && state2.get(TYPE) != CrateType.DOUBLE_Z) || state2.get(TYPE) == CrateType.SINGLE)
-                    && ((axis == Direction.Axis.X && state3.get(TYPE) != CrateType.DOUBLE_X) || (axis == Direction.Axis.Y && state3.get(TYPE) != CrateType.DOUBLE_Y) || (axis == Direction.Axis.Z && state3.get(TYPE) != CrateType.DOUBLE_Z) || state3.get(TYPE) == CrateType.SINGLE))
-            return true;
-        }
-        return false;
-    }
+    // DO THIS AND REMEMBER TO KEEP MATCHING CHESTBLOCK CODE TO THIS CLASS.
 
-    private boolean crateCheckDuo (BlockState currentBlock, BlockState state1) {
-        if (state1.getBlock() instanceof CrateBlock && (state1.get(TYPE) != CrateType.QUAD_X && state1.get(TYPE) != CrateType.QUAD_Y && state1.get(TYPE) != CrateType.QUAD_Z)
-                && currentBlock.getBlock() instanceof CrateBlock && (state1.get(TYPE) != CrateType.DOUBLE_Z && state1.get(TYPE) != CrateType.DOUBLE_X && state1.get(TYPE) != CrateType.DOUBLE_Y)) {
-            return true;
-        }
-        return false;
-    }
+    @Nullable
+    public static <T> T getCrateInventory(BlockState state, IWorld world, BlockPos pos, boolean allowBlocked, CrateBlock.InventoryFactory<T> factory) {
 
-    private BlockState calculateSize(BlockState state, World worldIn, BlockPos pos) {
-    }
+        // \/ REWRITE \/ (Remember the new code I created.)
 
-    /*public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (worldIn.isRemote) {
-            return true;
+        TileEntity tileentity = world.getTileEntity(pos);
+        if (!(tileentity instanceof CrateTileEntity)) {
+            return (T)null;
         } else {
-            TileEntity tileentity = worldIn.getTileEntity(pos);
-            if (tileentity instanceof CrateTileEntity) {
-                player.openContainer((CrateTileEntity)tileentity);
+            CrateTileEntity chesttileentity = (CrateTileEntity)tileentity;
+            CrateType chesttype = (CrateType) state.get(TYPE);
+            if (chesttype == CrateType.SINGLE) {
+                return factory.forSingle(chesttileentity);
+            } else {
+                if (chesttype == CrateType.DOUBLE_X)
             }
 
-            return true;
+
+        // \/ ORIGINAL CODE \/
+
+        TileEntity tileentity = world.getTileEntity(pos);
+        if (!(tileentity instanceof CrateTileEntity)) {
+            return (T)null;
+        } else {
+            CrateTileEntity chesttileentity = (CrateTileEntity)tileentity;
+            CrateType chesttype = (CrateType) state.get(TYPE);
+            if (chesttype == CrateType.SINGLE) {
+                return factory.forSingle(chesttileentity);
+            } else {
+                BlockPos blockpos = pos.offset(getDirectionToAttached(state));
+                BlockState blockstate = world.getBlockState(blockpos);
+                if (blockstate.getBlock() == state.getBlock()) {
+                    CrateType chesttype1 = (CrateType) blockstate.get(TYPE);
+                    if (chesttype1 != CrateType.SINGLE && chesttype != chesttype1 && blockstate.get(FACING) == state.get(FACING)) {
+                        if (!allowBlocked && isBlocked(world, blockpos)) {
+                            return (T)null;
+                        }
+
+                        TileEntity tileentity1 = world.getTileEntity(blockpos);
+                        if (tileentity1 instanceof CrateTileEntity) {
+                            CrateTileEntity chesttileentity1 = chesttype == CrateType.RIGHT ? chesttileentity : (CrateTileEntity)tileentity1;
+                            CrateTileEntity chesttileentity2 = chesttype == CrateType.RIGHT ? (CrateTileEntity)tileentity1 : chesttileentity;
+                            return factory.forDouble(chesttileentity1, chesttileentity2);
+                        }
+                    }
+                }
+
+                return factory.forSingle(chesttileentity);
+            }
         }
-    }*/
+    }
 
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
@@ -507,15 +1077,15 @@ public class CrateBlock extends ContainerBlock {
 
     public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
         TileEntity tileentity = worldIn.getTileEntity(pos);
-        if (tileentity instanceof CrateTileEntity) {
-            ((CrateTileEntity)tileentity).func_213962_h();
+        if (tileentity instanceof CrateTileEntityOld) {
+            ((CrateTileEntityOld)tileentity).func_213962_h();
         }
 
     }
 
     @Nullable
     public TileEntity createNewTileEntity(IBlockReader worldIn) {
-        return new CrateTileEntity();
+        return new CrateTileEntityOld();
     }
 
     /** @deprecated */
@@ -526,8 +1096,8 @@ public class CrateBlock extends ContainerBlock {
     public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         if (stack.hasDisplayName()) {
             TileEntity tileentity = worldIn.getTileEntity(pos);
-            if (tileentity instanceof CrateTileEntity) {
-                ((CrateTileEntity)tileentity).setCustomName(stack.getDisplayName());
+            if (tileentity instanceof CrateTileEntityOld) {
+                ((CrateTileEntityOld)tileentity).setCustomName(stack.getDisplayName());
             }
         }
 
@@ -544,6 +1114,45 @@ public class CrateBlock extends ContainerBlock {
     }
 
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return (BlockState)this.getDefaultState();
+        if (context.canPlace()) {
+            World world = context.getWorld();
+            BlockPos pos = context.getPos();
+            world.setBlockState(pos, this.getDefaultState());
+            ArrayList<BlockPos> positionList = checkForCrates(world, pos);
+            boolean rotate = rotateCrate(positionList.get(0));
+            ArrayList<BlockState> stateList = calculateSides(positionList, world);
+            if (context.getPlayer().isSneaking()) {
+                return this.getDefaultState().with(ROTATED, rotate);
+            }
+            int crateNum = getCrateNumber(pos, positionList);
+            BlockState currentState = this.getDefaultState();
+            for (int i = 0; i < positionList.size(); i++) {
+                if (i != crateNum) {
+                    world.setBlockState(positionList.get(i), stateList.get(i).with(ROTATED, rotate)
+                            .with(POS_NUM, getCrateNumber(positionList.get(i), positionList) + 1)
+                            .with(PARENT, (getCrateNumber(positionList.get(i), positionList)) == 0)
+                            .with(TYPE, getCrateType(positionList)));
+                }
+                if (i == crateNum) {
+                    currentState = stateList.get(i).with(ROTATED, rotate)
+                            .with(POS_NUM, getCrateNumber(positionList.get(i), positionList) + 1)
+                            .with(PARENT, (getCrateNumber(positionList.get(i), positionList)) == 0)
+                            .with(TYPE, getCrateType(positionList));
+                }
+            }
+            world.setBlockState(pos, Blocks.AIR.getDefaultState());
+            return currentState;
+        }
+        return null;
+    }
+
+    interface InventoryFactory<T> {
+        T forOcto(CrateTileEntity var1, CrateTileEntity var2, CrateTileEntity var3, CrateTileEntity var4, CrateTileEntity var5, CrateTileEntity var6, CrateTileEntity var7, CrateTileEntity var8);
+
+        T forQuad(CrateTileEntity var1, CrateTileEntity var2, CrateTileEntity var3, CrateTileEntity var4);
+
+        T forDouble(CrateTileEntity var1, CrateTileEntity var2);
+
+        T forSingle(CrateTileEntity var1);
     }
 }

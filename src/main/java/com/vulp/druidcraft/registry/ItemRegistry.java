@@ -165,4 +165,5 @@ public class ItemRegistry
     public static Item iron_sickle;
     public static Item gold_sickle;
     public static Item diamond_sickle;
+    public static Item crate_temp;
 }
