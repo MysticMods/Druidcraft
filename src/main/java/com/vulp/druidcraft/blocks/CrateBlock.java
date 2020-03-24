@@ -9,6 +9,7 @@ import com.vulp.druidcraft.inventory.QuadSidedInventory;
 import com.vulp.druidcraft.inventory.container.CrateContainer;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.DoubleSidedInventory;
@@ -21,10 +22,14 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.*;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
@@ -34,6 +39,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -160,6 +166,18 @@ public class CrateBlock extends ContainerBlock {
                 .with(WEST, true)
                 .with(UP, true)
                 .with(DOWN, true));
+    }
+
+    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if (worldIn.isRemote) {
+            return true;
+        } else {
+            INamedContainerProvider inamedcontainerprovider = this.getContainer(state, worldIn, pos);
+            if (inamedcontainerprovider != null) {
+                player.openContainer(inamedcontainerprovider);
+            }
+            return true;
+        }
     }
 
     @Nullable
@@ -468,8 +486,30 @@ public class CrateBlock extends ContainerBlock {
 
     public static ArrayList<BlockPos> getBlockPositions(World world, BlockPos pos) {
         ArrayList<BlockPos> config = new ArrayList<>();
-        CrateType type = (CrateType) world.getBlockState(pos).get(TYPE);
+        CrateType type = CrateType.SINGLE;
         int num = world.getBlockState(pos).get(POS_NUM);
+
+        if (world.getBlockState(pos).get(TYPE) == CrateType.DOUBLE_X) {
+            type = CrateType.DOUBLE_X;
+        }
+        if (world.getBlockState(pos).get(TYPE) == CrateType.DOUBLE_Y) {
+            type = CrateType.DOUBLE_Y;
+        }
+        if (world.getBlockState(pos).get(TYPE) == CrateType.DOUBLE_Z) {
+            type = CrateType.DOUBLE_Z;
+        }
+        if (world.getBlockState(pos).get(TYPE) == CrateType.QUAD_X) {
+            type = CrateType.QUAD_X;
+        }
+        if (world.getBlockState(pos).get(TYPE) == CrateType.QUAD_Y) {
+            type = CrateType.QUAD_Y;
+        }
+        if (world.getBlockState(pos).get(TYPE) == CrateType.QUAD_Z) {
+            type = CrateType.QUAD_Z;
+        }
+        if (world.getBlockState(pos).get(TYPE) == CrateType.OCTO) {
+            type = CrateType.OCTO;
+        }
 
         if (type == CrateType.OCTO) {
             if (num == 1) {
@@ -1019,47 +1059,22 @@ public class CrateBlock extends ContainerBlock {
         if (!(tileentity instanceof CrateTileEntity)) {
             return (T)null;
         } else {
-            CrateTileEntity chesttileentity = (CrateTileEntity)tileentity;
-            CrateType chesttype = (CrateType) state.get(TYPE);
-            if (chesttype == CrateType.SINGLE) {
-                return factory.forSingle(chesttileentity);
-            } else {
-                if (chesttype == CrateType.DOUBLE_X)
+            CrateTileEntity crateTileEntity = (CrateTileEntity) tileentity;
+            ArrayList<BlockPos> blockList = getBlockPositions((World) world, pos);
+            if (blockList.size() == 1) {
+                return factory.forSingle(crateTileEntity);
             }
-
-
-        // \/ ORIGINAL CODE \/
-
-        TileEntity tileentity = world.getTileEntity(pos);
-        if (!(tileentity instanceof CrateTileEntity)) {
-            return (T)null;
-        } else {
-            CrateTileEntity chesttileentity = (CrateTileEntity)tileentity;
-            CrateType chesttype = (CrateType) state.get(TYPE);
-            if (chesttype == CrateType.SINGLE) {
-                return factory.forSingle(chesttileentity);
-            } else {
-                BlockPos blockpos = pos.offset(getDirectionToAttached(state));
-                BlockState blockstate = world.getBlockState(blockpos);
-                if (blockstate.getBlock() == state.getBlock()) {
-                    CrateType chesttype1 = (CrateType) blockstate.get(TYPE);
-                    if (chesttype1 != CrateType.SINGLE && chesttype != chesttype1 && blockstate.get(FACING) == state.get(FACING)) {
-                        if (!allowBlocked && isBlocked(world, blockpos)) {
-                            return (T)null;
-                        }
-
-                        TileEntity tileentity1 = world.getTileEntity(blockpos);
-                        if (tileentity1 instanceof CrateTileEntity) {
-                            CrateTileEntity chesttileentity1 = chesttype == CrateType.RIGHT ? chesttileentity : (CrateTileEntity)tileentity1;
-                            CrateTileEntity chesttileentity2 = chesttype == CrateType.RIGHT ? (CrateTileEntity)tileentity1 : chesttileentity;
-                            return factory.forDouble(chesttileentity1, chesttileentity2);
-                        }
-                    }
-                }
-
-                return factory.forSingle(chesttileentity);
+            if (blockList.size() == 2) {
+                return factory.forDouble((CrateTileEntity) world.getTileEntity(blockList.get(0)), (CrateTileEntity) world.getTileEntity(blockList.get(1)));
+            }
+            if (blockList.size() == 4) {
+                return factory.forQuad((CrateTileEntity) world.getTileEntity(blockList.get(0)), (CrateTileEntity) world.getTileEntity(blockList.get(1)), (CrateTileEntity) world.getTileEntity(blockList.get(2)), (CrateTileEntity) world.getTileEntity(blockList.get(3)));
+            }
+            if (blockList.size() == 8) {
+                return factory.forOcto((CrateTileEntity) world.getTileEntity(blockList.get(0)), (CrateTileEntity) world.getTileEntity(blockList.get(1)), (CrateTileEntity) world.getTileEntity(blockList.get(2)), (CrateTileEntity) world.getTileEntity(blockList.get(3)), (CrateTileEntity) world.getTileEntity(blockList.get(4)), (CrateTileEntity) world.getTileEntity(blockList.get(5)), (CrateTileEntity) world.getTileEntity(blockList.get(6)), (CrateTileEntity) world.getTileEntity(blockList.get(7)));
             }
         }
+        return factory.forSingle((CrateTileEntity)tileentity);
     }
 
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
@@ -1084,8 +1099,34 @@ public class CrateBlock extends ContainerBlock {
     }
 
     @Nullable
+    public static IInventory getInventory(BlockState state, World world, BlockPos pos, boolean allowBlocked) {
+        return getCrateInventory(state, world, pos, allowBlocked, inventoryFactory);
+    }
+
+    @Nullable
+    public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
+        return getCrateInventory(state, worldIn, pos, false, guiFactory);
+    }
+
     public TileEntity createNewTileEntity(IBlockReader worldIn) {
-        return new CrateTileEntityOld();
+        return new CrateTileEntity();
+    }
+
+    private static boolean isBlocked(IWorld world, BlockPos pos) {
+        return isCatSittingOn(world, pos);
+    }
+
+    private static boolean isCatSittingOn(IWorld world, BlockPos pos) {
+        List<CatEntity> list = world.getEntitiesWithinAABB(CatEntity.class, new AxisAlignedBB((double)pos.getX(), (double)(pos.getY() + 1), (double)pos.getZ(), (double)(pos.getX() + 1), (double)(pos.getY() + 2), (double)(pos.getZ() + 1)));
+        if (!list.isEmpty()) {
+            for(CatEntity catentity : list) {
+                if (catentity.isSitting()) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /** @deprecated */
@@ -1110,7 +1151,7 @@ public class CrateBlock extends ContainerBlock {
 
     /** @deprecated */
     public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
-        return Container.calcRedstone(worldIn.getTileEntity(pos));
+        return Container.calcRedstoneFromInventory(getInventory(blockState, worldIn, pos, false));
     }
 
     public BlockState getStateForPlacement(BlockItemUseContext context) {

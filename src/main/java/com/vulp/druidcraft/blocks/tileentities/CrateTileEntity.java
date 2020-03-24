@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.blocks.tileentities;
 
+import com.vulp.druidcraft.api.CrateType;
 import com.vulp.druidcraft.blocks.CrateBlock;
 import com.vulp.druidcraft.blocks.CrateTempBlock;
 import com.vulp.druidcraft.inventory.OctoSidedInventory;
@@ -10,6 +11,7 @@ import com.vulp.druidcraft.registry.SoundEventRegistry;
 import com.vulp.druidcraft.registry.TileEntityRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ChestBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.DoubleSidedInventory;
@@ -19,6 +21,7 @@ import net.minecraft.inventory.container.ChestContainer;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.ChestType;
 import net.minecraft.tileentity.*;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
@@ -41,7 +44,6 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
 
     private CrateTileEntity(TileEntityType<?> tileEntityType) {
         super(tileEntityType);
-        this.neighbors = CrateBlock.getBlockPositions(world, pos);
     }
 
     public CrateTileEntity() {
@@ -50,9 +52,9 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
 
     public CompoundNBT write(CompoundNBT compound) {
         super.write(compound);
-        ArrayList<Integer> x = null;
-        ArrayList<Integer> y = null;
-        ArrayList<Integer> z = null;
+        ArrayList<Integer> x = new ArrayList<>();
+        ArrayList<Integer> y = new ArrayList<>();
+        ArrayList<Integer> z = new ArrayList<>();
         for (int i = 0; i < this.neighbors.size(); i++) {
             x.add(this.neighbors.get(i).getX());
             y.add(this.neighbors.get(i).getY());
@@ -66,6 +68,11 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
         }
 
         return compound;
+    }
+
+    @Override
+    public void onLoad() {
+        this.neighbors = CrateBlock.getBlockPositions(world, pos);
     }
 
     public void read(CompoundNBT compound) {

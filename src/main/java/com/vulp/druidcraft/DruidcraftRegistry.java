@@ -9,6 +9,7 @@ import com.vulp.druidcraft.blocks.StairsBlock;
 import com.vulp.druidcraft.blocks.FieryTorchBlock;
 import com.vulp.druidcraft.blocks.TrapDoorBlock;
 import com.vulp.druidcraft.blocks.WoodButtonBlock;
+import com.vulp.druidcraft.blocks.tileentities.CrateTileEntity;
 import com.vulp.druidcraft.blocks.tileentities.GrowthLampTileEntity;
 import com.vulp.druidcraft.blocks.trees.DarkwoodTree;
 import com.vulp.druidcraft.blocks.trees.ElderTree;
@@ -404,7 +405,8 @@ public class DruidcraftRegistry {
         ContainerRegistryEvent.getRegistry().registerAll
                 (
                         GUIRegistry.beetle_inv,
-                        GUIRegistry.generic_9X9
+                        GUIRegistry.generic_9X12,
+                        GUIRegistry.generic_9X24
                 );
 
         LOGGER.info("GUI registered.");
@@ -416,7 +418,8 @@ public class DruidcraftRegistry {
     {
         TileEntityRegistryEvent.getRegistry().registerAll
                 (
-                        TileEntityRegistry.old_crate = TileEntityRegistry.register("crate", TileEntityType.Builder.create(CrateTileEntityOld::new, BlockRegistry.crate_temp)),
+                        TileEntityRegistry.old_crate = TileEntityRegistry.register("crate_old", TileEntityType.Builder.create(CrateTileEntityOld::new, BlockRegistry.crate_temp)),
+                        TileEntityRegistry.crate = TileEntityRegistry.register("crate", TileEntityType.Builder.create(CrateTileEntity::new, BlockRegistry.crate)),
                         TileEntityRegistry.growth_lamp = TileEntityRegistry.register("growth_lamp", TileEntityType.Builder.create(GrowthLampTileEntity::new, BlockRegistry.growth_lamp))
 
                 );
