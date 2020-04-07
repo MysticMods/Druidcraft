@@ -1,14 +1,14 @@
 package com.vulp.druidcraft.inventory.container;
 
+import com.vulp.druidcraft.client.gui.screen.inventory.CrateScreen;
 import com.vulp.druidcraft.registry.GUIRegistry;
+import net.minecraft.client.gui.screen.inventory.CreativeScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.IInventoryChangedListener;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.ChestContainer;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
+import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.api.distmarker.Dist;
@@ -18,9 +18,8 @@ public class CrateContainer extends Container {
 
     private final IInventory mainCrateInv;
     private final int numRows;
-    private static final Inventory TMP_INVENTORY = new Inventory(45);
-    public final NonNullList<ItemStack> itemList = NonNullList.create();
-
+    private IInventory TMP_INVENTORY = new Inventory(54);
+    private float scrollPos = 0.0f;
 
     private CrateContainer(ContainerType<?> type, int id, PlayerInventory player, int rows) {
         this(type, id, player, new Inventory(9 * rows), rows);
@@ -74,58 +73,70 @@ public class CrateContainer extends Container {
         return new CrateContainer(GUIRegistry.generic_9X24, id, player, blockEntity, 24);
     }
 
-    public CrateContainer(ContainerType<?> type, int id, PlayerInventory playerInventoryIn, IInventory p_i50092_4_, int rows) {
+    public CrateContainer(ContainerType<?> type, int id, PlayerInventory playerInventoryIn, IInventory inventory, int rows) {
         super(type, id);
-        assertInventorySize(p_i50092_4_, rows * 9);
-        this.mainCrateInv = p_i50092_4_;
+        assertInventorySize(inventory, rows * 9);
+        this.mainCrateInv = inventory;
         this.numRows = rows;
-        p_i50092_4_.openInventory(playerInventoryIn.player);
+        this.scrollPos = 0.0f;
+        inventory.openInventory(playerInventoryIn.player);
         int i = (this.numRows - 4) * 18;
 
-        for(int j = 0; j < this.numRows; ++j) {
+        for(int j = 0; j < 6; ++j) {
             for(int k = 0; k < 9; ++k) {
-                this.addSlot(new Slot(p_i50092_4_, k + j * 9, 8 + k * 18, 18 + j * 18));
+                this.addSlot(new Slot(this.TMP_INVENTORY, k + j * 9, 8 + k * 18, 18 + j * 18));
             }
         }
 
+        // FIX: Hotbar slots aren't showing signs of existing. Look closely at the mapped coords.
+
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {
-                this.addSlot(new Slot(playerInventoryIn, j1 + l * 9 + 9, 8 + j1 * 18, 103 + l * 18 + i));
+                this.addSlot(new Slot(playerInventoryIn, j1 + l * 9 + 9, 8 + j1 * 18, 140 + l * 18));
             }
         }
 
         for(int i1 = 0; i1 < 9; ++i1) {
-            this.addSlot(new Slot(playerInventoryIn, i1, 8 + i1 * 18, 161 + i));
+            this.addSlot(new Slot(playerInventoryIn, i1, 8 + i1 * 18, 198 + i));
         }
 
         this.scrollTo(0.0F);
     }
 
+
+    @Override
+    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+        int i = (int) ((double) (this.scrollPos * (float) (getNumRows() - 6)) + 0.5D);
+        if (i < 0) {
+            i = 0;
+        }
+        for (int k = 0; k < 6; ++k) {
+            for (int l = 0; l < 9; ++l) {
+                int i1 = l + (k + i) * 9;
+                this.mainCrateInv.setInventorySlotContents(i1, this.TMP_INVENTORY.getStackInSlot(l + k * 9));
+            }
+        }
+        return super.slotClick(slotId, dragType, clickTypeIn, player);
+    }
+
     /**
      * Updates the gui slots ItemStack's based on scroll position.
      */
-    public void scrollTo(float pos) {
-        int i = (this.itemList.size() + 9 - 1) / 9 - 6;
-        int j = (int)((double)(pos * (float)i) + 0.5D);
-        if (j < 0) {
-            j = 0;
-        }
 
+    // FIX: Extreme desyncs of inventory. Idk what to do.
+
+    public void scrollTo(float pos) {
+        this.scrollPos = pos;
+        int i = (int)((double)(pos * (float)(getNumRows() - 6)) + 0.5D);
+        if (i < 0) {
+            i = 0;
+        }
         for(int k = 0; k < 6; ++k) {
             for(int l = 0; l < 9; ++l) {
-                int i1 = l + (k + j) * 9;
-                if (i1 >= 0 && i1 < this.itemList.size()) {
-                    CrateContainer.TMP_INVENTORY.setInventorySlotContents(l + k * 9, this.itemList.get(i1));
-                } else {
-                    CrateContainer.TMP_INVENTORY.setInventorySlotContents(l + k * 9, ItemStack.EMPTY);
-                }
+                int i1 = l + (k + i) * 9;
+                this.TMP_INVENTORY.setInventorySlotContents(l + k * 9, this.mainCrateInv.getStackInSlot(i1));
             }
         }
-
-    }
-
-    public boolean canScroll() {
-        return this.itemList.size() > 54;
     }
 
     /**
@@ -134,11 +145,11 @@ public class CrateContainer extends Container {
      */
     public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
+        Slot slot = (Slot)this.inventorySlots.get(index);
         if (slot != null && slot.getHasStack()) {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
-            if (index < this.numRows * 9) {
+            if (index < getNumRows() * 9) {
                 if (!this.mergeItemStack(itemstack1, this.numRows * 9, this.inventorySlots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
@@ -167,7 +178,7 @@ public class CrateContainer extends Container {
     /**
      * Gets the inventory associated with this chest container.
      */
-    public IInventory getLowerCrateInventory() {
+    public IInventory getMainInventory() {
         return this.mainCrateInv;
     }
 

@@ -64,12 +64,12 @@ public class OctoSidedInventory implements IInventory {
     public ItemStack getStackInSlot(int index) {
 
         if (index >= this.inv1.getSizeInventory()) {
-            if (index >= this.inv2.getSizeInventory()) {
-                if (index >= this.inv3.getSizeInventory()) {
-                    if (index >= this.inv4.getSizeInventory()) {
-                        if (index >= this.inv5.getSizeInventory()) {
-                            if (index >= this.inv6.getSizeInventory()) {
-                                if (index >= this.inv7.getSizeInventory()) {
+            if (index >= this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                if (index >= this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                    if (index >= this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                        if (index >= this.inv5.getSizeInventory()  + this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                            if (index >= this.inv6.getSizeInventory() + this.inv5.getSizeInventory() + this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                                if (index >= this.inv7.getSizeInventory() + this.inv6.getSizeInventory() + this.inv5.getSizeInventory() + this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                                     return this.inv8.getStackInSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory() + this.inv5.getSizeInventory() + this.inv6.getSizeInventory() + this.inv7.getSizeInventory()));
                                 } return this.inv7.getStackInSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory() + this.inv5.getSizeInventory() + this.inv6.getSizeInventory()));
                             } return this.inv6.getStackInSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory() + inv5.getSizeInventory()));
@@ -83,12 +83,12 @@ public class OctoSidedInventory implements IInventory {
     public ItemStack decrStackSize(int index, int count) {
 
         if (index >= this.inv1.getSizeInventory()) {
-            if (index >= this.inv2.getSizeInventory()) {
-                if (index >= this.inv3.getSizeInventory()) {
-                    if (index >= this.inv4.getSizeInventory()) {
-                        if (index >= this.inv5.getSizeInventory()) {
-                            if (index >= this.inv6.getSizeInventory()) {
-                                if (index >= this.inv7.getSizeInventory()) {
+            if (index >= this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                if (index >= this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                    if (index >= this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                        if (index >= this.inv5.getSizeInventory()  + this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                            if (index >= this.inv6.getSizeInventory() + this.inv5.getSizeInventory() + this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                                if (index >= this.inv7.getSizeInventory() + this.inv6.getSizeInventory() + this.inv5.getSizeInventory() + this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                                     return this.inv8.decrStackSize(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory() + this.inv5.getSizeInventory() + this.inv6.getSizeInventory() + this.inv7.getSizeInventory()), count);
                                 } return this.inv7.decrStackSize(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory() + this.inv5.getSizeInventory() + this.inv6.getSizeInventory()), count);
                             } return this.inv6.decrStackSize(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory() + inv5.getSizeInventory()), count);
@@ -102,12 +102,12 @@ public class OctoSidedInventory implements IInventory {
     public ItemStack removeStackFromSlot(int index) {
 
         if (index >= this.inv1.getSizeInventory()) {
-            if (index >= this.inv2.getSizeInventory()) {
-                if (index >= this.inv3.getSizeInventory()) {
-                    if (index >= this.inv4.getSizeInventory()) {
-                        if (index >= this.inv5.getSizeInventory()) {
-                            if (index >= this.inv6.getSizeInventory()) {
-                                if (index >= this.inv7.getSizeInventory()) {
+            if (index >= this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                if (index >= this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                    if (index >= this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                        if (index >= this.inv5.getSizeInventory()  + this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                            if (index >= this.inv6.getSizeInventory() + this.inv5.getSizeInventory() + this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                                if (index >= this.inv7.getSizeInventory() + this.inv6.getSizeInventory() + this.inv5.getSizeInventory() + this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                                     return this.inv8.removeStackFromSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory() + this.inv5.getSizeInventory() + this.inv6.getSizeInventory() + this.inv7.getSizeInventory()));
                                 } return this.inv7.removeStackFromSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory() + this.inv5.getSizeInventory() + this.inv6.getSizeInventory()));
                             } return this.inv6.removeStackFromSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory() + inv5.getSizeInventory()));
@@ -121,12 +121,12 @@ public class OctoSidedInventory implements IInventory {
     public void setInventorySlotContents(int index, ItemStack stack) {
 
         if (index >= this.inv1.getSizeInventory()) {
-            if (index >= this.inv2.getSizeInventory()) {
-                if (index >= this.inv3.getSizeInventory()) {
-                    if (index >= this.inv4.getSizeInventory()) {
-                        if (index >= this.inv5.getSizeInventory()) {
-                            if (index >= this.inv6.getSizeInventory()) {
-                                if (index >= this.inv7.getSizeInventory()) {
+            if (index >= this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                if (index >= this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                    if (index >= this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                        if (index >= this.inv5.getSizeInventory()  + this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                            if (index >= this.inv6.getSizeInventory() + this.inv5.getSizeInventory() + this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                                if (index >= this.inv7.getSizeInventory() + this.inv6.getSizeInventory() + this.inv5.getSizeInventory() + this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                                     this.inv8.setInventorySlotContents(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory() + this.inv5.getSizeInventory() + this.inv6.getSizeInventory() + this.inv7.getSizeInventory()), stack);
                                 } this.inv7.setInventorySlotContents(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory() + this.inv5.getSizeInventory() + this.inv6.getSizeInventory()), stack);
                             } this.inv6.setInventorySlotContents(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory() + inv5.getSizeInventory()), stack);
@@ -181,12 +181,12 @@ public class OctoSidedInventory implements IInventory {
     public boolean isItemValidForSlot(int index, ItemStack stack) {
 
         if (index >= this.inv1.getSizeInventory()) {
-            if (index >= this.inv2.getSizeInventory()) {
-                if (index >= this.inv3.getSizeInventory()) {
-                    if (index >= this.inv4.getSizeInventory()) {
-                        if (index >= this.inv5.getSizeInventory()) {
-                            if (index >= this.inv6.getSizeInventory()) {
-                                if (index >= this.inv7.getSizeInventory()) {
+            if (index >= this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                if (index >= this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                    if (index >= this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                        if (index >= this.inv5.getSizeInventory()  + this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                            if (index >= this.inv6.getSizeInventory() + this.inv5.getSizeInventory() + this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                                if (index >= this.inv7.getSizeInventory() + this.inv6.getSizeInventory() + this.inv5.getSizeInventory() + this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                                     return this.inv8.isItemValidForSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory() + this.inv5.getSizeInventory() + this.inv6.getSizeInventory() + this.inv7.getSizeInventory()), stack);
                                 } return this.inv7.isItemValidForSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory() + this.inv5.getSizeInventory() + this.inv6.getSizeInventory()), stack);
                             } return this.inv6.isItemValidForSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory() + inv5.getSizeInventory()), stack);

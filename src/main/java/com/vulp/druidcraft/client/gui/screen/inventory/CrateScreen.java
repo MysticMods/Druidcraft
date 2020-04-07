@@ -6,16 +6,13 @@ import com.vulp.druidcraft.inventory.container.CrateContainer;
 import net.minecraft.client.gui.IHasContainer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
-import java.util.List;
+// FIX: For some reason the quad crate is rendering an unneeded bit of the inventory on the bottom of the screen.
 
 @OnlyIn(Dist.CLIENT)
 public class CrateScreen extends ContainerScreen<CrateContainer> implements IHasContainer<CrateContainer> {
@@ -23,7 +20,6 @@ public class CrateScreen extends ContainerScreen<CrateContainer> implements IHas
     private final int inventoryRows;
     private float currentScroll;
     private boolean isScrolling;
-    private List<Slot> originalSlots;
 
     public CrateScreen(CrateContainer container, PlayerInventory playerInv, ITextComponent text) {
         super(container, playerInv, text);
@@ -39,20 +35,30 @@ public class CrateScreen extends ContainerScreen<CrateContainer> implements IHas
         this.renderHoveredToolTip(p_render_1_, p_render_2_);
     }
 
-    private boolean needsScrollBars() {
-        return this.container.canScroll();
+    protected boolean clickOnScrollBar(double p_mouseClicked_1_, double p_mouseClicked_3_) {
+        int i = this.guiLeft;
+        int j = this.guiTop;
+        int k = i + 174;
+        int l = j + 18;
+        int i1 = k + 14;
+        int j1 = l + 198;
+        return p_mouseClicked_1_ >= (double)k && p_mouseClicked_3_ >= (double)l && p_mouseClicked_1_ < (double)i1 && p_mouseClicked_3_ < (double)j1;
+    }
+
+    public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
+        if (p_mouseClicked_5_ == 0 && this.clickOnScrollBar(p_mouseClicked_1_, p_mouseClicked_3_)) {
+            this.isScrolling = true;
+            return true;
+        }
+        return super.mouseClicked(p_mouseClicked_1_, p_mouseClicked_3_, p_mouseClicked_5_);
     }
 
     public boolean mouseScrolled(double p_mouseScrolled_1_, double p_mouseScrolled_3_, double p_mouseScrolled_5_) {
-        if (!this.needsScrollBars()) {
-            return false;
-        } else {
-            int i = ((this.container).itemList.size() + 9 - 1) / 9 - 6;
-            this.currentScroll = (float)((double)this.currentScroll - p_mouseScrolled_5_ / (double)i);
-            this.currentScroll = MathHelper.clamp(this.currentScroll, 0.0F, 1.0F);
-            this.container.scrollTo(this.currentScroll);
-            return true;
-        }
+        int i = (((this.container).getNumRows() * 9) + 9 - 1) / 9 - 6;
+        this.currentScroll = (float)((double)this.currentScroll - p_mouseScrolled_5_ / (double)i);
+        this.currentScroll = MathHelper.clamp(this.currentScroll, 0.0F, 1.0F);
+        this.container.scrollTo(this.currentScroll);
+        return true;
     }
 
     public boolean mouseDragged(double p_mouseDragged_1_, double p_mouseDragged_3_, int p_mouseDragged_5_, double p_mouseDragged_6_, double p_mouseDragged_8_) {
@@ -66,6 +72,14 @@ public class CrateScreen extends ContainerScreen<CrateContainer> implements IHas
         } else {
             return super.mouseDragged(p_mouseDragged_1_, p_mouseDragged_3_, p_mouseDragged_5_, p_mouseDragged_6_, p_mouseDragged_8_);
         }
+    }
+
+    public boolean mouseReleased(double p_mouseReleased_1_, double p_mouseReleased_3_, int p_mouseReleased_5_) {
+        if (p_mouseReleased_5_ == 0) {
+            this.isScrolling = false;
+        }
+
+        return super.mouseReleased(p_mouseReleased_1_, p_mouseReleased_3_, p_mouseReleased_5_);
     }
 
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -85,9 +99,6 @@ public class CrateScreen extends ContainerScreen<CrateContainer> implements IHas
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         int x = this.guiLeft + 174;
         int y = this.guiTop + 18;
-        int k = y + 198;
-        if (needsScrollBars()) {
-            this.blit(i, j + (int)((float)(k - j - 17) * this.currentScroll), 232 + (this.needsScrollBars() ? 0 : 12), 0, 12, 15);
-        }
+        this.blit(x, y + (int)(181 * this.currentScroll), 232, 0, 12, 15);
     }
 }

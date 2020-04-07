@@ -51,8 +51,8 @@ public class QuadSidedInventory implements IInventory {
     public ItemStack getStackInSlot(int index) {
 
         if (index >= this.inv1.getSizeInventory()) {
-            if (index >= this.inv2.getSizeInventory()) {
-                if (index >= this.inv3.getSizeInventory()) {
+            if (index >= this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                if (index >= this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                     return this.inv4.getStackInSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory()));
                 }
                 return this.inv3.getStackInSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()));
@@ -64,8 +64,8 @@ public class QuadSidedInventory implements IInventory {
     public ItemStack decrStackSize(int index, int count) {
 
         if (index >= this.inv1.getSizeInventory()) {
-            if (index >= this.inv2.getSizeInventory()) {
-                if (index >= this.inv3.getSizeInventory()) {
+            if (index >= this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                if (index >= this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                     return this.inv4.decrStackSize(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory()), count);
                 }
                 return this.inv3.decrStackSize(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()), count);
@@ -77,8 +77,8 @@ public class QuadSidedInventory implements IInventory {
     public ItemStack removeStackFromSlot(int index) {
 
         if (index >= this.inv1.getSizeInventory()) {
-            if (index >= this.inv2.getSizeInventory()) {
-                if (index >= this.inv3.getSizeInventory()) {
+            if (index >= this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                if (index >= this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                     return this.inv4.removeStackFromSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory()));
                 }
                 return this.inv3.removeStackFromSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()));
@@ -90,8 +90,8 @@ public class QuadSidedInventory implements IInventory {
     public void setInventorySlotContents(int index, ItemStack stack) {
 
         if (index >= this.inv1.getSizeInventory()) {
-            if (index >= this.inv2.getSizeInventory()) {
-                if (index >= this.inv3.getSizeInventory()) {
+            if (index >= this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                if (index >= this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                     this.inv4.setInventorySlotContents(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory()), stack);
                 }
                 this.inv3.setInventorySlotContents(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()), stack);
@@ -132,8 +132,8 @@ public class QuadSidedInventory implements IInventory {
     public boolean isItemValidForSlot(int index, ItemStack stack) {
 
         if (index >= this.inv1.getSizeInventory()) {
-            if (index >= this.inv2.getSizeInventory()) {
-                if (index >= this.inv3.getSizeInventory()) {
+            if (index >= this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
+                if (index >= this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                     return this.inv4.isItemValidForSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory()), stack);
                 }
                 return this.inv3.isItemValidForSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()), stack);

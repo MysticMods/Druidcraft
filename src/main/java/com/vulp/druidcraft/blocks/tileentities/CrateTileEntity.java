@@ -1,6 +1,5 @@
 package com.vulp.druidcraft.blocks.tileentities;
 
-import com.vulp.druidcraft.api.CrateType;
 import com.vulp.druidcraft.blocks.CrateBlock;
 import com.vulp.druidcraft.blocks.CrateTempBlock;
 import com.vulp.druidcraft.inventory.OctoSidedInventory;
@@ -11,7 +10,6 @@ import com.vulp.druidcraft.registry.SoundEventRegistry;
 import com.vulp.druidcraft.registry.TileEntityRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ChestBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.DoubleSidedInventory;
@@ -21,7 +19,6 @@ import net.minecraft.inventory.container.ChestContainer;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.ChestType;
 import net.minecraft.tileentity.*;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
@@ -70,15 +67,10 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
         return compound;
     }
 
-    @Override
-    public void onLoad() {
-        this.neighbors = CrateBlock.getBlockPositions(world, pos);
-    }
-
     public void read(CompoundNBT compound) {
         super.read(compound);
         ArrayList<BlockPos> neighborArray = new ArrayList<>();
-        for (int i = 0; compound.getIntArray("CoordX").length > i; i++) {
+        for (int i = 0; i < compound.getIntArray("CoordX").length; i++) {
             neighborArray.add(new BlockPos(compound.getIntArray("CoordX")[i], compound.getIntArray("CoordY")[i], compound.getIntArray("CoordZ")[i]));
         }
         this.neighbors = neighborArray;
@@ -87,6 +79,13 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
             ItemStackHelper.loadAllItems(compound, this.contents);
         }
 
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (this.neighbors == null)
+        this.neighbors = CrateBlock.getBlockPositions(world, pos);
     }
 
     /**
@@ -180,7 +179,7 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
 
         for(PlayerEntity playerentity : world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB((double)((float)posX - f), (double)((float)posY - f), (double)((float)posZ - f), (double)((float)(posX + 1) + f), (double)((float)(posY + 1) + f), (double)((float)(posZ + 1) + f)))) {
             if (playerentity.openContainer instanceof CrateContainer && isQuadOrOcto) {
-                IInventory iinventory = ((CrateContainer)playerentity.openContainer).getLowerCrateInventory();
+                IInventory iinventory = ((CrateContainer)playerentity.openContainer).getMainInventory();
                 if ((iinventory == lockableTileEntity || iinventory instanceof QuadSidedInventory && ((QuadSidedInventory)iinventory).isPartOfQuadCrate(lockableTileEntity)) || (iinventory == lockableTileEntity || iinventory instanceof OctoSidedInventory && ((OctoSidedInventory)iinventory).isPartOfOctoCrate(lockableTileEntity))) {
                     ++i;
                 }
@@ -279,8 +278,8 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
     }
 
     private net.minecraftforge.items.IItemHandlerModifiable createHandler() {
-        int size = this.neighbors.size() + 1;
-        for (int i = 0; i > this.neighbors.size(); i++) {
+        int size = this.neighbors.size();
+        for (int i = 0; i > size; i++) {
             if (!(this.world.getBlockState(this.neighbors.get(i)).getBlock() instanceof CrateBlock) || size < 2) {
                 return new net.minecraftforge.items.wrapper.InvWrapper(this);
             }
@@ -288,19 +287,19 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
                 return new net.minecraftforge.items.wrapper.InvWrapper(this);
             }
         }
-        IInventory inven1 = (IInventory)this.getWorld().getTileEntity(this.neighbors.get(0));
-        IInventory inven2 = (IInventory)this.getWorld().getTileEntity(this.neighbors.get(1));
-        IInventory inven3 = (IInventory)this.getWorld().getTileEntity(this.neighbors.get(2));
-        IInventory inven4 = (IInventory)this.getWorld().getTileEntity(this.neighbors.get(3));
-        IInventory inven5 = (IInventory)this.getWorld().getTileEntity(this.neighbors.get(4));
-        IInventory inven6 = (IInventory)this.getWorld().getTileEntity(this.neighbors.get(5));
-        IInventory inven7 = (IInventory)this.getWorld().getTileEntity(this.neighbors.get(6));
-        IInventory inven8 = (IInventory)this.getWorld().getTileEntity(this.neighbors.get(7));
+
+        if (size == 1) {
+            return new net.minecraftforge.items.wrapper.InvWrapper(this);
+        }
+        IInventory inven1 = (IInventory) this.getWorld().getTileEntity(this.neighbors.get(0));
+        IInventory inven2 = (IInventory) this.getWorld().getTileEntity(this.neighbors.get(1));
         if (size == 2) {
             return new net.minecraftforge.items.wrapper.CombinedInvWrapper(
                     new net.minecraftforge.items.wrapper.InvWrapper(inven1),
                     new net.minecraftforge.items.wrapper.InvWrapper(inven2));
         }
+        IInventory inven3 = (IInventory) this.getWorld().getTileEntity(this.neighbors.get(2));
+        IInventory inven4 = (IInventory) this.getWorld().getTileEntity(this.neighbors.get(3));
         if (size == 4) {
             return new net.minecraftforge.items.wrapper.CombinedInvWrapper(
                     new net.minecraftforge.items.wrapper.InvWrapper(inven1),
@@ -308,6 +307,10 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
                     new net.minecraftforge.items.wrapper.InvWrapper(inven3),
                     new net.minecraftforge.items.wrapper.InvWrapper(inven4));
         }
+        IInventory inven5 = (IInventory) this.getWorld().getTileEntity(this.neighbors.get(4));
+        IInventory inven6 = (IInventory) this.getWorld().getTileEntity(this.neighbors.get(5));
+        IInventory inven7 = (IInventory) this.getWorld().getTileEntity(this.neighbors.get(6));
+        IInventory inven8 = (IInventory) this.getWorld().getTileEntity(this.neighbors.get(7));
         if (size == 8) {
             return new net.minecraftforge.items.wrapper.CombinedInvWrapper(
                     new net.minecraftforge.items.wrapper.InvWrapper(inven1),
