@@ -93,8 +93,10 @@ public class QuadSidedInventory implements IInventory {
             if (index >= this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                 if (index >= this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                     this.inv4.setInventorySlotContents(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory()), stack);
+                    return;
                 }
                 this.inv3.setInventorySlotContents(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()), stack);
+                return;
             }
             this.inv2.setInventorySlotContents(index - this.inv1.getSizeInventory(), stack);
         } else this.inv1.setInventorySlotContents(index, stack);
