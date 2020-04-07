@@ -72,7 +72,7 @@ public class QuadCrateScreen extends ContainerScreen<CrateContainer> implements 
                 this.blit(i + 7 + (b * 2), j - l + 7 + (a * 2), 28, 91, 2, 2);
             }
             for (int b = 0; b < 81; b++) {
-                this.blit(i + 33 + (b * 2), j - l + 179 + (a * 2), 28, 91, 2, 2);
+                this.blit(i + 35 + (b * 2), j - l + 179 + (a * 2), 28, 91, 2, 2);
             }
         }
     }
