@@ -1,7 +1,8 @@
 package com.vulp.druidcraft.registry;
 
 import com.vulp.druidcraft.client.gui.screen.inventory.BeetleInventoryScreen;
-import com.vulp.druidcraft.client.gui.screen.inventory.CrateScreen;
+import com.vulp.druidcraft.client.gui.screen.inventory.OctoCrateScreen;
+import com.vulp.druidcraft.client.gui.screen.inventory.QuadCrateScreen;
 import com.vulp.druidcraft.client.renders.BeetleEntityRender;
 import com.vulp.druidcraft.client.renders.DreadfishEntityRender;
 import com.vulp.druidcraft.client.renders.LunarMothEntityRender;
@@ -25,12 +26,8 @@ public class RenderRegistry
 
         // SCREENS
         ScreenManager.registerFactory(GUIRegistry.beetle_inv, BeetleInventoryScreen::new);
-        ScreenManager.registerFactory(GUIRegistry.generic_9X9, CrateScreen::new);
-        ScreenManager.registerFactory(GUIRegistry.generic_9X12, CrateScreen::new);
-        ScreenManager.registerFactory(GUIRegistry.generic_9X15, CrateScreen::new);
-        ScreenManager.registerFactory(GUIRegistry.generic_9X18, CrateScreen::new);
-        ScreenManager.registerFactory(GUIRegistry.generic_9X21, CrateScreen::new);
-        ScreenManager.registerFactory(GUIRegistry.generic_9X24, CrateScreen::new);
+        ScreenManager.registerFactory(GUIRegistry.generic_9X12, QuadCrateScreen::new);
+        ScreenManager.registerFactory(GUIRegistry.generic_9X24, OctoCrateScreen::new);
 
     }
 }
