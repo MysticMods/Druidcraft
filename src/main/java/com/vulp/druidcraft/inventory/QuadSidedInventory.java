@@ -11,29 +11,26 @@ public class QuadSidedInventory implements IInventory {
     private final IInventory inv2;
     private final IInventory inv3;
     private final IInventory inv4;
-    private final ArrayList<IInventory> invList = new ArrayList<>();
 
     public QuadSidedInventory(IInventory inventory1, IInventory inventory2, IInventory inventory3, IInventory inventory4) {
-        IInventory[] invList = {inventory1, inventory2, inventory3, inventory4};
-
-        for (int i = 0; i > invList.length; i++) {
-            for (int j = 0; j > invList.length; j++) {
-                if (invList[i] != invList[j]) {
-                    if (invList[i] == null && invList[j] != null) {
-                        invList[i] = invList[j];
-                    }
-                }
-            }
-        }
-
         this.inv1 = inventory1;
         this.inv2 = inventory2;
         this.inv3 = inventory3;
         this.inv4 = inventory4;
-        this.invList.add(inv1);
-        this.invList.add(inv2);
-        this.invList.add(inv3);
-        this.invList.add(inv4);
+        ArrayList<IInventory> invList = new ArrayList<>();
+        invList.add(inventory1);
+        invList.add(inventory2);
+        invList.add(inventory3);
+        invList.add(inventory4);
+        for (int i = 0; i < invList.size(); i++) {
+            for (int j = 0; j < invList.size(); j++) {
+                if (invList.get(i) != invList.get(j)) {
+                    if (invList.get(i) == null && invList.get(j) != null) {
+                        invList.set(i, invList.get(j));
+                    }
+                }
+            }
+        }
     }
 
     public int getSizeInventory() {
@@ -58,7 +55,8 @@ public class QuadSidedInventory implements IInventory {
                 return this.inv3.getStackInSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()));
             }
             return this.inv2.getStackInSlot(index - this.inv1.getSizeInventory());
-        } else return this.inv1.getStackInSlot(index);
+        }
+        return this.inv1.getStackInSlot(index);
     }
 
     public ItemStack decrStackSize(int index, int count) {
@@ -71,7 +69,8 @@ public class QuadSidedInventory implements IInventory {
                 return this.inv3.decrStackSize(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()), count);
             }
             return this.inv2.decrStackSize(index - this.inv1.getSizeInventory(), count);
-        } else return this.inv1.decrStackSize(index, count);
+        }
+        return this.inv1.decrStackSize(index, count);
     }
 
     public ItemStack removeStackFromSlot(int index) {
@@ -84,7 +83,8 @@ public class QuadSidedInventory implements IInventory {
                 return this.inv3.removeStackFromSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()));
             }
             return this.inv2.removeStackFromSlot(index - this.inv1.getSizeInventory());
-        } else return this.inv1.removeStackFromSlot(index);
+        }
+        return this.inv1.removeStackFromSlot(index);
     }
 
     public void setInventorySlotContents(int index, ItemStack stack) {
@@ -99,7 +99,8 @@ public class QuadSidedInventory implements IInventory {
                 return;
             }
             this.inv2.setInventorySlotContents(index - this.inv1.getSizeInventory(), stack);
-        } else this.inv1.setInventorySlotContents(index, stack);
+        }
+        this.inv1.setInventorySlotContents(index, stack);
     }
 
     public int getInventoryStackLimit() {
@@ -141,7 +142,8 @@ public class QuadSidedInventory implements IInventory {
                 return this.inv3.isItemValidForSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()), stack);
             }
             return this.inv2.isItemValidForSlot(index - this.inv1.getSizeInventory(), stack);
-        } else return this.inv1.isItemValidForSlot(index, stack);
+        }
+        return this.inv1.isItemValidForSlot(index, stack);
     }
 
     public void clear() {

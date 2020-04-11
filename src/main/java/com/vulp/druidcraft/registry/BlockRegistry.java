@@ -8,6 +8,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class BlockRegistry
 {
+    public static Block debug_block;
+
     public static Block hemp_crop;
     public static Block amber_ore;
     public static Block moonstone_ore;

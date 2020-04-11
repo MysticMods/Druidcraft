@@ -151,6 +151,7 @@
   "block.druidcraft.elder_sapling": "Elder Sapling",
   "block.druidcraft.elder_wood": "Elder Wood",
   "block.druidcraft.crate": "Crate",
+  "block.druidcraft.crate.description1": "Multiblock crate! You can not open other crates while this is in hand.",
   "block.druidcraft.ceramic_lantern": "Ceramic Lantern",
   "block.druidcraft.growth_lamp": "Lamp of Growth",
   "block.druidcraft.growth_lamp.description1": "Accelerates the growth of plants and baby animals within a 5x5x5 area!",

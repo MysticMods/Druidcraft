@@ -16,20 +16,8 @@ public class OctoSidedInventory implements IInventory {
     private final IInventory inv6;
     private final IInventory inv7;
     private final IInventory inv8;
-    private final ArrayList<IInventory> invList = new ArrayList<>();
 
     public OctoSidedInventory(IInventory inventory1, IInventory inventory2, IInventory inventory3, IInventory inventory4, IInventory inventory5, IInventory inventory6, IInventory inventory7, IInventory inventory8) {
-        IInventory[] invList = {inventory1, inventory2, inventory3, inventory4, inventory5, inventory6, inventory7, inventory8};
-
-        for (int i = 0; i > invList.length; i++) {
-            for (int j = 0; j > invList.length; j++) {
-                if (invList[i] != invList[j]) {
-                    if (invList[i] == null && invList[j] != null) {
-                        invList[i] = invList[j];
-                    }
-                }
-            }
-        }
 
         this.inv1 = inventory1;
         this.inv2 = inventory2;
@@ -39,14 +27,24 @@ public class OctoSidedInventory implements IInventory {
         this.inv6 = inventory6;
         this.inv7 = inventory7;
         this.inv8 = inventory8;
-        this.invList.add(inv1);
-        this.invList.add(inv2);
-        this.invList.add(inv3);
-        this.invList.add(inv4);
-        this.invList.add(inv5);
-        this.invList.add(inv6);
-        this.invList.add(inv7);
-        this.invList.add(inv8);
+        ArrayList<IInventory> invList = new ArrayList<>();
+        invList.add(inventory1);
+        invList.add(inventory2);
+        invList.add(inventory3);
+        invList.add(inventory4);
+        invList.add(inventory5);
+        invList.add(inventory6);
+        invList.add(inventory7);
+        invList.add(inventory8);
+        for (int i = 0; i < invList.size(); i++) {
+            for (int j = 0; j < invList.size(); j++) {
+                if (invList.get(i) != invList.get(j)) {
+                    if (invList.get(i) == null && invList.get(j) != null) {
+                        invList.set(i, invList.get(j));
+                    }
+                }
+            }
+        }
     }
 
     public int getSizeInventory() {

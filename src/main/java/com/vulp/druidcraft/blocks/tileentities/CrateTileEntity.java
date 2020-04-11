@@ -1,7 +1,7 @@
 package com.vulp.druidcraft.blocks.tileentities;
 
+import com.vulp.druidcraft.api.CrateType;
 import com.vulp.druidcraft.blocks.CrateBlock;
-import com.vulp.druidcraft.blocks.CrateTempBlock;
 import com.vulp.druidcraft.inventory.OctoSidedInventory;
 import com.vulp.druidcraft.inventory.QuadSidedInventory;
 import com.vulp.druidcraft.inventory.container.CrateContainer;
@@ -27,7 +27,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -45,6 +44,10 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
 
     public CrateTileEntity() {
         this(TileEntityRegistry.crate);
+    }
+
+    public ArrayList<BlockPos> getNeighbors() {
+        return this.neighbors;
     }
 
     public CompoundNBT write(CompoundNBT compound) {
@@ -161,8 +164,26 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
         int i = this.pos.getX();
         int j = this.pos.getY();
         int k = this.pos.getZ();
+        BlockState blockState = world.getBlockState(new BlockPos(i, j, k));
         ++this.ticksSinceSync;
-        this.numPlayersUsing = calculatePlayersUsingSync(this.world, this, this.ticksSinceSync, i, j, k, this.numPlayersUsing, this.neighbors.size() > 2);
+        this.numPlayersUsing = calculatePlayersUsingSync(this.world, this, this.ticksSinceSync, i, j, k, this.numPlayersUsing, (blockState.get(CrateBlock.TYPE) == CrateType.QUAD_X ||
+                blockState.get(CrateBlock.TYPE) == CrateType.QUAD_Y || blockState.get(CrateBlock.TYPE) == CrateType.QUAD_Z || blockState.get(CrateBlock.TYPE) == CrateType.OCTO));
+        if (this.numPlayersUsing > 0) {
+            this.onOpenOrClose();
+        } else {
+            if (blockState.getBlock() != BlockRegistry.crate) {
+                this.remove();
+                return;
+            }
+
+            boolean flag = blockState.get(CrateBlock.PROPERTY_OPEN);
+            if (flag) {
+                if (blockState.get(CrateBlock.PARENT)) {
+                    this.func_213965_a(blockState, SoundEventRegistry.close_crate);
+                }
+                this.setCrateState(blockState, false);
+            }
+        }
     }
 
     public static int calculatePlayersUsingSync(World world, LockableTileEntity lockableTileEntity, int ticksSinceSync, int posX, int posY, int posZ, int numPlayersUsing, boolean isQuadOrOcto) {
@@ -175,12 +196,12 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
 
     public static int calculatePlayersUsing(World world, LockableTileEntity lockableTileEntity, int posX, int posY, int posZ, boolean isQuadOrOcto) {
         int i = 0;
-        float f = 5.0F;
+        float f = 6.0F;
 
         for(PlayerEntity playerentity : world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB((double)((float)posX - f), (double)((float)posY - f), (double)((float)posZ - f), (double)((float)(posX + 1) + f), (double)((float)(posY + 1) + f), (double)((float)(posZ + 1) + f)))) {
             if (playerentity.openContainer instanceof CrateContainer && isQuadOrOcto) {
                 IInventory iinventory = ((CrateContainer)playerentity.openContainer).getMainInventory();
-                if ((iinventory == lockableTileEntity || iinventory instanceof QuadSidedInventory && ((QuadSidedInventory)iinventory).isPartOfQuadCrate(lockableTileEntity)) || (iinventory == lockableTileEntity || iinventory instanceof OctoSidedInventory && ((OctoSidedInventory)iinventory).isPartOfOctoCrate(lockableTileEntity))) {
+                if ((iinventory == lockableTileEntity || (iinventory instanceof QuadSidedInventory && ((QuadSidedInventory)iinventory).isPartOfQuadCrate(lockableTileEntity))) || (iinventory instanceof OctoSidedInventory && ((OctoSidedInventory)iinventory).isPartOfOctoCrate(lockableTileEntity))) {
                     ++i;
                 }
             }
@@ -203,10 +224,12 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
 
             ++this.numPlayersUsing;
             BlockState blockstate = this.getBlockState();
-            boolean flag = blockstate.get(CrateTempBlock.PROPERTY_OPEN);
+            boolean flag = blockstate.get(CrateBlock.PROPERTY_OPEN);
             if (!flag) {
-                this.func_213965_a(blockstate, SoundEventRegistry.open_crate);
-                this.playSoundOpen(blockstate, true);
+                if (blockstate.get(CrateBlock.PARENT)) {
+                    this.func_213965_a(blockstate, SoundEventRegistry.open_crate);
+                }
+                this.setCrateState(blockstate, true);
             }
 
             this.onOpenOrClose();
@@ -223,18 +246,6 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
 
     }
 
-    public static int getPlayersUsing(IBlockReader reader, BlockPos posIn) {
-        BlockState blockstate = reader.getBlockState(posIn);
-        if (blockstate.hasTileEntity()) {
-            TileEntity tileentity = reader.getTileEntity(posIn);
-            if (tileentity instanceof CrateTileEntity) {
-                return ((CrateTileEntity)tileentity).numPlayersUsing;
-            }
-        }
-
-        return 0;
-    }
-
     @Override
     public void updateContainingBlockInfo() {
         super.updateContainingBlockInfo();
@@ -242,29 +253,6 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
             this.crateHandler.invalidate();
             this.crateHandler = null;
         }
-    }
-
-    public void func_213962_h() {
-        int i = this.pos.getX();
-        int j = this.pos.getY();
-        int k = this.pos.getZ();
-        this.numPlayersUsing = ChestTileEntity.calculatePlayersUsing(this.world, this, i, j, k);
-        if (this.numPlayersUsing > 0) {
-            this.onOpenOrClose();
-        } else {
-            BlockState blockstate = this.getBlockState();
-            if (blockstate.getBlock() != BlockRegistry.crate_temp) {
-                this.remove();
-                return;
-            }
-
-            boolean flag = blockstate.get(CrateTempBlock.PROPERTY_OPEN);
-            if (flag) {
-                this.func_213965_a(blockstate, SoundEventRegistry.close_crate);
-                this.playSoundOpen(blockstate, false);
-            }
-        }
-
     }
 
     public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> cap, @javax.annotation.Nullable net.minecraft.util.Direction side) {
@@ -341,14 +329,25 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
         }
     }
 
-    private void playSoundOpen(BlockState state, boolean isOpening) {
-        this.world.setBlockState(this.getPos(), state.with(CrateBlock.PROPERTY_OPEN, Boolean.valueOf(isOpening)), 3);
+    private void setCrateState(BlockState state, boolean isOpening) {
+        this.world.setBlockState(this.getPos(), state.with(CrateBlock.PROPERTY_OPEN, isOpening), 3);
     }
 
-    private void func_213965_a(BlockState p_213965_1_, SoundEvent p_213965_2_) {
+    public float checkCrateShape(BlockState state) {
+        CrateType type = (CrateType) state.get(CrateBlock.TYPE);
+        if (type == CrateType.DOUBLE_X || type == CrateType.DOUBLE_Y || type == CrateType.DOUBLE_Z)
+            return 0.8F;
+        if (type == CrateType.QUAD_X || type == CrateType.QUAD_Y || type == CrateType.QUAD_Z)
+            return 0.7F;
+        if (type == CrateType.OCTO)
+            return 0.6F;
+        return 0.9F;
+    }
+
+    private void func_213965_a(BlockState state, SoundEvent p_213965_2_) {
         double d0 = (double)this.pos.getX() + 0.5D;
         double d1 = (double)this.pos.getY() + 0.5D;
         double d2 = (double)this.pos.getZ() + 0.5D;
-        this.world.playSound((PlayerEntity)null, d0, d1, d2, p_213965_2_, SoundCategory.BLOCKS, 0.65F, this.world.rand.nextFloat() * 0.1F + 0.9F);
+        this.world.playSound((PlayerEntity)null, d0, d1, d2, p_213965_2_, SoundCategory.BLOCKS, 0.65F, this.world.rand.nextFloat() * 0.1F + checkCrateShape(state));
     }
 }

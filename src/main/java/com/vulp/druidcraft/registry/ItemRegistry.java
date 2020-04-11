@@ -4,6 +4,8 @@ import net.minecraft.item.Item;
 
 public class ItemRegistry
 {
+    public static Item debug_block;
+
     public static Item hemp;
     public static Item hemp_seeds;
     public static Item rope;

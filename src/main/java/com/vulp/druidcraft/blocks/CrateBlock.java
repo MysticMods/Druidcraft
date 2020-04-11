@@ -1,13 +1,15 @@
 package com.vulp.druidcraft.blocks;
 
-import com.google.common.collect.Maps;
+import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.api.CrateType;
 import com.vulp.druidcraft.blocks.tileentities.CrateTileEntity;
-import com.vulp.druidcraft.blocks.tileentities.CrateTileEntityOld;
 import com.vulp.druidcraft.inventory.OctoSidedInventory;
 import com.vulp.druidcraft.inventory.QuadSidedInventory;
 import com.vulp.druidcraft.inventory.container.CrateContainer;
+import com.vulp.druidcraft.registry.ItemRegistry;
+import javafx.util.Pair;
 import net.minecraft.block.*;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,32 +21,35 @@ import net.minecraft.inventory.container.ChestContainer;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.*;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Util;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class CrateBlock extends ContainerBlock {
     public static final BooleanProperty PROPERTY_OPEN = BlockStateProperties.OPEN;
+    public static final BooleanProperty SHIFT_PLACED = BooleanProperty.create("shift_placed");
     public static final EnumProperty TYPE = EnumProperty.create("type", CrateType.class);
     public static final IntegerProperty POS_NUM = IntegerProperty.create("pos_num", 1, 8);
     public static final BooleanProperty PARENT = BooleanProperty.create("parent");
@@ -165,10 +170,16 @@ public class CrateBlock extends ContainerBlock {
                 .with(SOUTH, true)
                 .with(WEST, true)
                 .with(UP, true)
-                .with(DOWN, true));
+                .with(DOWN, true)
+                .with(SHIFT_PLACED, true));
     }
 
     public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        ItemStack itemstack = player.getHeldItem(handIn);
+        Item item = itemstack.getItem();
+        if (item == ItemRegistry.crate) {
+            return false;
+        }
         if (worldIn.isRemote) {
             return true;
         } else {
@@ -921,7 +932,10 @@ public class CrateBlock extends ContainerBlock {
     }
 
     public boolean rotateCrate(BlockPos pos) {
-        return (new Random(pos.getX() + pos.getY() + pos.getZ()).nextFloat() % 2 == 0);
+        Random bool = new Random();
+        bool.setSeed(pos.getX() + pos.getY() + pos.getZ());
+        bool.nextBoolean();
+        return (bool.nextBoolean());
     }
 
     public int getCrateNumber(BlockPos pos, ArrayList<BlockPos> blockPosList) {
@@ -1045,7 +1059,7 @@ public class CrateBlock extends ContainerBlock {
     }
 
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(TYPE, PROPERTY_OPEN, PARENT, ROTATED, POS_NUM, NORTH, EAST, SOUTH, WEST, UP, DOWN);
+        builder.add(TYPE, PROPERTY_OPEN, PARENT, ROTATED, POS_NUM, NORTH, EAST, SOUTH, WEST, UP, DOWN, SHIFT_PLACED);
     }
 
     // DO THIS AND REMEMBER TO KEEP MATCHING CHESTBLOCK CODE TO THIS CLASS.
@@ -1090,14 +1104,6 @@ public class CrateBlock extends ContainerBlock {
 
     }
 
-    public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
-        TileEntity tileentity = worldIn.getTileEntity(pos);
-        if (tileentity instanceof CrateTileEntityOld) {
-            ((CrateTileEntityOld)tileentity).func_213962_h();
-        }
-
-    }
-
     @Nullable
     public static IInventory getInventory(BlockState state, World world, BlockPos pos, boolean allowBlocked) {
         return getCrateInventory(state, world, pos, allowBlocked, inventoryFactory);
@@ -1134,15 +1140,6 @@ public class CrateBlock extends ContainerBlock {
         return BlockRenderType.MODEL;
     }
 
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        if (stack.hasDisplayName()) {
-            TileEntity tileentity = worldIn.getTileEntity(pos);
-            if (tileentity instanceof CrateTileEntityOld) {
-                ((CrateTileEntityOld)tileentity).setCustomName(stack.getDisplayName());
-            }
-        }
-
-    }
 
     /** @deprecated */
     public boolean hasComparatorInputOverride(BlockState state) {
@@ -1154,37 +1151,260 @@ public class CrateBlock extends ContainerBlock {
         return Container.calcRedstoneFromInventory(getInventory(blockState, worldIn, pos, false));
     }
 
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        if (context.canPlace()) {
-            World world = context.getWorld();
-            BlockPos pos = context.getPos();
-            world.setBlockState(pos, this.getDefaultState());
+    protected boolean canPlace(BlockItemUseContext p_195944_1_, BlockState p_195944_2_) {
+        PlayerEntity playerentity = p_195944_1_.getPlayer();
+        ISelectionContext iselectioncontext = playerentity == null ? ISelectionContext.dummy() : ISelectionContext.forEntity(playerentity);
+        return (!this.checkPosition() || p_195944_2_.isValidPosition(p_195944_1_.getWorld(), p_195944_1_.getPos())) && p_195944_1_.getWorld().func_217350_a(p_195944_2_, p_195944_1_.getPos(), iselectioncontext);
+    }
+
+    protected boolean checkPosition() {
+        return true;
+    }
+
+    private TileEntity getTileEntity(World world, BlockPos pos) {
+        return world.getTileEntity(pos);
+    }
+
+    private ArrayList<BlockPos> getNeighborsFromTE(TileEntity tileEntity) {
+        return ((CrateTileEntity) tileEntity).getNeighbors();
+    }
+
+    public ArrayList<Boolean> checkMissingCrates(World world, BlockPos pos, ArrayList<BlockPos> neighborList) {
+        ArrayList<Boolean> missingList = new ArrayList<>();
+        for (int i = 0; i < neighborList.size(); i++) {
+            missingList.add(world.getBlockState(neighborList.get(i)).getBlock() instanceof CrateBlock);
+        }
+        // Druidcraft.LOGGER.debug(missingList);
+        return missingList;
+    }
+
+    public Pair<ArrayList<BlockPos>, ArrayList<Boolean>> updateCrateShapeHelper(ArrayList<BlockPos> neighborList, ArrayList<Boolean> missingList, int num1, int num2, int num3, int num4) {
+        ArrayList<BlockPos> newNeighborList = new ArrayList<>();
+        ArrayList<Boolean> newMissingList = missingList;
+        if (missingList.get(num1) && missingList.get(num2) && missingList.get(num3) && missingList.get(num4)) {
+            newNeighborList.add(neighborList.get(num1));
+            newNeighborList.add(neighborList.get(num2));
+            newNeighborList.add(neighborList.get(num3));
+            newNeighborList.add(neighborList.get(num4));
+            newMissingList.set(num1, false);
+            newMissingList.set(num2, false);
+            newMissingList.set(num3, false);
+            newMissingList.set(num4, false);
+        }
+        return new Pair<ArrayList<BlockPos>, ArrayList<Boolean>>(newNeighborList, newMissingList);
+    }
+
+    public Pair<ArrayList<BlockPos>, ArrayList<Boolean>> updateCrateShapeHelper(ArrayList<BlockPos> neighborList, ArrayList<Boolean> missingList, int num1, int num2) {
+        ArrayList<BlockPos> newNeighborList = new ArrayList<>();
+        ArrayList<Boolean> newMissingList = missingList;
+        if (missingList.get(num1) && missingList.get(num2)) {
+            newNeighborList.add(neighborList.get(num1));
+            newNeighborList.add(neighborList.get(num2));
+            newMissingList.set(num1, false);
+            newMissingList.set(num2, false);
+        }
+        return new Pair<ArrayList<BlockPos>, ArrayList<Boolean>>(newNeighborList, newMissingList);
+    }
+
+    public ArrayList<ArrayList<BlockPos>> updateCrateShape(World world, BlockState state, BlockPos pos, ArrayList<BlockPos> neighborList, ArrayList<Boolean> missingList) {
+        CrateType type = getCrateType(neighborList);
+        ArrayList<ArrayList<BlockPos>> cratesList = new ArrayList<>();
+        if (type == CrateType.OCTO) {
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try1 = updateCrateShapeHelper(neighborList, missingList, 0, 1, 2, 3);
+            if (!try1.getKey().isEmpty()) {
+                cratesList.add(try1.getKey());
+                missingList = try1.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try2 = updateCrateShapeHelper(neighborList, missingList, 4, 5, 6, 7);
+            if (!try2.getKey().isEmpty()) {
+                cratesList.add(try2.getKey());
+                missingList = try2.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try3 = updateCrateShapeHelper(neighborList, missingList, 0, 2, 4, 6);
+            if (!try3.getKey().isEmpty()) {
+                cratesList.add(try3.getKey());
+                missingList = try3.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try4 = updateCrateShapeHelper(neighborList, missingList, 1, 3, 5, 7);
+            if (!try4.getKey().isEmpty()) {
+                cratesList.add(try4.getKey());
+                missingList = try4.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try5 = updateCrateShapeHelper(neighborList, missingList, 0, 1, 4, 5);
+            if (!try5.getKey().isEmpty()) {
+                cratesList.add(try5.getKey());
+                missingList = try5.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try6 = updateCrateShapeHelper(neighborList, missingList, 2, 3, 6, 7);
+            if (!try6.getKey().isEmpty()) {
+                cratesList.add(try6.getKey());
+                missingList = try6.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try7 = updateCrateShapeHelper(neighborList, missingList, 0, 1);
+            if (!try7.getKey().isEmpty()) {
+                cratesList.add(try7.getKey());
+                missingList = try7.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try8 = updateCrateShapeHelper(neighborList, missingList, 2, 3);
+            if (!try8.getKey().isEmpty()) {
+                cratesList.add(try8.getKey());
+                missingList = try8.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try9 = updateCrateShapeHelper(neighborList, missingList, 4, 5);
+            if (!try9.getKey().isEmpty()) {
+                cratesList.add(try9.getKey());
+                missingList = try9.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try10 = updateCrateShapeHelper(neighborList, missingList, 6, 7);
+            if (!try10.getKey().isEmpty()) {
+                cratesList.add(try10.getKey());
+                missingList = try10.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try11 = updateCrateShapeHelper(neighborList, missingList, 0, 2);
+            if (!try11.getKey().isEmpty()) {
+                cratesList.add(try11.getKey());
+                missingList = try11.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try12 = updateCrateShapeHelper(neighborList, missingList, 1, 3);
+            if (!try12.getKey().isEmpty()) {
+                cratesList.add(try12.getKey());
+                missingList = try12.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try13 = updateCrateShapeHelper(neighborList, missingList, 4, 6);
+            if (!try13.getKey().isEmpty()) {
+                cratesList.add(try13.getKey());
+                missingList = try13.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try14 = updateCrateShapeHelper(neighborList, missingList, 5, 7);
+            if (!try14.getKey().isEmpty()) {
+                cratesList.add(try14.getKey());
+                missingList = try14.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try15 = updateCrateShapeHelper(neighborList, missingList, 0, 4);
+            if (!try15.getKey().isEmpty()) {
+                cratesList.add(try15.getKey());
+                missingList = try15.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try16 = updateCrateShapeHelper(neighborList, missingList, 1, 5);
+            if (!try16.getKey().isEmpty()) {
+                cratesList.add(try16.getKey());
+                missingList = try16.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try17 = updateCrateShapeHelper(neighborList, missingList, 2, 6);
+            if (!try17.getKey().isEmpty()) {
+                cratesList.add(try17.getKey());
+                missingList = try17.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try18 = updateCrateShapeHelper(neighborList, missingList, 3, 7);
+            if (!try18.getKey().isEmpty()) {
+                cratesList.add(try18.getKey());
+                missingList = try18.getValue();
+            }
+        }
+        if (type == CrateType.QUAD_X || type == CrateType.QUAD_Y || type == CrateType.QUAD_Z) {
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try1 = updateCrateShapeHelper(neighborList, missingList, 0, 1);
+            if (!try1.getKey().isEmpty()) {
+                cratesList.add(try1.getKey());
+                missingList = try1.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try2 = updateCrateShapeHelper(neighborList, missingList, 2, 3);
+            if (!try2.getKey().isEmpty()) {
+                cratesList.add(try2.getKey());
+                missingList = try2.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try3 = updateCrateShapeHelper(neighborList, missingList, 0, 2);
+            if (!try3.getKey().isEmpty()) {
+                cratesList.add(try3.getKey());
+                missingList = try3.getValue();
+            }
+            Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try4 = updateCrateShapeHelper(neighborList, missingList, 1, 3);
+            if (!try4.getKey().isEmpty()) {
+                cratesList.add(try4.getKey());
+                missingList = try4.getValue();
+            }
+        }
+        for (int i = 0; i < missingList.size(); i++) {
+            if (missingList.get(i)) {
+                ArrayList<BlockPos> singleCrate = new ArrayList<>();
+                singleCrate.add(neighborList.get(i));
+                cratesList.add(singleCrate);
+            }
+        }
+        return cratesList;
+    }
+
+    @Override
+    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+        World world = (World) worldIn;
+        ArrayList<BlockPos> neighborList = getBlockPositions(world, currentPos);
+        ArrayList<Boolean> missingList = checkMissingCrates(world, currentPos, neighborList);
+        if (missingList.contains(false)) {
+            // Block is missing.
+            ArrayList<ArrayList<BlockPos>> cratesList = updateCrateShape(world, stateIn, currentPos, neighborList, missingList);
+            for (int i = 0; i < cratesList.size(); i++) {
+                ArrayList<BlockState> newStateList = calculateSides(cratesList.get(i), world);
+                newStateList.set(0, newStateList.get(0).with(PARENT, true));
+                for (int j = 0; j < newStateList.size(); j++) {
+                    boolean rotate = rotateCrate(cratesList.get(i).get(0));
+                    world.setBlockState(cratesList.get(i).get(j), newStateList.get(j).with(ROTATED, rotate).with(POS_NUM, j + 1).with(TYPE, getCrateType(cratesList.get(i))).with(PARENT, (j == 0)));
+                    if (currentPos == cratesList.get(i).get(j)) {
+                        return newStateList.get(j).with(ROTATED, rotate).with(POS_NUM, j + 1).with(TYPE, getCrateType(cratesList.get(i))).with(PARENT, (j == 0));
+                    }
+                }
+            }
+        }
+        // Block is not missing.
+        return stateIn;
+    }
+
+/*    @Override
+    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean isMoving) {
+        if (!state.get(SHIFT_PLACED)) {
             ArrayList<BlockPos> positionList = checkForCrates(world, pos);
             boolean rotate = rotateCrate(positionList.get(0));
             ArrayList<BlockState> stateList = calculateSides(positionList, world);
-            if (context.getPlayer().isSneaking()) {
-                return this.getDefaultState().with(ROTATED, rotate);
-            }
-            int crateNum = getCrateNumber(pos, positionList);
-            BlockState currentState = this.getDefaultState();
             for (int i = 0; i < positionList.size(); i++) {
-                if (i != crateNum) {
+                world.setBlockState(positionList.get(i), stateList.get(i).with(ROTATED, rotate)
+                        .with(POS_NUM, getCrateNumber(positionList.get(i), positionList) + 1)
+                        .with(PARENT, (getCrateNumber(positionList.get(i), positionList)) == 0)
+                        .with(TYPE, getCrateType(positionList)));
+            }
+        }
+    }*/
+
+    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        if (placer != null) {
+            if (!placer.getEntity().isSneaking()) {
+                ArrayList<BlockPos> positionList = checkForCrates(world, pos);
+                boolean rotate = rotateCrate(positionList.get(0));
+                ArrayList<BlockState> stateList = calculateSides(positionList, world);
+                for (int i = 0; i < positionList.size(); i++) {
                     world.setBlockState(positionList.get(i), stateList.get(i).with(ROTATED, rotate)
                             .with(POS_NUM, getCrateNumber(positionList.get(i), positionList) + 1)
                             .with(PARENT, (getCrateNumber(positionList.get(i), positionList)) == 0)
                             .with(TYPE, getCrateType(positionList)));
                 }
-                if (i == crateNum) {
-                    currentState = stateList.get(i).with(ROTATED, rotate)
-                            .with(POS_NUM, getCrateNumber(positionList.get(i), positionList) + 1)
-                            .with(PARENT, (getCrateNumber(positionList.get(i), positionList)) == 0)
-                            .with(TYPE, getCrateType(positionList));
-                }
             }
-            world.setBlockState(pos, Blocks.AIR.getDefaultState());
-            return currentState;
         }
-        return null;
+        if (stack.hasDisplayName()) {
+            TileEntity tileentity = world.getTileEntity(pos);
+            if (tileentity instanceof CrateTileEntity) {
+                ((CrateTileEntity)tileentity).setCustomName(stack.getDisplayName());
+            }
+        }
+
+    }
+
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
+        boolean rotate = rotateCrate(context.getPos());
+        return this.getDefaultState().with(ROTATED, rotate);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        if (worldIn == null) return;
+        tooltip.add(new TranslationTextComponent("block.druidcraft.crate.description1").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
     }
 
     interface InventoryFactory<T> {
