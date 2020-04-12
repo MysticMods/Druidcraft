@@ -25,6 +25,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.*;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.BarrelTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -49,7 +50,6 @@ import java.util.Random;
 
 public class CrateBlock extends ContainerBlock {
     public static final BooleanProperty PROPERTY_OPEN = BlockStateProperties.OPEN;
-    public static final BooleanProperty SHIFT_PLACED = BooleanProperty.create("shift_placed");
     public static final EnumProperty TYPE = EnumProperty.create("type", CrateType.class);
     public static final IntegerProperty POS_NUM = IntegerProperty.create("pos_num", 1, 8);
     public static final BooleanProperty PARENT = BooleanProperty.create("parent");
@@ -170,8 +170,7 @@ public class CrateBlock extends ContainerBlock {
                 .with(SOUTH, true)
                 .with(WEST, true)
                 .with(UP, true)
-                .with(DOWN, true)
-                .with(SHIFT_PLACED, true));
+                .with(DOWN, true));
     }
 
     public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
@@ -493,6 +492,16 @@ public class CrateBlock extends ContainerBlock {
         shapeConfig.clear();
         shapeConfig.add(pos);
         return shapeConfig;
+    }
+
+    public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
+        Druidcraft.LOGGER.debug("Attempting tick...");
+        TileEntity tileentity = worldIn.getTileEntity(pos);
+        if (tileentity instanceof CrateTileEntity) {
+            ((CrateTileEntity)tileentity).crateTick();
+            Druidcraft.LOGGER.debug("Initializing tick...");
+        }
+
     }
 
     public static ArrayList<BlockPos> getBlockPositions(World world, BlockPos pos) {
@@ -1059,7 +1068,7 @@ public class CrateBlock extends ContainerBlock {
     }
 
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(TYPE, PROPERTY_OPEN, PARENT, ROTATED, POS_NUM, NORTH, EAST, SOUTH, WEST, UP, DOWN, SHIFT_PLACED);
+        builder.add(TYPE, PROPERTY_OPEN, PARENT, ROTATED, POS_NUM, NORTH, EAST, SOUTH, WEST, UP, DOWN);
     }
 
     // DO THIS AND REMEMBER TO KEEP MATCHING CHESTBLOCK CODE TO THIS CLASS.

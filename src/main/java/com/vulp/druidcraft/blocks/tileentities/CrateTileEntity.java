@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.blocks.tileentities;
 
+import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.api.CrateType;
 import com.vulp.druidcraft.blocks.CrateBlock;
 import com.vulp.druidcraft.inventory.OctoSidedInventory;
@@ -8,8 +9,10 @@ import com.vulp.druidcraft.inventory.container.CrateContainer;
 import com.vulp.druidcraft.registry.BlockRegistry;
 import com.vulp.druidcraft.registry.SoundEventRegistry;
 import com.vulp.druidcraft.registry.TileEntityRegistry;
+import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.DoubleSidedInventory;
@@ -28,10 +31,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
 
-public class CrateTileEntity extends LockableLootTileEntity implements ITickableTileEntity {
+public class CrateTileEntity extends LockableLootTileEntity {
     private NonNullList<ItemStack> contents = NonNullList.withSize(27, ItemStack.EMPTY);
     private ArrayList<BlockPos> neighbors;
     private int numPlayersUsing;
@@ -160,41 +164,34 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
         return ChestContainer.createGeneric9X3(id, player, this);
     }
 
-    public void tick() {
+    public void crateTick() {
+        Druidcraft.LOGGER.debug("Ticking!");
         int i = this.pos.getX();
         int j = this.pos.getY();
         int k = this.pos.getZ();
         BlockState blockState = world.getBlockState(new BlockPos(i, j, k));
-        ++this.ticksSinceSync;
-        this.numPlayersUsing = calculatePlayersUsingSync(this.world, this, this.ticksSinceSync, i, j, k, this.numPlayersUsing, (blockState.get(CrateBlock.TYPE) == CrateType.QUAD_X ||
+        this.numPlayersUsing = CrateTileEntity.calculatePlayersUsing(this.world, this, i, j, k, (blockState.get(CrateBlock.TYPE) == CrateType.QUAD_X ||
                 blockState.get(CrateBlock.TYPE) == CrateType.QUAD_Y || blockState.get(CrateBlock.TYPE) == CrateType.QUAD_Z || blockState.get(CrateBlock.TYPE) == CrateType.OCTO));
         if (this.numPlayersUsing > 0) {
-            this.onOpenOrClose();
+            this.scheduleTick();
         } else {
-            if (blockState.getBlock() != BlockRegistry.crate) {
+            BlockState blockstate = this.getBlockState();
+            if (blockstate.getBlock() != BlockRegistry.crate) {
                 this.remove();
                 return;
             }
-
-            boolean flag = blockState.get(CrateBlock.PROPERTY_OPEN);
-            if (flag) {
+            if (blockstate.get(CrateBlock.PROPERTY_OPEN)) {
                 if (blockState.get(CrateBlock.PARENT)) {
-                    this.func_213965_a(blockState, SoundEventRegistry.close_crate);
+                    this.playSound(blockState, SoundEventRegistry.close_crate);
                 }
-                this.setCrateState(blockState, false);
+                this.setCrateState(blockstate, false);
             }
         }
-    }
 
-    public static int calculatePlayersUsingSync(World world, LockableTileEntity lockableTileEntity, int ticksSinceSync, int posX, int posY, int posZ, int numPlayersUsing, boolean isQuadOrOcto) {
-        if (!world.isRemote && numPlayersUsing != 0 && (ticksSinceSync + posX + posY + posZ) % 200 == 0) {
-            numPlayersUsing = calculatePlayersUsing(world, lockableTileEntity, posX, posY, posZ, isQuadOrOcto);
-        }
-
-        return numPlayersUsing;
     }
 
     public static int calculatePlayersUsing(World world, LockableTileEntity lockableTileEntity, int posX, int posY, int posZ, boolean isQuadOrOcto) {
+        Druidcraft.LOGGER.debug("Calculating players!");
         int i = 0;
         float f = 6.0F;
 
@@ -212,7 +209,7 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
                 }
             }
         }
-
+        Druidcraft.LOGGER.debug("Players using = " + i);
         return i;
     }
 
@@ -227,17 +224,17 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
             boolean flag = blockstate.get(CrateBlock.PROPERTY_OPEN);
             if (!flag) {
                 if (blockstate.get(CrateBlock.PARENT)) {
-                    this.func_213965_a(blockstate, SoundEventRegistry.open_crate);
+                    this.playSound(blockstate, SoundEventRegistry.open_crate);
                 }
                 this.setCrateState(blockstate, true);
             }
 
-            this.onOpenOrClose();
+            this.scheduleTick();
         }
 
     }
 
-    private void onOpenOrClose() {
+    private void scheduleTick() {
         Block block = this.getBlockState().getBlock();
         if (block instanceof CrateBlock) {
             this.world.addBlockEvent(this.pos, block, 1, this.numPlayersUsing);
@@ -344,7 +341,7 @@ public class CrateTileEntity extends LockableLootTileEntity implements ITickable
         return 0.9F;
     }
 
-    private void func_213965_a(BlockState state, SoundEvent p_213965_2_) {
+    private void playSound(BlockState state, SoundEvent p_213965_2_) {
         double d0 = (double)this.pos.getX() + 0.5D;
         double d1 = (double)this.pos.getY() + 0.5D;
         double d2 = (double)this.pos.getZ() + 0.5D;

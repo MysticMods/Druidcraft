@@ -59,6 +59,7 @@ public class CrateTempBlock extends ContainerBlock {
 
     }
 
+    @Override
     public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
         TileEntity tileentity = worldIn.getTileEntity(pos);
         if (tileentity instanceof CrateTileEntityOld) {
