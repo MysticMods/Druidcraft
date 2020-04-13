@@ -151,7 +151,7 @@
   "block.druidcraft.elder_sapling": "Elder Sapling",
   "block.druidcraft.elder_wood": "Elder Wood",
   "block.druidcraft.crate": "Crate",
-  "block.druidcraft.crate.description1": "Multiblock crate! You can not open other crates while this is in hand.",
+  "block.druidcraft.crate.description1": "Multiblock crate! You can not open other crates while this is in hand, to make placing easier.",
   "block.druidcraft.ceramic_lantern": "Ceramic Lantern",
   "block.druidcraft.growth_lamp": "Lamp of Growth",
   "block.druidcraft.growth_lamp.description1": "Accelerates the growth of plants and baby animals within a 5x5x5 area!",
@@ -170,7 +170,10 @@
   "entity.druidcraft.beetle": "Beetle",
   "entity.druidcraft.lunar_moth": "Lunar Moth",
 
-  "container.druidcraft.crate": "Crate",
+  "container.druidcraft.crate": "Small Crate",
+  "container.druidcraft.crateDouble": "Medium Crate",
+  "container.druidcraft.crateQuad": "Large Crate",
+  "container.druidcraft.crateOcto": "Huge Crate",
 
   "biome.druidcraft.darkwood_forest": "Darkwood Forest",
 
@@ -195,6 +198,8 @@
   "advancements.druidcraft.place_rope.title": "Roped In",
   "advancements.druidcraft.place_rope.description": "Try placing down some rope",
   "advancements.druidcraft.collector.title": "Collector",
-  "advancements.druidcraft.collector.description": "Collect a moonstone, fiery glass, rockroot and amber block"
+  "advancements.druidcraft.collector.description": "Collect a moonstone, fiery glass, rockroot and amber block",
+
+  "block.druidcraft.old_crate.update": "This block has been updated. Break to get the updated block."
   
 }

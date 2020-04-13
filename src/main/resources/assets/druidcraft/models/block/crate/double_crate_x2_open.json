@@ -1,0 +1,24 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"28": "druidcraft:block/wide_crate_front_right",
+		"32": "druidcraft:block/wide_crate_top_right",
+		"33": "druidcraft:block/wide_crate_top_right_open",
+		"35": "druidcraft:block/wide_crate_front_left",
+		"38": "druidcraft:block/small_crate_side"
+	},
+	"elements": [
+		{
+			"name": "block",
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#35"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#38"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#28"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#33"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#32"}
+			}
+		}
+	]
+}

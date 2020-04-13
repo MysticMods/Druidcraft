@@ -198,7 +198,7 @@ public class DruidcraftRegistry {
                         ItemRegistry.dry_mud_brick_wall = new BlockItem(BlockRegistry.dry_mud_brick_wall, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.dry_mud_brick_wall.getRegistryName()),
                         ItemRegistry.fiery_torch = new WallOrFloorItem(BlockRegistry.fiery_torch, BlockRegistry.wall_fiery_torch, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.fiery_torch.getRegistryName()),
                         ItemRegistry.rope = new BlockItem(BlockRegistry.rope, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.rope.getRegistryName()),
-                        ItemRegistry.crate_temp = new BlockItem(BlockRegistry.crate_temp, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.crate_temp.getRegistryName()),
+                        ItemRegistry.crate_temp = new BlockItem(BlockRegistry.crate_temp, new Item.Properties()).setRegistryName(BlockRegistry.crate_temp.getRegistryName()),
                         ItemRegistry.crate = new BlockItem(BlockRegistry.crate, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.crate.getRegistryName()),
                         ItemRegistry.ceramic_lantern = new BlockItem(BlockRegistry.ceramic_lantern, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.ceramic_lantern.getRegistryName()),
                         ItemRegistry.lavender = new BlockItem(BlockRegistry.lavender, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.lavender.getRegistryName()),
@@ -232,7 +232,7 @@ public class DruidcraftRegistry {
     {
         BlockRegistryEvent.getRegistry().registerAll
                 (
-                        BlockRegistry.debug_block = new DebugBlock(DebugBlock.Properties.create(Material.CLAY)).setRegistryName(location("debug_block")),
+                        BlockRegistry.debug_block = new DebugBlock(DebugBlock.Properties.create(Material.CLAY)).setRegistryName(location("debug")),
 
                         BlockRegistry.hemp_crop = new HempBlock(HempBlock.Properties.create(Material.PLANTS).sound(SoundType.CROP).hardnessAndResistance(0.0f).doesNotBlockMovement().tickRandomly()).setRegistryName(location("hemp_crop")),
                         BlockRegistry.amber_ore = new OreBlock(OreBlock.Properties.create(Material.ROCK).hardnessAndResistance(3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(1), 6, 12).setRegistryName(location("amber_ore")),
@@ -315,7 +315,7 @@ public class DruidcraftRegistry {
                         BlockRegistry.rope = new RopeBlock(RopeBlock.Properties.create(Material.WOOL).sound(SoundType.CLOTH).hardnessAndResistance(0.0f)).setRegistryName(location("rope")),
                         BlockRegistry.rope_lantern = new RopeLanternBlock(RopeLanternBlock.Properties.create(Material.IRON).hardnessAndResistance(3.5F).sound(SoundType.LANTERN).lightValue(15).lootFrom(Blocks.LANTERN)).setRegistryName(location("rope_lantern")),
                         BlockRegistry.blueberry_bush = new BerryBushBlock(() -> ItemRegistry.blueberries, false, BerryBushBlock.Properties.create(Material.PLANTS).tickRandomly().doesNotBlockMovement().sound(SoundType.SWEET_BERRY_BUSH)).setRegistryName(location("blueberry_bush")),
-                        BlockRegistry.crate_temp = new CrateTempBlock(CrateTempBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("old_crate")),
+                        BlockRegistry.crate_temp = new CrateTempBlock(CrateTempBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)).setRegistryName(location("removed")),
                         BlockRegistry.ceramic_lantern = new CeramicLanternBlock(CeramicLanternBlock.Properties.create(Material.ROCK).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5f).lightValue(13)).setRegistryName(location("ceramic_lantern")),
                         BlockRegistry.turquoise_lunar_moth_jar = new LunarMothJarBlock(LunarMothJarBlock.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(1.0f).lightValue(10), 1).setRegistryName(location("turquoise_lunar_moth_lantern")),
                         BlockRegistry.white_lunar_moth_jar = new LunarMothJarBlock(LunarMothJarBlock.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(1.0f).lightValue(10), 2).setRegistryName(location("white_lunar_moth_lantern")),

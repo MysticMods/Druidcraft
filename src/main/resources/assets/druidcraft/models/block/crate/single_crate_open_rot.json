@@ -1,0 +1,24 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"37": "druidcraft:block/small_crate_top",
+		"40": "druidcraft:block/small_crate_top_open",
+		"38": "druidcraft:block/small_crate_front",
+		"39": "druidcraft:block/small_crate_side"
+	},
+	"elements": [
+		{
+			"name": "block",
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#39"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#38"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#39"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#38"},
+				"up": {"uv": [0, 0, 16, 16], "rotation": 270, "texture": "#40"},
+				"down": {"uv": [0, 0, 16, 16], "rotation": 270, "texture": "#37"}
+			}
+		}
+	]
+}

@@ -1,3 +1,3 @@
 {
-	"parent": "druidcraft:block/crate"
+	"parent": "druidcraft:block/crate/single_crate"
 }

@@ -53,7 +53,7 @@ public class CrateBlock extends ContainerBlock {
     public static final EnumProperty TYPE = EnumProperty.create("type", CrateType.class);
     public static final IntegerProperty POS_NUM = IntegerProperty.create("pos_num", 1, 8);
     public static final BooleanProperty PARENT = BooleanProperty.create("parent");
-    public static final BooleanProperty ROTATED = BooleanProperty.create("rotated");
+    public static final BooleanProperty ROTATED = BooleanProperty.create("rot");
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
     public static final BooleanProperty EAST = BooleanProperty.create("east");
     public static final BooleanProperty SOUTH = BooleanProperty.create("south");
@@ -494,12 +494,11 @@ public class CrateBlock extends ContainerBlock {
         return shapeConfig;
     }
 
+    @Override
     public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
-        Druidcraft.LOGGER.debug("Attempting tick...");
         TileEntity tileentity = worldIn.getTileEntity(pos);
         if (tileentity instanceof CrateTileEntity) {
             ((CrateTileEntity)tileentity).crateTick();
-            Druidcraft.LOGGER.debug("Initializing tick...");
         }
 
     }
@@ -1160,22 +1159,8 @@ public class CrateBlock extends ContainerBlock {
         return Container.calcRedstoneFromInventory(getInventory(blockState, worldIn, pos, false));
     }
 
-    protected boolean canPlace(BlockItemUseContext p_195944_1_, BlockState p_195944_2_) {
-        PlayerEntity playerentity = p_195944_1_.getPlayer();
-        ISelectionContext iselectioncontext = playerentity == null ? ISelectionContext.dummy() : ISelectionContext.forEntity(playerentity);
-        return (!this.checkPosition() || p_195944_2_.isValidPosition(p_195944_1_.getWorld(), p_195944_1_.getPos())) && p_195944_1_.getWorld().func_217350_a(p_195944_2_, p_195944_1_.getPos(), iselectioncontext);
-    }
-
     protected boolean checkPosition() {
         return true;
-    }
-
-    private TileEntity getTileEntity(World world, BlockPos pos) {
-        return world.getTileEntity(pos);
-    }
-
-    private ArrayList<BlockPos> getNeighborsFromTE(TileEntity tileEntity) {
-        return ((CrateTileEntity) tileEntity).getNeighbors();
     }
 
     public ArrayList<Boolean> checkMissingCrates(World world, BlockPos pos, ArrayList<BlockPos> neighborList) {
@@ -1183,7 +1168,6 @@ public class CrateBlock extends ContainerBlock {
         for (int i = 0; i < neighborList.size(); i++) {
             missingList.add(world.getBlockState(neighborList.get(i)).getBlock() instanceof CrateBlock);
         }
-        // Druidcraft.LOGGER.debug(missingList);
         return missingList;
     }
 
