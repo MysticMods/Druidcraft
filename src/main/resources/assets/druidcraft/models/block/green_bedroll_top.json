@@ -1,9 +1,9 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "druidcraft:block/bedroll_top",
-		"2": "druidcraft:block/bedroll_side_bits",
-		"particle": "druidcraft:block/bedroll_top"
+		"0": "druidcraft:block/green_bedroll_top",
+		"2": "druidcraft:block/green_bedroll_side_bits",
+		"particle": "druidcraft:block/green_bedroll_top"
 	},
 	"elements": [
 		{

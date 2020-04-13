@@ -96,6 +96,22 @@ public class BlockRegistry
     public static Block lavender;
     public static Block potted_lavender;
     public static Block crate;
+    public static Block black_bedroll;
+    public static Block red_bedroll;
+    public static Block green_bedroll;
+    public static Block brown_bedroll;
+    public static Block blue_bedroll;
+    public static Block purple_bedroll;
+    public static Block cyan_bedroll;
+    public static Block light_gray_bedroll;
+    public static Block gray_bedroll;
+    public static Block pink_bedroll;
+    public static Block lime_bedroll;
+    public static Block yellow_bedroll;
+    public static Block light_blue_bedroll;
+    public static Block magenta_bedroll;
+    public static Block orange_bedroll;
+    public static Block white_bedroll;
 
     public static Block fiery_torch;
     public static Block wall_fiery_torch;
