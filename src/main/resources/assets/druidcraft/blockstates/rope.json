@@ -11,9 +11,6 @@
         {   "when": { "north": "regular" },
             "apply": { "model": "druidcraft:block/rope_north" }
         },
-        {   "when": { "north": "tied_fence" },
-            "apply": { "model": "druidcraft:block/rope_north_fence" }
-        },
 		{   "when": { "north": "tied_beam_1" },
             "apply": { "model": "druidcraft:block/rope_north_beam_y" }
         },
@@ -24,9 +21,6 @@
 		
         {   "when": { "east": "regular" },
             "apply": { "model": "druidcraft:block/rope_east" }
-        },
-		{   "when": { "east": "tied_fence" },
-            "apply": { "model": "druidcraft:block/rope_east_fence" }
         },
 		{   "when": { "east": "tied_beam_1" },
             "apply": { "model": "druidcraft:block/rope_east_beam_y" }
@@ -39,9 +33,6 @@
         {   "when": { "south": "regular" },
             "apply": { "model": "druidcraft:block/rope_south" }
         },
-		{   "when": { "south": "tied_fence" },
-            "apply": { "model": "druidcraft:block/rope_south_fence" }
-        },
 		{   "when": { "south": "tied_beam_1" },
             "apply": { "model": "druidcraft:block/rope_south_beam_y" }
         },
@@ -52,9 +43,6 @@
 		
         {   "when": { "west": "regular" },
             "apply": { "model": "druidcraft:block/rope_west" }
-        },
-		{   "when": { "west": "tied_fence" },
-            "apply": { "model": "druidcraft:block/rope_west_fence" }
         },
 		{   "when": { "west": "tied_beam_1" },
             "apply": { "model": "druidcraft:block/rope_west_beam_y" }

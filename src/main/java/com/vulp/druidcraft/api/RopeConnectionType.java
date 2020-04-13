@@ -7,7 +7,6 @@ import java.util.Locale;
 public enum RopeConnectionType implements IStringSerializable {
     NONE,
     REGULAR,
-    TIED_FENCE,
     TIED_BEAM_1,
     TIED_BEAM_2;
 

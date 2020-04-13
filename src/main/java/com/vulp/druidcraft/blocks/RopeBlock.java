@@ -255,8 +255,6 @@ public class RopeBlock extends SixWayBlock implements IKnifeable {
         BlockState northState = world.getBlockState(pos.offset(Direction.NORTH));
         if (northState.func_224755_d(world, pos.offset(Direction.NORTH), Direction.NORTH.getOpposite()) || northState.getBlock() == this) {
             northType = RopeConnectionType.REGULAR;
-        } else if (northState.getBlock().isIn(BlockTags.FENCES)) {
-            northType = RopeConnectionType.TIED_FENCE;
         } else if (northState.getBlock() instanceof SmallBeamBlock) {
             northType = beamChecker(northState, Direction.NORTH);
         }
@@ -265,8 +263,6 @@ public class RopeBlock extends SixWayBlock implements IKnifeable {
         BlockState eastState = world.getBlockState(pos.offset(Direction.EAST));
         if (eastState.func_224755_d(world, pos.offset(Direction.EAST), Direction.EAST.getOpposite()) || eastState.getBlock() == this) {
             eastType = RopeConnectionType.REGULAR;
-        } else if (eastState.getBlock().isIn(BlockTags.FENCES)) {
-            eastType = RopeConnectionType.TIED_FENCE;
         } else if (eastState.getBlock() instanceof SmallBeamBlock) {
             eastType = beamChecker(eastState, Direction.EAST);
         }
@@ -276,8 +272,6 @@ public class RopeBlock extends SixWayBlock implements IKnifeable {
         BlockState southState = world.getBlockState(pos.offset(Direction.SOUTH));
         if (southState.func_224755_d(world, pos.offset(Direction.SOUTH), Direction.SOUTH.getOpposite()) || southState.getBlock() == this) {
             southType = RopeConnectionType.REGULAR;
-        } else if (southState.getBlock().isIn(BlockTags.FENCES)) {
-            southType = RopeConnectionType.TIED_FENCE;
         } else if (southState.getBlock() instanceof SmallBeamBlock) {
             southType = beamChecker(southState, Direction.SOUTH);
         }
@@ -286,8 +280,6 @@ public class RopeBlock extends SixWayBlock implements IKnifeable {
         BlockState westState = world.getBlockState(pos.offset(Direction.WEST));
         if (westState.func_224755_d(world, pos.offset(Direction.WEST), Direction.WEST.getOpposite()) || westState.getBlock() == this) {
             westType = RopeConnectionType.REGULAR;
-        } else if (westState.getBlock().isIn(BlockTags.FENCES)) {
-            westType = RopeConnectionType.TIED_FENCE;
         } else if (westState.getBlock() instanceof SmallBeamBlock) {
             westType = beamChecker(westState, Direction.WEST);
         }
