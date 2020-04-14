@@ -1,0 +1,21 @@
+{
+	"clight_grayit": "Made with Blockbench",
+	"textures": {
+		"1": "druidcraft:block/light_gray_bedroll_bottom",
+		"particle": "druidcraft:block/light_gray_bedroll_top"
+	},
+	"elements": [
+		{
+			"name": "cover_bot",
+			"from": [1, 0, 0],
+			"to": [15, 2, 16],
+			"faces": {
+				"east": {"uv": [1, 0, 3, 16], "rotation": 90, "texture": "#1"},
+				"south": {"uv": [1, 14, 15, 16], "rotation": 180, "texture": "#1"},
+				"west": {"uv": [13, 0, 15, 16], "rotation": 270, "texture": "#1"},
+				"up": {"uv": [1, 0, 15, 16], "texture": "#1"},
+				"down": {"uv": [1, 0, 15, 16], "rotation": 180, "texture": "#1"}
+			}
+		}
+	]
+}
