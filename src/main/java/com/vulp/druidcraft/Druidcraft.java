@@ -1,8 +1,13 @@
 package com.vulp.druidcraft;
 
+import com.vulp.druidcraft.capabilities.ITempSpawnCapability;
+import com.vulp.druidcraft.capabilities.TempSpawnFactory;
+import com.vulp.druidcraft.capabilities.TempSpawnStorage;
 import com.vulp.druidcraft.config.Configuration;
 import com.vulp.druidcraft.config.DropRateConfig;
+import com.vulp.druidcraft.events.CapabilityManager;
 import com.vulp.druidcraft.events.LootHandler;
+import com.vulp.druidcraft.events.SpawnHandler;
 import com.vulp.druidcraft.registry.*;
 import com.vulp.druidcraft.world.OreGeneration;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -46,9 +51,12 @@ public class Druidcraft {
         VanillaIntegrationRegistry.setup();
 
         MinecraftForge.EVENT_BUS.register(new GUIRegistry());
+        MinecraftForge.EVENT_BUS.register(new SpawnHandler());
         if (DropRateConfig.drop_seeds.get()) {
             MinecraftForge.EVENT_BUS.register(new LootHandler());
         }
+        MinecraftForge.EVENT_BUS.register(new CapabilityRegistry());
+        MinecraftForge.EVENT_BUS.register(new CapabilityManager());
 
         LOGGER.info("Setup method registered.");
     }
