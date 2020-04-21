@@ -1,8 +1,5 @@
 package com.vulp.druidcraft;
 
-import com.vulp.druidcraft.capabilities.ITempSpawnCapability;
-import com.vulp.druidcraft.capabilities.TempSpawnFactory;
-import com.vulp.druidcraft.capabilities.TempSpawnStorage;
 import com.vulp.druidcraft.config.Configuration;
 import com.vulp.druidcraft.config.DropRateConfig;
 import com.vulp.druidcraft.events.CapabilityManager;
@@ -55,8 +52,6 @@ public class Druidcraft {
         if (DropRateConfig.drop_seeds.get()) {
             MinecraftForge.EVENT_BUS.register(new LootHandler());
         }
-        MinecraftForge.EVENT_BUS.register(new CapabilityRegistry());
-        MinecraftForge.EVENT_BUS.register(new CapabilityManager());
 
         LOGGER.info("Setup method registered.");
     }
