@@ -10,6 +10,7 @@ import com.vulp.druidcraft.entities.BeetleEntity;
 import com.vulp.druidcraft.entities.DreadfishEntity;
 import com.vulp.druidcraft.entities.LunarMothEntity;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.entity.model.ShieldModel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;

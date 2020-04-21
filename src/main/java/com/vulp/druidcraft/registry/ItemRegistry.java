@@ -44,12 +44,14 @@ public class ItemRegistry
     public static Item bone_chestplate;
     public static Item bone_leggings;
     public static Item bone_boots;
+    public static Item bone_shield;
 
     public static Item chitin;
     public static Item chitin_helmet;
     public static Item chitin_chestplate;
     public static Item chitin_leggings;
     public static Item chitin_boots;
+    public static Item chitin_shield;
 
     public static Item moonstone_sword;
     public static Item moonstone_pickaxe;
@@ -61,6 +63,7 @@ public class ItemRegistry
     public static Item moonstone_chestplate;
     public static Item moonstone_leggings;
     public static Item moonstone_boots;
+    public static Item moonstone_shield;
 
     public static Item knife;
 
