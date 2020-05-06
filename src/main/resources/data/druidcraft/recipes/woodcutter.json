@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " O ",
+    "###"
+  ],
+  "key": {
+    "O": {
+      "item": "minecraft:iron_ingot"
+    },
+    "#": {
+      "tag": "minecraft:logs"
+    }
+  },
+  "result": {
+    "item": "druidcraft:woodcutter"
+  }
+}

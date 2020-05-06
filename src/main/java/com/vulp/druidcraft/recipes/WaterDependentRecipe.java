@@ -15,7 +15,6 @@ import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.inventory.container.WorkbenchContainer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipe;
@@ -80,7 +79,7 @@ public class WaterDependentRecipe extends ShapedRecipe {
 
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return RecipeRegistry.WATER_CRAFTING.serializer;
+        return RecipeRegistry.water_crafting.serializer;
     }
 
     @Override

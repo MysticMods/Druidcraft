@@ -1,0 +1,8 @@
+{
+  "type": "druidcraft:woodcutting",
+  "ingredient": {
+    "item": "druidcraft:elder_wood"
+  },
+  "result": "druidcraft:elder_beam",
+  "count": 1
+}

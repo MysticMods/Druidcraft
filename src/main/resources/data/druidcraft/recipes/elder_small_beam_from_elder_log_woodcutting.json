@@ -1,0 +1,8 @@
+{
+  "type": "druidcraft:woodcutting",
+  "ingredient": {
+    "item": "druidcraft:elder_log"
+  },
+  "result": "druidcraft:elder_small_beam",
+  "count": 4
+}

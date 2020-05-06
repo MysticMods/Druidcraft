@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.blocks;
 
+import com.mojang.datafixers.util.Pair;
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.api.CrateType;
 import com.vulp.druidcraft.blocks.tileentities.CrateTileEntity;
@@ -7,7 +8,6 @@ import com.vulp.druidcraft.inventory.OctoSidedInventory;
 import com.vulp.druidcraft.inventory.QuadSidedInventory;
 import com.vulp.druidcraft.inventory.container.CrateContainer;
 import com.vulp.druidcraft.registry.ItemRegistry;
-import javafx.util.Pair;
 import net.minecraft.block.*;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -98,7 +98,7 @@ public class CrateBlock extends ContainerBlock {
                     if (tileEntity1.hasCustomName()) {
                         return tileEntity1.getDisplayName();
                     } else {
-                        return (ITextComponent)(tileEntity2.hasCustomName() ? tileEntity2.getDisplayName() : new TranslationTextComponent("container.crateOcto"));
+                        return (ITextComponent)(tileEntity2.hasCustomName() ? tileEntity2.getDisplayName() : new TranslationTextComponent("container." + Druidcraft.MODID + ".crate_octo"));
                     }
                 }
             };
@@ -122,7 +122,7 @@ public class CrateBlock extends ContainerBlock {
                     if (tileEntity1.hasCustomName()) {
                         return tileEntity1.getDisplayName();
                     } else {
-                        return (ITextComponent)(tileEntity2.hasCustomName() ? tileEntity2.getDisplayName() : new TranslationTextComponent("container.crateQuad"));
+                        return (ITextComponent)(tileEntity2.hasCustomName() ? tileEntity2.getDisplayName() : new TranslationTextComponent("container." + Druidcraft.MODID + ".crate_quad"));
                     }
                 }
             };
@@ -146,7 +146,7 @@ public class CrateBlock extends ContainerBlock {
                     if (tileEntity1.hasCustomName()) {
                         return tileEntity1.getDisplayName();
                     } else {
-                        return (ITextComponent)(tileEntity2.hasCustomName() ? tileEntity2.getDisplayName() : new TranslationTextComponent("container.crateDouble"));
+                        return (ITextComponent)(tileEntity2.hasCustomName() ? tileEntity2.getDisplayName() : new TranslationTextComponent("container." + Druidcraft.MODID + ".crate_double"));
                     }
                 }
             };
@@ -1184,7 +1184,7 @@ public class CrateBlock extends ContainerBlock {
             newMissingList.set(num3, false);
             newMissingList.set(num4, false);
         }
-        return new Pair<ArrayList<BlockPos>, ArrayList<Boolean>>(newNeighborList, newMissingList);
+        return new Pair<>(newNeighborList, newMissingList);
     }
 
     public Pair<ArrayList<BlockPos>, ArrayList<Boolean>> updateCrateShapeHelper(ArrayList<BlockPos> neighborList, ArrayList<Boolean> missingList, int num1, int num2) {
@@ -1196,7 +1196,7 @@ public class CrateBlock extends ContainerBlock {
             newMissingList.set(num1, false);
             newMissingList.set(num2, false);
         }
-        return new Pair<ArrayList<BlockPos>, ArrayList<Boolean>>(newNeighborList, newMissingList);
+        return new Pair<>(newNeighborList, newMissingList);
     }
 
     public ArrayList<ArrayList<BlockPos>> updateCrateShape(World world, BlockState state, BlockPos pos, ArrayList<BlockPos> neighborList, ArrayList<Boolean> missingList) {
@@ -1204,116 +1204,116 @@ public class CrateBlock extends ContainerBlock {
         ArrayList<ArrayList<BlockPos>> cratesList = new ArrayList<>();
         if (type == CrateType.OCTO) {
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try1 = updateCrateShapeHelper(neighborList, missingList, 0, 1, 2, 3);
-            if (!try1.getKey().isEmpty()) {
-                cratesList.add(try1.getKey());
-                missingList = try1.getValue();
+            if (!try1.getFirst().isEmpty()) {
+                cratesList.add(try1.getFirst());
+                missingList = try1.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try2 = updateCrateShapeHelper(neighborList, missingList, 4, 5, 6, 7);
-            if (!try2.getKey().isEmpty()) {
-                cratesList.add(try2.getKey());
-                missingList = try2.getValue();
+            if (!try2.getFirst().isEmpty()) {
+                cratesList.add(try2.getFirst());
+                missingList = try2.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try3 = updateCrateShapeHelper(neighborList, missingList, 0, 2, 4, 6);
-            if (!try3.getKey().isEmpty()) {
-                cratesList.add(try3.getKey());
-                missingList = try3.getValue();
+            if (!try3.getFirst().isEmpty()) {
+                cratesList.add(try3.getFirst());
+                missingList = try3.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try4 = updateCrateShapeHelper(neighborList, missingList, 1, 3, 5, 7);
-            if (!try4.getKey().isEmpty()) {
-                cratesList.add(try4.getKey());
-                missingList = try4.getValue();
+            if (!try4.getFirst().isEmpty()) {
+                cratesList.add(try4.getFirst());
+                missingList = try4.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try5 = updateCrateShapeHelper(neighborList, missingList, 0, 1, 4, 5);
-            if (!try5.getKey().isEmpty()) {
-                cratesList.add(try5.getKey());
-                missingList = try5.getValue();
+            if (!try5.getFirst().isEmpty()) {
+                cratesList.add(try5.getFirst());
+                missingList = try5.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try6 = updateCrateShapeHelper(neighborList, missingList, 2, 3, 6, 7);
-            if (!try6.getKey().isEmpty()) {
-                cratesList.add(try6.getKey());
-                missingList = try6.getValue();
+            if (!try6.getFirst().isEmpty()) {
+                cratesList.add(try6.getFirst());
+                missingList = try6.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try7 = updateCrateShapeHelper(neighborList, missingList, 0, 1);
-            if (!try7.getKey().isEmpty()) {
-                cratesList.add(try7.getKey());
-                missingList = try7.getValue();
+            if (!try7.getFirst().isEmpty()) {
+                cratesList.add(try7.getFirst());
+                missingList = try7.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try8 = updateCrateShapeHelper(neighborList, missingList, 2, 3);
-            if (!try8.getKey().isEmpty()) {
-                cratesList.add(try8.getKey());
-                missingList = try8.getValue();
+            if (!try8.getFirst().isEmpty()) {
+                cratesList.add(try8.getFirst());
+                missingList = try8.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try9 = updateCrateShapeHelper(neighborList, missingList, 4, 5);
-            if (!try9.getKey().isEmpty()) {
-                cratesList.add(try9.getKey());
-                missingList = try9.getValue();
+            if (!try9.getFirst().isEmpty()) {
+                cratesList.add(try9.getFirst());
+                missingList = try9.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try10 = updateCrateShapeHelper(neighborList, missingList, 6, 7);
-            if (!try10.getKey().isEmpty()) {
-                cratesList.add(try10.getKey());
-                missingList = try10.getValue();
+            if (!try10.getFirst().isEmpty()) {
+                cratesList.add(try10.getFirst());
+                missingList = try10.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try11 = updateCrateShapeHelper(neighborList, missingList, 0, 2);
-            if (!try11.getKey().isEmpty()) {
-                cratesList.add(try11.getKey());
-                missingList = try11.getValue();
+            if (!try11.getFirst().isEmpty()) {
+                cratesList.add(try11.getFirst());
+                missingList = try11.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try12 = updateCrateShapeHelper(neighborList, missingList, 1, 3);
-            if (!try12.getKey().isEmpty()) {
-                cratesList.add(try12.getKey());
-                missingList = try12.getValue();
+            if (!try12.getFirst().isEmpty()) {
+                cratesList.add(try12.getFirst());
+                missingList = try12.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try13 = updateCrateShapeHelper(neighborList, missingList, 4, 6);
-            if (!try13.getKey().isEmpty()) {
-                cratesList.add(try13.getKey());
-                missingList = try13.getValue();
+            if (!try13.getFirst().isEmpty()) {
+                cratesList.add(try13.getFirst());
+                missingList = try13.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try14 = updateCrateShapeHelper(neighborList, missingList, 5, 7);
-            if (!try14.getKey().isEmpty()) {
-                cratesList.add(try14.getKey());
-                missingList = try14.getValue();
+            if (!try14.getFirst().isEmpty()) {
+                cratesList.add(try14.getFirst());
+                missingList = try14.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try15 = updateCrateShapeHelper(neighborList, missingList, 0, 4);
-            if (!try15.getKey().isEmpty()) {
-                cratesList.add(try15.getKey());
-                missingList = try15.getValue();
+            if (!try15.getFirst().isEmpty()) {
+                cratesList.add(try15.getFirst());
+                missingList = try15.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try16 = updateCrateShapeHelper(neighborList, missingList, 1, 5);
-            if (!try16.getKey().isEmpty()) {
-                cratesList.add(try16.getKey());
-                missingList = try16.getValue();
+            if (!try16.getFirst().isEmpty()) {
+                cratesList.add(try16.getFirst());
+                missingList = try16.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try17 = updateCrateShapeHelper(neighborList, missingList, 2, 6);
-            if (!try17.getKey().isEmpty()) {
-                cratesList.add(try17.getKey());
-                missingList = try17.getValue();
+            if (!try17.getFirst().isEmpty()) {
+                cratesList.add(try17.getFirst());
+                missingList = try17.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try18 = updateCrateShapeHelper(neighborList, missingList, 3, 7);
-            if (!try18.getKey().isEmpty()) {
-                cratesList.add(try18.getKey());
-                missingList = try18.getValue();
+            if (!try18.getFirst().isEmpty()) {
+                cratesList.add(try18.getFirst());
+                missingList = try18.getSecond();
             }
         }
         if (type == CrateType.QUAD_X || type == CrateType.QUAD_Y || type == CrateType.QUAD_Z) {
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try1 = updateCrateShapeHelper(neighborList, missingList, 0, 1);
-            if (!try1.getKey().isEmpty()) {
-                cratesList.add(try1.getKey());
-                missingList = try1.getValue();
+            if (!try1.getFirst().isEmpty()) {
+                cratesList.add(try1.getFirst());
+                missingList = try1.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try2 = updateCrateShapeHelper(neighborList, missingList, 2, 3);
-            if (!try2.getKey().isEmpty()) {
-                cratesList.add(try2.getKey());
-                missingList = try2.getValue();
+            if (!try2.getFirst().isEmpty()) {
+                cratesList.add(try2.getFirst());
+                missingList = try2.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try3 = updateCrateShapeHelper(neighborList, missingList, 0, 2);
-            if (!try3.getKey().isEmpty()) {
-                cratesList.add(try3.getKey());
-                missingList = try3.getValue();
+            if (!try3.getFirst().isEmpty()) {
+                cratesList.add(try3.getFirst());
+                missingList = try3.getSecond();
             }
             Pair<ArrayList<BlockPos>, ArrayList<Boolean>> try4 = updateCrateShapeHelper(neighborList, missingList, 1, 3);
-            if (!try4.getKey().isEmpty()) {
-                cratesList.add(try4.getKey());
-                missingList = try4.getValue();
+            if (!try4.getFirst().isEmpty()) {
+                cratesList.add(try4.getFirst());
+                missingList = try4.getSecond();
             }
         }
         for (int i = 0; i < missingList.size(); i++) {

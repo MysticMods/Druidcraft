@@ -1,0 +1,8 @@
+{
+  "type": "druidcraft:woodcutting",
+  "ingredient": {
+    "item": "druidcraft:elder_log"
+  },
+  "result": "druidcraft:stripped_elder_log",
+  "count": 1
+}

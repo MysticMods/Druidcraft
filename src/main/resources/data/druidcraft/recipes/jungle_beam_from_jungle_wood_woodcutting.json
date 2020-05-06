@@ -1,0 +1,8 @@
+{
+  "type": "druidcraft:woodcutting",
+  "ingredient": {
+    "item": "minecraft:jungle_wood"
+  },
+  "result": "druidcraft:jungle_beam",
+  "count": 1
+}

@@ -12,5 +12,10 @@
 	"close_crate": {
 		"sounds": [ "druidcraft:blocks/crate/crate_close" ],
 		"subtitle": "subtitles.druidcraft.block.crate.close"
+	},
+	"woodcutter_take_result": {
+		"sounds": [ "druidcraft:ui/woodcutter/cut1",
+					"druidcraft:ui/woodcutter/cut2" ],
+		"subtitle": "subtitles.druidcraft.ui.woodcutter.take_result"
 	}
 }

@@ -2,7 +2,6 @@ package com.vulp.druidcraft;
 
 import com.vulp.druidcraft.config.Configuration;
 import com.vulp.druidcraft.config.DropRateConfig;
-import com.vulp.druidcraft.events.CapabilityManager;
 import com.vulp.druidcraft.events.LootHandler;
 import com.vulp.druidcraft.events.SpawnHandler;
 import com.vulp.druidcraft.registry.*;

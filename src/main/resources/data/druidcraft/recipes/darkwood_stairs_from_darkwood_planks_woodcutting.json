@@ -1,0 +1,8 @@
+{
+  "type": "druidcraft:woodcutting",
+  "ingredient": {
+    "item": "druidcraft:darkwood_planks"
+  },
+  "result": "druidcraft:darkwood_stairs",
+  "count": 1
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WWW",
+    "###"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:brown_wool"
+    },
+    "#": {
+      "item": "minecraft:wheat"
+    }
+  },
+  "result": {
+    "item": "druidcraft:brown_bedroll"
+  }
+}

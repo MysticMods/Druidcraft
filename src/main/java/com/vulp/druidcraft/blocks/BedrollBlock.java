@@ -2,6 +2,7 @@ package com.vulp.druidcraft.blocks;
 
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,6 +11,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.DyeColor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BedPart;
@@ -22,10 +24,16 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.*;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiquidContainer {
     private final DyeColor color;
@@ -34,7 +42,7 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
     public BedrollBlock(DyeColor colorIn, Properties properties) {
         super(colorIn, properties);
         this.color = colorIn;
-        this.setDefaultState(this.stateContainer.getBaseState().with(PART, BedPart.FOOT).with(OCCUPIED, Boolean.valueOf(false)).with(WATERLOGGED, false));
+        this.setDefaultState(this.stateContainer.getBaseState().with(PART, BedPart.FOOT).with(OCCUPIED, false).with(WATERLOGGED, false));
     }
 
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
@@ -105,7 +113,7 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
     public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, IFluidState fluidStateIn) {
         if (fluidStateIn.getFluid() == Fluids.WATER) {
             if (!worldIn.isRemote()) {
-                worldIn.setBlockState(pos, state.with(WATERLOGGED, Boolean.valueOf(true)), 3);
+                worldIn.setBlockState(pos, state.with(WATERLOGGED, true), 3);
                 worldIn.getPendingFluidTicks().scheduleTick(pos, fluidStateIn.getFluid(), fluidStateIn.getFluid().getTickRate(worldIn));
             }
             return true;
@@ -134,6 +142,13 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
 
     public void onLanded(IBlockReader worldIn, Entity entityIn) {
         entityIn.setMotion(entityIn.getMotion().mul(1.0D, 0.0D, 1.0D));
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        if (worldIn == null) return;
+        tooltip.add(new TranslationTextComponent("block.druidcraft.bedroll.description1").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
     }
 
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {

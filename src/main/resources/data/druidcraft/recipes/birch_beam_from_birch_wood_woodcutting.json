@@ -1,0 +1,8 @@
+{
+  "type": "druidcraft:woodcutting",
+  "ingredient": {
+    "item": "minecraft:birch_wood"
+  },
+  "result": "druidcraft:birch_beam",
+  "count": 1
+}

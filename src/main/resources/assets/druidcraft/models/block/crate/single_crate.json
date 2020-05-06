@@ -1,6 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
+		"particle": "druidcraft:block/small_crate_front",
 		"37": "druidcraft:block/small_crate_top",
 		"38": "druidcraft:block/small_crate_side",
 		"39": "druidcraft:block/small_crate_front"

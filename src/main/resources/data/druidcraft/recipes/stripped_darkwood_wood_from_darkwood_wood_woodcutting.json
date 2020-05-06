@@ -1,0 +1,8 @@
+{
+  "type": "druidcraft:woodcutting",
+  "ingredient": {
+    "item": "druidcraft:darkwood_wood"
+  },
+  "result": "druidcraft:stripped_darkwood_wood",
+  "count": 1
+}

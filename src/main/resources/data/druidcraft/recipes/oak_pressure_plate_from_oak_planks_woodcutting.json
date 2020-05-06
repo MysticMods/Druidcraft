@@ -1,0 +1,8 @@
+{
+  "type": "druidcraft:woodcutting",
+  "ingredient": {
+    "item": "minecraft:oak_planks"
+  },
+  "result": "minecraft:oak_pressure_plate",
+  "count": 3
+}

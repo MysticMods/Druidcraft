@@ -1,0 +1,8 @@
+{
+  "type": "druidcraft:woodcutting",
+  "ingredient": {
+    "item": "minecraft:dark_oak_planks"
+  },
+  "result": "druidcraft:dark_oak_panels",
+  "count": 1
+}

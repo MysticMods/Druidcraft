@@ -13,6 +13,8 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -65,6 +67,6 @@ public class KnifeItem extends Item {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (worldIn == null) return;
-        tooltip.add(new TranslationTextComponent("item.druidcraft.knife.description1"));
+        tooltip.add(new TranslationTextComponent("item.druidcraft.knife.description1").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
     }
 }

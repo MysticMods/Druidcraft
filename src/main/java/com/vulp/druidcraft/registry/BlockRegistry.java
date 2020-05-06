@@ -134,4 +134,6 @@ public class BlockRegistry
     public static Block white_soulfire;
     public static Block rope_lantern;
     public static Block growth_lamp;
+
+    public static Block woodcutter;
 }

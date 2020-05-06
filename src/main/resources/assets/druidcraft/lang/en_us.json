@@ -37,7 +37,9 @@
   "item.druidcraft.bone_chestplate": "Bone Chestplate",
   "item.druidcraft.bone_leggings": "Bone Leggings",
   "item.druidcraft.bone_boots": "Bone Boots",
-  
+  "item.druidcraft.bone_shield": "Bone Shield",
+
+
   "item.druidcraft.knife": "Knife",
   "item.druidcraft.knife.description1": "Used to configure rope blocks. (WIP)",
   "block.druidcraft.turquoise_lunar_moth_lantern": "Turquoise Lunar Moth Lantern",
@@ -64,11 +66,13 @@
   "item.druidcraft.moonstone_chestplate": "Moonstone Chestplate",
   "item.druidcraft.moonstone_leggings": "Moonstone Leggings",
   "item.druidcraft.moonstone_boots": "Moonstone Boots",
+  "item.druidcraft.moonstone_shield": "Moonstone Shield",
 
   "item.druidcraft.chitin_helmet": "Chitin Helmet",
   "item.druidcraft.chitin_chestplate": "Chitin Chestplate",
   "item.druidcraft.chitin_leggings": "Chitin Leggings",
   "item.druidcraft.chitin_boots": "Chitin Boots",
+  "item.druidcraft.chitin_shield": "Chitin Shield",
 
   "block.druidcraft.darkwood_log": "Darkwood Log",
   "block.druidcraft.stripped_darkwood_log": "Stripped Darkwood Log",
@@ -165,21 +169,41 @@
   "block.druidcraft.potted_lavender": "Potted Lavender",
   "block.druidcraft.potted_darkwood_sapling": "Potted Darkwood Sapling",
   "block.druidcraft.potted_elder_sapling": "Potted Elder Sapling",
+  "block.druidcraft.black_bedroll": "Black Bedroll",
+  "block.druidcraft.red_bedroll": "Red Bedroll",
+  "block.druidcraft.green_bedroll": "Green Bedroll",
+  "block.druidcraft.brown_bedroll": "Brown Bedroll",
+  "block.druidcraft.blue_bedroll": "Blue Bedroll",
+  "block.druidcraft.purple_bedroll": "Purple Bedroll",
+  "block.druidcraft.cyan_bedroll": "Cyan Bedroll",
+  "block.druidcraft.light_gray_bedroll": "Light Gray Bedroll",
+  "block.druidcraft.gray_bedroll": "Gray Bedroll",
+  "block.druidcraft.pink_bedroll": "Pink Bedroll",
+  "block.druidcraft.lime_bedroll": "Lime Bedroll",
+  "block.druidcraft.yellow_bedroll": "Yellow Bedroll",
+  "block.druidcraft.light_blue_bedroll": "Light Blue Bedroll",
+  "block.druidcraft.magenta_bedroll": "Magenta Bedroll",
+  "block.druidcraft.orange_bedroll": "Orange Bedroll",
+  "block.druidcraft.white_bedroll": "White Bedroll",
+  "block.druidcraft.bedroll.description1": "A way to sleep that will not set your spawn!",
+  "block.druidcraft.woodcutter": "Woodcutter",
 
   "entity.druidcraft.dreadfish": "Dreadfish",
   "entity.druidcraft.beetle": "Beetle",
   "entity.druidcraft.lunar_moth": "Lunar Moth",
 
   "container.druidcraft.crate": "Small Crate",
-  "container.druidcraft.crateDouble": "Medium Crate",
-  "container.druidcraft.crateQuad": "Large Crate",
-  "container.druidcraft.crateOcto": "Huge Crate",
+  "container.druidcraft.crate_double": "Medium Crate",
+  "container.druidcraft.crate_quad": "Large Crate",
+  "container.druidcraft.crate_octo": "Huge Crate",
+  "container.druidcraft.woodcutter": "Woodcutter",
 
   "biome.druidcraft.darkwood_forest": "Darkwood Forest",
 
   "subtitles.druidcraft.item.bottle.fill": "Bottle fills",
   "subtitles.druidcraft.block.crate.open": "Crate opens",
   "subtitles.druidcraft.block.crate.close": "Crate closes",
+  "subtitles.druidcraft.ui.woodcutter.take_result": "Woodcutter used",
 
   "itemGroup.druidcraft": "Druidcraft",
   

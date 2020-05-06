@@ -13,10 +13,12 @@ import com.vulp.druidcraft.blocks.tileentities.CrateTileEntity;
 import com.vulp.druidcraft.blocks.tileentities.GrowthLampTileEntity;
 import com.vulp.druidcraft.blocks.trees.DarkwoodTree;
 import com.vulp.druidcraft.blocks.trees.ElderTree;
+import com.vulp.druidcraft.client.gui.screen.inventory.WoodcutterScreen;
 import com.vulp.druidcraft.client.renders.ItemTileEntityRenderer;
 import com.vulp.druidcraft.entities.LunarMothColors;
 import com.vulp.druidcraft.blocks.tileentities.CrateTileEntityOld;
 import com.vulp.druidcraft.items.*;
+import com.vulp.druidcraft.recipes.RecipeSerializers;
 import com.vulp.druidcraft.registry.*;
 import com.vulp.druidcraft.world.biomes.DarkwoodForest;
 import com.vulp.druidcraft.world.features.BerryBushFeature;
@@ -240,7 +242,9 @@ public class DruidcraftRegistry {
                         ItemRegistry.light_blue_soulfire = new BlockItem(BlockRegistry.light_blue_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.light_blue_soulfire.getRegistryName()),
                         ItemRegistry.magenta_soulfire = new BlockItem(BlockRegistry.magenta_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.magenta_soulfire.getRegistryName()),
                         ItemRegistry.orange_soulfire = new BlockItem(BlockRegistry.orange_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.orange_soulfire.getRegistryName()),
-                        ItemRegistry.white_soulfire = new BlockItem(BlockRegistry.white_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.white_soulfire.getRegistryName())
+                        ItemRegistry.white_soulfire = new BlockItem(BlockRegistry.white_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.white_soulfire.getRegistryName()),
+
+                        ItemRegistry.woodcutter = new BlockItem(BlockRegistry.woodcutter, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.woodcutter.getRegistryName())
                 );
 
         EntityRegistry.registerEntitySpawnEggs(itemRegistryEvent);
@@ -379,7 +383,9 @@ public class DruidcraftRegistry {
                         BlockRegistry.light_blue_soulfire = new SoulfireBlock(DyeColor.LIGHT_BLUE, SoulfireBlock.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f).doesNotBlockMovement().lightValue(13)).setRegistryName(location("light_blue_soulfire")),
                         BlockRegistry.magenta_soulfire = new SoulfireBlock(DyeColor.MAGENTA, SoulfireBlock.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f).doesNotBlockMovement().lightValue(13)).setRegistryName(location("magenta_soulfire")),
                         BlockRegistry.orange_soulfire = new SoulfireBlock(DyeColor.ORANGE, SoulfireBlock.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f).doesNotBlockMovement().lightValue(13)).setRegistryName(location("orange_soulfire")),
-                        BlockRegistry.white_soulfire = new SoulfireBlock(DyeColor.WHITE, SoulfireBlock.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f).doesNotBlockMovement().lightValue(13)).setRegistryName(location("white_soulfire"))
+                        BlockRegistry.white_soulfire = new SoulfireBlock(DyeColor.WHITE, SoulfireBlock.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f).doesNotBlockMovement().lightValue(13)).setRegistryName(location("white_soulfire")),
+
+                        BlockRegistry.woodcutter = new WoodcutterBlock(WoodcutterBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(1.75f)).setRegistryName(location("woodcutter"))
                 );
 
         LOGGER.info("Blocks registered.");
@@ -393,7 +399,8 @@ public class DruidcraftRegistry {
                 (
                         SoundEventRegistry.fill_bottle,
                         SoundEventRegistry.open_crate,
-                        SoundEventRegistry.close_crate
+                        SoundEventRegistry.close_crate,
+                        SoundEventRegistry.wood_cutter_take
                 );
 
         LOGGER.info("Sound events registered.");
@@ -436,6 +443,7 @@ public class DruidcraftRegistry {
     {
 
         RecipeRegistry.register(RecipeRegistryEvent);
+        RecipeRegistryEvent.getRegistry().register(RecipeSerializers.woodcutting.setRegistryName(location("woodcutting")));
 
         LOGGER.info("Recipes registered.");
     }
@@ -448,7 +456,8 @@ public class DruidcraftRegistry {
                 (
                         GUIRegistry.beetle_inv,
                         GUIRegistry.generic_9X12,
-                        GUIRegistry.generic_9X24
+                        GUIRegistry.generic_9X24,
+                        GUIRegistry.woodcutter
                 );
 
         LOGGER.info("GUI registered.");

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WWW",
+    "###"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:light_gray_wool"
+    },
+    "#": {
+      "item": "minecraft:wheat"
+    }
+  },
+  "result": {
+    "item": "druidcraft:light_gray_bedroll"
+  }
+}

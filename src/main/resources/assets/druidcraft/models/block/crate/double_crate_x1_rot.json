@@ -1,11 +1,11 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
+		"particle": "druidcraft:block/small_crate_front",
 		"28": "druidcraft:block/wide_crate_side_right",
 		"33": "druidcraft:block/tall_crate_top_up",
 		"35": "druidcraft:block/wide_crate_side_left",
-		"38": "druidcraft:block/small_crate_front",
-		"40": "druidcraft:block/wide_crate_top_left"
+		"38": "druidcraft:block/small_crate_front"
 	},
 	"elements": [
 		{
@@ -16,7 +16,7 @@
 				"north": {"uv": [0, 0, 16, 16], "texture": "#28"},
 				"south": {"uv": [0, 0, 16, 16], "texture": "#35"},
 				"west": {"uv": [0, 0, 16, 16], "texture": "#38"},
-				"up": {"uv": [0, 0, 16, 16], "rotation": 270, "texture": "#40"},
+				"up": {"uv": [0, 0, 16, 16], "rotation": 270, "texture": "#33"},
 				"down": {"uv": [0, 0, 16, 16], "rotation": 270, "texture": "#33"}
 			}
 		}

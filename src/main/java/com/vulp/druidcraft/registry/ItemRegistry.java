@@ -181,10 +181,14 @@ public class ItemRegistry
     public static Item orange_bedroll;
     public static Item white_bedroll;
 
+    public static Item travel_pack;
+
     public static Item wooden_sickle;
     public static Item stone_sickle;
     public static Item iron_sickle;
     public static Item gold_sickle;
     public static Item diamond_sickle;
     public static Item crate_temp;
+
+    public static Item woodcutter;
 }
