@@ -260,7 +260,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
 
     private net.minecraftforge.items.IItemHandlerModifiable createHandler() {
         int size = this.neighbors.size();
-        for (int i = 0; i > size; i++) {
+        for (int i = 0; i < size; i++) {
             if (!(this.world.getBlockState(this.neighbors.get(i)).getBlock() instanceof CrateBlock) || size < 2) {
                 return new net.minecraftforge.items.wrapper.InvWrapper(this);
             }
@@ -269,7 +269,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
             }
         }
 
-        if (size == 1) {
+        if (size <= 1) {
             return new net.minecraftforge.items.wrapper.InvWrapper(this);
         }
         IInventory inven1 = (IInventory) this.getWorld().getTileEntity(this.neighbors.get(0));
