@@ -1,0 +1,75 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "druidcraft:block/rope",
+		"1": "druidcraft:block/rope_overlay",
+		"2": "druidcraft:block/rope_connector_2",
+		"particle": "druidcraft:block/rope"
+	},
+	"elements": [
+		{
+			"name": "tied_y",
+			"from": [4, 4, 4],
+			"to": [12, 12, 12],
+			"faces": {
+				"north": {"uv": [0, 8, 8, 16], "texture": "#2"},
+				"east": {"uv": [0, 8, 8, 16], "texture": "#2"},
+				"south": {"uv": [0, 8, 8, 16], "texture": "#2"},
+				"west": {"uv": [0, 8, 8, 16], "texture": "#2"},
+				"up": {"uv": [0, 0, 8, 8], "texture": "#2"},
+				"down": {"uv": [0, 0, 8, 8], "texture": "#2"}
+			}
+		},
+		{
+			"name": "tied_y_overlay",
+			"from": [3.8, 3.8, 3.8],
+			"to": [12.2, 12.2, 12.2],
+			"faces": {
+				"north": {"uv": [8, 8, 16, 16], "texture": "#2"},
+				"east": {"uv": [8, 8, 16, 16], "texture": "#2"},
+				"south": {"uv": [8, 8, 16, 16], "texture": "#2"},
+				"west": {"uv": [8, 8, 16, 16], "texture": "#2"},
+				"up": {"uv": [8, 0, 16, 8], "texture": "#2"},
+				"down": {"uv": [8, 0, 16, 8], "texture": "#2"}
+			}
+		},
+		{
+			"name": "north_end",
+			"from": [7, 7, 0],
+			"to": [9, 9, 7],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9, 8]},
+			"faces": {
+				"north": {"uv": [4, 0, 6, 2], "texture": "#0"},
+				"east": {"uv": [13, 9, 15, 16], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [8, 9, 10, 16], "rotation": 90, "texture": "#0"},
+				"up": {"uv": [7, 9, 9, 16], "texture": "#0"},
+				"down": {"uv": [10, 9, 12, 16], "texture": "#0"}
+			}
+		},
+		{
+			"name": "north_end_overlay",
+			"from": [6.8, 6.8, 0.8],
+			"to": [9.2, 9.2, 7.2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9, 8]},
+			"faces": {
+				"north": {"uv": [4, 0, 6, 2], "texture": "#1"},
+				"east": {"uv": [13, 10, 15, 16], "rotation": 90, "texture": "#1"},
+				"west": {"uv": [8, 10, 10, 16], "rotation": 90, "texture": "#1"},
+				"up": {"uv": [7, 10, 9, 16], "texture": "#1"},
+				"down": {"uv": [10, 10, 12, 16], "texture": "#1"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "y",
+			"origin": [8, 8, 8],
+			"children": [0, 1]
+		},
+		{
+			"name": "north",
+			"origin": [8, 9, 8],
+			"children": [2, 3]
+		}
+	]
+}

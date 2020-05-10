@@ -3,26 +3,17 @@ package com.vulp.druidcraft.blocks;
 import com.google.common.collect.Maps;
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.api.IKnifeable;
-import com.vulp.druidcraft.api.RopeConnectionType;
 import com.vulp.druidcraft.registry.BlockRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.*;
 import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.IProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -35,19 +26,17 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.Map;
 
-@SuppressWarnings("deprecation")
-public class RopeBlock extends SixWayBlock implements IKnifeable {
+public class RopeBlock extends Block implements IKnifeable {
     private static final Direction[] FACING_VALUES = Direction.values();
-    public static final EnumProperty<RopeConnectionType> NORTH = EnumProperty.create("north", RopeConnectionType.class);
-    public static final EnumProperty<RopeConnectionType> EAST = EnumProperty.create("east", RopeConnectionType.class);
-    public static final EnumProperty<RopeConnectionType> SOUTH = EnumProperty.create("south", RopeConnectionType.class);
-    public static final EnumProperty<RopeConnectionType> WEST = EnumProperty.create("west", RopeConnectionType.class);
-    public static final EnumProperty<RopeConnectionType> UP = EnumProperty.create("up", RopeConnectionType.class);
-    public static final EnumProperty<RopeConnectionType> DOWN = EnumProperty.create("down", RopeConnectionType.class);
+    public static final BooleanProperty NORTH = BooleanProperty.create("north");
+    public static final BooleanProperty EAST = BooleanProperty.create("east");
+    public static final BooleanProperty SOUTH = BooleanProperty.create("south");
+    public static final BooleanProperty WEST = BooleanProperty.create("west");
+    public static final BooleanProperty UP = BooleanProperty.create("up");
+    public static final BooleanProperty DOWN = BooleanProperty.create("down");
     public static final BooleanProperty KNOTTED = BooleanProperty.create("knotted");
-    protected final VoxelShape[] collisionShapes;
-    public static final Map<Direction, EnumProperty<RopeConnectionType>> FACING_TO_PROPERTY_MAP = Util.make(Maps.newEnumMap(Direction.class), (map) -> {
-        map.put(Direction.NORTH, NORTH);
+    public static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = Util.make(Maps.newEnumMap(Direction.class), (map) -> {
+        map.put(Direction.NORTH, EAST);
         map.put(Direction.EAST, EAST);
         map.put(Direction.SOUTH, SOUTH);
         map.put(Direction.WEST, WEST);
@@ -56,15 +45,14 @@ public class RopeBlock extends SixWayBlock implements IKnifeable {
     });
 
     public RopeBlock(Properties properties) {
-        super(0.12F, properties);
-        this.collisionShapes = this.makeCollisionShapes(0.125F);
+        super(properties);
         this.setDefaultState(this.getDefaultState()
-                .with(NORTH, RopeConnectionType.NONE)
-                .with(EAST, RopeConnectionType.NONE)
-                .with(SOUTH, RopeConnectionType.NONE)
-                .with(WEST, RopeConnectionType.NONE)
-                .with(UP, RopeConnectionType.NONE)
-                .with(DOWN, RopeConnectionType.NONE)
+                .with(NORTH, false)
+                .with(EAST, false)
+                .with(SOUTH, false)
+                .with(WEST, false)
+                .with(UP, false)
+                .with(DOWN, false)
                 .with(KNOTTED, false));
     }
 
@@ -79,7 +67,7 @@ public class RopeBlock extends SixWayBlock implements IKnifeable {
         Direction side = getClickedConnection(relative);
         if (side != null) {
             if (!(world.getBlockState(pos.offset(side)).getBlock() instanceof RopeBlock )) {
-                BlockState state1 = cycleProperty(state, FACING_TO_PROPERTY_MAP.get(side), context);
+                BlockState state1 = cycleProperty(state, side, context);
                 world.setBlockState(pos, state1, 18);
                 return ActionResultType.SUCCESS;
             }
@@ -88,18 +76,25 @@ public class RopeBlock extends SixWayBlock implements IKnifeable {
         return ActionResultType.PASS;
     }
 
-    @SuppressWarnings("unchecked")
-    private <T extends Comparable<T>> BlockState cycleProperty(BlockState state, IProperty<T> propertyIn, ItemUseContext context) {
-        T value = getAdjacentValue(propertyIn.getAllowedValues(), state.get(propertyIn));
-        if (value != RopeConnectionType.NONE) {
-            return calculateKnot(state.with(propertyIn, (T) RopeConnectionType.NONE));
-        } else if (!state.get(KNOTTED) && context.getPlayer().isSneaking()) {
-            return state.with(KNOTTED, true);
-        } else return calculateState(state, context.getWorld(), context.getPos());
-    }
-
-    private static <T> T getAdjacentValue(Iterable<T> p_195959_0_, @Nullable T p_195959_1_) {
-        return Util.getElementAfter(p_195959_0_, p_195959_1_);
+    private BlockState cycleProperty(BlockState state, Direction sideUsed, ItemUseContext context) {
+        BooleanProperty property = FACING_TO_PROPERTY_MAP.get(sideUsed);
+        if (!context.getPlayer().isSneaking()) {
+            if (state.get(property)) {
+                return calculateKnot(state.with(property, false));
+            } else {
+                if (context.getWorld().getBlockState(context.getPos()).func_224755_d(context.getWorld(), context.getPos().offset(sideUsed), sideUsed)) {
+                    return calculateKnot(state.with(property, true));
+                }
+            }
+        }
+        else if (context.getPlayer().isSneaking()) {
+            if (!state.get(KNOTTED))
+                return state.with(KNOTTED, true);
+            else if (!calculateKnot(state).get(KNOTTED)) {
+                return state.with(KNOTTED, false);
+            }
+        }
+        return calculateState(state, context.getWorld(), context.getPos());
     }
 
     @Nullable
@@ -121,45 +116,31 @@ public class RopeBlock extends SixWayBlock implements IKnifeable {
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return this.shapes[this.getShapeIndex(state)];
-    }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return this.collisionShapes[this.getShapeIndex(state)];
+        VoxelShape shape = Block.makeCuboidShape(6.0f, 6.0f, 6.0f, 10.0f, 10.0f, 10.0f);
+        if (state.get(NORTH)) {
+            shape = VoxelShapes.or(shape, Block.makeCuboidShape(6.0f, 6.0f, 0.0f, 10.0f, 10.0f, 6.0f));
+        }
+        if (state.get(SOUTH)) {
+            shape = VoxelShapes.or(shape, Block.makeCuboidShape(6.0f, 6.0f, 10.0f, 10.0f, 10.0f, 16.0f));
+        }
+        if (state.get(WEST)) {
+            shape = VoxelShapes.or(shape, Block.makeCuboidShape(0.0f, 6.0f, 6.0f, 6.0f, 10.0f, 10.0f));
+        }
+        if (state.get(EAST)) {
+            shape = VoxelShapes.or(shape, Block.makeCuboidShape(10.0f, 6.0f, 6.0f, 16.0f, 10.0f, 10.0f));
+        }
+        if (state.get(DOWN)) {
+            shape = VoxelShapes.or(shape, Block.makeCuboidShape(6.0f, 0.0f, 6.0f, 10.0f, 6.0f, 10.0f));
+        }
+        if (state.get(UP)) {
+            shape = VoxelShapes.or(shape, Block.makeCuboidShape(6.0f, 10.0f, 6.0f, 10.0f, 16.0f, 10.0f));
+        }
+        return shape;
     }
 
     @Override
     public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT;
-    }
-
-    private VoxelShape[] makeCollisionShapes(float apothem) {
-        float f = 0.5F - apothem;
-        float f1 = 0.5F + apothem;
-        VoxelShape voxelshape = Block.makeCuboidShape((double)(f * 16.0F), (double)(f * 16.0F), (double)(f * 16.0F), (double)(f1 * 16.0F), (double)(f1 * 16.0F), (double)(f1 * 16.0F));
-        VoxelShape[] avoxelshape = new VoxelShape[FACING_VALUES.length];
-
-        for(int i = 0; i < FACING_VALUES.length; ++i) {
-            Direction direction = FACING_VALUES[i];
-            avoxelshape[i] = VoxelShapes.create(0.5D + Math.min((double)(-apothem), (double)direction.getXOffset() * 0.5D), 0.5D + Math.min((double)(-apothem), (double)direction.getYOffset() * 0.5D), 0.5D + Math.min((double)(-apothem), (double)direction.getZOffset() * 0.5D), 0.5D + Math.max((double)apothem, (double)direction.getXOffset() * 0.5D), 0.5D + Math.max((double)apothem, (double)direction.getYOffset() * 0.5D), 0.5D + Math.max((double)apothem, (double)direction.getZOffset() * 0.5D));
-        }
-
-        VoxelShape[] avoxelshape1 = new VoxelShape[64];
-
-        for(int k = 0; k < 64; ++k) {
-            VoxelShape voxelshape1 = voxelshape;
-
-            for(int j = 0; j < FACING_VALUES.length; ++j) {
-                if ((k & 1 << j) != 0) {
-                    voxelshape1 = VoxelShapes.or(voxelshape1, avoxelshape[j]);
-                }
-            }
-
-            avoxelshape1[k] = voxelshape1;
-        }
-
-        return avoxelshape1;
     }
 
     @Override
@@ -180,16 +161,20 @@ public class RopeBlock extends SixWayBlock implements IKnifeable {
     private BlockState calculateKnot (BlockState currentState) {
         int count = 0;
 
-        for (Direction dir : Direction.values()) {
-            EnumProperty<RopeConnectionType> prop = FACING_TO_PROPERTY_MAP.get(dir);
-            if (prop != null) {
-                if (currentState.get(prop) != RopeConnectionType.NONE) {
-                    count++;
-                }
-            }
-        }
+        if (currentState.get(NORTH))
+            count++;
+        if (currentState.get(SOUTH))
+            count++;
+        if (currentState.get(EAST))
+            count++;
+        if (currentState.get(WEST))
+            count++;
+        if (currentState.get(UP))
+            count++;
+        if (currentState.get(DOWN))
+            count++;
 
-        boolean doKnot = count >= 3 || count == 0;
+        boolean doKnot = count > 2 || count == 0;
         return currentState.with(KNOTTED, doKnot);
     }
 
@@ -203,110 +188,57 @@ public class RopeBlock extends SixWayBlock implements IKnifeable {
         return calculateState(state, world, currentPos);
     }
 
-    public static RopeConnectionType beamChecker(BlockState directionState, Direction direction) {
-        if (direction == Direction.NORTH || direction == Direction.SOUTH) {
-            if (directionState.get(SmallBeamBlock.X_AXIS)) {
-                if (!directionState.get(SmallBeamBlock.Z_AXIS)) {
-                    return RopeConnectionType.TIED_BEAM_2;
-                } else return RopeConnectionType.REGULAR;
-            } if (directionState.get(SmallBeamBlock.Y_AXIS)) {
-                if (!directionState.get(SmallBeamBlock.Z_AXIS)) {
-                    return RopeConnectionType.TIED_BEAM_1;
-                } else return RopeConnectionType.REGULAR;
-            } if (directionState.get(SmallBeamBlock.Z_AXIS)) {
-                return RopeConnectionType.REGULAR;
-            }
-        }
-
-        if (direction == Direction.EAST || direction == Direction.WEST) {
-            if (directionState.get(SmallBeamBlock.X_AXIS)) {
-                return RopeConnectionType.REGULAR;
-            } if (directionState.get(SmallBeamBlock.Y_AXIS)) {
-                if (!directionState.get(SmallBeamBlock.X_AXIS)) {
-                    return RopeConnectionType.TIED_BEAM_1;
-                } else return RopeConnectionType.REGULAR;
-            } if (directionState.get(SmallBeamBlock.Z_AXIS)) {
-                if (!directionState.get(SmallBeamBlock.X_AXIS)) {
-                    return RopeConnectionType.TIED_BEAM_2;
-                } else return RopeConnectionType.REGULAR;
-            }
-        }
-
-        if (direction == Direction.UP || direction == Direction.DOWN) {
-            if (directionState.get(SmallBeamBlock.X_AXIS)) {
-                if (!directionState.get(SmallBeamBlock.Y_AXIS)) {
-                    return RopeConnectionType.TIED_BEAM_2;
-                } else return RopeConnectionType.REGULAR;
-            } if (directionState.get(SmallBeamBlock.Y_AXIS)) {
-                return RopeConnectionType.REGULAR;
-            } if (directionState.get(SmallBeamBlock.Z_AXIS)) {
-                if (!directionState.get(SmallBeamBlock.Y_AXIS)) {
-                    return RopeConnectionType.TIED_BEAM_1;
-                } else return RopeConnectionType.REGULAR;
-            }
-        }
-
-        return RopeConnectionType.NONE;
-    }
-
     private BlockState calculateState(BlockState currentState, IWorld world, BlockPos pos) {
 
-        RopeConnectionType northType = RopeConnectionType.NONE;
+        boolean northType = false;
         BlockState northState = world.getBlockState(pos.offset(Direction.NORTH));
-        if (northState.func_224755_d(world, pos.offset(Direction.NORTH), Direction.NORTH.getOpposite()) || northState.getBlock() == this) {
-            northType = RopeConnectionType.REGULAR;
-        } else if (northState.getBlock() instanceof SmallBeamBlock) {
-            northType = beamChecker(northState, Direction.NORTH);
+        if (northState.func_224755_d(world, pos.offset(Direction.NORTH), Direction.NORTH.getOpposite()) || northState.getBlock() instanceof RopeBlock || northState.getBlock() instanceof SmallBeamBlock) {
+            northType = true;
         }
 
-        RopeConnectionType eastType = RopeConnectionType.NONE;
+        boolean eastType = false;
         BlockState eastState = world.getBlockState(pos.offset(Direction.EAST));
-        if (eastState.func_224755_d(world, pos.offset(Direction.EAST), Direction.EAST.getOpposite()) || eastState.getBlock() == this) {
-            eastType = RopeConnectionType.REGULAR;
-        } else if (eastState.getBlock() instanceof SmallBeamBlock) {
-            eastType = beamChecker(eastState, Direction.EAST);
+        if (eastState.func_224755_d(world, pos.offset(Direction.EAST), Direction.EAST.getOpposite()) || eastState.getBlock() instanceof RopeBlock || eastState.getBlock() instanceof SmallBeamBlock) {
+            eastType = true;
         }
 
-
-        RopeConnectionType southType = RopeConnectionType.NONE;
+        boolean southType = false;
         BlockState southState = world.getBlockState(pos.offset(Direction.SOUTH));
-        if (southState.func_224755_d(world, pos.offset(Direction.SOUTH), Direction.SOUTH.getOpposite()) || southState.getBlock() == this) {
-            southType = RopeConnectionType.REGULAR;
-        } else if (southState.getBlock() instanceof SmallBeamBlock) {
-            southType = beamChecker(southState, Direction.SOUTH);
+        if (southState.func_224755_d(world, pos.offset(Direction.SOUTH), Direction.SOUTH.getOpposite()) || southState.getBlock() instanceof RopeBlock || southState.getBlock() instanceof SmallBeamBlock) {
+            southType = true;
         }
 
-        RopeConnectionType westType = RopeConnectionType.NONE;
+        boolean westType = false;
         BlockState westState = world.getBlockState(pos.offset(Direction.WEST));
-        if (westState.func_224755_d(world, pos.offset(Direction.WEST), Direction.WEST.getOpposite()) || westState.getBlock() == this) {
-            westType = RopeConnectionType.REGULAR;
-        } else if (westState.getBlock() instanceof SmallBeamBlock) {
-            westType = beamChecker(westState, Direction.WEST);
+        if (westState.func_224755_d(world, pos.offset(Direction.WEST), Direction.WEST.getOpposite()) || westState.getBlock() instanceof RopeBlock || westState.getBlock() instanceof SmallBeamBlock) {
+            westType = true;
         }
 
-        RopeConnectionType upType = RopeConnectionType.NONE;
+        boolean upType = false;
         BlockState upState = world.getBlockState(pos.offset(Direction.UP));
-        if (upState.func_224755_d(world, pos.offset(Direction.UP), Direction.UP.getOpposite()) || upState.getBlock() == this || upState.getBlock().isIn(BlockTags.FENCES)) {
-            upType = RopeConnectionType.REGULAR;
-        } else if (upState.getBlock() instanceof SmallBeamBlock) {
-            upType = beamChecker(upState, Direction.UP);
+        if (upState.func_224755_d(world, pos.offset(Direction.UP), Direction.UP.getOpposite()) || upState.getBlock() instanceof RopeBlock || upState.getBlock() instanceof SmallBeamBlock) {
+            upType = true;
         }
 
-        RopeConnectionType downType = RopeConnectionType.NONE;
+        boolean downType = false;
         BlockState downState = world.getBlockState(pos.offset(Direction.DOWN));
-        if (downState.func_224755_d(world, pos.offset(Direction.DOWN), Direction.DOWN.getOpposite()) || downState.getBlock() == this || downState.getBlock().isIn(BlockTags.FENCES) || downState.getBlock() instanceof RopeLanternBlock || ((downState.getBlock() instanceof GrowthLampBlock || (downState.getBlock() instanceof RopeableLanternBlock) && downState.get(RopeableLanternBlock.HANGING) && downState.get(RopeableLanternBlock.ROPED)))) {
-            downType = RopeConnectionType.REGULAR;
-        } else if (downState.getBlock() instanceof SmallBeamBlock) {
-            downType = beamChecker(downState, Direction.DOWN);
+        if (downState.func_224755_d(world, pos.offset(Direction.DOWN), Direction.DOWN.getOpposite()) || downState.getBlock() instanceof RopeBlock || downState.getBlock() instanceof SmallBeamBlock || ((downState.getBlock() instanceof RopeableLanternBlock || downState.getBlock() instanceof RopeLanternBlock || downState.getBlock() instanceof GrowthLampBlock) && (downState.get(RopeableLanternBlock.HANGING) && downState.get(RopeableLanternBlock.ROPED)))) {
+            downType = true;
         }
 
-        return calculateKnot(currentState
+        BlockState finalState = calculateKnot(currentState
                 .with(NORTH, northType)
                 .with(EAST, eastType)
                 .with(SOUTH, southType)
                 .with(WEST, westType)
                 .with(UP, upType)
                 .with(DOWN, downType));
+
+        if (finalState == currentState) {
+            return currentState;
+        } else {
+            return finalState;
+        }
     }
 
     @Override
@@ -330,22 +262,4 @@ public class RopeBlock extends SixWayBlock implements IKnifeable {
     public PushReaction getPushReaction(BlockState state) {
         return PushReaction.DESTROY;
     }
-
-    @Override
-    protected int getShapeIndex(BlockState state) {
-        int i = 0;
-
-        for(int j = 0; j < Direction.values().length; ++j) {
-            if (state.get(FACING_TO_PROPERTY_MAP.get(Direction.values()[j])) != RopeConnectionType.NONE) {
-                i |= 1 << j;
-            }
-        }
-
-        return i;
-    }
-
-    public static RopeConnectionType getConnection(BlockState state, Direction side) {
-        return state.get(FACING_TO_PROPERTY_MAP.get(side));
-    }
-
 }

@@ -6,71 +6,23 @@
 		{   "when": { "knotted": "false" },
             "apply": { "model": "druidcraft:block/rope_base" }
         },
-		
-		
-        {   "when": { "north": "regular" },
+        {   "when": { "north": "true" },
             "apply": { "model": "druidcraft:block/rope_north" }
         },
-		{   "when": { "north": "tied_beam_1" },
-            "apply": { "model": "druidcraft:block/rope_north_beam_y" }
-        },
-	    {   "when": { "north": "tied_beam_2" },
-            "apply": { "model": "druidcraft:block/rope_north_beam_x" }
-        },
-		
-		
-        {   "when": { "east": "regular" },
+        {   "when": { "east": "true" },
             "apply": { "model": "druidcraft:block/rope_east" }
         },
-		{   "when": { "east": "tied_beam_1" },
-            "apply": { "model": "druidcraft:block/rope_east_beam_y" }
-        },
-		{   "when": { "east": "tied_beam_2" },
-            "apply": { "model": "druidcraft:block/rope_east_beam_z" }
-        },
-		
-		
-        {   "when": { "south": "regular" },
+        {   "when": { "south": "true" },
             "apply": { "model": "druidcraft:block/rope_south" }
         },
-		{   "when": { "south": "tied_beam_1" },
-            "apply": { "model": "druidcraft:block/rope_south_beam_y" }
-        },
-		{   "when": { "south": "tied_beam_2" },
-            "apply": { "model": "druidcraft:block/rope_south_beam_x" }
-        },
-		
-		
-        {   "when": { "west": "regular" },
+        {   "when": { "west": "true" },
             "apply": { "model": "druidcraft:block/rope_west" }
         },
-		{   "when": { "west": "tied_beam_1" },
-            "apply": { "model": "druidcraft:block/rope_west_beam_y" }
-        },
-		{   "when": { "west": "tied_beam_2" },
-            "apply": { "model": "druidcraft:block/rope_west_beam_z" }
-        },
-		
-		
-		{   "when": { "up": "regular" },
+		{   "when": { "up": "true" },
             "apply": { "model": "druidcraft:block/rope_up" }
         },
-		{   "when": { "up": "tied_beam_1" },
-            "apply": { "model": "druidcraft:block/rope_up_beam_z" }
-        },
-		{   "when": { "up": "tied_beam_2" },
-            "apply": { "model": "druidcraft:block/rope_up_beam_x" }
-        },
-		
-		
-		{   "when": { "down": "regular" },
+		{   "when": { "down": "true" },
             "apply": { "model": "druidcraft:block/rope_down" }
-        },
-		{   "when": { "down": "tied_beam_1" },
-            "apply": { "model": "druidcraft:block/rope_down_beam_z" }
-        },
-		{   "when": { "down": "tied_beam_2" },
-            "apply": { "model": "druidcraft:block/rope_down_beam_x" }
         }
     ]
 }
