@@ -30,6 +30,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
@@ -254,7 +255,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
             }
             return this.crateHandler.cast();
         }
-        return super.getCapability(cap);
+        return LazyOptional.empty();
     }
 
     private net.minecraftforge.items.IItemHandlerModifiable createHandler() {
