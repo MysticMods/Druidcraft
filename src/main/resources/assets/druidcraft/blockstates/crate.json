@@ -1,138 +1,335 @@
 {
-    "variants": {
-		"type=single,open=false,rot=false": { "model": "druidcraft:block/crate/single_crate" },
-        "type=single,open=true,rot=false": { "model": "druidcraft:block/crate/single_crate_open" },
-		"type=single,open=false,rot=true": { "model": "druidcraft:block/crate/single_crate_rot" },
-        "type=single,open=true,rot=true": { "model": "druidcraft:block/crate/single_crate_open_rot" },
+    "multipart": [
+		{   "when": { "type":"single","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/single_crate" }
+        },
+		{   "when": { "type":"single","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/single_crate_open" }
+        },
+        {   "when": { "type":"single","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/single_crate_rot" }
+        },
+		{   "when": { "type":"single","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/single_crate_open_rot" }
+        },
 		
-		"type=double_x,pos_num=1,open=false,rot=false": { "model": "druidcraft:block/crate/double_crate_x1" },
-		"type=double_x,pos_num=1,open=true,rot=false": { "model": "druidcraft:block/crate/double_crate_x1_open" },
-		"type=double_x,pos_num=1,open=false,rot=true": { "model": "druidcraft:block/crate/double_crate_x1_rot" },
-		"type=double_x,pos_num=1,open=true,rot=true": { "model": "druidcraft:block/crate/double_crate_x1_open_rot" },
+        {   "when": { "type":"double_x","pos_num":"1","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_x1" }
+        },
+        {   "when": { "type":"double_x","pos_num":"1","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_x1_open" }
+        },
+		{   "when": { "type":"double_x","pos_num":"1","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_x1_rot" }
+        },
+		{   "when": { "type":"double_x","pos_num":"1","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_x1_open_rot" }
+        },
+		{   "when": { "type":"double_x","pos_num":"2","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_x2" }
+        },
+        {   "when": { "type":"double_x","pos_num":"2","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_x2_open" }
+        },
+		{   "when": { "type":"double_x","pos_num":"2","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_x2_rot" }
+        },
+		{   "when": { "type":"double_x","pos_num":"2","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_x2_open_rot" }
+        },
 		
-        "type=double_x,pos_num=2,open=false,rot=false": { "model": "druidcraft:block/crate/double_crate_x2" },
-		"type=double_x,pos_num=2,open=true,rot=false": { "model": "druidcraft:block/crate/double_crate_x2_open" },
-		"type=double_x,pos_num=2,open=false,rot=true": { "model": "druidcraft:block/crate/double_crate_x2_rot" },
-		"type=double_x,pos_num=2,open=true,rot=true": { "model": "druidcraft:block/crate/double_crate_x2_open_rot" },
+		{   "when": { "type":"double_y","pos_num":"1","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_y1" }
+        },
+        {   "when": { "type":"double_y","pos_num":"1","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_y1_open" }
+        },
+		{   "when": { "type":"double_y","pos_num":"1","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_y1_rot" }
+        },
+		{   "when": { "type":"double_y","pos_num":"1","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_y1_open_rot" }
+        },
+		{   "when": { "type":"double_y","pos_num":"2","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_y2" }
+        },
+        {   "when": { "type":"double_y","pos_num":"2","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_y2_open" }
+        },
+		{   "when": { "type":"double_y","pos_num":"2","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_y2_rot" }
+        },
+		{   "when": { "type":"double_y","pos_num":"2","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_y2_open_rot" }
+        },
 		
-		"type=double_y,pos_num=1,open=false,rot=false": { "model": "druidcraft:block/crate/double_crate_y1" },
-		"type=double_y,pos_num=1,open=true,rot=false": { "model": "druidcraft:block/crate/double_crate_y1_open" },
-		"type=double_y,pos_num=1,open=false,rot=true": { "model": "druidcraft:block/crate/double_crate_y1_rot" },
-		"type=double_y,pos_num=1,open=true,rot=true": { "model": "druidcraft:block/crate/double_crate_y1_open_rot" },
+		{   "when": { "type":"double_z","pos_num":"1","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_z1" }
+        },
+        {   "when": { "type":"double_z","pos_num":"1","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_z1_open" }
+        },
+		{   "when": { "type":"double_z","pos_num":"1","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_z1_rot" }
+        },
+		{   "when": { "type":"double_z","pos_num":"1","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_z1_open_rot" }
+        },
+		{   "when": { "type":"double_z","pos_num":"2","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_z2" }
+        },
+        {   "when": { "type":"double_z","pos_num":"2","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_z2_open" }
+        },
+		{   "when": { "type":"double_z","pos_num":"2","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_z2_rot" }
+        },
+		{   "when": { "type":"double_z","pos_num":"2","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/double_crate_z2_open_rot" }
+        },
 		
-		"type=double_y,pos_num=2,open=false,rot=false": { "model": "druidcraft:block/crate/double_crate_y2" },
-		"type=double_y,pos_num=2,open=true,rot=false": { "model": "druidcraft:block/crate/double_crate_y2_open" },
-		"type=double_y,pos_num=2,open=false,rot=true": { "model": "druidcraft:block/crate/double_crate_y2_rot" },
-		"type=double_y,pos_num=2,open=true,rot=true": { "model": "druidcraft:block/crate/double_crate_y2_open_rot" },
+		{   "when": { "type":"quad_x","pos_num":"1","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_x1" }
+        },
+        {   "when": { "type":"quad_x","pos_num":"1","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_x1_open" }
+        },
+		{   "when": { "type":"quad_x","pos_num":"1","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_x1_rot" }
+        },
+		{   "when": { "type":"quad_x","pos_num":"1","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_x1_open_rot" }
+        },
+		{   "when": { "type":"quad_x","pos_num":"2","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_x2" }
+        },
+        {   "when": { "type":"quad_x","pos_num":"2","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_x2_open" }
+        },
+		{   "when": { "type":"quad_x","pos_num":"2","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_x2_rot" }
+        },
+		{   "when": { "type":"quad_x","pos_num":"2","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_x2_open_rot" }
+        },
+		{   "when": { "type":"quad_x","pos_num":"3","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_x3" }
+        },
+        {   "when": { "type":"quad_x","pos_num":"3","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_x3_open" }
+        },
+		{   "when": { "type":"quad_x","pos_num":"3","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_x3_rot" }
+        },
+		{   "when": { "type":"quad_x","pos_num":"3","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_x3_open_rot" }
+        },
+		{   "when": { "type":"quad_x","pos_num":"4","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_x4" }
+        },
+        {   "when": { "type":"quad_x","pos_num":"4","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_x4_open" }
+        },
+		{   "when": { "type":"quad_x","pos_num":"4","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_x4_rot" }
+        },
+		{   "when": { "type":"quad_x","pos_num":"4","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_x4_open_rot" }
+        },
 		
-		"type=double_z,pos_num=1,open=false,rot=false": { "model": "druidcraft:block/crate/double_crate_z1" },
-		"type=double_z,pos_num=1,open=true,rot=false": { "model": "druidcraft:block/crate/double_crate_z1_open" },
-		"type=double_z,pos_num=1,open=false,rot=true": { "model": "druidcraft:block/crate/double_crate_z1_rot" },
-		"type=double_z,pos_num=1,open=true,rot=true": { "model": "druidcraft:block/crate/double_crate_z1_open_rot" },
+		{   "when": { "type":"quad_y","pos_num":"1","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_y1" }
+        },
+        {   "when": { "type":"quad_y","pos_num":"1","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_y1_open" }
+        },
+		{   "when": { "type":"quad_y","pos_num":"1","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_y1_rot" }
+        },
+		{   "when": { "type":"quad_y","pos_num":"1","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_y1_open_rot" }
+        },
+		{   "when": { "type":"quad_y","pos_num":"2","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_y2" }
+        },
+        {   "when": { "type":"quad_y","pos_num":"2","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_y2_open" }
+        },
+		{   "when": { "type":"quad_y","pos_num":"2","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_y2_rot" }
+        },
+		{   "when": { "type":"quad_y","pos_num":"2","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_y2_open_rot" }
+        },
+		{   "when": { "type":"quad_y","pos_num":"3","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_y3" }
+        },
+        {   "when": { "type":"quad_y","pos_num":"3","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_y3_open" }
+        },
+		{   "when": { "type":"quad_y","pos_num":"3","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_y3_rot" }
+        },
+		{   "when": { "type":"quad_y","pos_num":"3","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_y3_open_rot" }
+        },
+		{   "when": { "type":"quad_y","pos_num":"4","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_y4" }
+        },
+        {   "when": { "type":"quad_y","pos_num":"4","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_y4_open" }
+        },
+		{   "when": { "type":"quad_y","pos_num":"4","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_y4_rot" }
+        },
+		{   "when": { "type":"quad_y","pos_num":"4","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_y4_open_rot" }
+        },
 		
-		"type=double_z,pos_num=2,open=false,rot=false": { "model": "druidcraft:block/crate/double_crate_z2" },
-		"type=double_z,pos_num=2,open=true,rot=false": { "model": "druidcraft:block/crate/double_crate_z2_open" },
-		"type=double_z,pos_num=2,open=false,rot=true": { "model": "druidcraft:block/crate/double_crate_z2_rot" },
-		"type=double_z,pos_num=2,open=true,rot=true": { "model": "druidcraft:block/crate/double_crate_z2_open_rot" },
+		{   "when": { "type":"quad_z","pos_num":"1","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_z1" }
+        },
+        {   "when": { "type":"quad_z","pos_num":"1","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_z1_open" }
+        },
+		{   "when": { "type":"quad_z","pos_num":"1","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_z1_rot" }
+        },
+		{   "when": { "type":"quad_z","pos_num":"1","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_z1_open_rot" }
+        },
+		{   "when": { "type":"quad_z","pos_num":"2","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_z2" }
+        },
+        {   "when": { "type":"quad_z","pos_num":"2","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_z2_open" }
+        },
+		{   "when": { "type":"quad_z","pos_num":"2","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_z2_rot" }
+        },
+		{   "when": { "type":"quad_z","pos_num":"2","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_z2_open_rot" }
+        },
+		{   "when": { "type":"quad_z","pos_num":"3","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_z3" }
+        },
+        {   "when": { "type":"quad_z","pos_num":"3","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_z3_open" }
+        },
+		{   "when": { "type":"quad_z","pos_num":"3","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_z3_rot" }
+        },
+		{   "when": { "type":"quad_z","pos_num":"3","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_z3_open_rot" }
+        },
+		{   "when": { "type":"quad_z","pos_num":"4","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_z4" }
+        },
+        {   "when": { "type":"quad_z","pos_num":"4","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_z4_open" }
+        },
+		{   "when": { "type":"quad_z","pos_num":"4","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_z4_rot" }
+        },
+		{   "when": { "type":"quad_z","pos_num":"4","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/quad_crate_z4_open_rot" }
+        },
 		
-		"type=quad_x,pos_num=1,open=false,rot=false": { "model": "druidcraft:block/crate/quad_crate_x1" },
-		"type=quad_x,pos_num=1,open=true,rot=false": { "model": "druidcraft:block/crate/quad_crate_x1_open" },
-		"type=quad_x,pos_num=1,open=false,rot=true": { "model": "druidcraft:block/crate/quad_crate_x1_rot" },
-		"type=quad_x,pos_num=1,open=true,rot=true": { "model": "druidcraft:block/crate/quad_crate_x1_open_rot" },
-		
-		"type=quad_x,pos_num=2,open=false,rot=false": { "model": "druidcraft:block/crate/quad_crate_x2" },
-		"type=quad_x,pos_num=2,open=true,rot=false": { "model": "druidcraft:block/crate/quad_crate_x2_open" },
-		"type=quad_x,pos_num=2,open=false,rot=true": { "model": "druidcraft:block/crate/quad_crate_x2_rot" },
-		"type=quad_x,pos_num=2,open=true,rot=true": { "model": "druidcraft:block/crate/quad_crate_x2_open_rot" },
-		
-		"type=quad_x,pos_num=3,open=false,rot=false": { "model": "druidcraft:block/crate/quad_crate_x3" },
-		"type=quad_x,pos_num=3,open=true,rot=false": { "model": "druidcraft:block/crate/quad_crate_x3_open" },
-		"type=quad_x,pos_num=3,open=false,rot=true": { "model": "druidcraft:block/crate/quad_crate_x3_rot" },
-		"type=quad_x,pos_num=3,open=true,rot=true": { "model": "druidcraft:block/crate/quad_crate_x3_open_rot" },
-		
-		"type=quad_x,pos_num=4,open=false,rot=false": { "model": "druidcraft:block/crate/quad_crate_x4" },
-		"type=quad_x,pos_num=4,open=true,rot=false": { "model": "druidcraft:block/crate/quad_crate_x4_open" },
-		"type=quad_x,pos_num=4,open=false,rot=true": { "model": "druidcraft:block/crate/quad_crate_x4_rot" },
-		"type=quad_x,pos_num=4,open=true,rot=true": { "model": "druidcraft:block/crate/quad_crate_x4_open_rot" },
-		
-		"type=quad_y,pos_num=1,open=false,rot=false": { "model": "druidcraft:block/crate/quad_crate_y1" },
-		"type=quad_y,pos_num=1,open=true,rot=false": { "model": "druidcraft:block/crate/quad_crate_y1_open" },
-		"type=quad_y,pos_num=1,open=false,rot=true": { "model": "druidcraft:block/crate/quad_crate_y1_rot" },
-		"type=quad_y,pos_num=1,open=true,rot=true": { "model": "druidcraft:block/crate/quad_crate_y1_open_rot" },
-		
-		"type=quad_y,pos_num=2,open=false,rot=false": { "model": "druidcraft:block/crate/quad_crate_y2" },
-		"type=quad_y,pos_num=2,open=true,rot=false": { "model": "druidcraft:block/crate/quad_crate_y2_open" },
-		"type=quad_y,pos_num=2,open=false,rot=true": { "model": "druidcraft:block/crate/quad_crate_y2_rot" },
-		"type=quad_y,pos_num=2,open=true,rot=true": { "model": "druidcraft:block/crate/quad_crate_y2_open_rot" },
-		
-		"type=quad_y,pos_num=3,open=false,rot=false": { "model": "druidcraft:block/crate/quad_crate_y3" },
-		"type=quad_y,pos_num=3,open=true,rot=false": { "model": "druidcraft:block/crate/quad_crate_y3_open" },
-		"type=quad_y,pos_num=3,open=false,rot=true": { "model": "druidcraft:block/crate/quad_crate_y3_rot" },
-		"type=quad_y,pos_num=3,open=true,rot=true": { "model": "druidcraft:block/crate/quad_crate_y3_open_rot" },
-		
-		"type=quad_y,pos_num=4,open=false,rot=false": { "model": "druidcraft:block/crate/quad_crate_y4" },
-		"type=quad_y,pos_num=4,open=true,rot=false": { "model": "druidcraft:block/crate/quad_crate_y4_open" },
-		"type=quad_y,pos_num=4,open=false,rot=true": { "model": "druidcraft:block/crate/quad_crate_y4_rot" },
-		"type=quad_y,pos_num=4,open=true,rot=true": { "model": "druidcraft:block/crate/quad_crate_y4_open_rot" },
-		
-		"type=quad_z,pos_num=1,open=false,rot=false": { "model": "druidcraft:block/crate/quad_crate_z1" },
-		"type=quad_z,pos_num=1,open=true,rot=false": { "model": "druidcraft:block/crate/quad_crate_z1_open" },
-		"type=quad_z,pos_num=1,open=false,rot=true": { "model": "druidcraft:block/crate/quad_crate_z1_rot" },
-		"type=quad_z,pos_num=1,open=true,rot=true": { "model": "druidcraft:block/crate/quad_crate_z1_open_rot" },
-		
-		"type=quad_z,pos_num=2,open=false,rot=false": { "model": "druidcraft:block/crate/quad_crate_z2" },
-		"type=quad_z,pos_num=2,open=true,rot=false": { "model": "druidcraft:block/crate/quad_crate_z2_open" },
-		"type=quad_z,pos_num=2,open=false,rot=true": { "model": "druidcraft:block/crate/quad_crate_z2_rot" },
-		"type=quad_z,pos_num=2,open=true,rot=true": { "model": "druidcraft:block/crate/quad_crate_z2_open_rot" },
-		
-		"type=quad_z,pos_num=3,open=false,rot=false": { "model": "druidcraft:block/crate/quad_crate_z3" },
-		"type=quad_z,pos_num=3,open=true,rot=false": { "model": "druidcraft:block/crate/quad_crate_z3_open" },
-		"type=quad_z,pos_num=3,open=false,rot=true": { "model": "druidcraft:block/crate/quad_crate_z3_rot" },
-		"type=quad_z,pos_num=3,open=true,rot=true": { "model": "druidcraft:block/crate/quad_crate_z3_open_rot" },
-		
-		"type=quad_z,pos_num=4,open=false,rot=false": { "model": "druidcraft:block/crate/quad_crate_z4" },
-		"type=quad_z,pos_num=4,open=true,rot=false": { "model": "druidcraft:block/crate/quad_crate_z4_open" },
-		"type=quad_z,pos_num=4,open=false,rot=true": { "model": "druidcraft:block/crate/quad_crate_z4_rot" },
-		"type=quad_z,pos_num=4,open=true,rot=true": { "model": "druidcraft:block/crate/quad_crate_z4_open_rot" },
-		
-		"type=octo,pos_num=1,open=false,rot=false": { "model": "druidcraft:block/crate/octo_crate_1" },
-		"type=octo,pos_num=1,open=true,rot=false": { "model": "druidcraft:block/crate/octo_crate_1_open" },
-		"type=octo,pos_num=1,open=false,rot=true": { "model": "druidcraft:block/crate/octo_crate_1_rot" },
-		"type=octo,pos_num=1,open=true,rot=true": { "model": "druidcraft:block/crate/octo_crate_1_open_rot" },
-		
-		"type=octo,pos_num=2,open=false,rot=false": { "model": "druidcraft:block/crate/octo_crate_2" },
-		"type=octo,pos_num=2,open=true,rot=false": { "model": "druidcraft:block/crate/octo_crate_2_open" },
-		"type=octo,pos_num=2,open=false,rot=true": { "model": "druidcraft:block/crate/octo_crate_2_rot" },
-		"type=octo,pos_num=2,open=true,rot=true": { "model": "druidcraft:block/crate/octo_crate_2_open_rot" },
-		
-		"type=octo,pos_num=3,open=false,rot=false": { "model": "druidcraft:block/crate/octo_crate_3" },
-		"type=octo,pos_num=3,open=true,rot=false": { "model": "druidcraft:block/crate/octo_crate_3_open" },
-		"type=octo,pos_num=3,open=false,rot=true": { "model": "druidcraft:block/crate/octo_crate_3_rot" },
-		"type=octo,pos_num=3,open=true,rot=true": { "model": "druidcraft:block/crate/octo_crate_3_open_rot" },
-		
-		"type=octo,pos_num=4,open=false,rot=false": { "model": "druidcraft:block/crate/octo_crate_4" },
-		"type=octo,pos_num=4,open=true,rot=false": { "model": "druidcraft:block/crate/octo_crate_4_open" },
-		"type=octo,pos_num=4,open=false,rot=true": { "model": "druidcraft:block/crate/octo_crate_4_rot" },
-		"type=octo,pos_num=4,open=true,rot=true": { "model": "druidcraft:block/crate/octo_crate_4_open_rot" },
-		
-		"type=octo,pos_num=5,open=false,rot=false": { "model": "druidcraft:block/crate/octo_crate_5" },
-		"type=octo,pos_num=5,open=true,rot=false": { "model": "druidcraft:block/crate/octo_crate_5_open" },
-		"type=octo,pos_num=5,open=false,rot=true": { "model": "druidcraft:block/crate/octo_crate_5_rot" },
-		"type=octo,pos_num=5,open=true,rot=true": { "model": "druidcraft:block/crate/octo_crate_5_open_rot" },
-		
-		"type=octo,pos_num=6,open=false,rot=false": { "model": "druidcraft:block/crate/octo_crate_6" },
-		"type=octo,pos_num=6,open=true,rot=false": { "model": "druidcraft:block/crate/octo_crate_6_open" },
-		"type=octo,pos_num=6,open=false,rot=true": { "model": "druidcraft:block/crate/octo_crate_6_rot" },
-		"type=octo,pos_num=6,open=true,rot=true": { "model": "druidcraft:block/crate/octo_crate_6_open_rot" },
-		
-		"type=octo,pos_num=7,open=false,rot=false": { "model": "druidcraft:block/crate/octo_crate_7" },
-		"type=octo,pos_num=7,open=true,rot=false": { "model": "druidcraft:block/crate/octo_crate_7_open" },
-		"type=octo,pos_num=7,open=false,rot=true": { "model": "druidcraft:block/crate/octo_crate_7_rot" },
-		"type=octo,pos_num=7,open=true,rot=true": { "model": "druidcraft:block/crate/octo_crate_7_open_rot" },
-		
-		"type=octo,pos_num=8,open=false,rot=false": { "model": "druidcraft:block/crate/octo_crate_8" },
-		"type=octo,pos_num=8,open=true,rot=false": { "model": "druidcraft:block/crate/octo_crate_8_open" },
-		"type=octo,pos_num=8,open=false,rot=true": { "model": "druidcraft:block/crate/octo_crate_8_rot" },
-		"type=octo,pos_num=8,open=true,rot=true": { "model": "druidcraft:block/crate/octo_crate_8_open_rot" }
-    }
+		{   "when": { "type":"octo","pos_num":"1","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_1" }
+        },
+        {   "when": { "type":"octo","pos_num":"1","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_1_open" }
+        },
+		{   "when": { "type":"octo","pos_num":"1","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_1_rot" }
+        },
+		{   "when": { "type":"octo","pos_num":"1","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_1_open_rot" }
+        },
+		{   "when": { "type":"octo","pos_num":"2","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_2" }
+        },
+        {   "when": { "type":"octo","pos_num":"2","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_2_open" }
+        },
+		{   "when": { "type":"octo","pos_num":"2","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_2_rot" }
+        },
+		{   "when": { "type":"octo","pos_num":"2","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_2_open_rot" }
+        },
+		{   "when": { "type":"octo","pos_num":"3","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_3" }
+        },
+        {   "when": { "type":"octo","pos_num":"3","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_3_open" }
+        },
+		{   "when": { "type":"octo","pos_num":"3","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_3_rot" }
+        },
+		{   "when": { "type":"octo","pos_num":"3","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_3_open_rot" }
+        },
+		{   "when": { "type":"octo","pos_num":"4","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_4" }
+        },
+        {   "when": { "type":"octo","pos_num":"4","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_4_open" }
+        },
+		{   "when": { "type":"octo","pos_num":"4","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_4_rot" }
+        },
+		{   "when": { "type":"octo","pos_num":"4","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_4_open_rot" }
+        },
+		{   "when": { "type":"octo","pos_num":"5","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_5" }
+        },
+        {   "when": { "type":"octo","pos_num":"5","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_5_open" }
+        },
+		{   "when": { "type":"octo","pos_num":"5","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_5_rot" }
+        },
+		{   "when": { "type":"octo","pos_num":"5","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_5_open_rot" }
+        },
+		{   "when": { "type":"octo","pos_num":"6","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_6" }
+        },
+        {   "when": { "type":"octo","pos_num":"6","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_6_open" }
+        },
+		{   "when": { "type":"octo","pos_num":"6","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_6_rot" }
+        },
+		{   "when": { "type":"octo","pos_num":"6","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_6_open_rot" }
+        },
+		{   "when": { "type":"octo","pos_num":"7","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_7" }
+        },
+        {   "when": { "type":"octo","pos_num":"7","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_7_open" }
+        },
+		{   "when": { "type":"octo","pos_num":"7","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_7_rot" }
+        },
+		{   "when": { "type":"octo","pos_num":"7","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_7_open_rot" }
+        },
+		{   "when": { "type":"octo","pos_num":"8","open":"false","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_8" }
+        },
+        {   "when": { "type":"octo","pos_num":"8","open":"true","rot":"false" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_8_open" }
+        },
+		{   "when": { "type":"octo","pos_num":"8","open":"false","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_8_rot" }
+        },
+		{   "when": { "type":"octo","pos_num":"8","open":"true","rot":"true" },
+            "apply": { "model": "druidcraft:block/crate/octo_crate_8_open_rot" }
+        }
+    ]
 }
