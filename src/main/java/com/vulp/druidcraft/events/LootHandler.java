@@ -16,7 +16,6 @@ public class LootHandler {
 
     @SubscribeEvent
     public void onGrassBroken(BreakEvent event) {
-        Druidcraft.LOGGER.debug("Grass");
         if (!event.getWorld().isRemote()) {
             if ((event.getPlayer().getHeldItemMainhand().getItem() != Items.SHEARS) && (!event.getPlayer().isCreative())) {
                 if (event.getState().getBlock() == Blocks.GRASS || event.getState().getBlock() == Blocks.TALL_GRASS || event.getState().getBlock() == Blocks.FERN) {

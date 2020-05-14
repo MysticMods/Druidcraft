@@ -3,6 +3,7 @@ package com.vulp.druidcraft.registry;
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.inventory.container.BeetleInventoryContainer;
 import com.vulp.druidcraft.inventory.container.CrateContainer;
+import com.vulp.druidcraft.inventory.container.TravelPackContainer;
 import com.vulp.druidcraft.inventory.container.WoodcutterContainer;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.ContainerType;
@@ -19,4 +20,5 @@ public class GUIRegistry {
     public static ContainerType generic_9X12 = new ContainerType<>(CrateContainer::createGeneric9X12).setRegistryName(Druidcraft.MODID, "generic_9x12");
     public static ContainerType generic_9X24 = new ContainerType<>(CrateContainer::createGeneric9X24).setRegistryName(Druidcraft.MODID, "generic_9x24");
     public static ContainerType woodcutter = new ContainerType<>(WoodcutterContainer::new).setRegistryName(Druidcraft.MODID, "woodcutter");
+    public static ContainerType travel_pack = new ContainerType<>(TravelPackContainer::createClientContainer).setRegistryName(Druidcraft.MODID, "travel_pack");
 }

@@ -43,11 +43,6 @@ public class LunarMothEggItem extends Item {
     }
 
     @Override
-    public boolean updateItemStackNBT(CompoundNBT nbt) {
-        return super.updateItemStackNBT(nbt);
-    }
-
-    @Override
     public ActionResultType onItemUse(ItemUseContext context) {
         World world = context.getWorld();
         if (world.isRemote) {

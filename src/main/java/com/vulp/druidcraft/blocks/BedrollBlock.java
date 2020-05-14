@@ -133,7 +133,11 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         boolean water = context.getWorld().getBlockState(context.getPos()).getBlock() == Blocks.WATER;
-        return super.getStateForPlacement(context).with(WATERLOGGED, water);
+        BlockState state = super.getStateForPlacement(context);
+        if (state == null) {
+            return null;
+        }
+        return state.with(WATERLOGGED, water);
     }
 
     public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
