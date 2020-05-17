@@ -65,23 +65,27 @@ public class TravelPackContainer extends Container {
         super.detectAndSendChanges();
         if (travelPackInventory instanceof TravelPackInventory) {
             ((TravelPackInventory) travelPackInventory).writeItemStack();
-            ItemStack bedroll = travelPackInventory.getStackInSlot(0);
-            CompoundNBT packTags = travelPack.getTag();
-                if (bedroll.getItem() instanceof BedrollItem) {
-                    int colorID = ((BedrollItem) bedroll.getItem()).getColor().getId();
-                    if (packTags != null && (!packTags.contains("color") || colorID != packTags.getInt("color")))
-                        packTags.putInt("color", colorID);
-                } else {
-                    if (packTags != null && packTags.contains("color"))
-                        packTags.remove("color");
-                }
+        //    handleBedrollData();
+        }
+    }
 
-                // DEBUG
-                if (packTags != null && packTags.contains("color")) {
-                    Druidcraft.LOGGER.debug(DyeColor.byId(packTags.getInt("color")).getTranslationKey());
-                } else {
-                    Druidcraft.LOGGER.debug("null");
-                }
+    public void handleBedrollData() {
+        ItemStack bedroll = travelPackInventory.getStackInSlot(1);
+        CompoundNBT packTags = travelPack.getTag();
+        if (bedroll.getItem() instanceof BedrollItem) {
+            int colorID = ((BedrollItem) bedroll.getItem()).getColor().getId();
+            if (packTags != null && (!packTags.contains("color") || colorID != packTags.getInt("color")))
+                packTags.putInt("color", colorID);
+        } else {
+            if (packTags != null && packTags.contains("color"))
+                packTags.remove("color");
+        }
+
+        // DEBUG
+        if (packTags != null && packTags.contains("color")) {
+            Druidcraft.LOGGER.debug(DyeColor.byId(packTags.getInt("color")).getTranslationKey());
+        } else {
+            Druidcraft.LOGGER.debug("null");
         }
     }
 

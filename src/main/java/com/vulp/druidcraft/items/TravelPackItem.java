@@ -2,10 +2,13 @@ package com.vulp.druidcraft.items;
 
 import com.vulp.druidcraft.inventory.TravelPackInventory;
 import com.vulp.druidcraft.inventory.container.TravelPackContainer;
+import com.vulp.druidcraft.network.PacketHandler;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.DyeColor;
@@ -18,6 +21,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 
@@ -47,13 +51,22 @@ public class TravelPackItem extends Item {
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 
+    @Override
+    public void inventoryTick(ItemStack itemStack, World world, Entity entity, int slot, boolean isHeldItem) {
+        if (isHeldItem) {
+            TravelPackInventory travelPackInventory = new TravelPackInventory(itemStack);
+            ItemStack bedroll = travelPackInventory.getStackInSlot(0);
+            int colorID = bedroll.getItem() instanceof BedrollItem ? ((BedrollItem) bedroll.getItem()).getColor().getId() : -1;
+            CompoundNBT nbt = itemStack.getOrCreateTag();
+            nbt.putInt("color", colorID);
+        }
+    }
+
     @Nullable
-    public static DyeColor getBedrollColor(ItemStack bedrollItem) {
-        CompoundNBT tags = bedrollItem.getTag();
-        if (tags != null) {
-            if (tags.contains("color")) {
-                return DyeColor.byId(tags.getInt("color"));
-            }
+    public static DyeColor getColor(CompoundNBT nbt) {
+        int colorID = nbt.getInt("color");
+        if (colorID != -1) {
+            return DyeColor.byId(nbt.getInt("color"));
         }
         return null;
     }

@@ -4,6 +4,7 @@ import com.vulp.druidcraft.config.Configuration;
 import com.vulp.druidcraft.config.DropRateConfig;
 import com.vulp.druidcraft.events.LootHandler;
 import com.vulp.druidcraft.events.SpawnHandler;
+import com.vulp.druidcraft.network.PacketHandler;
 import com.vulp.druidcraft.registry.*;
 import com.vulp.druidcraft.world.OreGeneration;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -43,6 +44,8 @@ public class Druidcraft {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
+        PacketHandler.init();
+
         OreGeneration.setupOreGeneration();
         VanillaIntegrationRegistry.setup();
 

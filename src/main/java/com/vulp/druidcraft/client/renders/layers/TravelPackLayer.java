@@ -64,10 +64,11 @@ public class TravelPackLayer<T extends PlayerEntity, M extends BipedModel<T>, A 
             int slotNum = entityLivingBaseIn.inventory.getSlotFor(new ItemStack(ItemRegistry.travel_pack));
             if (slotNum != -1) {
                 ItemStack travelPackItem = entityLivingBaseIn.inventory.getStackInSlot(slotNum);
-                DyeColor bedrollColor = TravelPackItem.getBedrollColor(travelPackItem);
+                DyeColor bedrollColor = travelPackItem.getTag() != null ? TravelPackItem.getColor(travelPackItem.getTag()) : null;
                 A a = bedrollColor == null ? this.normal_pack : this.bedroll_pack;
                 this.getEntityModel().func_217148_a(a);
                 a.setLivingAnimations(entityLivingBaseIn, limbSwing, limbSwingAmount, partialTicks);
+                Druidcraft.LOGGER.debug(bedrollColor);
                 if (bedrollColor == null) {
                     this.bindTexture(REGULAR_PACK_TEX);
                 } else {
