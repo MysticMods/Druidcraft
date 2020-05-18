@@ -83,7 +83,7 @@ public class CrateContainer extends Container {
         if (slot != null && slot.getHasStack()) {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
-            if (index < getNumRows() * 9) {
+            if (index < this.numRows * 9) {
                 if (!this.mergeItemStack(itemstack1, this.numRows * 9, this.inventorySlots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
@@ -114,11 +114,6 @@ public class CrateContainer extends Container {
      */
     public IInventory getMainInventory() {
         return this.mainCrateInv;
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public int getNumRows() {
-        return this.numRows;
     }
 
     /**

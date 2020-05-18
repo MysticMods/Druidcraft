@@ -1,17 +1,22 @@
 package com.vulp.druidcraft.items;
 
+import com.vulp.druidcraft.Druidcraft;
+import com.vulp.druidcraft.DruidcraftRegistry;
 import com.vulp.druidcraft.inventory.TravelPackInventory;
 import com.vulp.druidcraft.inventory.container.TravelPackContainer;
 import com.vulp.druidcraft.network.PacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.DyeColor;
+import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -24,11 +29,19 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class TravelPackItem extends Item {
 
     public TravelPackItem(Properties properties) {
         super(properties);
+        this.addPropertyOverride(DruidcraftRegistry.location("color"), (itemStack, world, livingEntity) -> {
+            CompoundNBT nbt = itemStack.getOrCreateTag();
+            if (nbt.contains("color")) {
+                return nbt.getInt("color");
+            }
+            else return -1;
+        });
     }
 
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
@@ -59,6 +72,7 @@ public class TravelPackItem extends Item {
             int colorID = bedroll.getItem() instanceof BedrollItem ? ((BedrollItem) bedroll.getItem()).getColor().getId() : -1;
             CompoundNBT nbt = itemStack.getOrCreateTag();
             nbt.putInt("color", colorID);
+            Druidcraft.LOGGER.debug(DyeColor.byId(colorID).getTranslationKey());
         }
     }
 
