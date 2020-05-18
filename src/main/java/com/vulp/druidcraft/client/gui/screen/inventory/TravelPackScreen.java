@@ -7,6 +7,7 @@ import com.vulp.druidcraft.inventory.container.CrateContainer;
 import com.vulp.druidcraft.inventory.container.TravelPackContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.IHasContainer;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.BeaconScreen;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
