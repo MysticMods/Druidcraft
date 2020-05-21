@@ -46,9 +46,9 @@ public class RenderRegistry
 
         // PLAYER MODEL HOOK
         Map<String, PlayerRenderer> playerSkinMap = Minecraft.getInstance().getRenderManager().getSkinMap();
-        // REMEMBER TO CHANGE THESE TO OBFUSCATED!
-        List<LayerRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>>> defaultSkinMap = ObfuscationReflectionHelper.getPrivateValue(LivingRenderer.class, playerSkinMap.get("default"), "layerRenderers");
-        List<LayerRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>>> slimSkinMap = ObfuscationReflectionHelper.getPrivateValue(LivingRenderer.class, playerSkinMap.get("slim"), "layerRenderers");
+
+        List<LayerRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>>> defaultSkinMap = ObfuscationReflectionHelper.getPrivateValue(LivingRenderer.class, playerSkinMap.get("default"), "field_177097_h");
+        List<LayerRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>>> slimSkinMap = ObfuscationReflectionHelper.getPrivateValue(LivingRenderer.class, playerSkinMap.get("slim"), "field_177097_h");
 
         defaultSkinMap.add(new TravelPackLayer<>(playerSkinMap.get("default"), new TravelPackModel<>(), new BedrollTravelPackModel<>()));
         slimSkinMap.add(new TravelPackLayer<>(playerSkinMap.get("default"), new TravelPackModel<>(), new BedrollTravelPackModel<>()));
