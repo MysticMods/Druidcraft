@@ -74,7 +74,7 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
         builder.add(X_AXIS, Y_AXIS, Z_AXIS, NORTH, SOUTH, EAST, WEST, UP, DOWN, CONNECTIONS, WATERLOGGED, DEFAULT_AXIS);
     }
 
-    public BlockState ropeConnectionCalculations(boolean onPlaced, World world, BlockState state, BlockPos pos) {
+    public BlockState ropeConnectionCalculations(boolean onPlaced, IWorld world, BlockState state, BlockPos pos) {
         BlockState newState = state.with(NORTH, false).with(EAST, false).with(SOUTH, false).with(WEST, false).with(UP, false).with(DOWN, false);
         if (world.getBlockState(pos.north()).getBlock() instanceof RopeBlock && !state.get(Z_AXIS)) {
             if (onPlaced || world.getBlockState(pos.north()).get(RopeBlock.SOUTH))
@@ -119,7 +119,7 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
         return !state.get(WATERLOGGED);
     }
 
-    private BlockState calculateState (BlockState currentState, World world, BlockPos pos, Direction.Axis defaultAxis) {
+    private BlockState calculateState (BlockState currentState, IWorld world, BlockPos pos, Direction.Axis defaultAxis) {
 
         boolean xBool = defaultAxis == Direction.Axis.X;
         boolean yBool = defaultAxis == Direction.Axis.Y;
@@ -194,7 +194,7 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
     @Override
     public Fluid pickupFluid(IWorld worldIn, BlockPos pos, BlockState state) {
         if (state.get(WATERLOGGED)) {
-            worldIn.setBlockState(pos, state.with(WATERLOGGED, Boolean.valueOf(false)), 3);
+            worldIn.setBlockState(pos, state.with(WATERLOGGED, false), 3);
             return Fluids.WATER;
         } else {
             return Fluids.EMPTY;
@@ -219,7 +219,7 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
             world.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
 
-        return ropeConnectionCalculations(false, world.getWorld(), calculateState(state, (World) world, currentPos, state.get(DEFAULT_AXIS)), currentPos);
+        return ropeConnectionCalculations(false, world, calculateState(state, world, currentPos, state.get(DEFAULT_AXIS)), currentPos);
     }
 
     @Override
