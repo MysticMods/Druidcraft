@@ -48,8 +48,6 @@ public class BeetleInventoryScreen extends ContainerScreen<BeetleInventoryContai
                 }
             }
         }
-
-        // mousePosY NEEDS CALIBRATION!
         InventoryScreen.drawEntityOnScreen(i + 43, j + 62, 17, (float)(i + 43) - this.mousePosx, (float)(j + 48) - this.mousePosY, this.beetleEntity);
     }
 

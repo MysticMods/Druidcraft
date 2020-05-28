@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.blocks;
 
+import com.vulp.druidcraft.Druidcraft;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
@@ -34,6 +35,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Random;
 
 public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiquidContainer {
     private final DyeColor color;
@@ -92,7 +94,7 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
     @Override
     public Fluid pickupFluid(IWorld worldIn, BlockPos pos, BlockState state) {
         if (state.get(WATERLOGGED)) {
-            worldIn.setBlockState(pos, state.with(WATERLOGGED, Boolean.valueOf(false)), 3);
+            worldIn.setBlockState(pos, state.with(WATERLOGGED, false), 3);
             return Fluids.WATER;
         } else {
             return Fluids.EMPTY;

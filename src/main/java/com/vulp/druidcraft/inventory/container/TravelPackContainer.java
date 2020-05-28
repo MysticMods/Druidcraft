@@ -4,6 +4,7 @@ import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.inventory.TravelPackInventory;
 import com.vulp.druidcraft.items.BedrollItem;
 import com.vulp.druidcraft.registry.GUIRegistry;
+import com.vulp.druidcraft.registry.ItemRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
@@ -60,32 +61,15 @@ public class TravelPackContainer extends Container {
         return true;
     }
 
+    public boolean hasBedroll() {
+        return this.travelPackInventory.getStackInSlot(0).getItem() instanceof BedrollItem;
+    }
+
     @Override
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
         if (travelPackInventory instanceof TravelPackInventory) {
             ((TravelPackInventory) travelPackInventory).writeItemStack();
-        //    handleBedrollData();
-        }
-    }
-
-    public void handleBedrollData() {
-        ItemStack bedroll = travelPackInventory.getStackInSlot(1);
-        CompoundNBT packTags = travelPack.getTag();
-        if (bedroll.getItem() instanceof BedrollItem) {
-            int colorID = ((BedrollItem) bedroll.getItem()).getColor().getId();
-            if (packTags != null && (!packTags.contains("color") || colorID != packTags.getInt("color")))
-                packTags.putInt("color", colorID);
-        } else {
-            if (packTags != null && packTags.contains("color"))
-                packTags.remove("color");
-        }
-
-        // DEBUG
-        if (packTags != null && packTags.contains("color")) {
-            Druidcraft.LOGGER.debug(DyeColor.byId(packTags.getInt("color")).getTranslationKey());
-        } else {
-            Druidcraft.LOGGER.debug("null");
         }
     }
 

@@ -1,41 +1,66 @@
 package com.vulp.druidcraft.events;
 
 import com.vulp.druidcraft.Druidcraft;
+import com.vulp.druidcraft.api.BedrollDyeColorIndex;
 import com.vulp.druidcraft.blocks.BedrollBlock;
+import com.vulp.druidcraft.inventory.TravelPackInventory;
+import com.vulp.druidcraft.items.BedrollItem;
+import com.vulp.druidcraft.items.TravelPackItem;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
+import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class SpawnHandler {
 
     @SubscribeEvent
     public void onPlayerSetSpawn(PlayerSetSpawnEvent event) {
-/*            if (!event.getPlayer().world.isRemote()) {
-            Druidcraft.LOGGER.debug("Bed");
-            PlayerEntity player = event.getPlayer();
-            BlockPos pos = event.getNewSpawn();
-            if (player.getEntityWorld().getBlockState(pos).getBlock() instanceof BedrollBlock) {
-                CompoundNBT playerData = player.getPersistentData();
-                playerData.putInt("TempSpawnX", pos.getX());
-                playerData.putInt("TempSpawnY", pos.getY());
-                playerData.putInt("TempSpawnZ", pos.getZ());
-                event.isCanceled();
-            }
-        } else {*/
-            PlayerEntity player = event.getPlayer();
-            BlockPos pos = event.getNewSpawn();
-            if (player.getEntityWorld().getBlockState(pos).getBlock() instanceof BedrollBlock) {
-                event.isCanceled();
-            }
-//        }
+        PlayerEntity player = event.getPlayer();
+        BlockPos pos = event.getNewSpawn();
+        if (player.getEntityWorld().getBlockState(pos).getBlock() instanceof BedrollBlock) {
+            event.isCanceled();
+        }
     }
 
-    // Does trigger! Something is wrong. Place a bunch more debugs to see what path is being taken on respawn.
-    // The setting of spawns is triggering the above SetSpawnEvent. Look into whether that's what is breaking the code.
+    @SubscribeEvent
+    public void onPlayerWakeUp(PlayerWakeUpEvent event) {
+        Druidcraft.LOGGER.debug("WAKING!");
+        PlayerEntity player = event.getPlayer();
+        ItemStack itemStack = player.getHeldItem(Hand.MAIN_HAND).getItem() instanceof TravelPackItem ? player.getHeldItem(Hand.MAIN_HAND) : player.getHeldItem(Hand.OFF_HAND);
+        CompoundNBT nbt = itemStack.getOrCreateTag();
+        if (nbt.contains("BedrollPosX")) {
+            BlockPos pos = new BlockPos(nbt.getInt("BedrollPosX"), nbt.getInt("BedrollPosY"), nbt.getInt("BedrollPosZ"));
+            World world = player.getEntityWorld();
+            BlockState blockState = world.getBlockState(pos);
+            if (blockState.getBlock() instanceof BedrollBlock) {
+                BedrollDyeColorIndex bedrollDyeColor = BedrollDyeColorIndex.byBlock((BedrollBlock)blockState.getBlock());
+                nbt.putInt("Color", bedrollDyeColor.getIndex());
+                TravelPackInventory inventory = new TravelPackInventory(itemStack);
+                inventory.setInventorySlotContents(0, new ItemStack(bedrollDyeColor.getBedrollItem(), 1));
+                inventory.writeItemStack();
+                Direction facing = blockState.get(BedrollBlock.HORIZONTAL_FACING);
+                BlockState headBlock = world.getBlockState(pos);
+                BlockState footBlock = world.getBlockState(pos.offset(facing.getOpposite()));
+                world.setBlockState(pos, headBlock.get(BedrollBlock.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState());
+                world.setBlockState(pos.offset(facing.getOpposite()), footBlock.get(BedrollBlock.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState());
+            }
+            nbt.remove("BedrollPosX");
+            nbt.remove("BedrollPosY");
+            nbt.remove("BedrollPosZ");
+        }
+    }
+
+
 /*    @SubscribeEvent
     public void onSpawn(PlayerEvent.PlayerRespawnEvent event) {
         World world = event.getPlayer().world;
