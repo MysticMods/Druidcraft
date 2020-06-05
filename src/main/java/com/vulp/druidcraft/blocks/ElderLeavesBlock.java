@@ -13,6 +13,7 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
@@ -31,7 +32,7 @@ public class ElderLeavesBlock extends LeavesBlock {
     }
 
     @Override
-    public void randomTick(BlockState state, World worldIn, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
         super.randomTick(state, worldIn, pos, random);
         if (!worldIn.isRemote && (worldIn.rand.nextInt(4) == 0) && CropLifeStageType.checkCropLife(worldIn) == CropLifeStageType.FLOWER && CropLifeStageType.getTwoDayCycle(worldIn) <= 12000) {
             if (state.get(GROWTH_TRIES) < 2) {

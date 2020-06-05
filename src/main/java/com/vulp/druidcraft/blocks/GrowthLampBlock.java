@@ -1,10 +1,6 @@
 package com.vulp.druidcraft.blocks;
 
-import com.vulp.druidcraft.Druidcraft;
-import com.vulp.druidcraft.DruidcraftRegistry;
 import com.vulp.druidcraft.blocks.tileentities.GrowthLampTileEntity;
-import com.vulp.druidcraft.registry.BlockRegistry;
-import com.vulp.druidcraft.registry.ParticleRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.client.util.ITooltipFlag;
@@ -12,14 +8,11 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ConduitTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -32,14 +25,11 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.IPlantable;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Random;
 
 public class GrowthLampBlock extends ContainerBlock implements IWaterLoggable {
     public static final BooleanProperty HANGING = BlockStateProperties.HANGING;
@@ -102,18 +92,13 @@ public class GrowthLampBlock extends ContainerBlock implements IWaterLoggable {
     }
 
     @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
-    }
-
-    @Override
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        Direction direction = func_220277_j(state).getOpposite();
-        return Block.func_220055_a(worldIn, pos.offset(direction), direction.getOpposite()) || worldIn.getBlockState(pos.offset(Direction.UP)).getBlock() instanceof RopeBlock;
+        Direction direction = getHang(state).getOpposite();
+        return Block.hasEnoughSolidSide(worldIn, pos.offset(direction), direction.getOpposite()) || worldIn.getBlockState(pos.offset(Direction.UP)).getBlock() instanceof RopeBlock;
     }
 
-    protected static Direction func_220277_j(BlockState p_220277_0_) {
-        return p_220277_0_.get(HANGING) ? Direction.DOWN : Direction.UP;
+    protected static Direction getHang(BlockState blockState) {
+        return blockState.get(HANGING) ? Direction.DOWN : Direction.UP;
     }
 
     @Override
@@ -126,7 +111,7 @@ public class GrowthLampBlock extends ContainerBlock implements IWaterLoggable {
         if (stateIn.get(WATERLOGGED)) {
             worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
         }
-        return func_220277_j(stateIn).getOpposite() == facing && !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState() : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+        return getHang(stateIn).getOpposite() == facing && !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState() : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }
 
     @Override

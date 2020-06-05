@@ -17,6 +17,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
 
@@ -53,14 +54,14 @@ public class AloeVeraBlock extends CropBlock implements IGrowable, IPlantable {
     }
 
     public BlockState withAge(int age) {
-        return this.getDefaultState().with(this.getAgeProperty(), Integer.valueOf(age));
+        return this.getDefaultState().with(this.getAgeProperty(), age);
     }
 
     public boolean isMaxAge(BlockState state) {
         return state.get(this.getAgeProperty()) >= this.getMaxAge();
     }
 
-    public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
+    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
         super.tick(state, worldIn, pos, random);
         if (!worldIn.isAreaLoaded(pos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
         if (worldIn.getLightSubtracted(pos, 0) >= 9) {
@@ -118,7 +119,7 @@ public class AloeVeraBlock extends CropBlock implements IGrowable, IPlantable {
     }
 
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        return (worldIn.getLightSubtracted(pos, 0) >= 8 || worldIn.isSkyLightMax(pos)) && super.isValidPosition(state, worldIn, pos);
+        return (worldIn.getLightSubtracted(pos, 0) >= 8 || worldIn.canSeeSky(pos)) && super.isValidPosition(state, worldIn, pos);
     }
 
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
@@ -162,8 +163,8 @@ public class AloeVeraBlock extends CropBlock implements IGrowable, IPlantable {
         return true;
     }
 
-    public void grow(World worldIn, Random rand, BlockPos pos, BlockState state) {
-        this.grow(worldIn, pos, state);
+    public void grow(ServerWorld serverWorld, Random random, BlockPos blockPos, BlockState blockState) {
+        this.grow(serverWorld, blockPos, blockState);
     }
 
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {

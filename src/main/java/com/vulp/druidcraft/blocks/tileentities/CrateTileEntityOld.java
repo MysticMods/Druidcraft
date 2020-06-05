@@ -1,6 +1,5 @@
 package com.vulp.druidcraft.blocks.tileentities;
 
-import com.vulp.druidcraft.blocks.CrateTempBlock;
 import com.vulp.druidcraft.registry.BlockRegistry;
 import com.vulp.druidcraft.registry.SoundEventRegistry;
 import com.vulp.druidcraft.registry.TileEntityRegistry;

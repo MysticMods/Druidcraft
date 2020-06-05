@@ -17,7 +17,7 @@ import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BedPart;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -51,24 +51,25 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
         builder.add(HORIZONTAL_FACING, PART, OCCUPIED, WATERLOGGED);
     }
 
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (worldIn.isRemote) {
-            return true;
+            return ActionResultType.CONSUME;
         } else {
             if (state.get(PART) != BedPart.HEAD) {
                 pos = pos.offset(state.get(HORIZONTAL_FACING));
                 state = worldIn.getBlockState(pos);
                 if (state.getBlock() != this) {
-                    return true;
+                    return ActionResultType.CONSUME;
                 }
             }
 
             net.minecraftforge.common.extensions.IForgeDimension.SleepResult sleepResult = worldIn.dimension.canSleepAt(player, pos);
             if (sleepResult != net.minecraftforge.common.extensions.IForgeDimension.SleepResult.BED_EXPLODES) {
-                if (sleepResult == net.minecraftforge.common.extensions.IForgeDimension.SleepResult.DENY) return true;
+                if (sleepResult == net.minecraftforge.common.extensions.IForgeDimension.SleepResult.DENY)
+                    return ActionResultType.SUCCESS;
                 if (state.get(OCCUPIED)) {
                     player.sendStatusMessage(new TranslationTextComponent("block.druidcraft.bedroll.occupied"), true);
-                    return true;
+                    return ActionResultType.SUCCESS;
                 } else {
                     player.trySleep(pos).ifLeft((p_220173_1_) -> {
                         if (p_220173_1_ != null) {
@@ -76,7 +77,7 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
                         }
 
                     });
-                    return true;
+                    return ActionResultType.SUCCESS;
                 }
             } else {
                 worldIn.removeBlock(pos, false);
@@ -86,7 +87,7 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
                 }
 
                 worldIn.createExplosion((Entity)null, DamageSource.netherBedExplosion(), (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, 5.0F, true, Explosion.Mode.DESTROY);
-                return true;
+                return ActionResultType.SUCCESS;
             }
         }
     }
@@ -143,7 +144,7 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
     }
 
     public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
-        entityIn.fall(fallDistance, 1.0F);
+        super.onFallenUpon(worldIn, pos, entityIn, fallDistance);
     }
 
     public void onLanded(IBlockReader worldIn, Entity entityIn) {
@@ -199,7 +200,4 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
         return BlockRenderType.MODEL;
     }
 
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.SOLID;
-    }
 }

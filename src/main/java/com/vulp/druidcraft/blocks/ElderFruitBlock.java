@@ -28,6 +28,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldInfo;
 import net.minecraft.world.storage.WorldSummary;
 import net.minecraftforge.server.permission.context.WorldContext;
@@ -143,7 +144,7 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
     }
 
     @Override
-    public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
+    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
         if (!worldIn.isAreaLoaded(pos, 1) && state.get(LIFE_STAGE) == CropLifeStageType.NONE) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
         if (worldIn.getLightSubtracted(pos, 0) >= 9 && isGrowable(worldIn, pos)) {
             int i = this.getAge(state);
@@ -169,7 +170,7 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
     }
 
     @Override
-    public void randomTick(BlockState state, World worldIn, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
         super.randomTick(state, worldIn, pos, random);
         if (!worldIn.isRemote && (worldIn.rand.nextInt(8) == 0)) {
             if (CropLifeStageType.checkCropLife(worldIn) == CropLifeStageType.NONE) {
@@ -242,14 +243,14 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (worldIn.isRemote) {
-            return true;
+            return ActionResultType.CONSUME;
         } else {
             if (isMaxAge(state) && !(state.get(MID_BERRY) && state.get(LIFE_STAGE) == CropLifeStageType.BERRY)) {
                 worldIn.destroyBlock(pos, true);
             }
-            return true;
+            return ActionResultType.PASS;
         }
     }
 
@@ -267,7 +268,7 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
     }
 
     @Override
-    public void grow(World worldIn, Random rand, BlockPos pos, BlockState state) {
+    public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
         this.grow(worldIn, pos, state);
     }
 

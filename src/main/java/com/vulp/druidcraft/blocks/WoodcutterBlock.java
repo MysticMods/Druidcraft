@@ -9,6 +9,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.inventory.container.StonecutterContainer;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
@@ -35,10 +36,14 @@ public class WoodcutterBlock extends StonecutterBlock {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        player.openContainer(state.getContainer(worldIn, pos));
-        // player.addStat(Stats.interact_with_woodcutter);
-        return true;
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if (worldIn.isRemote) {
+            return ActionResultType.SUCCESS;
+        } else {
+            player.openContainer(state.getContainer(worldIn, pos));
+            // player.addStat(Stats.interact_with_woodcutter);
+            return ActionResultType.SUCCESS;
+        }
     }
 
 }

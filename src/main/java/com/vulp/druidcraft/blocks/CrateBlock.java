@@ -27,6 +27,7 @@ import net.minecraft.state.*;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.BarrelTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -40,6 +41,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -173,20 +175,20 @@ public class CrateBlock extends ContainerBlock {
                 .with(DOWN, true));
     }
 
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         ItemStack itemstack = player.getHeldItem(handIn);
         Item item = itemstack.getItem();
         if (item == ItemRegistry.crate) {
-            return false;
+            return ActionResultType.PASS;
         }
         if (worldIn.isRemote) {
-            return true;
+            return ActionResultType.SUCCESS;
         } else {
             INamedContainerProvider inamedcontainerprovider = this.getContainer(state, worldIn, pos);
             if (inamedcontainerprovider != null) {
                 player.openContainer(inamedcontainerprovider);
             }
-            return true;
+            return ActionResultType.SUCCESS;
         }
     }
 
@@ -495,7 +497,7 @@ public class CrateBlock extends ContainerBlock {
     }
 
     @Override
-    public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
+    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
         TileEntity tileentity = worldIn.getTileEntity(pos);
         if (tileentity instanceof CrateTileEntity) {
             ((CrateTileEntity)tileentity).crateTick();

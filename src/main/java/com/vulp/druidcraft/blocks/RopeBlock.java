@@ -82,7 +82,7 @@ public class RopeBlock extends Block implements IKnifeable {
             if (state.get(property)) {
                 return calculateKnot(state.with(property, false));
             } else {
-                if (context.getWorld().getBlockState(context.getPos()).func_224755_d(context.getWorld(), context.getPos().offset(sideUsed), sideUsed)) {
+                if (context.getWorld().getBlockState(context.getPos()).isSolidSide(context.getWorld(), context.getPos().offset(sideUsed), sideUsed)) {
                     return calculateKnot(state.with(property, true));
                 }
             }
@@ -139,11 +139,6 @@ public class RopeBlock extends Block implements IKnifeable {
     }
 
     @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
-    }
-
-    @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN, KNOTTED);
     }
@@ -192,37 +187,37 @@ public class RopeBlock extends Block implements IKnifeable {
 
         boolean northType = false;
         BlockState northState = world.getBlockState(pos.offset(Direction.NORTH));
-        if (northState.func_224755_d(world, pos.offset(Direction.NORTH), Direction.NORTH.getOpposite()) || northState.getBlock() instanceof RopeBlock || northState.getBlock() instanceof SmallBeamBlock) {
+        if (northState.isSolidSide(world, pos.offset(Direction.NORTH), Direction.NORTH.getOpposite()) || northState.getBlock() instanceof RopeBlock || northState.getBlock() instanceof SmallBeamBlock) {
             northType = true;
         }
 
         boolean eastType = false;
         BlockState eastState = world.getBlockState(pos.offset(Direction.EAST));
-        if (eastState.func_224755_d(world, pos.offset(Direction.EAST), Direction.EAST.getOpposite()) || eastState.getBlock() instanceof RopeBlock || eastState.getBlock() instanceof SmallBeamBlock) {
+        if (eastState.isSolidSide(world, pos.offset(Direction.EAST), Direction.EAST.getOpposite()) || eastState.getBlock() instanceof RopeBlock || eastState.getBlock() instanceof SmallBeamBlock) {
             eastType = true;
         }
 
         boolean southType = false;
         BlockState southState = world.getBlockState(pos.offset(Direction.SOUTH));
-        if (southState.func_224755_d(world, pos.offset(Direction.SOUTH), Direction.SOUTH.getOpposite()) || southState.getBlock() instanceof RopeBlock || southState.getBlock() instanceof SmallBeamBlock) {
+        if (southState.isSolidSide(world, pos.offset(Direction.SOUTH), Direction.SOUTH.getOpposite()) || southState.getBlock() instanceof RopeBlock || southState.getBlock() instanceof SmallBeamBlock) {
             southType = true;
         }
 
         boolean westType = false;
         BlockState westState = world.getBlockState(pos.offset(Direction.WEST));
-        if (westState.func_224755_d(world, pos.offset(Direction.WEST), Direction.WEST.getOpposite()) || westState.getBlock() instanceof RopeBlock || westState.getBlock() instanceof SmallBeamBlock) {
+        if (westState.isSolidSide(world, pos.offset(Direction.WEST), Direction.WEST.getOpposite()) || westState.getBlock() instanceof RopeBlock || westState.getBlock() instanceof SmallBeamBlock) {
             westType = true;
         }
 
         boolean upType = false;
         BlockState upState = world.getBlockState(pos.offset(Direction.UP));
-        if (upState.func_224755_d(world, pos.offset(Direction.UP), Direction.UP.getOpposite()) || upState.getBlock() instanceof RopeBlock || upState.getBlock() instanceof SmallBeamBlock) {
+        if (upState.isSolidSide(world, pos.offset(Direction.UP), Direction.UP.getOpposite()) || upState.getBlock() instanceof RopeBlock || upState.getBlock() instanceof SmallBeamBlock) {
             upType = true;
         }
 
         boolean downType = false;
         BlockState downState = world.getBlockState(pos.offset(Direction.DOWN));
-        if (downState.func_224755_d(world, pos.offset(Direction.DOWN), Direction.DOWN.getOpposite()) || downState.getBlock() instanceof RopeBlock || downState.getBlock() instanceof SmallBeamBlock || ((downState.getBlock() instanceof RopeableLanternBlock || downState.getBlock() instanceof RopeLanternBlock || downState.getBlock() instanceof GrowthLampBlock) && (downState.get(RopeableLanternBlock.HANGING) && downState.get(RopeableLanternBlock.ROPED)))) {
+        if (downState.isSolidSide(world, pos.offset(Direction.DOWN), Direction.DOWN.getOpposite()) || downState.getBlock() instanceof RopeBlock || downState.getBlock() instanceof SmallBeamBlock || ((downState.getBlock() instanceof RopeableLanternBlock || downState.getBlock() instanceof RopeLanternBlock || downState.getBlock() instanceof GrowthLampBlock) && (downState.get(RopeableLanternBlock.HANGING) && downState.get(RopeableLanternBlock.ROPED)))) {
             downType = true;
         }
 
@@ -242,7 +237,7 @@ public class RopeBlock extends Block implements IKnifeable {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         ItemStack itemstack = player.getHeldItem(handIn);
         Item item = itemstack.getItem();
 
@@ -252,9 +247,9 @@ public class RopeBlock extends Block implements IKnifeable {
             }
             worldIn.setBlockState(pos.down(), BlockRegistry.rope_lantern.getDefaultState());
             worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_LANTERN_PLACE, SoundCategory.BLOCKS, 1.0F, 0.88F, true);
-            return true;
+            return ActionResultType.SUCCESS;
         } else {
-            return false;
+            return ActionResultType.FAIL;
         }
     }
 
