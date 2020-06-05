@@ -37,7 +37,7 @@ import java.util.Map;
 import java.util.Random;
 
 
-public class ElderFruitBlock extends BushBlock implements IGrowable {
+public class ElderFruitBlock extends CropBlock implements IGrowable {
 
     public static final DirectionProperty FACING = DirectionalBlock.FACING;
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_3;
@@ -223,7 +223,7 @@ public class ElderFruitBlock extends BushBlock implements IGrowable {
     }
 
     @Override
-    protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
+    public boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
         return true;
     }
 

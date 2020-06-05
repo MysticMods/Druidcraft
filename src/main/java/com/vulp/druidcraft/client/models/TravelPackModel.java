@@ -65,7 +65,6 @@ public class TravelPackModel<T extends LivingEntity> extends BipedModel<T> {
             lvt_12_1_.rotateAngleZ += MathHelper.sin(this.swingProgress * 3.1415927F) * -0.4F;
         }
         this.pack.render(scale);
-        GlStateManager.popMatrix();
     }
 
 }

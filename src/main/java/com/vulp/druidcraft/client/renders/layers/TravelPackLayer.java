@@ -24,7 +24,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -73,14 +75,15 @@ public class TravelPackLayer<T extends PlayerEntity, M extends BipedModel<T>, A 
             int slotNum = -1;
             for (int i = 0; i < handler.getSlots(); i++) {
                 ItemStack inSlot = handler.getStackInSlot(i);
-                if (inSlot.getItem() == ItemRegistry.travel_pack) {
+                if (inSlot.getItem() == ItemRegistry.travel_pack && entityLivingBaseIn.inventory.currentItem != i) {
                     slotNum = i;
                     break;
                 }
             }
             if (slotNum != -1) {
                 ItemStack travelPackItem = entityLivingBaseIn.inventory.getStackInSlot(slotNum);
-                DyeColor bedrollColor = travelPackItem.getTag() != null ? TravelPackItem.getColor(travelPackItem.getTag()) : null;
+                CompoundNBT nbt = travelPackItem.getOrCreateTag();
+                DyeColor bedrollColor = nbt.contains("Color") || nbt.getInt("Color") == -1 ? TravelPackItem.getColor(nbt) : null;
                 A a = bedrollColor == null ? this.normal_pack : this.bedroll_pack;
                 this.getEntityModel().func_217148_a(a);
                 a.setLivingAnimations(entityLivingBaseIn, limbSwing, limbSwingAmount, partialTicks);

@@ -4,18 +4,14 @@ import com.mojang.datafixers.Dynamic;
 import com.vulp.druidcraft.blocks.WoodBlock;
 import com.vulp.druidcraft.registry.BlockRegistry;
 import net.minecraft.block.*;
-import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldWriter;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.IWorldGenerationBaseReader;
 import net.minecraft.world.gen.IWorldGenerationReader;
 import net.minecraft.world.gen.feature.AbstractTreeFeature;
-import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.common.IPlantable;
 
@@ -90,58 +86,58 @@ public class ElderTreeFeature extends AbstractTreeFeature<NoFeatureConfig> {
                     if (isAirOrLeaves(worldIn, blockpos)) {
                         if (base == 0) {
                             if (rand.nextBoolean()) {
-                                if (isAir(worldIn, blockpos.north().down())) {
+                                if (isReplaceable(worldIn, blockpos.north().down())) {
                                     this.placeLogAt(changedBlocks, worldIn, blockpos.north().down(), boundsIn, true);
-                                } else {
+                                } else if (isReplaceable(worldIn, blockpos.north())) {
                                     this.placeLogAt(changedBlocks, worldIn, blockpos.north(), boundsIn, true);
                                 }
                             }
                             if (rand.nextBoolean()) {
-                                if (isAir(worldIn, blockpos.east().down())) {
+                                if (isReplaceable(worldIn, blockpos.east().down())) {
                                     this.placeLogAt(changedBlocks, worldIn, blockpos.east().down(), boundsIn, true);
-                                } else {
+                                } else if (isReplaceable(worldIn, blockpos.east())) {
                                     this.placeLogAt(changedBlocks, worldIn, blockpos.east(), boundsIn, true);
                                 }
                             }
                             if (rand.nextBoolean()) {
-                                if (isAir(worldIn, blockpos.south().down())) {
+                                if (isReplaceable(worldIn, blockpos.south().down())) {
                                     this.placeLogAt(changedBlocks, worldIn, blockpos.south().down(), boundsIn, true);
-                                } else {
+                                } else if (isReplaceable(worldIn, blockpos.south())) {
                                     this.placeLogAt(changedBlocks, worldIn, blockpos.south(), boundsIn, true);
                                 }
                             }
                             if (rand.nextBoolean()) {
-                                if (isAir(worldIn, blockpos.west().down())) {
+                                if (isReplaceable(worldIn, blockpos.west().down())) {
                                     this.placeLogAt(changedBlocks, worldIn, blockpos.west().down(), boundsIn, true);
-                                } else {
+                                } else if (isReplaceable(worldIn, blockpos.west())) {
                                     this.placeLogAt(changedBlocks, worldIn, blockpos.west(), boundsIn, true);
                                 }
                             }
                             if (rand.nextBoolean()) {
-                                if (isAir(worldIn, blockpos.north().east().down())) {
+                                if (isReplaceable(worldIn, blockpos.north().east().down())) {
                                     this.placeLogAt(changedBlocks, worldIn, blockpos.north().east().down(), boundsIn, true);
-                                } else {
+                                } else if (isReplaceable(worldIn, blockpos.north().east())) {
                                     this.placeLogAt(changedBlocks, worldIn, blockpos.north().east(), boundsIn, true);
                                 }
                             }
                             if (rand.nextBoolean()) {
-                                if (isAir(worldIn, blockpos.north().west().down())) {
+                                if (isReplaceable(worldIn, blockpos.north().west().down())) {
                                     this.placeLogAt(changedBlocks, worldIn, blockpos.north().west().down(), boundsIn, true);
-                                } else {
+                                } else if (isReplaceable(worldIn, blockpos.north().west())) {
                                     this.placeLogAt(changedBlocks, worldIn, blockpos.north().west(), boundsIn, true);
                                 }
                             }
                             if (rand.nextBoolean()) {
-                                if (isAir(worldIn, blockpos.south().east().down())) {
+                                if (isReplaceable(worldIn, blockpos.south().east().down())) {
                                     this.placeLogAt(changedBlocks, worldIn, blockpos.south().east().down(), boundsIn, true);
-                                } else {
+                                } else if (isReplaceable(worldIn, blockpos.south().east())) {
                                     this.placeLogAt(changedBlocks, worldIn, blockpos.south().east(), boundsIn, true);
                                 }
                             }
                             if (rand.nextBoolean()) {
-                                if (isAir(worldIn, blockpos.south().west().down())) {
+                                if (isReplaceable(worldIn, blockpos.south().west().down())) {
                                     this.placeLogAt(changedBlocks, worldIn, blockpos.south().west().down(), boundsIn, true);
-                                } else {
+                                } else if (isReplaceable(worldIn, blockpos.south().west())) {
                                     this.placeLogAt(changedBlocks, worldIn, blockpos.south().west(), boundsIn, true);
                                 }
                             }
@@ -152,30 +148,30 @@ public class ElderTreeFeature extends AbstractTreeFeature<NoFeatureConfig> {
                             this.placeLogAt(changedBlocks, worldIn, blockpos, boundsIn, false);
                             if (base == height - 2 || base == height - 3) {
                                 if (logSide1 == 0) {
-                                    this.placeLogAt(changedBlocks, worldIn, blockpos.north(1), boundsIn, Direction.Axis.Z);
+                                    this.placeRotatedLog(changedBlocks, worldIn, blockpos.north(1), boundsIn, Direction.Axis.Z);
                                 }
                                 if (logSide1 == 1) {
-                                    this.placeLogAt(changedBlocks, worldIn, blockpos.east(1), boundsIn, Direction.Axis.X);
+                                    this.placeRotatedLog(changedBlocks, worldIn, blockpos.east(1), boundsIn, Direction.Axis.X);
                                 }
                                 if (logSide1 == 2) {
-                                    this.placeLogAt(changedBlocks, worldIn, blockpos.south(1), boundsIn, Direction.Axis.Z);
+                                    this.placeRotatedLog(changedBlocks, worldIn, blockpos.south(1), boundsIn, Direction.Axis.Z);
                                 }
                                 if (logSide1 == 3) {
-                                    this.placeLogAt(changedBlocks, worldIn, blockpos.west(1), boundsIn, Direction.Axis.X);
+                                    this.placeRotatedLog(changedBlocks, worldIn, blockpos.west(1), boundsIn, Direction.Axis.X);
                                 }
                             }
                             if (base == height - 2 || base == height - 3) {
                                 if (logSide1 == 0) {
-                                    this.placeLogAt(changedBlocks, worldIn, blockpos.north(1), boundsIn, Direction.Axis.Z);
+                                    this.placeRotatedLog(changedBlocks, worldIn, blockpos.north(1), boundsIn, Direction.Axis.Z);
                                 }
                                 if (logSide1 == 1) {
-                                    this.placeLogAt(changedBlocks, worldIn, blockpos.east(1), boundsIn, Direction.Axis.X);
+                                    this.placeRotatedLog(changedBlocks, worldIn, blockpos.east(1), boundsIn, Direction.Axis.X);
                                 }
                                 if (logSide1 == 2) {
-                                    this.placeLogAt(changedBlocks, worldIn, blockpos.south(1), boundsIn, Direction.Axis.Z);
+                                    this.placeRotatedLog(changedBlocks, worldIn, blockpos.south(1), boundsIn, Direction.Axis.Z);
                                 }
                                 if (logSide1 == 3) {
-                                    this.placeLogAt(changedBlocks, worldIn, blockpos.west(1), boundsIn, Direction.Axis.X);
+                                    this.placeRotatedLog(changedBlocks, worldIn, blockpos.west(1), boundsIn, Direction.Axis.X);
                                 }
                             }
                         }
@@ -256,7 +252,13 @@ public class ElderTreeFeature extends AbstractTreeFeature<NoFeatureConfig> {
         this.setLogState(setPos, writer, pos, blockType, boundingBox);
     }
 
-    private void placeLogAt(Set<BlockPos> setPos, IWorldWriter writer, BlockPos pos, MutableBoundingBox boundingBox, Direction.Axis setAxis) {
+    protected static boolean isReplaceable(IWorldGenerationBaseReader worldIn, BlockPos pos) {
+        if (!(worldIn instanceof net.minecraft.world.IBlockReader)) // FORGE: Redirect to state method when possible
+            return worldIn.hasBlockState(pos, BlockState::isAir);
+        else return worldIn.hasBlockState(pos, state -> state.getMaterial().isReplaceable());
+    }
+
+    private void placeRotatedLog(Set<BlockPos> setPos, IWorldWriter writer, BlockPos pos, MutableBoundingBox boundingBox, Direction.Axis setAxis) {
         BlockState blockType = TRUNK.getBlock().getDefaultState().with(LogBlock.AXIS, setAxis);
         this.setLogState(setPos, writer, pos, blockType, boundingBox);
     }

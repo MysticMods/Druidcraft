@@ -1,0 +1,7 @@
+{
+    "parent": "block/door_bottom",
+    "textures": {
+        "bottom": "druidcraft:block/fruit_door_bottom",
+        "top": "druidcraft:block/fruit_door_top"
+    }
+}

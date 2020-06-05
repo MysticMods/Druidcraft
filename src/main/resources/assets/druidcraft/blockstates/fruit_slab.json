@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "type=bottom": { "model": "druidcraft:block/fruit_slab" },
+        "type=top": { "model": "druidcraft:block/fruit_slab_top" },
+        "type=double": { "model": "druidcraft:block/fruit_planks" }
+    }
+}

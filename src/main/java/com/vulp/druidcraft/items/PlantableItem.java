@@ -1,8 +1,10 @@
 package com.vulp.druidcraft.items;
 
+import com.vulp.druidcraft.blocks.CropBlock;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BushBlock;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.ChickenEntity;
@@ -20,15 +22,19 @@ import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
 
+import javax.annotation.Nullable;
+
 public class PlantableItem extends Item implements IPlantable
 {
     private final PlantType plantType;
-    private Block crop;
+    private CropBlock crop;
+    private final boolean blockDependent;
 
-    public PlantableItem(Properties properties, PlantType plantType, Block crop) {
+    public PlantableItem(Properties properties, PlantType plantType, CropBlock crop, boolean blockDependent) {
         super(properties);
         this.plantType = plantType;
         this.crop = crop;
+        this.blockDependent = blockDependent;
     }
 
     @Override
@@ -40,7 +46,7 @@ public class PlantableItem extends Item implements IPlantable
     ItemStack stack = context.getPlayer().getHeldItem(context.getHand());
     BlockState state = context.getWorld().getBlockState(context.getPos());
 
-    if (direction == Direction.UP && player.canPlayerEdit(pos.offset(direction), direction, stack) && context.getWorld().isAirBlock(pos.up()) && (state.getBlock().canSustainPlant(state, context.getWorld(), pos, Direction.UP, this)))
+    if (direction == Direction.UP && player.canPlayerEdit(pos.offset(direction), direction, stack) && context.getWorld().isAirBlock(pos.up()) && (this.blockDependent ? state.getBlock().canSustainPlant(state, context.getWorld(), pos, Direction.UP, this) : (crop.isValidGround(state, context.getWorld(), pos))))
 		{
 		    context.getWorld().setBlockState(pos.up(), crop.getDefaultState());
 

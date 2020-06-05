@@ -9,7 +9,6 @@ import net.minecraft.util.ResourceLocation;
 public class BlockRegistry
 {
     public static Block debug_block;
-
     public static Block hemp_crop;
     public static Block amber_ore;
     public static Block moonstone_ore;
@@ -35,7 +34,6 @@ public class BlockRegistry
     public static Block darkwood_button;
     public static Block darkwood_trapdoor;
     public static Block darkwood_door;
-
     public static Block elder_log;
     public static Block stripped_elder_log;
     public static Block elder_leaves;
@@ -53,7 +51,22 @@ public class BlockRegistry
     public static Block elder_trapdoor;
     public static Block elder_door;
     public static Block elder_fruit;
-
+    public static Block fruit_log;
+    public static Block stripped_fruit_log;
+    public static Block fruit_leaves;
+    public static Block fruit_sapling;
+    public static Block potted_fruit_sapling;
+    public static Block fruit_planks;
+    public static Block stripped_fruit_wood;
+    public static Block fruit_wood;
+    public static Block fruit_slab;
+    public static Block fruit_stairs;
+    public static Block fruit_fence;
+    public static Block fruit_fence_gate;
+    public static Block fruit_pressure_plate;
+    public static Block fruit_button;
+    public static Block fruit_trapdoor;
+    public static Block fruit_door;
     public static Block blueberry_bush;
     public static Block crate_temp;
     public static Block ceramic_lantern;
@@ -63,7 +76,6 @@ public class BlockRegistry
     public static Block yellow_lunar_moth_jar;
     public static Block orange_lunar_moth_jar;
     public static Block pink_lunar_moth_jar;
-
     public static Block oak_beam;
     public static Block spruce_beam;
     public static Block birch_beam;
@@ -72,6 +84,7 @@ public class BlockRegistry
     public static Block dark_oak_beam;
     public static Block darkwood_beam;
     public static Block elder_beam;
+    public static Block fruit_beam;
     public static Block oak_small_beam;
     public static Block spruce_small_beam;
     public static Block birch_small_beam;
@@ -80,6 +93,7 @@ public class BlockRegistry
     public static Block dark_oak_small_beam;
     public static Block darkwood_small_beam;
     public static Block elder_small_beam;
+    public static Block fruit_small_beam;
     public static Block oak_panels;
     public static Block spruce_panels;
     public static Block birch_panels;
@@ -88,6 +102,7 @@ public class BlockRegistry
     public static Block dark_oak_panels;
     public static Block darkwood_panels;
     public static Block elder_panels;
+    public static Block fruit_panels;
     public static Block wet_mud_bricks;
     public static Block dry_mud_bricks;
     public static Block dry_mud_brick_slab;
@@ -112,7 +127,6 @@ public class BlockRegistry
     public static Block green_bedroll;
     public static Block red_bedroll;
     public static Block black_bedroll;
-
     public static Block fiery_torch;
     public static Block wall_fiery_torch;
     public static Block rope;
@@ -134,6 +148,6 @@ public class BlockRegistry
     public static Block black_soulfire;
     public static Block rope_lantern;
     public static Block growth_lamp;
-
     public static Block woodcutter;
+    public static Block aloe_vera_crop;
 }

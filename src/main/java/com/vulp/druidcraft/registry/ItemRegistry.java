@@ -135,6 +135,22 @@ public class ItemRegistry
     public static Item elder_door;
     public static Item lavender;
 
+    public static Item fruit_log;
+    public static Item stripped_fruit_log;
+    public static Item fruit_leaves;
+    public static Item fruit_sapling;
+    public static Item fruit_planks;
+    public static Item stripped_fruit_wood;
+    public static Item fruit_wood;
+    public static Item fruit_slab;
+    public static Item fruit_stairs;
+    public static Item fruit_fence;
+    public static Item fruit_fence_gate;
+    public static Item fruit_pressure_plate;
+    public static Item fruit_button;
+    public static Item fruit_trapdoor;
+    public static Item fruit_door;
+
     public static Item oak_beam;
     public static Item spruce_beam;
     public static Item birch_beam;
@@ -143,6 +159,7 @@ public class ItemRegistry
     public static Item dark_oak_beam;
     public static Item darkwood_beam;
     public static Item elder_beam;
+    public static Item fruit_beam;
     public static Item oak_small_beam;
     public static Item spruce_small_beam;
     public static Item birch_small_beam;
@@ -151,6 +168,7 @@ public class ItemRegistry
     public static Item dark_oak_small_beam;
     public static Item darkwood_small_beam;
     public static Item elder_small_beam;
+    public static Item fruit_small_beam;
     public static Item oak_panels;
     public static Item spruce_panels;
     public static Item birch_panels;
@@ -159,6 +177,7 @@ public class ItemRegistry
     public static Item dark_oak_panels;
     public static Item darkwood_panels;
     public static Item elder_panels;
+    public static Item fruit_panels;
     public static Item wet_mud_bricks;
     public static Item dry_mud_bricks;
     public static Item dry_mud_brick_slab;
@@ -192,4 +211,5 @@ public class ItemRegistry
     public static Item crate_temp;
 
     public static Item woodcutter;
+    public static Item aloe_vera;
 }

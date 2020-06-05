@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "axis=y": { "model": "druidcraft:block/fruit_log" },
+        "axis=z": { "model": "druidcraft:block/fruit_log", "x": 90 },
+        "axis=x": { "model": "druidcraft:block/fruit_log", "x": 90, "y": 90 }
+    }
+}

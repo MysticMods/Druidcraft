@@ -30,6 +30,7 @@ public class DebugBlock extends Block {
     }
 
     public void checkStuff(PlayerEntity player) {
+
         if (!player.world.isRemote()) {
             CompoundNBT data = player.getPersistentData();
             int spawnX;

@@ -3,6 +3,7 @@ package com.vulp.druidcraft;
 import com.vulp.druidcraft.config.Configuration;
 import com.vulp.druidcraft.config.DropRateConfig;
 import com.vulp.druidcraft.events.LootHandler;
+import com.vulp.druidcraft.events.RenderHandler;
 import com.vulp.druidcraft.events.SpawnHandler;
 import com.vulp.druidcraft.network.PacketHandler;
 import com.vulp.druidcraft.registry.*;
@@ -60,12 +61,13 @@ public class Druidcraft {
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         RenderRegistry.registryRenders();
+        // RenderHandler.registerColors();
         LOGGER.info("Client registry method registered.");
     }
 
     private void doParticleStuff(final ParticleFactoryRegisterEvent event) {
         ParticleRegistry.registerFactories();
-        LOGGER.info("Client registry method registered.");
+        LOGGER.info("Particle registry method registered.");
     }
     @SubscribeEvent
     public void onServerStarting(FMLServerStartingEvent event) {

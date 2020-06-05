@@ -24,9 +24,7 @@ public class BasicShieldItem extends Item {
 
     public BasicShieldItem(Item.Properties builder, int durability, Item repairItem) {
         super(builder);
-        this.addPropertyOverride(new ResourceLocation("blocking"), (itemStack, world, livingEntity) -> {
-            return livingEntity != null && livingEntity.isHandActive() && livingEntity.getActiveItemStack() == itemStack ? 1.0F : 0.0F;
-        });
+        this.addPropertyOverride(new ResourceLocation("blocking"), (itemStack, world, livingEntity) -> livingEntity != null && livingEntity.isHandActive() && livingEntity.getActiveItemStack() == itemStack ? 1.0F : 0.0F);
         DispenserBlock.registerDispenseBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
         this.durabilityValue = durability;
         this.repairMaterial = repairItem;

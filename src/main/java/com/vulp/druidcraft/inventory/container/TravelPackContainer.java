@@ -35,7 +35,7 @@ public class TravelPackContainer extends Container {
         // Storage
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 3; j++) {
-                this.addSlot(new Slot(inventory, 4 + j + i * 3, 62 + j * 18, 20 + i * 18));
+                this.addSlot(new TravelPackSlot(inventory, 4 + j + i * 3, 62 + j * 18, 20 + i * 18));
             }
         }
 

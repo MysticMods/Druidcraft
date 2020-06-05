@@ -34,9 +34,6 @@ public class BedrollTravelPackModel<T extends LivingEntity> extends BipedModel<T
     public void render(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         this.pack.rotateAngleX = this.isSneak ? 0.5F : 0.0F;
         this.pack.offsetZ = this.isSneak ? 0.7F : 0.0F;
-        if (entity.shouldRenderSneaking()) {
-            GlStateManager.translatef(0.0F, 0.0F, 0.0F);
-        }
         this.bipedBody.rotateAngleY = 0.0F;
         if (this.swingProgress > 0.0F) {
             HandSide lvt_11_1_ = this.func_217147_a(entity);
@@ -69,7 +66,6 @@ public class BedrollTravelPackModel<T extends LivingEntity> extends BipedModel<T
             lvt_12_1_.rotateAngleZ += MathHelper.sin(this.swingProgress * 3.1415927F) * -0.4F;
         }
         this.pack.render(scale);
-        GlStateManager.popMatrix();
     }
 
 }

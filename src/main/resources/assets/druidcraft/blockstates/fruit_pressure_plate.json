@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "powered=false": { "model": "druidcraft:block/fruit_pressure_plate" },
+        "powered=true": { "model": "druidcraft:block/fruit_pressure_plate_down" }
+    }
+}

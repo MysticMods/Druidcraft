@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "age=0": { "model": "druidcraft:block/aloe_vera_stage0" },
+        "age=1": { "model": "druidcraft:block/aloe_vera_stage1" },
+		"age=2": { "model": "druidcraft:block/aloe_vera_stage2" }
+    }
+}
