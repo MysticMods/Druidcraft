@@ -1,11 +1,11 @@
 modLoader="javafml"
-loaderVersion="[28,)"
+loaderVersion="[31,)"
 issueTrackerURL="https://github.com/MysticMods/Druidcraft/issues"
 
 [[mods]]
 modId="druidcraft"
 version="0.4.0"
-mcversion= "1.14,"
+mcversion= "1.15,"
 displayName="Druidcraft"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/druidcraft"
 credits="Java, Forge, MCP, Minecraft, and the Mystic team for supporting me!"
@@ -19,6 +19,6 @@ Regardless, I hope you enjoy the features as they're rolled out! :)
 [[dependencies.druidcraft]]
     modId="forge"
     mandatory=true
-    versionRange="[28.1.70,)"
+    versionRange="[31.2.0,)"
     ordering="NONE"
     side="BOTH"
