@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.client.renders;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.DruidcraftRegistry;
@@ -28,7 +29,7 @@ public class DreadfishEntityRender extends MobRenderer<DreadfishEntity, Dreadfis
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(DreadfishEntity entity) {
+    public ResourceLocation getEntityTexture(DreadfishEntity entity) {
         if (entity.isTamed()) {
             if (entity.getHealth() >= entity.getMaxHealth()) {
                 return DREADFISH_HEALTH_FULL;
@@ -54,8 +55,8 @@ public class DreadfishEntityRender extends MobRenderer<DreadfishEntity, Dreadfis
     }
 
     @Override
-    protected void applyRotations(DreadfishEntity entityLiving, float ageInTicks, float rotationYaw, float partialTicks) {
-        super.applyRotations(entityLiving, ageInTicks, rotationYaw, partialTicks);
+    protected void applyRotations(DreadfishEntity entityLiving, MatrixStack matrix, float ageInTicks, float rotationYaw, float partialTicks) {
+        super.applyRotations(entityLiving, matrix, ageInTicks, rotationYaw, partialTicks);
         float f = 1.0F;
         float f1 = 1.0F;
         float f2 = f * 4.3F * MathHelper.sin(f1 * 0.6F * ageInTicks);

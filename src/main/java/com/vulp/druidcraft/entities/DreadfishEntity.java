@@ -116,7 +116,8 @@ public class DreadfishEntity extends TameableFlyingMonsterEntity
     }
 
     @Override
-    public void fall(float distance, float damageMultiplier) {
+    public boolean onLivingFall(float p_225503_1_, float p_225503_2_) {
+        return false;
     }
 
     private static boolean isValidLightLevel(IWorld world, BlockPos pos, Random rand) {
@@ -225,9 +226,9 @@ public class DreadfishEntity extends TameableFlyingMonsterEntity
             this.dreadfishEntity.setMotion(this.dreadfishEntity.getMotion().add(0.0D, 0.0D, 0.0D));
 
             if (this.action == Action.MOVE_TO && !this.dreadfishEntity.getNavigator().noPath()) {
-                double d0 = this.posX - this.dreadfishEntity.posX;
-                double d1 = this.posY - this.dreadfishEntity.posY;
-                double d2 = this.posZ - this.dreadfishEntity.posZ;
+                double d0 = this.posX - this.dreadfishEntity.getPosX();
+                double d1 = this.posY - this.dreadfishEntity.getPosY();
+                double d2 = this.posZ - this.dreadfishEntity.getPosZ();
                 double d3 = (double) MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
                 d1 /= d3;
                 float f = (float)(MathHelper.atan2(d2, d0) * 57.2957763671875D) - 90.0F;
@@ -402,7 +403,7 @@ public class DreadfishEntity extends TameableFlyingMonsterEntity
         if (this.world.isRemote) {
             int[] color = getSmokeColorArray();
 
-            world.addParticle(ParticleRegistry.magic_smoke, false, this.posX, this.posY + (((rand.nextDouble() - 0.5) + 0.2) / 3) + 0.2, this.posZ + (((rand.nextDouble() - 0.5) + 0.2) / 3), color[0] / 255.f, color[1] / 255.f, color[2] / 255.f);
+            world.addParticle(ParticleRegistry.magic_smoke, false, this.getPosX(), this.getPosY() + (((rand.nextDouble() - 0.5) + 0.2) / 3) + 0.2, this.getPosZ() + (((rand.nextDouble() - 0.5) + 0.2) / 3), color[0] / 255.f, color[1] / 255.f, color[2] / 255.f);
         }
 
         if (!this.world.isRemote && this.getAttackTarget() == null && this.isHostile()) {

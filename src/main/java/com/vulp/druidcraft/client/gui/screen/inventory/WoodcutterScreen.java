@@ -75,7 +75,7 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
     }
 
     private void drawRecipesItems(int p_214142_1_, int p_214142_2_, int p_214142_3_) {
-        RenderHelper.enableGUIStandardItemLighting();
+        RenderHelper.enableStandardItemLighting();
         List<WoodcuttingRecipe> lvt_4_1_ = ((this.container).getRecipeList());
 
         for(int lvt_5_1_ = this.recipeIndexOffset; lvt_5_1_ < p_214142_3_ && lvt_5_1_ < (this.container).getRecipeListSize(); ++lvt_5_1_) {

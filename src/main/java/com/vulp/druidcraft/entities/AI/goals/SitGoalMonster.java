@@ -37,7 +37,7 @@ public class SitGoalMonster extends Goal {
             if (livingentity == null) {
                 return true;
             } else {
-                return this.tameable.getDistanceSq(livingentity) < 144.0D && livingentity.getRevengeTarget() != null ? false : this.isSitting;
+                return (!(this.tameable.getDistanceSq(livingentity) < 144.0D) || livingentity.getRevengeTarget() == null) && this.isSitting;
             }
         }
     }

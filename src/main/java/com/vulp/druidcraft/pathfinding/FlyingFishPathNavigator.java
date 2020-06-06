@@ -30,7 +30,7 @@ public class FlyingFishPathNavigator extends SwimmerPathNavigator {
 
     @Override
     public boolean tryMoveToEntityLiving(Entity entityIn, double speedIn) {
-        Path path = this.getPathToEntityLiving(entityIn, 1);
+        Path path = this.getPathToEntity(entityIn, 1);
         return path != null && this.setPath(path, speedIn);
     }
 

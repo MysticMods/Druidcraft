@@ -23,7 +23,7 @@ public class BeetleEntityRender extends MobRenderer<BeetleEntity, BeetleEntityMo
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(BeetleEntity entity) {
+    public ResourceLocation getEntityTexture(BeetleEntity entity) {
         return BEETLE;
     }
 

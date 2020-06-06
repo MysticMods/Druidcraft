@@ -330,7 +330,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         if (passenger instanceof MobEntity) {
             MobEntity mobentity = (MobEntity)passenger;
             this.renderYawOffset = mobentity.renderYawOffset;
-            passenger.setPosition(this.posX, this.posY + this.getMountedYOffset() + passenger.getYOffset(), this.posZ);
+            passenger.setPosition(this.getPosX(), this.getPosY() + this.getMountedYOffset() + passenger.getYOffset(), this.getPosZ());
         }
     }
 

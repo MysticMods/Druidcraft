@@ -36,7 +36,7 @@ public class LunarMothEntityRender extends MobRenderer<LunarMothEntity, LunarMot
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(LunarMothEntity entity) {
+    public ResourceLocation getEntityTexture(LunarMothEntity entity) {
         switch (entity.getColor()) {
             case TURQUOISE:
                 return MOTH_TURQUOISE;

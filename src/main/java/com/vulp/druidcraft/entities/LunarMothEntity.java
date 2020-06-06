@@ -56,7 +56,7 @@ public class LunarMothEntity extends AnimalEntity {
         ItemStack itemstack = player.getHeldItem(hand);
         Item item = itemstack.getItem();
         if (item == Items.GLASS_BOTTLE) {
-            player.getEntityWorld().playSound(player, player.posX, player.posY, player.posZ, SoundEventRegistry.fill_bottle, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+            player.getEntityWorld().playSound(player, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEventRegistry.fill_bottle, SoundCategory.NEUTRAL, 1.0F, 1.0F);
             this.bottleToMothJar(itemstack, player);
             remove();
             return true;
@@ -133,12 +133,12 @@ public class LunarMothEntity extends AnimalEntity {
             }
 
             if (this.spawnPosition == null || this.rand.nextInt(30) == 0 || this.spawnPosition.withinDistance(this.getPositionVec(), 2.0D)) {
-                this.spawnPosition = new BlockPos(this.posX + (double)this.rand.nextInt(7) - (double)this.rand.nextInt(7), this.posY + (double)this.rand.nextInt(6) - 2.0D, this.posZ + (double)this.rand.nextInt(7) - (double)this.rand.nextInt(7));
+                this.spawnPosition = new BlockPos(this.getPosX() + (double)this.rand.nextInt(7) - (double)this.rand.nextInt(7), this.getPosY() + (double)this.rand.nextInt(6) - 2.0D, this.getPosZ() + (double)this.rand.nextInt(7) - (double)this.rand.nextInt(7));
             }
 
-            double d0 = (double)this.spawnPosition.getX() + 0.5D - this.posX;
-            double d1 = (double)this.spawnPosition.getY() + 0.1D - this.posY;
-            double d2 = (double)this.spawnPosition.getZ() + 0.5D - this.posZ;
+            double d0 = (double)this.spawnPosition.getX() + 0.5D - this.getPosX();
+            double d1 = (double)this.spawnPosition.getY() + 0.1D - this.getPosY();
+            double d2 = (double)this.spawnPosition.getZ() + 0.5D - this.getPosZ();
             Vec3d vec3d = this.getMotion();
             Vec3d vec3d1 = vec3d.add((Math.signum(d0) * 0.5D - vec3d.x) * 0.10000000149011612D, (Math.signum(d1) * 0.699999988079071D - vec3d.y) * 0.10000000149011612D, (Math.signum(d2) * 0.5D - vec3d.z) * 0.10000000149011612D);
             this.setMotion(vec3d1);
@@ -155,7 +155,8 @@ public class LunarMothEntity extends AnimalEntity {
     }
 
     @Override
-    public void fall(float distance, float damageMultiplier) {
+    public boolean onLivingFall(float p_225503_1_, float p_225503_2_) {
+        return false;
     }
 
     @Override
@@ -314,7 +315,7 @@ public class LunarMothEntity extends AnimalEntity {
             }
 
             if (rand.nextBoolean()) {
-                world.addParticle(ParticleRegistry.magic_glitter, false, this.posX + (((rand.nextDouble() - 0.5)) / 3), this.posY + ((rand.nextDouble() - 0.5) / 3) + 0.2, this.posZ + (((rand.nextDouble() - 0.5)) / 3), (red / 255.f) * colorMod, (green / 255.f) * colorMod, (blue / 255.f) * colorMod);
+                world.addParticle(ParticleRegistry.magic_glitter, false, this.getPosX() + (((rand.nextDouble() - 0.5)) / 3), this.getPosY() + ((rand.nextDouble() - 0.5) / 3) + 0.2, this.getPosZ() + (((rand.nextDouble() - 0.5)) / 3), (red / 255.f) * colorMod, (green / 255.f) * colorMod, (blue / 255.f) * colorMod);
             }
         }
     }

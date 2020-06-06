@@ -93,8 +93,8 @@ public class FollowOwnerGoalMonster extends Goal {
                 this.timeToRecalcPath = 10;
                 if (!this.tameable.getLeashed() && !this.tameable.isPassenger()) {
                     if (this.tameable.getDistanceSq(this.owner) > 576.0D) {
-                        int i = MathHelper.floor(this.owner.posX) - 2;
-                        int j = MathHelper.floor(this.owner.posZ) - 2;
+                        int i = MathHelper.floor(this.owner.getPosX()) - 2;
+                        int j = MathHelper.floor(this.owner.getPosZ()) - 2;
                         int k = MathHelper.floor(this.owner.getBoundingBox().minY);
 
                         for (int l = 0; l <= 4; ++l) {

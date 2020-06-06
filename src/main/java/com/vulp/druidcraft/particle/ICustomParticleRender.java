@@ -20,7 +20,7 @@ public interface ICustomParticleRender extends IParticleRenderType {
             GlStateManager.enableBlend();
             GlStateManager.depthMask(false);
             textureManager.bindTexture(AtlasTexture.LOCATION_PARTICLES_TEXTURE);
-            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
+            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA.param, GlStateManager.DestFactor.ONE.param);
             GlStateManager.alphaFunc(516, 0.003921569F);
             GlStateManager.disableCull();
             buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
