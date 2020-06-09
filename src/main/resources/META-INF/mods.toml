@@ -19,6 +19,6 @@ Regardless, I hope you enjoy the features as they're rolled out! :)
 [[dependencies.druidcraft]]
     modId="forge"
     mandatory=true
-    versionRange="[31.2.0,)"
+    versionRange="[31.2.9,)"
     ordering="NONE"
     side="BOTH"

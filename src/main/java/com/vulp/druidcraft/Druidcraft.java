@@ -3,7 +3,6 @@ package com.vulp.druidcraft;
 import com.vulp.druidcraft.config.Configuration;
 import com.vulp.druidcraft.config.DropRateConfig;
 import com.vulp.druidcraft.events.LootHandler;
-import com.vulp.druidcraft.events.RenderHandler;
 import com.vulp.druidcraft.events.SpawnHandler;
 import com.vulp.druidcraft.network.PacketHandler;
 import com.vulp.druidcraft.registry.*;
@@ -55,7 +54,6 @@ public class Druidcraft {
         if (DropRateConfig.drop_seeds.get()) {
             MinecraftForge.EVENT_BUS.register(new LootHandler());
         }
-
         LOGGER.info("Setup method registered.");
     }
 

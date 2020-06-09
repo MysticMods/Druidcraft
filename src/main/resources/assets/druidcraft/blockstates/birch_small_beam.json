@@ -3,46 +3,6 @@
 		{   "when":	{ "connections": "2" },
             "apply": { "model": "druidcraft:block/birch_small_beam_center" }
         },
-		
-		{   "when":	{ "north": "true", "x_axis": "true" },
-            "apply": { "model": "druidcraft:block/beam_rope_north_x" }
-        },
-		{   "when":	{ "south": "true", "x_axis": "true" },
-            "apply": { "model": "druidcraft:block/beam_rope_south_x" }
-        },
-		{   "when":	{ "up": "true", "x_axis": "true" },
-            "apply": { "model": "druidcraft:block/beam_rope_up_x" }
-        },
-		{   "when":	{ "down": "true", "x_axis": "true" },
-            "apply": { "model": "druidcraft:block/beam_rope_down_x" }
-        },
-		
-		{   "when":	{ "north": "true", "y_axis": "true" },
-            "apply": { "model": "druidcraft:block/beam_rope_north_y" }
-        },
-		{   "when":	{ "south": "true", "y_axis": "true" },
-            "apply": { "model": "druidcraft:block/beam_rope_south_y" }
-        },
-		{   "when":	{ "east": "true", "y_axis": "true" },
-            "apply": { "model": "druidcraft:block/beam_rope_east_y" }
-        },
-		{   "when":	{ "west": "true", "y_axis": "true" },
-            "apply": { "model": "druidcraft:block/beam_rope_west_y" }
-        },
-		
-		{   "when":	{ "east": "true", "z_axis": "true" },
-            "apply": { "model": "druidcraft:block/beam_rope_east_z" }
-        },
-		{   "when":	{ "west": "true", "z_axis": "true" },
-            "apply": { "model": "druidcraft:block/beam_rope_west_z" }
-        },
-		{   "when":	{ "up": "true", "z_axis": "true" },
-            "apply": { "model": "druidcraft:block/beam_rope_up_z" }
-        },
-		{   "when":	{ "down": "true", "z_axis": "true" },
-            "apply": { "model": "druidcraft:block/beam_rope_down_z" }
-        },
-		
 		{   "when":	{ "connections": "0|1", "x_axis": "true" },
             "apply": { "model": "druidcraft:block/birch_small_beam_full_x" }
         },

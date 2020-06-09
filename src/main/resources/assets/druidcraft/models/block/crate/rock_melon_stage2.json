@@ -1,0 +1,34 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"31": "druidcraft:block/rock_melon_leaves_stage2",
+		"37": "druidcraft:block/rock_melon_top_stage2",
+		"38": "druidcraft:block/rock_melon_side_stage2",
+		"particle": "druidcraft:block/rock_melon_stone_side"
+	},
+	"elements": [
+		{
+			"from": [4, 0, 4],
+			"to": [12, 8, 12],
+			"faces": {
+				"north": {"uv": [4, 8, 12, 16], "texture": "#38"},
+				"east": {"uv": [4, 8, 12, 16], "texture": "#38"},
+				"south": {"uv": [4, 8, 12, 16], "texture": "#38"},
+				"west": {"uv": [4, 8, 12, 16], "texture": "#38"},
+				"up": {"uv": [4, 4, 12, 12], "texture": "#37"},
+				"down": {"uv": [4, 4, 12, 12], "texture": "#37"}
+			}
+		},
+		{
+			"from": [3, 0, 3],
+			"to": [13, 3, 13],
+			"rotation": {"angle": 0, "axis": "y", "origin": [9, 8, 9]},
+			"faces": {
+				"north": {"uv": [3, 13, 13, 16], "texture": "#31"},
+				"east": {"uv": [3, 13, 13, 16], "texture": "#31"},
+				"south": {"uv": [3, 13, 13, 16], "texture": "#31"},
+				"west": {"uv": [3, 13, 13, 16], "texture": "#31"}
+			}
+		}
+	]
+}

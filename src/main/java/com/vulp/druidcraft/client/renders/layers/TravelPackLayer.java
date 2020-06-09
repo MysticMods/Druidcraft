@@ -2,10 +2,12 @@ package com.vulp.druidcraft.client.renders.layers;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.items.TravelPackItem;
 import com.vulp.druidcraft.registry.ItemRegistry;
@@ -13,11 +15,15 @@ import javafx.util.Builder;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.ArmorLayer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -65,11 +71,12 @@ public class TravelPackLayer<T extends PlayerEntity, M extends BipedModel<T>, A 
         this.bedroll_pack = bedrolledModel;
     }
 
-    public void render(T entityLivingBaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        renderPack(entityLivingBaseIn, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, scale);
+    @Override
+    public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, T entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+        renderPack(matrixStackIn, bufferIn, entitylivingbaseIn, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, packedLightIn);
     }
 
-    public void renderPack(T entityLivingBaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+    public void renderPack(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, T entityLivingBaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, int packedLightIn) {
         if (entityLivingBaseIn.getEntity() instanceof PlayerEntity) {
             IItemHandler handler = entityLivingBaseIn.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP).orElse(null);
             int slotNum = -1;
@@ -85,20 +92,18 @@ public class TravelPackLayer<T extends PlayerEntity, M extends BipedModel<T>, A 
                 CompoundNBT nbt = travelPackItem.getOrCreateTag();
                 DyeColor bedrollColor = nbt.contains("Color") || nbt.getInt("Color") == -1 ? TravelPackItem.getColor(nbt) : null;
                 A a = bedrollColor == null ? this.normal_pack : this.bedroll_pack;
-                this.getEntityModel().func_217148_a(a);
+                this.getEntityModel().setModelAttributes(a);
                 a.setLivingAnimations(entityLivingBaseIn, limbSwing, limbSwingAmount, partialTicks);
+                ResourceLocation resourceLocation;
                 if (bedrollColor == null) {
-                    this.bindTexture(REGULAR_PACK_TEX);
+                    resourceLocation = REGULAR_PACK_TEX;
                 } else {
-                    this.bindTexture(TEX_MAP.get(bedrollColor));
+                    resourceLocation = TEX_MAP.get(bedrollColor);
                 }
-                a.render(entityLivingBaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+                IVertexBuilder ivertexbuilder = ItemRenderer.getBuffer(bufferIn, RenderType.getEntityCutoutNoCull(resourceLocation), false, false);
+                a.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 0.0F, 0.0F, 0.0F, 1.0F);
             }
         }
-    }
-
-    public boolean shouldCombineTextures() {
-        return false;
     }
 
 }

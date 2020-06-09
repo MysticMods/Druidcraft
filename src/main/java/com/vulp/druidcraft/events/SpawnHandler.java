@@ -6,6 +6,7 @@ import com.vulp.druidcraft.blocks.BedrollBlock;
 import com.vulp.druidcraft.inventory.TravelPackInventory;
 import com.vulp.druidcraft.items.BedrollItem;
 import com.vulp.druidcraft.items.TravelPackItem;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,14 +28,17 @@ public class SpawnHandler {
     public void onPlayerSetSpawn(PlayerSetSpawnEvent event) {
         PlayerEntity player = event.getPlayer();
         BlockPos pos = event.getNewSpawn();
-        if (player.getEntityWorld().getBlockState(pos).getBlock() instanceof BedrollBlock) {
-            event.isCanceled();
+        World world = player.getEntityWorld();
+        if (pos != null && !world.isRemote) {
+            Block block = world.getBlockState(pos).getBlock();
+            if (player.getEntityWorld().getBlockState(pos).getBlock() instanceof BedrollBlock) {
+                event.setCanceled(true);
+            }
         }
     }
 
     @SubscribeEvent
     public void onPlayerWakeUp(PlayerWakeUpEvent event) {
-        Druidcraft.LOGGER.debug("WAKING!");
         PlayerEntity player = event.getPlayer();
         ItemStack itemStack = player.getHeldItem(Hand.MAIN_HAND).getItem() instanceof TravelPackItem ? player.getHeldItem(Hand.MAIN_HAND) : player.getHeldItem(Hand.OFF_HAND);
         CompoundNBT nbt = itemStack.getOrCreateTag();

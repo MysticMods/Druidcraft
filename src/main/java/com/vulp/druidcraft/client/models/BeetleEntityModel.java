@@ -4,7 +4,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.vulp.druidcraft.entities.BeetleEntity;
 import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.entity.model.ModelRenderer;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
@@ -141,13 +140,18 @@ public class BeetleEntityModel<T extends BeetleEntity> extends EntityModel<T> {
 
 
     @Override
-    public void render(MatrixStack matrixStack, IVertexBuilder iVertexBuilder, int i, int i1, float v, float v1, float v2, float v3) {
+    public void render(MatrixStack matrixStack, IVertexBuilder iVertexBuilder, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        this.body_1.render(matrixStack, iVertexBuilder, packedLight, packedOverlay);
+    }
 
+    private void rotationAngles(ModelRenderer ModelRenderer, float x, float y, float z) {
+        ModelRenderer.rotateAngleX = x;
+        ModelRenderer.rotateAngleY = y;
+        ModelRenderer.rotateAngleZ = z;
     }
 
     @Override
-    public void render(BeetleEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        this.setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+    public void setRotationAngles(BeetleEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
         this.harness.showModel = false;
         this.saddle_main.showModel = false;
@@ -171,18 +175,6 @@ public class BeetleEntityModel<T extends BeetleEntity> extends EntityModel<T> {
             this.chest_R_front.showModel = true;
             this.chest_R_back.showModel = true;
         }
-
-        this.body_1.render(scale);
-    }
-
-    private void rotationAngles(ModelRenderer ModelRenderer, float x, float y, float z) {
-        ModelRenderer.rotateAngleX = x;
-        ModelRenderer.rotateAngleY = y;
-        ModelRenderer.rotateAngleZ = z;
-    }
-
-    @Override
-    public void setRotationAngles(BeetleEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
         this.head.rotateAngleY = netHeadYaw * 0.012F;
         this.head.rotateAngleX = headPitch * 0.012F;

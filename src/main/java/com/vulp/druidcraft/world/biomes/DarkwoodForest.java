@@ -1,6 +1,7 @@
 package com.vulp.druidcraft.world.biomes;
 
 import com.vulp.druidcraft.DruidcraftRegistry;
+import com.vulp.druidcraft.registry.FeatureRegistry;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -20,8 +21,8 @@ public class DarkwoodForest extends Biome {
         super((new Biome.Builder()).surfaceBuilder(new ConfiguredSurfaceBuilder<SurfaceBuilderConfig>(SurfaceBuilder.DEFAULT, new SurfaceBuilderConfig(Blocks.GRASS_BLOCK.getDefaultState(), Blocks.DIRT.getDefaultState(), Blocks.SAND.getDefaultState())))
                 .precipitation(RainType.RAIN).category(Category.TAIGA).downfall(0.8f).depth(0.3f).scale(0.2f).temperature(0.25f).waterColor(0x5786E5).waterFogColor(0x38577F).parent(null));
 
-        this.addStructure(Feature.MINESHAFT, new MineshaftConfig(0.004D, MineshaftStructure.Type.NORMAL));
-        this.addStructure(Feature.STRONGHOLD, IFeatureConfig.NO_FEATURE_CONFIG);
+        this.addStructure(Feature.MINESHAFT.withConfiguration(new MineshaftConfig(0.004D, MineshaftStructure.Type.NORMAL)));
+        this.addStructure(Feature.STRONGHOLD.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
         DefaultBiomeFeatures.addCarvers(this);
         DefaultBiomeFeatures.addStructures(this);
         DefaultBiomeFeatures.addLakes(this);
@@ -32,8 +33,8 @@ public class DarkwoodForest extends Biome {
         DefaultBiomeFeatures.addStoneVariants(this);
         DefaultBiomeFeatures.addOres(this);
         DefaultBiomeFeatures.addSedimentDisks(this);
-        BiomeFeatures.addDarkwoodTrees(this);
-        BiomeFeatures.addDarkwoodShrubs(this);
+        FeatureRegistry.addDarkwoodTrees(this);
+        FeatureRegistry.addDarkwoodShrubs(this);
         DefaultBiomeFeatures.addDefaultFlowers(this);
         DefaultBiomeFeatures.addTaigaGrassAndMushrooms(this);
         DefaultBiomeFeatures.addMushrooms(this);
@@ -57,16 +58,16 @@ public class DarkwoodForest extends Biome {
         this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.ENDERMAN, 10, 1, 4));
         this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.WITCH, 5, 1, 1));
 
-
     }
 
     @Override
-    public int getGrassColor(BlockPos pos) {
+    public int getGrassColor(double posX, double posZ) {
         return 0x508948;
     }
 
     @Override
-    public int getFoliageColor(BlockPos pos) {
+    public int getFoliageColor() {
         return 0x305B2A;
     }
+
 }

@@ -6,9 +6,8 @@ import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.DruidcraftRegistry;
 import com.vulp.druidcraft.client.models.DreadfishEntityModel;
 import com.vulp.druidcraft.entities.DreadfishEntity;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.Vector3f;
+import net.minecraft.client.renderer.entity.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
@@ -52,6 +51,7 @@ public class DreadfishEntityRender extends MobRenderer<DreadfishEntity, Dreadfis
         {
             return new DreadfishEntityRender(manager);
         }
+
     }
 
     @Override
@@ -60,7 +60,7 @@ public class DreadfishEntityRender extends MobRenderer<DreadfishEntity, Dreadfis
         float f = 1.0F;
         float f1 = 1.0F;
         float f2 = f * 4.3F * MathHelper.sin(f1 * 0.6F * ageInTicks);
-        GlStateManager.rotatef(f2, 0.0F, 1.0F, 0.0F);
-        GlStateManager.translatef(0.0F, 0.0F, -0.4F);
+        matrix.rotate(Vector3f.YP.rotationDegrees(f2));
+        matrix.translate(0.0D, 0.0D, -0.4000000059604645D);
     }
 }
