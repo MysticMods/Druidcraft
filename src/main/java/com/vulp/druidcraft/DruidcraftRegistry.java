@@ -486,6 +486,17 @@ public class DruidcraftRegistry {
         LOGGER.info("Tile Entities registered.");
     }
 
+    // BIOME REGISTRATION
+    @SubscribeEvent
+    public static void onBiomeRegistry(final RegistryEvent.Register<Biome> BiomeRegistryEvent)
+    {
+        IForgeRegistry<Biome> registry = BiomeRegistryEvent.getRegistry();
+
+        BiomeRegistry.darkwood_forest = BiomeRegistry.registerBiome(registry, new DarkwoodForest(), "darkwood_forest", 6, false, BiomeManager.BiomeType.COOL, BiomeDictionary.Type.CONIFEROUS);
+
+        LOGGER.info("Biomes registered.");
+    }
+
     // FEATURE REGISTRATION
     @SubscribeEvent
     public static void onFeatureRegistry(final RegistryEvent.Register<Feature<?>> FeatureRegistryEvent)
@@ -503,17 +514,6 @@ public class DruidcraftRegistry {
 
         FeatureRegistry.spawnFeatures();
         LOGGER.info("Features registered.");
-    }
-
-    // BIOME REGISTRATION
-    @SubscribeEvent
-    public static void onBiomeRegistry(final RegistryEvent.Register<Biome> BiomeRegistryEvent)
-    {
-        IForgeRegistry<Biome> registry = BiomeRegistryEvent.getRegistry();
-
-        BiomeRegistry.darkwood_forest = BiomeRegistry.registerBiome(registry, new DarkwoodForest(), "darkwood_forest", 6, false, BiomeManager.BiomeType.COOL, BiomeDictionary.Type.CONIFEROUS);
-
-        LOGGER.info("Biomes registered.");
     }
 
     // TEXTURE STITCHING

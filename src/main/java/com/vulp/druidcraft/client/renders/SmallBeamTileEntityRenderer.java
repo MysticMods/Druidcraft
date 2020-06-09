@@ -42,23 +42,15 @@ public class SmallBeamTileEntityRenderer extends TileEntityRenderer<SmallBeamTil
             this.model.up.showModel = list.get(4);
             this.model.down.showModel = list.get(5);
             this.model.center_x.showModel = axis == Direction.Axis.X;
-            this.model.center_y.showModel = axis == Direction.Axis.X;
-            this.model.center_z.showModel = axis == Direction.Axis.X;
+            this.model.center_y.showModel = axis == Direction.Axis.Y;
+            this.model.center_z.showModel = axis == Direction.Axis.Z;
         }
         matrixStack.scale(0.6666667F, -0.6666667F, -0.6666667F);
         Material material = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, texture);
         SmallBeamRopeModel model = this.model;
         model.getClass();
         IVertexBuilder iVertexBuilder = material.getBuffer(iRenderTypeBuffer, model::getRenderType);
-        this.model.north.render(matrixStack, iVertexBuilder, i, i1);
-        this.model.east.render(matrixStack, iVertexBuilder, i, i1);
-        this.model.south.render(matrixStack, iVertexBuilder, i, i1);
-        this.model.west.render(matrixStack, iVertexBuilder, i, i1);
-        this.model.up.render(matrixStack, iVertexBuilder, i, i1);
-        this.model.down.render(matrixStack, iVertexBuilder, i, i1);
-        this.model.center_x.render(matrixStack, iVertexBuilder, i, i1);
-        this.model.center_y.render(matrixStack, iVertexBuilder, i, i1);
-        this.model.center_z.render(matrixStack, iVertexBuilder, i, i1);
+        this.model.render(matrixStack, iVertexBuilder, i, i1, 1.0F, 1.0F, 1.0F, 1.0F);
         matrixStack.pop();
     }
 

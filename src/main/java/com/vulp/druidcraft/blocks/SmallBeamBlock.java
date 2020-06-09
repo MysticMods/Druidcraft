@@ -9,6 +9,7 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.*;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -18,7 +19,9 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiquidContainer {
+import javax.annotation.Nullable;
+
+public class SmallBeamBlock extends ContainerBlock implements IBucketPickupHandler, ILiquidContainer {
 
     public static final BooleanProperty X_AXIS = BooleanProperty.create("x_axis");
     public static final BooleanProperty Y_AXIS = BooleanProperty.create("y_axis");
@@ -36,6 +39,11 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
                 .with(CONNECTIONS, 0)
                 .with(WATERLOGGED, false)
                 .with(DEFAULT_AXIS, Direction.Axis.Y));
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(IBlockReader world) {
+        return new SmallBeamTileEntity();
     }
 
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
@@ -60,6 +68,11 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(X_AXIS, Y_AXIS, Z_AXIS, CONNECTIONS, WATERLOGGED, DEFAULT_AXIS);
+    }
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 
     @Override
