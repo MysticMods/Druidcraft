@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.blocks.tileentities;
 
+import com.vulp.druidcraft.blocks.CrateBlock;
 import com.vulp.druidcraft.blocks.RopeBlock;
 import com.vulp.druidcraft.blocks.SmallBeamBlock;
 import com.vulp.druidcraft.registry.TileEntityRegistry;
@@ -35,8 +36,8 @@ public class SmallBeamTileEntity extends TileEntity {
     @Override
     public void onLoad() {
         super.onLoad();
-        if (this.world != null) {
-            ropeConnectionCalculations(this.world, getBlockState(), this.pos);
+        if (this.world != null && this.getBlockState().getBlock() instanceof SmallBeamBlock) {
+            ropeConnectionCalculations(this.world, this.getBlockState(), this.pos);
         }
     }
 

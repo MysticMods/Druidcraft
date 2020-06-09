@@ -217,7 +217,7 @@ public class RopeBlock extends Block implements IKnifeable {
 
         boolean downType = false;
         BlockState downState = world.getBlockState(pos.offset(Direction.DOWN));
-        if (downState.isSolidSide(world, pos.offset(Direction.DOWN), Direction.DOWN.getOpposite()) || downState.getBlock() instanceof RopeBlock || downState.getBlock() instanceof SmallBeamBlock || ((downState.getBlock() instanceof RopeableLanternBlock || downState.getBlock() instanceof RopeLanternBlock || downState.getBlock() instanceof GrowthLampBlock) && (downState.get(RopeableLanternBlock.HANGING) && downState.get(RopeableLanternBlock.ROPED)))) {
+        if (downState.isSolidSide(world, pos.offset(Direction.DOWN), Direction.DOWN.getOpposite()) || downState.getBlock() instanceof RopeBlock || downState.getBlock() instanceof RopeLanternBlock || downState.getBlock() instanceof SmallBeamBlock || ((downState.getBlock() instanceof RopeableLanternBlock || downState.getBlock() instanceof GrowthLampBlock) && (downState.get(RopeableLanternBlock.HANGING) && downState.get(RopeableLanternBlock.ROPED)))) {
             downType = true;
         }
 

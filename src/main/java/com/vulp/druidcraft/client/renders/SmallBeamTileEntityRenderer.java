@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.model.Material;
 import net.minecraft.client.renderer.model.Model;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.Direction;
@@ -34,18 +35,18 @@ public class SmallBeamTileEntityRenderer extends TileEntityRenderer<SmallBeamTil
         ArrayList<Boolean> list = smallBeamTileEntity.getDirections();
         Direction.Axis axis = smallBeamTileEntity.getRotation();
         matrixStack.push();
+        matrixStack.translate(0.5D, -0.5D, 0.5D);
         if (axis != null) {
             this.model.north.showModel = list.get(0);
-            this.model.east.showModel = list.get(1);
+            this.model.west.showModel = list.get(1);
             this.model.south.showModel = list.get(2);
-            this.model.west.showModel = list.get(3);
-            this.model.up.showModel = list.get(4);
-            this.model.down.showModel = list.get(5);
+            this.model.east.showModel = list.get(3);
+            this.model.down.showModel = list.get(4);
+            this.model.up.showModel = list.get(5);
             this.model.center_x.showModel = axis == Direction.Axis.X;
             this.model.center_y.showModel = axis == Direction.Axis.Y;
             this.model.center_z.showModel = axis == Direction.Axis.Z;
         }
-        matrixStack.scale(0.6666667F, -0.6666667F, -0.6666667F);
         Material material = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, texture);
         SmallBeamRopeModel model = this.model;
         model.getClass();

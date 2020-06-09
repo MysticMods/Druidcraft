@@ -2,10 +2,7 @@ package com.vulp.druidcraft.blocks;
 
 import com.vulp.druidcraft.registry.BlockRegistry;
 import com.vulp.druidcraft.registry.ItemRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CropsBlock;
+import net.minecraft.block.*;
 import net.minecraft.state.IProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
@@ -25,7 +22,7 @@ import net.minecraftforge.common.PlantType;
 
 import java.util.Random;
 
-public class HempBlock extends CropBlock {
+public class HempBlock extends CropBlock implements IGrowable {
 
     private static boolean topBlockValid;
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_3;
@@ -60,7 +57,6 @@ public class HempBlock extends CropBlock {
         return state.get(this.getAgeProperty()) >= this.getMaxAge();
     }
 
-
     @OnlyIn(Dist.CLIENT)
     protected IItemProvider getSeedsItem() {
         return ItemRegistry.hemp_seeds;
@@ -68,6 +64,27 @@ public class HempBlock extends CropBlock {
 
     public boolean canGrow(IBlockReader world, BlockPos pos, BlockState state, boolean isClient) {
         return (!isMaxAge(state)) || (world.getBlockState(pos.down()).getBlock() != this) && (world.getBlockState(pos.up()).getBlock() != this);
+    }
+
+    @Override
+    public boolean canUseBonemeal(World world, Random random, BlockPos blockPos, BlockState blockState) {
+        return true;
+    }
+
+    @Override
+    public void grow(ServerWorld serverWorld, Random random, BlockPos blockPos, BlockState state) {
+        int i = this.getAge(state) + this.getBonemealAgeIncrease(serverWorld);
+        int j = this.getMaxAge();
+        if (i > j) {
+            i = j;
+        }
+
+        if (this.getAge(state) != j) {
+            serverWorld.setBlockState(blockPos, this.withAge(i), 2);
+        }
+        else if ((this.getAge(state) == j) && (topBlockValid = true)) {
+            serverWorld.setBlockState(blockPos.up(), this.getDefaultState());
+        }
     }
 
     @Override
@@ -140,21 +157,6 @@ public class HempBlock extends CropBlock {
         }
 
         return f / 3;
-    }
-
-    public void grow(World world, BlockPos pos, BlockState state) {
-        int i = this.getAge(state) + this.getBonemealAgeIncrease(world);
-        int j = this.getMaxAge();
-        if (i > j) {
-            i = j;
-        }
-
-        if (this.getAge(state) != j) {
-            world.setBlockState(pos, this.withAge(i), 2);
-        }
-        else if ((this.getAge(state) == j) && (topBlockValid = true)) {
-            world.setBlockState(pos.up(), this.getDefaultState());
-        }
     }
 
     protected int getBonemealAgeIncrease(World worldIn) {
