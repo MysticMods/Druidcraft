@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class SmallBeamBlock extends ContainerBlock implements IBucketPickupHandler, ILiquidContainer {
+public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiquidContainer {
 
     public static final BooleanProperty X_AXIS = BooleanProperty.create("x_axis");
     public static final BooleanProperty Y_AXIS = BooleanProperty.create("y_axis");
@@ -41,11 +41,25 @@ public class SmallBeamBlock extends ContainerBlock implements IBucketPickupHandl
                 .with(DEFAULT_AXIS, Direction.Axis.Y));
     }
 
+    @Nullable
     @Override
-    public TileEntity createNewTileEntity(IBlockReader world) {
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new SmallBeamTileEntity();
     }
 
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public boolean eventReceived(BlockState p_189539_1_, World p_189539_2_, BlockPos p_189539_3_, int p_189539_4_, int p_189539_5_) {
+        super.eventReceived(p_189539_1_, p_189539_2_, p_189539_3_, p_189539_4_, p_189539_5_);
+        TileEntity lvt_6_1_ = p_189539_2_.getTileEntity(p_189539_3_);
+        return lvt_6_1_ != null && lvt_6_1_.receiveClientEvent(p_189539_4_, p_189539_5_);
+    }
+
+    @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         VoxelShape voxelshape = VoxelShapes.empty();
 
