@@ -65,6 +65,7 @@ public class WoodcutterContainer extends Container {
          * For tile entities, ensures the chunk containing the tile entity is saved to disk later - the game won't think
          * it hasn't changed and skip it.
          */
+        @Override
         public void markDirty() {
             super.markDirty();
             WoodcutterContainer.this.onCraftMatrixChanged(this);
@@ -89,10 +90,12 @@ public class WoodcutterContainer extends Container {
             /**
              * Check if the stack is allowed to be placed in this slot, used for armor slots as well as furnace fuel.
              */
+            @Override
             public boolean isItemValid(ItemStack stack) {
                 return false;
             }
 
+            @Override
             public ItemStack onTake(PlayerEntity thePlayer, ItemStack stack) {
                 ItemStack itemstack = WoodcutterContainer.this.inputInventorySlot.decrStackSize(1);
                 if (!itemstack.isEmpty()) {
@@ -151,6 +154,7 @@ public class WoodcutterContainer extends Container {
     /**
      * Determines whether supplied player can use this container
      */
+    @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
         return isWithinUsableDistance(this.worldPosCallable, playerIn, BlockRegistry.woodcutter);
     }
@@ -158,6 +162,7 @@ public class WoodcutterContainer extends Container {
     /**
      * Handles the given Button-click on the server, currently only used by enchanting. Name is for legacy.
      */
+    @Override
     public boolean enchantItem(PlayerEntity playerIn, int id) {
         if (id >= 0 && id < this.recipes.size()) {
             this.selectedRecipe.set(id);
@@ -170,6 +175,7 @@ public class WoodcutterContainer extends Container {
     /**
      * Callback for when the crafting matrix is changed.
      */
+    @Override
     public void onCraftMatrixChanged(IInventory inventoryIn) {
         ItemStack itemstack = this.inputInventorySlot.getStack();
         if (itemstack.getItem() != this.itemStackInput.getItem()) {
@@ -200,6 +206,7 @@ public class WoodcutterContainer extends Container {
         this.detectAndSendChanges();
     }
 
+    @Override
     public ContainerType<?> getType() {
         return GUIRegistry.woodcutter;
     }
@@ -213,6 +220,7 @@ public class WoodcutterContainer extends Container {
      * Called to determine if the current slot is valid for the stack merging (double-click) code. The stack passed in is
      * null for the initial slot that was double-clicked.
      */
+    @Override
     public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
         return false;
     }
@@ -221,6 +229,7 @@ public class WoodcutterContainer extends Container {
      * Handle when the stack in slot {@code index} is shift-clicked. Normally this moves the stack between the player
      * inventory and the other inventory(s).
      */
+    @Override
     public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
@@ -276,6 +285,7 @@ public class WoodcutterContainer extends Container {
     /**
      * Called when the container is closed.
      */
+    @Override
     public void onContainerClosed(PlayerEntity playerIn) {
         super.onContainerClosed(playerIn);
         this.inventory.removeStackFromSlot(1);

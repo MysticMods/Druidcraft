@@ -11,6 +11,7 @@ public class TravelPackSlot extends Slot {
         super(inventory, index, posX, posY);
     }
 
+    @Override
     public boolean isItemValid(ItemStack itemStack) {
         return !(itemStack.getItem() instanceof TravelPackItem);
     }

@@ -47,10 +47,12 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
         this.setDefaultState(this.stateContainer.getBaseState().with(PART, BedPart.FOOT).with(OCCUPIED, false).with(WATERLOGGED, false));
     }
 
+    @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(HORIZONTAL_FACING, PART, OCCUPIED, WATERLOGGED);
     }
 
+    @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (worldIn.isRemote) {
             return ActionResultType.CONSUME;
@@ -102,6 +104,7 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
         }
     }
 
+    @Override
     @SuppressWarnings("deprecation")
     public IFluidState getFluidState(BlockState state) {
         return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
@@ -143,10 +146,12 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
         return state.with(WATERLOGGED, water);
     }
 
+    @Override
     public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
         super.onFallenUpon(worldIn, pos, entityIn, fallDistance);
     }
 
+    @Override
     public void onLanded(IBlockReader worldIn, Entity entityIn) {
         entityIn.setMotion(entityIn.getMotion().mul(1.0D, 0.0D, 1.0D));
     }
@@ -158,6 +163,7 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
         tooltip.add(new TranslationTextComponent("block.druidcraft.bedroll.description1").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
     }
 
+    @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         if (state.get(PART) == BedPart.FOOT) {
             Direction direction = state.get(HORIZONTAL_FACING);
@@ -196,6 +202,7 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
     }
 
 
+    @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }

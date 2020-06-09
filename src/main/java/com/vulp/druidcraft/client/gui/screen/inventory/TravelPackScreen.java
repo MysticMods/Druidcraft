@@ -133,9 +133,11 @@ public class TravelPackScreen extends ContainerScreen<TravelPackContainer> imple
             this.resourceLocation = resourceLocation;
         }
 
+        @Override
         public void onPress() {
         }
 
+        @Override
         public void renderToolTip(int p_renderToolTip_1_, int p_renderToolTip_2_) {
             TravelPackScreen.this.renderTooltip(I18n.format(resourceLocation), p_renderToolTip_1_, p_renderToolTip_2_);
         }
@@ -149,6 +151,7 @@ public class TravelPackScreen extends ContainerScreen<TravelPackContainer> imple
             super(xIn, yIn, 6, 16, "");
         }
 
+        @Override
         public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
             Minecraft.getInstance().getTextureManager().bindTexture(TRAVEL_PACK_GUI_TEXTURE);
             GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);

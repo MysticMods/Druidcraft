@@ -37,10 +37,12 @@ public class AloeVeraBlock extends CropBlock implements IGrowable, IPlantable {
         return AGE;
     }
 
+    @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return SHAPE_BY_AGE[state.get(this.getAgeProperty())];
     }
 
+    @Override
     public boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
         return BlockTags.SAND.contains(state.getBlock());
     }
@@ -61,6 +63,7 @@ public class AloeVeraBlock extends CropBlock implements IGrowable, IPlantable {
         return state.get(this.getAgeProperty()) >= this.getMaxAge();
     }
 
+    @Override
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
         super.tick(state, worldIn, pos, random);
         if (!worldIn.isAreaLoaded(pos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
@@ -118,10 +121,12 @@ public class AloeVeraBlock extends CropBlock implements IGrowable, IPlantable {
         return f / 3;
     }
 
+    @Override
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
         return (worldIn.getLightSubtracted(pos, 0) >= 8 || worldIn.canSeeSky(pos)) && super.isValidPosition(state, worldIn, pos);
     }
 
+    @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
         if (entityIn instanceof RavagerEntity && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(worldIn, entityIn)) {
             worldIn.destroyBlock(pos, true);
@@ -148,6 +153,7 @@ public class AloeVeraBlock extends CropBlock implements IGrowable, IPlantable {
         return ItemRegistry.aloe_vera;
     }
 
+    @Override
     public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
         return new ItemStack(this.getSeedsItem());
     }
@@ -155,18 +161,22 @@ public class AloeVeraBlock extends CropBlock implements IGrowable, IPlantable {
     /**
      * Whether this IGrowable can grow
      */
+    @Override
     public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return !this.isMaxAge(state);
     }
 
+    @Override
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
         return true;
     }
 
+    @Override
     public void grow(ServerWorld serverWorld, Random random, BlockPos blockPos, BlockState blockState) {
         this.grow(serverWorld, blockPos, blockState);
     }
 
+    @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(AGE);
     }

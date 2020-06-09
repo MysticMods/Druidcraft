@@ -33,10 +33,12 @@ public class QuadSidedInventory implements IInventory {
         }
     }
 
+    @Override
     public int getSizeInventory() {
         return this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory();
     }
 
+    @Override
     public boolean isEmpty() {
         return this.inv1.isEmpty() && this.inv2.isEmpty() && this.inv3.isEmpty() && this.inv4.isEmpty();
     }
@@ -45,6 +47,7 @@ public class QuadSidedInventory implements IInventory {
         return this.inv1 == inventoryIn || this.inv2 == inventoryIn || this.inv3 == inventoryIn || this.inv4 == inventoryIn;
     }
 
+    @Override
     public ItemStack getStackInSlot(int index) {
 
         if (index >= this.inv1.getSizeInventory()) {
@@ -59,6 +62,7 @@ public class QuadSidedInventory implements IInventory {
         return this.inv1.getStackInSlot(index);
     }
 
+    @Override
     public ItemStack decrStackSize(int index, int count) {
 
         if (index >= this.inv1.getSizeInventory()) {
@@ -73,6 +77,7 @@ public class QuadSidedInventory implements IInventory {
         return this.inv1.decrStackSize(index, count);
     }
 
+    @Override
     public ItemStack removeStackFromSlot(int index) {
 
         if (index >= this.inv1.getSizeInventory()) {
@@ -87,6 +92,7 @@ public class QuadSidedInventory implements IInventory {
         return this.inv1.removeStackFromSlot(index);
     }
 
+    @Override
     public void setInventorySlotContents(int index, ItemStack stack) {
 
         if (index >= this.inv1.getSizeInventory()) {
@@ -103,10 +109,12 @@ public class QuadSidedInventory implements IInventory {
         this.inv1.setInventorySlotContents(index, stack);
     }
 
+    @Override
     public int getInventoryStackLimit() {
         return this.inv1.getInventoryStackLimit();
     }
 
+    @Override
     public void markDirty() {
         this.inv1.markDirty();
         this.inv2.markDirty();
@@ -114,10 +122,12 @@ public class QuadSidedInventory implements IInventory {
         this.inv4.markDirty();
     }
 
+    @Override
     public boolean isUsableByPlayer(PlayerEntity player) {
         return this.inv1.isUsableByPlayer(player) && this.inv2.isUsableByPlayer(player) && this.inv3.isUsableByPlayer(player) && this.inv4.isUsableByPlayer(player);
     }
 
+    @Override
     public void openInventory(PlayerEntity player) {
         this.inv1.openInventory(player);
         this.inv2.openInventory(player);
@@ -125,6 +135,7 @@ public class QuadSidedInventory implements IInventory {
         this.inv4.openInventory(player);
     }
 
+    @Override
     public void closeInventory(PlayerEntity player) {
         this.inv1.closeInventory(player);
         this.inv2.closeInventory(player);
@@ -132,6 +143,7 @@ public class QuadSidedInventory implements IInventory {
         this.inv4.closeInventory(player);
     }
 
+    @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {
 
         if (index >= this.inv1.getSizeInventory()) {
@@ -146,6 +158,7 @@ public class QuadSidedInventory implements IInventory {
         return this.inv1.isItemValidForSlot(index, stack);
     }
 
+    @Override
     public void clear() {
         this.inv1.clear();
         this.inv2.clear();

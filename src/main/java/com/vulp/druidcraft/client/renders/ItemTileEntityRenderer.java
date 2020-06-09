@@ -51,6 +51,7 @@ public class ItemTileEntityRenderer extends ItemStackTileEntityRenderer {
     public static final ResourceLocation chitin_shield_tex = DruidcraftRegistry.location("entity/shields/chitin");
     public static final ResourceLocation moonstone_shield_tex = DruidcraftRegistry.location("entity/shields/moonstone");
 
+    @Override
     public void render(ItemStack itemStack, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int packedLight, int packedOverlay) {
         Item item = itemStack.getItem();
         if (item instanceof BasicShieldItem) {

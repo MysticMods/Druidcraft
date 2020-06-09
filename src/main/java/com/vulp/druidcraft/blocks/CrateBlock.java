@@ -63,18 +63,22 @@ public class CrateBlock extends ContainerBlock {
     public static final BooleanProperty UP = BooleanProperty.create("up");
     public static final BooleanProperty DOWN = BooleanProperty.create("down");
     private static final CrateBlock.InventoryFactory<IInventory> inventoryFactory = new CrateBlock.InventoryFactory<IInventory>() {
+        @Override
         public IInventory forOcto(CrateTileEntity inv1, CrateTileEntity inv2, CrateTileEntity inv3, CrateTileEntity inv4, CrateTileEntity inv5, CrateTileEntity inv6, CrateTileEntity inv7, CrateTileEntity inv8) {
             return new OctoSidedInventory(inv1, inv2, inv3, inv4, inv5, inv6, inv7, inv8);
         }
 
+        @Override
         public IInventory forQuad(CrateTileEntity inv1, CrateTileEntity inv2, CrateTileEntity inv3, CrateTileEntity inv4) {
             return new QuadSidedInventory(inv1, inv2, inv3, inv4);
         }
 
+        @Override
         public IInventory forDouble(CrateTileEntity inv1, CrateTileEntity inv2) {
             return new DoubleSidedInventory(inv1, inv2);
         }
 
+        @Override
         public IInventory forSingle(CrateTileEntity tileEntity) {
             return tileEntity;
         }
@@ -82,9 +86,11 @@ public class CrateBlock extends ContainerBlock {
     private static final CrateBlock.InventoryFactory<INamedContainerProvider> guiFactory = new CrateBlock.InventoryFactory<INamedContainerProvider>() {
 
 
+        @Override
         public INamedContainerProvider forOcto(final CrateTileEntity tileEntity1, final CrateTileEntity tileEntity2, final CrateTileEntity tileEntity3, final CrateTileEntity tileEntity4, final CrateTileEntity tileEntity5, final CrateTileEntity tileEntity6, final CrateTileEntity tileEntity7, final CrateTileEntity tileEntity8) {
             final IInventory iinventory = new OctoSidedInventory(tileEntity1, tileEntity2, tileEntity3, tileEntity4, tileEntity5, tileEntity6, tileEntity7, tileEntity8);
             return new INamedContainerProvider() {
+                @Override
                 @Nullable
                 public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
                     if (tileEntity1.canOpen(p_createMenu_3_) && tileEntity2.canOpen(p_createMenu_3_)) {
@@ -96,6 +102,7 @@ public class CrateBlock extends ContainerBlock {
                     }
                 }
 
+                @Override
                 public ITextComponent getDisplayName() {
                     if (tileEntity1.hasCustomName()) {
                         return tileEntity1.getDisplayName();
@@ -106,9 +113,11 @@ public class CrateBlock extends ContainerBlock {
             };
         }
 
+        @Override
         public INamedContainerProvider forQuad(final CrateTileEntity tileEntity1, final CrateTileEntity tileEntity2, final CrateTileEntity tileEntity3, final CrateTileEntity tileEntity4) {
             final IInventory iinventory = new QuadSidedInventory(tileEntity1, tileEntity2, tileEntity3, tileEntity4);
             return new INamedContainerProvider() {
+                @Override
                 @Nullable
                 public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
                     if (tileEntity1.canOpen(p_createMenu_3_) && tileEntity2.canOpen(p_createMenu_3_)) {
@@ -120,6 +129,7 @@ public class CrateBlock extends ContainerBlock {
                     }
                 }
 
+                @Override
                 public ITextComponent getDisplayName() {
                     if (tileEntity1.hasCustomName()) {
                         return tileEntity1.getDisplayName();
@@ -130,9 +140,11 @@ public class CrateBlock extends ContainerBlock {
             };
         }
 
+        @Override
         public INamedContainerProvider forDouble(final CrateTileEntity tileEntity1, final CrateTileEntity tileEntity2) {
             final IInventory iinventory = new DoubleSidedInventory(tileEntity1, tileEntity2);
             return new INamedContainerProvider() {
+                @Override
                 @Nullable
                 public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
                     if (tileEntity1.canOpen(p_createMenu_3_) && tileEntity2.canOpen(p_createMenu_3_)) {
@@ -144,6 +156,7 @@ public class CrateBlock extends ContainerBlock {
                     }
                 }
 
+                @Override
                 public ITextComponent getDisplayName() {
                     if (tileEntity1.hasCustomName()) {
                         return tileEntity1.getDisplayName();
@@ -154,6 +167,7 @@ public class CrateBlock extends ContainerBlock {
             };
         }
 
+        @Override
         public INamedContainerProvider forSingle(CrateTileEntity p_212856_1_) {
             return p_212856_1_;
         }
@@ -175,6 +189,7 @@ public class CrateBlock extends ContainerBlock {
                 .with(DOWN, true));
     }
 
+    @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         ItemStack itemstack = player.getHeldItem(handIn);
         Item item = itemstack.getItem();
@@ -1068,6 +1083,7 @@ public class CrateBlock extends ContainerBlock {
         return blockStateList;
     }
 
+    @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(TYPE, PROPERTY_OPEN, PARENT, ROTATED, POS_NUM, NORTH, EAST, SOUTH, WEST, UP, DOWN);
     }
@@ -1101,6 +1117,7 @@ public class CrateBlock extends ContainerBlock {
         return factory.forSingle((CrateTileEntity)tileentity);
     }
 
+    @Override
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
             TileEntity tileentity = worldIn.getTileEntity(pos);
@@ -1119,11 +1136,13 @@ public class CrateBlock extends ContainerBlock {
         return getCrateInventory(state, world, pos, allowBlocked, inventoryFactory);
     }
 
+    @Override
     @Nullable
     public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
         return getCrateInventory(state, worldIn, pos, false, guiFactory);
     }
 
+    @Override
     public TileEntity createNewTileEntity(IBlockReader worldIn) {
         return new CrateTileEntity();
     }
@@ -1146,17 +1165,20 @@ public class CrateBlock extends ContainerBlock {
     }
 
     /** @deprecated */
+    @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
 
 
     /** @deprecated */
+    @Override
     public boolean hasComparatorInputOverride(BlockState state) {
         return true;
     }
 
     /** @deprecated */
+    @Override
     public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
         return Container.calcRedstoneFromInventory(getInventory(blockState, worldIn, pos, false));
     }
@@ -1367,6 +1389,7 @@ public class CrateBlock extends ContainerBlock {
         }
     }*/
 
+    @Override
     public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         if (placer != null) {
             if (!placer.getEntity().isSneaking()) {
@@ -1390,6 +1413,7 @@ public class CrateBlock extends ContainerBlock {
 
     }
 
+    @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         boolean rotate = rotateCrate(context.getPos());
         return this.getDefaultState().with(ROTATED, rotate);

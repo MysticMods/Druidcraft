@@ -30,6 +30,7 @@ public class BasicShieldItem extends Item {
         this.repairMaterial = repairItem;
     }
 
+    @Override
     public UseAction getUseAction(ItemStack stack) {
         return UseAction.BLOCK;
     }
@@ -37,6 +38,7 @@ public class BasicShieldItem extends Item {
     /**
      * How long it takes to use or consume an item
      */
+    @Override
     public int getUseDuration(ItemStack stack) {
         return this.durabilityValue;
     }
@@ -45,6 +47,7 @@ public class BasicShieldItem extends Item {
      * Called to trigger the item's "innate" right click behavior. To handle when this item is used on a Block, see
      * {@link #onItemUse}.
      */
+    @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
         playerIn.setActiveHand(handIn);
@@ -54,6 +57,7 @@ public class BasicShieldItem extends Item {
     /**
      * Return whether this item is repairable in an anvil.
      */
+    @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
         return this.repairMaterial == repair.getItem() || super.getIsRepairable(toRepair, repair);
     }

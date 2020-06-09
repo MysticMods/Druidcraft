@@ -13,10 +13,12 @@ public class WoodcuttingRecipe extends SingleItemRecipe {
         super(IModdedRecipeType.woodcutting, RecipeSerializers.woodcutting, p_i50021_1_, p_i50021_2_, p_i50021_3_, p_i50021_4_);
     }
 
+    @Override
     public boolean matches(IInventory inv, World worldIn) {
         return this.ingredient.test(inv.getStackInSlot(0));
     }
 
+    @Override
     public ItemStack getIcon() {
         return new ItemStack(BlockRegistry.woodcutter);
     }

@@ -77,6 +77,7 @@ public class CrateContainer extends Container {
      * Handle when the stack in slot {@code index} is shift-clicked. Normally this moves the stack between the player
      * inventory and the other inventory(s).
      */
+    @Override
     public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = (Slot)this.inventorySlots.get(index);
@@ -104,6 +105,7 @@ public class CrateContainer extends Container {
     /**
      * Called when the container is closed.
      */
+    @Override
     public void onContainerClosed(PlayerEntity playerIn) {
         super.onContainerClosed(playerIn);
         this.mainCrateInv.closeInventory(playerIn);

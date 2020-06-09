@@ -30,16 +30,19 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
         p_i51076_1_.setInventoryUpdateListener(this::onInventoryUpdate);
     }
 
+    @Override
     public void render(int p_render_1_, int p_render_2_, float p_render_3_) {
         super.render(p_render_1_, p_render_2_, p_render_3_);
         this.renderHoveredToolTip(p_render_1_, p_render_2_);
     }
 
+    @Override
     protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
         this.font.drawString(this.title.getFormattedText(), 8.0F, 4.0F, 4210752);
         this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0F, (float)(this.ySize - 94), 4210752);
     }
 
+    @Override
     protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
         this.renderBackground();
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -89,6 +92,7 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
         RenderHelper.disableStandardItemLighting();
     }
 
+    @Override
     public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
         this.clickedOnSroll = false;
         if (this.hasItemsInInputSlot) {
@@ -117,6 +121,7 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
         return super.mouseClicked(p_mouseClicked_1_, p_mouseClicked_3_, p_mouseClicked_5_);
     }
 
+    @Override
     public boolean mouseDragged(double p_mouseDragged_1_, double p_mouseDragged_3_, int p_mouseDragged_5_, double p_mouseDragged_6_, double p_mouseDragged_8_) {
         if (this.clickedOnSroll && this.canScroll()) {
             int lvt_10_1_ = this.guiTop + 14;
@@ -130,6 +135,7 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
         }
     }
 
+    @Override
     public boolean mouseScrolled(double p_mouseScrolled_1_, double p_mouseScrolled_3_, double p_mouseScrolled_5_) {
         if (this.canScroll()) {
             int lvt_7_1_ = this.getHiddenRows();

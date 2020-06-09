@@ -34,6 +34,7 @@ public class RopeableLanternBlock extends Block implements IWaterLoggable {
         this.setDefaultState(this.stateContainer.getBaseState().with(HANGING, false).with(ROPED, false).with(WATERLOGGED, false));
     }
 
+    @Override
     @Nullable
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         IFluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
@@ -52,6 +53,7 @@ public class RopeableLanternBlock extends Block implements IWaterLoggable {
         return null;
     }
 
+    @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         VoxelShape lantern_grounded = VoxelShapes.or(VoxelShapes.or(Block.makeCuboidShape(4.0f, 0.0f, 4.0f, 12.0f, 2.0f, 12.0f), Block.makeCuboidShape(3.0f, 2.0f, 3.0f, 13.0f, 8.0f, 13.0f)), Block.makeCuboidShape(6.0f, 7.0f, 6.0f, 12.0f, 9.0f, 12.0f));
         VoxelShape lantern_hanging = VoxelShapes.or(VoxelShapes.or(Block.makeCuboidShape(4.0f, 1.0f, 4.0f, 12.0f, 3.0f, 12.0f), Block.makeCuboidShape(3.0f, 3.0f, 3.0f, 13.0f, 9.0f, 13.0f)), Block.makeCuboidShape(5.0f, 9.0f, 5.0f, 11.0f, 11.0f, 11.0f));
@@ -65,11 +67,13 @@ public class RopeableLanternBlock extends Block implements IWaterLoggable {
         return VoxelShapes.or(lantern_grounded, Block.makeCuboidShape(5.0f, 10.0f, 5.0f, 11.0f, 13.0f, 11.0f));
     }
 
+    @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(HANGING, ROPED, WATERLOGGED);
     }
 
 
+    @Override
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
         Direction direction = func_220277_j(state).getOpposite();
         return Block.hasEnoughSolidSide(worldIn, pos.offset(direction), direction.getOpposite()) || worldIn.getBlockState(pos.offset(Direction.UP)).getBlock() instanceof RopeBlock;
@@ -79,10 +83,12 @@ public class RopeableLanternBlock extends Block implements IWaterLoggable {
         return p_220277_0_.get(HANGING) ? Direction.DOWN : Direction.UP;
     }
 
+    @Override
     public PushReaction getPushReaction(BlockState state) {
         return PushReaction.DESTROY;
     }
 
+    @Override
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
         if (stateIn.get(WATERLOGGED)) {
             worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
@@ -109,6 +115,7 @@ public class RopeableLanternBlock extends Block implements IWaterLoggable {
         }
     }
 
+    @Override
     public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
         return false;
     }

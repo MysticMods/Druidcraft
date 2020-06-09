@@ -14,6 +14,7 @@ public class TravelPackBedrollSlot extends Slot {
         this.container = container;
     }
 
+    @Override
     public boolean isItemValid(ItemStack itemStack) {
         return itemStack.getItem() instanceof BedrollItem;
     }

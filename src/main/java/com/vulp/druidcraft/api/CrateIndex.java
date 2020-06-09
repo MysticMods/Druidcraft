@@ -103,6 +103,7 @@ public enum CrateIndex implements IStringSerializable {
         return this.down;
     }
 
+    @Override
     public String getName() {
         return name();
     }

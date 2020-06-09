@@ -53,6 +53,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
         return this.neighbors;
     }
 
+    @Override
     public CompoundNBT write(CompoundNBT compound) {
         super.write(compound);
         ArrayList<Integer> x = new ArrayList<>();
@@ -73,6 +74,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
         return compound;
     }
 
+    @Override
     public void read(CompoundNBT compound) {
         super.read(compound);
         ArrayList<BlockPos> neighborArray = new ArrayList<>();
@@ -97,10 +99,12 @@ public class CrateTileEntity extends LockableLootTileEntity {
     /**
      * Returns the number of slots in the inventory.
      */
+    @Override
     public int getSizeInventory() {
         return 27;
     }
 
+    @Override
     public boolean isEmpty() {
         for(ItemStack itemstack : this.contents) {
             if (!itemstack.isEmpty()) {
@@ -114,6 +118,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
     /**
      * Returns the stack in the given slot.
      */
+    @Override
     public ItemStack getStackInSlot(int index) {
         return this.contents.get(index);
     }
@@ -121,6 +126,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
     /**
      * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
      */
+    @Override
     public ItemStack decrStackSize(int index, int count) {
         return ItemStackHelper.getAndSplit(this.contents, index, count);
     }
@@ -128,6 +134,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
     /**
      * Removes a stack from the given slot and returns it.
      */
+    @Override
     public ItemStack removeStackFromSlot(int index) {
         return ItemStackHelper.getAndRemove(this.contents, index);
     }
@@ -135,6 +142,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
+    @Override
     public void setInventorySlotContents(int index, ItemStack stack) {
         this.contents.set(index, stack);
         if (stack.getCount() > this.getInventoryStackLimit()) {
@@ -143,22 +151,27 @@ public class CrateTileEntity extends LockableLootTileEntity {
 
     }
 
+    @Override
     public void clear() {
         this.contents.clear();
     }
 
+    @Override
     protected NonNullList<ItemStack> getItems() {
         return this.contents;
     }
 
+    @Override
     protected void setItems(NonNullList<ItemStack> itemsIn) {
         this.contents = itemsIn;
     }
 
+    @Override
     protected ITextComponent getDefaultName() {
         return new TranslationTextComponent("container.druidcraft.crate");
     }
 
+    @Override
     protected Container createMenu(int id, PlayerInventory player) {
         return ChestContainer.createGeneric9X3(id, player, this);
     }
@@ -212,6 +225,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
         return i;
     }
 
+    @Override
     public void openInventory(PlayerEntity player) {
         if (!player.isSpectator()) {
             if (this.numPlayersUsing < 0) {
@@ -248,6 +262,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
         }
     }
 
+    @Override
     public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> cap, @javax.annotation.Nullable net.minecraft.util.Direction side) {
         if (!this.removed && cap == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             if (this.crateHandler == null) {
@@ -316,6 +331,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
             crateHandler.invalidate();
     }
 
+    @Override
     public void closeInventory(PlayerEntity player) {
         if (!player.isSpectator()) {
             --this.numPlayersUsing;

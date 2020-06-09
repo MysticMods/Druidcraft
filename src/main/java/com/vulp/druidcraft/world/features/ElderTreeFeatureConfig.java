@@ -35,10 +35,12 @@ public class ElderTreeFeatureConfig extends BaseTreeFeatureConfig {
         this.baseHeight = baseHeightIn;
     }
 
+    @Override
     public void forcePlacement() {
         this.forcePlacement = true;
     }
 
+    @Override
     public <T> Dynamic<T> serialize(DynamicOps<T> ops) {
         ImmutableMap.Builder<T, T> builder = ImmutableMap.builder();
         builder.put(ops.createString("base_provider"), this.baseProvider.serialize(ops)).put(ops.createString("trunk_provider"), this.trunkProvider.serialize(ops)).put(ops.createString("leaves_provider"), this.leavesProvider.serialize(ops)).put(ops.createString("decorators"), ops.createList(this.decorators.stream().map((p_227375_1_) -> {
@@ -47,11 +49,13 @@ public class ElderTreeFeatureConfig extends BaseTreeFeatureConfig {
         return new Dynamic<>(ops, ops.createMap(builder.build()));
     }
 
+    @Override
     protected ElderTreeFeatureConfig setSapling(net.minecraftforge.common.IPlantable value) {
         this.sapling = value;
         return this;
     }
 
+    @Override
     public net.minecraftforge.common.IPlantable getSapling() {
         return this.sapling;
     }

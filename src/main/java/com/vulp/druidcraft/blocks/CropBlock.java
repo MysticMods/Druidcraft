@@ -12,6 +12,7 @@ public class CropBlock extends BushBlock {
         super(properties);
     }
 
+    @Override
     public boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
         return state.getBlock() == Blocks.FARMLAND;
     }

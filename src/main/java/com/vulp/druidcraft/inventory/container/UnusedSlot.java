@@ -12,6 +12,7 @@ public class UnusedSlot extends Slot {
         super(inventory, index, posX, posY);
     }
 
+    @Override
     public boolean isItemValid(ItemStack itemStack) {
         return false;
     }
