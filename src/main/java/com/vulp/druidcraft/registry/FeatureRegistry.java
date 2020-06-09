@@ -44,15 +44,6 @@ public class FeatureRegistry {
         addLavenderPatches();
     }
 
-    // Custom biome features.
-    public static void addDarkwoodTrees(Biome biomeIn) {
-        biomeIn.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.RANDOM_SELECTOR.withConfiguration(new MultipleRandomFeatureConfig(ImmutableList.of(Feature.MEGA_SPRUCE_TREE.withConfiguration(giant_darkwood_tree_feature).withChance(0.5F), Feature.NORMAL_TREE.withConfiguration(darkwood_tree_feature).withChance(0.5F)), Feature.NORMAL_TREE.withConfiguration(darkwood_tree_feature))).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.configure(new AtSurfaceWithExtraConfig(12, 0.3F, 3))));
-    }
-
-    public static void addDarkwoodShrubs(Biome biomeIn) {
-        biomeIn.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.JUNGLE_GROUND_BUSH.withConfiguration(darkwood_bush_feature).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.configure(new AtSurfaceWithExtraConfig(5, 0.3F, 2))));
-    }
-
     // Vanilla / Multi biome features.
     public static void addElderTrees() {
         for (Biome biome : ForgeRegistries.BIOMES) {

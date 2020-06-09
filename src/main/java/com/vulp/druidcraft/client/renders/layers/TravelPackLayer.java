@@ -79,6 +79,9 @@ public class TravelPackLayer<T extends PlayerEntity, M extends BipedModel<T>, A 
     public void renderPack(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, T entityLivingBaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, int packedLightIn) {
         if (entityLivingBaseIn.getEntity() instanceof PlayerEntity) {
             IItemHandler handler = entityLivingBaseIn.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP).orElse(null);
+            if (handler == null) {
+                return;
+            }
             int slotNum = -1;
             for (int i = 0; i < handler.getSlots(); i++) {
                 ItemStack inSlot = handler.getStackInSlot(i);
