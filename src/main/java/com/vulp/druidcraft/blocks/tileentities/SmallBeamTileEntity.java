@@ -26,19 +26,11 @@ public class SmallBeamTileEntity extends TileEntity {
     private Direction.Axis ROT = Direction.Axis.X;
 
     public SmallBeamTileEntity() {
-        super(TileEntityRegistry.small_beam);
+        this(TileEntityRegistry.small_beam);
     }
 
     public SmallBeamTileEntity(TileEntityType<?> tileEntityType) {
         super(tileEntityType);
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        if (this.world != null && this.getBlockState().getBlock() instanceof SmallBeamBlock) {
-            ropeConnectionCalculations(this.world, this.getBlockState(), this.pos);
-        }
     }
 
     @Override
