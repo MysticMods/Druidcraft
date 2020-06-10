@@ -8,9 +8,12 @@ import net.minecraft.block.*;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.*;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -27,7 +30,6 @@ import javax.annotation.Nullable;
 import java.util.Map;
 
 public class RopeBlock extends Block implements IKnifeable {
-    private static final Direction[] FACING_VALUES = Direction.values();
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
     public static final BooleanProperty EAST = BooleanProperty.create("east");
     public static final BooleanProperty SOUTH = BooleanProperty.create("south");
@@ -35,6 +37,7 @@ public class RopeBlock extends Block implements IKnifeable {
     public static final BooleanProperty UP = BooleanProperty.create("up");
     public static final BooleanProperty DOWN = BooleanProperty.create("down");
     public static final BooleanProperty KNOTTED = BooleanProperty.create("knotted");
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = Util.make(Maps.newEnumMap(Direction.class), (map) -> {
         map.put(Direction.NORTH, EAST);
         map.put(Direction.EAST, EAST);
@@ -53,7 +56,8 @@ public class RopeBlock extends Block implements IKnifeable {
                 .with(WEST, false)
                 .with(UP, false)
                 .with(DOWN, false)
-                .with(KNOTTED, false));
+                .with(KNOTTED, false)
+                .with(WATERLOGGED, false));
     }
 
     @Override
@@ -140,7 +144,7 @@ public class RopeBlock extends Block implements IKnifeable {
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN, KNOTTED);
+        builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN, KNOTTED, WATERLOGGED);
     }
 
     @Override
@@ -150,7 +154,8 @@ public class RopeBlock extends Block implements IKnifeable {
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return calculateState(getDefaultState(), context.getWorld(), context.getPos());
+        IFluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
+        return calculateState(getDefaultState(), context.getWorld(), context.getPos()).with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
     }
 
     private BlockState calculateKnot (BlockState currentState) {
@@ -180,6 +185,9 @@ public class RopeBlock extends Block implements IKnifeable {
 
     @Override
     public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+        if (state.get(WATERLOGGED)) {
+            world.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        }
         return calculateState(state, world, currentPos);
     }
 
