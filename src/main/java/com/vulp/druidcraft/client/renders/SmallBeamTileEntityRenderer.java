@@ -38,14 +38,15 @@ public class SmallBeamTileEntityRenderer extends TileEntityRenderer<SmallBeamTil
         matrixStack.translate(0.5D, -0.5D, 0.5D);
         if (axis != null) {
             this.model.north.showModel = list.get(0);
-            this.model.west.showModel = list.get(1);
+            this.model.east.showModel = list.get(1);
             this.model.south.showModel = list.get(2);
-            this.model.east.showModel = list.get(3);
-            this.model.down.showModel = list.get(4);
-            this.model.up.showModel = list.get(5);
-            this.model.center_x.showModel = axis == Direction.Axis.X;
-            this.model.center_y.showModel = axis == Direction.Axis.Y;
-            this.model.center_z.showModel = axis == Direction.Axis.Z;
+            this.model.west.showModel = list.get(3);
+            this.model.up.showModel = list.get(4);
+            this.model.down.showModel = list.get(5);
+            boolean hasRope = list.contains(true);
+            this.model.center_x.showModel = hasRope & axis == Direction.Axis.X;
+            this.model.center_y.showModel = hasRope & axis == Direction.Axis.Y;
+            this.model.center_z.showModel = hasRope & axis == Direction.Axis.Z;
         }
         Material material = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, texture);
         SmallBeamRopeModel model = this.model;
@@ -56,7 +57,7 @@ public class SmallBeamTileEntityRenderer extends TileEntityRenderer<SmallBeamTil
     }
 
     @OnlyIn(Dist.CLIENT)
-    public class SmallBeamRopeModel extends Model {
+    public static class SmallBeamRopeModel extends Model {
         private final ModelRenderer center_y;
         private final ModelRenderer center_z;
         private final ModelRenderer center_x;
@@ -91,11 +92,13 @@ public class SmallBeamTileEntityRenderer extends TileEntityRenderer<SmallBeamTil
 
             down = new ModelRenderer(this);
             down.setRotationPoint(0.0F, 16.0F, 0.0F);
+            setRotationAngle(down, 3.1416F, 0.0F, 0.0F);
             down.setTextureOffset(0, 22).addBox(-1.0F, 4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
             down.setTextureOffset(8, 22).addBox(-1.0F, 4.0F, -1.0F, 2.0F, 3.0F, 2.0F, 0.2F, false);
 
             up = new ModelRenderer(this);
             up.setRotationPoint(0.0F, 16.0F, 0.0F);
+            setRotationAngle(up, 3.1416F, 0.0F, 0.0F);
             up.setTextureOffset(0, 16).addBox(-1.0F, -8.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
             up.setTextureOffset(8, 16).addBox(-1.0F, -8.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.2F, false);
 
@@ -111,11 +114,13 @@ public class SmallBeamTileEntityRenderer extends TileEntityRenderer<SmallBeamTil
 
             east = new ModelRenderer(this);
             east.setRotationPoint(0.0F, 16.0F, 0.0F);
+            setRotationAngle(east, 0.0F, 0.0F, -3.1416F);
             east.setTextureOffset(16, 16).addBox(-8.0F, -1.0F, -1.0F, 4.0F, 2.0F, 2.0F, 0.0F, false);
             east.setTextureOffset(28, 16).addBox(-7.0F, -1.0F, -1.0F, 3.0F, 2.0F, 2.0F, 0.2F, false);
 
             west = new ModelRenderer(this);
             west.setRotationPoint(0.0F, 16.0F, 0.0F);
+            setRotationAngle(west, 0.0F, 0.0F, -3.1416F);
             west.setTextureOffset(16, 20).addBox(4.0F, -1.0F, -1.0F, 4.0F, 2.0F, 2.0F, 0.0F, false);
             west.setTextureOffset(28, 20).addBox(4.0F, -1.0F, -1.0F, 4.0F, 2.0F, 2.0F, 0.2F, false);
         }
