@@ -6,6 +6,8 @@ import com.vulp.druidcraft.blocks.SmallBeamBlock;
 import com.vulp.druidcraft.registry.TileEntityRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
@@ -56,6 +58,20 @@ public class SmallBeamTileEntity extends TileEntity {
         this.UP = compound.getBoolean("Up");
         this.DOWN = compound.getBoolean("Down");
         this.ROT = intToAxis(compound.getInt("Rotation"));
+    }
+
+    @Override
+    public CompoundNBT getUpdateTag()
+    {
+        CompoundNBT nbtTagCompound = new CompoundNBT();
+        write(nbtTagCompound);
+        return nbtTagCompound;
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundNBT tag)
+    {
+        this.read(tag);
     }
 
     public int axisToInt(Direction.Axis axis) {
