@@ -3,37 +3,38 @@ package com.vulp.druidcraft.api;
 import net.minecraft.util.IStringSerializable;
 
 import javax.annotation.Nullable;
+import java.util.Locale;
 
 public enum CrateIndex implements IStringSerializable {
     // | TYPE | NUM | NORTH | SOUTH | EAST | WEST | UP | DOWN |
-    CRATE00_0(CrateType.SINGLE, 1, true, true, true, true, true, true),
-    CRATE00_1(CrateType.SINGLE, 1, false, false, false, false, false, false),
+    CRATE00_0(CrateType.SINGLE, 1, false, false, false, false, false, false),
+    CRATE00_1(CrateType.SINGLE, 1, true, true, true, true, true, true),
     CRATE01(CrateType.DOUBLE_X, 1, true, true, true, false, true, true),
     CRATE02(CrateType.DOUBLE_X, 2, true, true, false, true, true, true),
     CRATE03(CrateType.DOUBLE_Y, 1, true, true, true, true, true, false),
     CRATE04(CrateType.DOUBLE_Y, 2, true, true, true, true, false, true),
     CRATE05(CrateType.DOUBLE_Z, 1, false, true, true, true, true, true),
     CRATE06(CrateType.DOUBLE_Z, 2, true, false, true, true, true, true),
-    CRATE_07(CrateType.QUAD_X, 1, false, true, true, true, true, false),
-    CRATE_08(CrateType.QUAD_X, 2, true, false, true, true, true, false),
-    CRATE_09(CrateType.QUAD_X, 3, false, true, true, true, false, true),
-    CRATE_10(CrateType.QUAD_X, 4, true, false, true, true, false, true),
-    CRATE_11(CrateType.QUAD_Y, 1, false, true, true, false, true, true),
-    CRATE_12(CrateType.QUAD_Y, 2, false, true, false, true, true, true),
-    CRATE_13(CrateType.QUAD_Y, 3, true, false, true, false, true, true),
-    CRATE_14(CrateType.QUAD_Y, 4, true, false, false, true, true, true),
-    CRATE_15(CrateType.QUAD_Z, 1, true, true, false, true, true, false),
-    CRATE_16(CrateType.QUAD_Z, 2, true, true, true, false, true, false),
-    CRATE_17(CrateType.QUAD_Z, 3, true, true, false, true, false, true),
-    CRATE_18(CrateType.QUAD_Z, 4, true, true, true, false, false, true),
-    CRATE_19(CrateType.OCTO, 1, false, true, false, true, true, false),
-    CRATE_20(CrateType.OCTO, 2, false, true, true, false, true, false),
-    CRATE_21(CrateType.OCTO, 3, true, false, false, true, true, false),
-    CRATE_22(CrateType.OCTO, 4, true, false, true, false, true, false),
-    CRATE_23(CrateType.OCTO, 5, false, true, false, true, false, true),
-    CRATE_24(CrateType.OCTO, 6, false, true, true, false, false, true),
-    CRATE_25(CrateType.OCTO, 7, true, false, false, true, false, true),
-    CRATE_26(CrateType.OCTO, 8, true, false, true, false, false, true);
+    CRATE07(CrateType.QUAD_X, 1, false, true, true, true, true, false),
+    CRATE08(CrateType.QUAD_X, 2, true, false, true, true, true, false),
+    CRATE09(CrateType.QUAD_X, 3, false, true, true, true, false, true),
+    CRATE10(CrateType.QUAD_X, 4, true, false, true, true, false, true),
+    CRATE11(CrateType.QUAD_Y, 1, false, true, true, false, true, true),
+    CRATE12(CrateType.QUAD_Y, 2, false, true, false, true, true, true),
+    CRATE13(CrateType.QUAD_Y, 3, true, false, true, false, true, true),
+    CRATE14(CrateType.QUAD_Y, 4, true, false, false, true, true, true),
+    CRATE15(CrateType.QUAD_Z, 1, true, true, true, false, true, false),
+    CRATE16(CrateType.QUAD_Z, 2, true, true, false, true, true, false),
+    CRATE17(CrateType.QUAD_Z, 3, true, true, true, false, false, true),
+    CRATE18(CrateType.QUAD_Z, 4, true, true, false, true, false, true),
+    CRATE19(CrateType.OCTO, 1, false, true, true, false, true, false),
+    CRATE20(CrateType.OCTO, 2, false, true, false, true, true, false),
+    CRATE21(CrateType.OCTO, 3, true, false, true, false, true, false),
+    CRATE22(CrateType.OCTO, 4, true, false, false, true, true, false),
+    CRATE23(CrateType.OCTO, 5, false, true, true, false, false, true),
+    CRATE24(CrateType.OCTO, 6, false, true, false, true, false, true),
+    CRATE25(CrateType.OCTO, 7, true, false, true, false, false, true),
+    CRATE26(CrateType.OCTO, 8, true, false, false, true, false, true);
 
     private final CrateType type;
     private final int posNumber;
@@ -55,7 +56,6 @@ public enum CrateIndex implements IStringSerializable {
         this.down = down;
     }
 
-    @Nullable
     public static CrateIndex matchCrateIndex(CrateType type, int posNumber, boolean north, boolean south, boolean east, boolean west, boolean up, boolean down) {
         for (CrateIndex index : CrateIndex.values()) {
             if (type == index.getType() && posNumber == index.getPosNumber()) {
@@ -64,7 +64,7 @@ public enum CrateIndex implements IStringSerializable {
                 }
             }
         }
-        return null;
+        return CrateIndex.CRATE00_0;
     }
 
     public boolean isParent() {
@@ -105,7 +105,7 @@ public enum CrateIndex implements IStringSerializable {
 
     @Override
     public String getName() {
-        return name();
+        return name().toLowerCase(Locale.ROOT);
     }
 
 }

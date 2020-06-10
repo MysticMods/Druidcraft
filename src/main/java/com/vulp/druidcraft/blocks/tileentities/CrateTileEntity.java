@@ -181,8 +181,8 @@ public class CrateTileEntity extends LockableLootTileEntity {
         int j = this.pos.getY();
         int k = this.pos.getZ();
         BlockState blockState = world.getBlockState(new BlockPos(i, j, k));
-        this.numPlayersUsing = calculatePlayersUsing(this.world, this, i, j, k, (blockState.get(CrateBlock.TYPE) == CrateType.QUAD_X ||
-                blockState.get(CrateBlock.TYPE) == CrateType.QUAD_Y || blockState.get(CrateBlock.TYPE) == CrateType.QUAD_Z || blockState.get(CrateBlock.TYPE) == CrateType.OCTO));
+        this.numPlayersUsing = calculatePlayersUsing(this.world, this, i, j, k, (blockState.get(CrateBlock.INDEX).getType() == CrateType.QUAD_X ||
+                blockState.get(CrateBlock.INDEX).getType() == CrateType.QUAD_Y || blockState.get(CrateBlock.INDEX).getType() == CrateType.QUAD_Z || blockState.get(CrateBlock.INDEX).getType() == CrateType.OCTO));
         if (this.numPlayersUsing > 0) {
             this.scheduleTick();
         } else {
@@ -194,7 +194,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
 
             boolean flag = blockstate.get(CrateBlock.PROPERTY_OPEN);
             if (flag) {
-                if (blockState.get(CrateBlock.PARENT)) {
+                if (blockState.get(CrateBlock.INDEX).isParent()) {
                     this.playSound(blockState, SoundEventRegistry.close_crate);
                 }
                 this.setCrateState(blockstate, false);
@@ -236,7 +236,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
             BlockState blockstate = this.getBlockState();
             boolean flag = blockstate.get(CrateBlock.PROPERTY_OPEN);
             if (!flag) {
-                if (blockstate.get(CrateBlock.PARENT)) {
+                if (blockstate.get(CrateBlock.INDEX).isParent()) {
                     this.playSound(blockstate, SoundEventRegistry.open_crate);
                 }
                 this.setCrateState(blockstate, true);
@@ -343,7 +343,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
     }
 
     public float checkCrateShape(BlockState state) {
-        CrateType type = (CrateType) state.get(CrateBlock.TYPE);
+        CrateType type = (CrateType) state.get(CrateBlock.INDEX).getType();
         if (type == CrateType.DOUBLE_X || type == CrateType.DOUBLE_Y || type == CrateType.DOUBLE_Z)
             return 0.8F;
         if (type == CrateType.QUAD_X || type == CrateType.QUAD_Y || type == CrateType.QUAD_Z)
