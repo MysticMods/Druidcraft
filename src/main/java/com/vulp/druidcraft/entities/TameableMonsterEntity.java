@@ -219,9 +219,9 @@ public class TameableMonsterEntity extends CreatureEntity {
     void setTamedBy(PlayerEntity player) {
         this.setTamed(true);
         this.setOwnerId(player.getUniqueID());
-        if (player instanceof ServerPlayerEntity) {
+        /*if (player instanceof ServerPlayerEntity) {
             AdvancementRegistry.TAME_MONSTER.trigger((ServerPlayerEntity)player, this);
-        }
+        }*/
 
     }
 

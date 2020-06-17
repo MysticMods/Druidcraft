@@ -1,12 +1,14 @@
 package com.vulp.druidcraft.entities.AI.goals;
 
-import com.vulp.druidcraft.entities.TameableFlyingMonsterEntity;
-import com.vulp.druidcraft.pathfinding.FlyingFishPathNavigator;
+import com.vulp.druidcraft.entities.TameableMonsterEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.pathfinding.FlyingPathNavigator;
+import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
+import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorldReader;
@@ -14,17 +16,17 @@ import net.minecraft.world.IWorldReader;
 import java.util.EnumSet;
 
 public class FollowOwnerGoalMonster extends Goal {
-    private final TameableFlyingMonsterEntity tameable;
+    private final TameableMonsterEntity tameable;
     private LivingEntity owner;
     protected final IWorldReader world;
     private final double followSpeed;
-    private final FlyingFishPathNavigator navigator;
+    protected final PathNavigator navigator;
     private int timeToRecalcPath;
     private final float maxDist;
     private final float minDist;
     private float oldWaterCost;
 
-    public FollowOwnerGoalMonster(TameableFlyingMonsterEntity tameableIn, double followSpeedIn, float minDistIn, float maxDistIn) {
+    public FollowOwnerGoalMonster(TameableMonsterEntity tameableIn, double followSpeedIn, float minDistIn, float maxDistIn) {
         this.tameable = tameableIn;
         this.world = tameableIn.world;
         this.followSpeed = followSpeedIn;

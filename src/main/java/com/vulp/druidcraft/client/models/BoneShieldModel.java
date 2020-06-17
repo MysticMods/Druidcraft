@@ -30,6 +30,8 @@ public class BoneShieldModel extends Model {
         setRotationAngle(cage_right, 0.0F, -0.1745F, 0.0F);
         cage_right.setTextureOffset(0, 0).addBox(0.0F, -31.0F, 0.0F, 6.0F, 10.0F, 1.0F, 0.0F, false);
 
+
+
         bone2 = new ModelRenderer(this);
         bone2.setRotationPoint(0.0F, 2.0F, 0.0F);
         cage_right.addChild(bone2);
