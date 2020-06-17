@@ -179,6 +179,7 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
         return CreatureAttribute.UNDEAD;
     }
 
+    @Override
     protected PathNavigator createNavigator(World worldIn) {
         ImprovedFlyingPathNavigator flyingpathnavigator = new ImprovedFlyingPathNavigator(this, worldIn);
         flyingpathnavigator.setCanOpenDoors(false);
@@ -254,6 +255,7 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
             }
             if (this.isOwner(player) && !this.world.isRemote) {
                 this.sitGoal.setSitting(!this.isSitting());
+                this.getNavigator().clearPath();
                 this.setAttackTarget(null);
             }
         }
@@ -266,6 +268,7 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
                 if (this.rand.nextInt(3) == 0 && !EventFactory.onMonsterTame(this, player)) {
                     this.playTameEffect(true);
                     this.setTamedBy(player);
+                    this.getNavigator().clearPath();
                     this.setAttackTarget(null);
                     this.sitGoal.setSitting(true);
                     this.setHealth(24.0F);

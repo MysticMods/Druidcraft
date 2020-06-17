@@ -60,7 +60,14 @@ public class DreadfishEntityRender extends MobRenderer<DreadfishEntity, Dreadfis
         float f = 1.0F;
         float f1 = 1.0F;
         float f2 = f * 4.3F * MathHelper.sin(f1 * 0.6F * ageInTicks);
-        matrix.rotate(Vector3f.YP.rotationDegrees(f2));
-        matrix.translate(0.0D, 0.0D, -0.4000000059604645D);
+        if (!entityLiving.isSitting()) {
+            matrix.rotate(Vector3f.YP.rotationDegrees(f2));
+            matrix.rotate(Vector3f.XP.rotationDegrees(0));
+        } else {
+            matrix.rotate(Vector3f.YP.rotationDegrees(0));
+            matrix.rotate(Vector3f.XP.rotationDegrees(f2 / 3));
+            // Insert hover code.
+        }
+        matrix.translate(0.0D, 0.05 * MathHelper.sin(ageInTicks * 0.2F), -0.4000000059604645D);
     }
 }
