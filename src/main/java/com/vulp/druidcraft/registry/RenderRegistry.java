@@ -49,6 +49,7 @@ public class RenderRegistry
 
         // BLOCKS
     //    RenderTypeLookup.setRenderLayer(BlockRegistry.aloe_vera_crop, RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockRegistry.amber_block, RenderType.getTranslucent());
         RenderTypeLookup.setRenderLayer(BlockRegistry.blueberry_bush, RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockRegistry.ceramic_lantern, RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockRegistry.darkwood_door, RenderType.getCutout());
