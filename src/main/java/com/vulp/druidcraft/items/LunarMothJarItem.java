@@ -50,6 +50,10 @@ public class LunarMothJarItem extends BlockItem {
         }
     }
 
+    public LunarMothColors getColor() {
+        return this.color;
+    }
+
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
         if (context.getPlayer().isSneaking()) {

@@ -13,6 +13,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -33,8 +34,12 @@ import net.minecraft.state.properties.BedPart;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeConfig;
 import net.minecraftforge.common.extensions.IForgeDimension;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -209,6 +214,17 @@ public class TravelPackItem extends Item {
             return DyeColor.byId(nbt.getInt("Color"));
         }
         return null;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        if (worldIn == null) return;
+        if (!Screen.hasShiftDown()) {
+            tooltip.add(new TranslationTextComponent("item.druidcraft.hold_shift").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+        } else {
+            tooltip.add(new TranslationTextComponent("item.druidcraft.travel_pack.description1").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+        }
     }
 
     @Override

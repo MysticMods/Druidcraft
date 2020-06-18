@@ -4,6 +4,7 @@ import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.api.CropLifeStageType;
 import com.vulp.druidcraft.registry.ParticleRegistry;
 import net.minecraft.block.*;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
@@ -80,7 +81,11 @@ public class FieryTorchBlock extends TorchBlock implements IWaterLoggable {
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (worldIn == null) return;
-        tooltip.add(new TranslationTextComponent("block.druidcraft.fiery_torch.description1").setStyle(new Style().setColor(TextFormatting.GOLD).setItalic(true)));
+        if (!Screen.hasShiftDown()) {
+            tooltip.add(new TranslationTextComponent("block.druidcraft.hold_shift").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+        } else {
+            tooltip.add(new TranslationTextComponent("block.druidcraft.fiery_torch.description1").setStyle(new Style().setColor(TextFormatting.GOLD).setItalic(true)));
+        }
     }
 
     @Override

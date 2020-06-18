@@ -2,6 +2,7 @@ package com.vulp.druidcraft.items;
 
 import com.vulp.druidcraft.api.IKnifeable;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -67,6 +68,10 @@ public class KnifeItem extends Item {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (worldIn == null) return;
-        tooltip.add(new TranslationTextComponent("item.druidcraft.knife.description1").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+        if (!Screen.hasShiftDown()) {
+            tooltip.add(new TranslationTextComponent("item.druidcraft.hold_shift").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+        } else {
+            tooltip.add(new TranslationTextComponent("item.druidcraft.knife.description1").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+        }
     }
 }

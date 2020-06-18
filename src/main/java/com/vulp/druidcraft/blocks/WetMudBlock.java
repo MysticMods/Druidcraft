@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FallingBlock;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -61,7 +62,11 @@ public class WetMudBlock extends Block {
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (worldIn == null) return;
-        tooltip.add(new TranslationTextComponent("block.druidcraft.wet_mud_bricks.description1").setStyle(new Style().setColor(TextFormatting.AQUA).setItalic(true)));
+        if (!Screen.hasShiftDown()) {
+            tooltip.add(new TranslationTextComponent("block.druidcraft.hold_shift").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+        } else {
+            tooltip.add(new TranslationTextComponent("block.druidcraft.wet_mud_bricks.description1").setStyle(new Style().setColor(TextFormatting.AQUA).setItalic(true)));
+        }
     }
 
     private boolean isNextToWater(IBlockReader p_203943_1_, BlockPos p_203943_2_) {

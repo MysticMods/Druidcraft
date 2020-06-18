@@ -3,6 +3,7 @@ package com.vulp.druidcraft.blocks;
 import com.vulp.druidcraft.blocks.tileentities.GrowthLampTileEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.material.PushReaction;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
@@ -137,7 +138,11 @@ public class GrowthLampBlock extends ContainerBlock implements IWaterLoggable {
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (worldIn == null) return;
-        tooltip.add(new TranslationTextComponent("block.druidcraft.growth_lamp.description1").setStyle(new Style().setColor(TextFormatting.GREEN).setItalic(true)));
+        if (!Screen.hasShiftDown()) {
+            tooltip.add(new TranslationTextComponent("block.druidcraft.hold_shift").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+        } else {
+            tooltip.add(new TranslationTextComponent("block.druidcraft.growth_lamp.description1").setStyle(new Style().setColor(TextFormatting.GREEN).setItalic(true)));
+        }
     }
 
     @Override

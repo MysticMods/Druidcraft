@@ -11,6 +11,7 @@ import com.vulp.druidcraft.inventory.QuadSidedInventory;
 import com.vulp.druidcraft.inventory.container.CrateContainer;
 import com.vulp.druidcraft.registry.ItemRegistry;
 import net.minecraft.block.*;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.CatEntity;
@@ -1400,7 +1401,11 @@ public class CrateBlock extends ContainerBlock {
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (worldIn == null) return;
-        tooltip.add(new TranslationTextComponent("block.druidcraft.crate.description1").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+        if (!Screen.hasShiftDown()) {
+            tooltip.add(new TranslationTextComponent("block.druidcraft.hold_shift").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+        } else {
+            tooltip.add(new TranslationTextComponent("block.druidcraft.crate.description1").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+        }
     }
 
     interface InventoryFactory<T> {

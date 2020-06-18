@@ -1,4 +1,7 @@
 {
+  "block.druidcraft.hold_shift": "Hold [SHIFT] for more info.",
+  "item.druidcraft.hold_shift": "Hold [SHIFT] for more info.",
+
   "block.druidcraft.amber_ore": "Amber Ore",
   "block.druidcraft.moonstone_ore": "Moonstone Ore",
   "block.druidcraft.fiery_glass_ore": "Fiery Glass Ore",
@@ -48,6 +51,7 @@
   "block.druidcraft.yellow_lunar_moth_lantern": "Yellow Lunar Moth Lantern",
   "block.druidcraft.white_lunar_moth_lantern": "White Lunar Moth Lantern",
   "block.druidcraft.pink_lunar_moth_lantern": "Pink Lunar Moth Lantern",
+  "block.druidcraft.lunar_moth_lantern.description1": "Crouch while placing to put down the lantern.",
   "item.druidcraft.turquoise_lunar_moth_egg": "Turquoise Lunar Moth Egg",
   "item.druidcraft.white_lunar_moth_egg": "White Lunar Moth Egg",
   "item.druidcraft.lime_lunar_moth_egg": "Lime Lunar Moth Egg",
@@ -80,6 +84,7 @@
   "item.druidcraft.chitin_boots": "Chitin Boots",
   "item.druidcraft.chitin_shield": "Chitin Shield",
   "item.druidcraft.travel_pack": "Travel Pack",
+  "item.druidcraft.travel_pack.description1": "Small pack with some special utility slots.",
   "item.druidcraft.travel_pack.button1": "Deploy Bedroll",
   "item.druidcraft.travel_pack.button2": "(NYI)",
   "item.druidcraft.travel_pack.button3": "(NYI)",
@@ -197,6 +202,9 @@
   "block.druidcraft.bedroll.fail.time": "You can sleep only at night and during thunderstorms.",
   "block.druidcraft.bedroll.fail.placement": "Cannot place bedroll.",
   "block.druidcraft.woodcutter": "Woodcutter",
+  "block.druidcraft.debug_block": "Debug Block",
+  "block.druidcraft.debug_block.description1": "Developer block, may cause problems for your game.",
+
 
   "entity.druidcraft.dreadfish": "Dreadfish",
   "entity.druidcraft.beetle": "Beetle",

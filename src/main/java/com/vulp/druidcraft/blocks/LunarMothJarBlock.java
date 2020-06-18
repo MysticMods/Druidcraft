@@ -1,9 +1,14 @@
 package com.vulp.druidcraft.blocks;
 
+import com.vulp.druidcraft.items.LunarMothJarItem;
 import com.vulp.druidcraft.registry.ParticleRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -11,11 +16,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Random;
 
 public class LunarMothJarBlock extends RopeableLanternBlock {
@@ -110,4 +121,33 @@ public class LunarMothJarBlock extends RopeableLanternBlock {
         float offset2 = Math.min(limit, Math.max(-limit, rand.nextFloat() - 0.5f));
         worldIn.addParticle(ParticleRegistry.magic_glitter, false, d0 + offset0, d1 + offset1, d2 + offset2, color[0] / 255F, color[1] / 255F, color[2] / 255F);
     }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        if (worldIn == null) return;
+        if (!Screen.hasShiftDown()) {
+            tooltip.add(new TranslationTextComponent("block.druidcraft.hold_shift").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+        } else {
+            tooltip.add(new TranslationTextComponent("block.druidcraft.lunar_moth_lantern.description1").setStyle(new Style().setColor(getTextColor((LunarMothJarItem)stack.getItem())).setItalic(true)));
+        }
+    }
+
+    public TextFormatting getTextColor(LunarMothJarItem item) {
+        switch (item.getColor()) {
+            case ORANGE:
+                return TextFormatting.GOLD;
+            case WHITE:
+                return TextFormatting.WHITE;
+            case LIME:
+                return TextFormatting.GREEN;
+            case PINK:
+                return TextFormatting.RED;
+            case YELLOW:
+                return TextFormatting.YELLOW;
+            default:
+                return TextFormatting.AQUA;
+        }
+    }
+
 }

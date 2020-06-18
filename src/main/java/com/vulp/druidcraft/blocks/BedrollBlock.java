@@ -3,6 +3,7 @@ package com.vulp.druidcraft.blocks;
 import com.vulp.druidcraft.Druidcraft;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -160,7 +161,11 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (worldIn == null) return;
-        tooltip.add(new TranslationTextComponent("block.druidcraft.bedroll.description1").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+        if (!Screen.hasShiftDown()) {
+            tooltip.add(new TranslationTextComponent("block.druidcraft.hold_shift").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+        } else {
+            tooltip.add(new TranslationTextComponent("block.druidcraft.bedroll.description1").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+        }
     }
 
     @Override
