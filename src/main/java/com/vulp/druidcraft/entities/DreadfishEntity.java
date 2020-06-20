@@ -9,7 +9,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.controller.FlyingMovementController;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.monster.AbstractSkeletonEntity;
 import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.entity.monster.SkeletonEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -36,12 +38,15 @@ import java.util.Random;
 import java.util.function.Predicate;
 
 @SuppressWarnings("unchecked")
-public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAnimal
+public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAnimal, IRangedAttackMob
 {
     private static final Predicate<LivingEntity> isPlayer;
     private static final DataParameter<Integer> SMOKE_COLOR = EntityDataManager.createKey(DreadfishEntity.class, DataSerializers.VARINT);
     private static final Map<DyeColor, int[]> DYE_COLOR_MAP = new HashMap<>();
     private DyeColor smokeColor = null;
+    private final RangedFireBreathAttackGoal<DreadfishEntity> breathAttack = new RangedFireBreathAttackGoal<>(this, 1.0D, 20, 15.0F);
+    private final MeleeAttackGoal meleeAttack = new MeleeAttackGoal(this, 3.0, true);
+
 
     static {
         DYE_COLOR_MAP.put(DyeColor.BLACK, new int[]{15, 15, 15});
@@ -102,6 +107,10 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
     protected void registerData() {
         super.registerData();
         this.dataManager.register(SMOKE_COLOR, DyeColor.PURPLE.getId());
+    }
+
+    @Override
+    public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
     }
 
     @Override
@@ -382,4 +391,5 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
     public boolean isOnLadder() {
         return false;
     }
+
 }
