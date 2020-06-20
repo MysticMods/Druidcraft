@@ -358,15 +358,21 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
 
     @Override
     public void livingTick() {
+
         super.livingTick();
         if (this.world.isRemote) {
-            if (this.limbSwing * 5 < 0 && rand.nextInt((int) this.limbSwing * 5) == 0) {
-                particle();
+            if ((int)(this.limbSwing * 10) > 0 && rand.nextInt((int)(this.limbSwing * 10)) != 0) {
+                if (rand.nextInt(3) == 0) {
+                    particle();
+                }
             }
-            else if (rand.nextInt(4) == 0) {
-                particle();
+            else {
+                if (rand.nextInt(8) == 0) {
+                    particle();
+                }
             }
         }
+
         if (!this.world.isRemote && this.getAttackTarget() == null && this.isHostile()) {
             this.setHostile(false);
         }
