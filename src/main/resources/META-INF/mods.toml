@@ -4,7 +4,7 @@ issueTrackerURL="https://github.com/MysticMods/Druidcraft/issues"
 
 [[mods]]
 modId="druidcraft"
-version="0.4.1"
+version="0.4.2"
 mcversion= "1.15,"
 displayName="Druidcraft"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/druidcraft"

@@ -1,6 +1,5 @@
 package com.vulp.druidcraft;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.vulp.druidcraft.blocks.*;
 import com.vulp.druidcraft.blocks.DoorBlock;
@@ -22,13 +21,13 @@ import com.vulp.druidcraft.entities.LunarMothColors;
 import com.vulp.druidcraft.items.*;
 import com.vulp.druidcraft.recipes.RecipeSerializers;
 import com.vulp.druidcraft.registry.*;
+import com.vulp.druidcraft.world.biomes.BiomeFeatures;
 import com.vulp.druidcraft.world.biomes.DarkwoodForest;
 import com.vulp.druidcraft.world.features.ElderTreeFeature;
 import com.vulp.druidcraft.world.features.ElderTreeFeatureConfig;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.block.trees.SpruceTree;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -45,7 +44,6 @@ import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.foliageplacer.SpruceFoliagePlacer;
-import net.minecraft.world.gen.treedecorator.AlterGroundTreeDecorator;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -505,6 +503,9 @@ public class DruidcraftRegistry {
 
         FeatureRegistry.elder_tree = FeatureRegistry.register(registry, new ElderTreeFeature(ElderTreeFeatureConfig::deserialize), "elder_tree");
 
+        BiomeFeatures.darkwood_tree_feature = new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.darkwood_log.getDefaultState()), new SimpleBlockStateProvider(BlockRegistry.darkwood_leaves.getDefaultState()), new SpruceFoliagePlacer(2, 1)).baseHeight(6).heightRandA(3).trunkHeight(1).trunkHeightRandom(1).trunkTopOffsetRandom(2).ignoreVines().setSapling((IPlantable)BlockRegistry.darkwood_sapling).build();
+        BiomeFeatures.mega_darkwood_tree_feature = new HugeTreeFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.darkwood_log.getDefaultState()), new SimpleBlockStateProvider(BlockRegistry.darkwood_leaves.getDefaultState())).baseHeight(13).heightInterval(15).crownHeight(13).setSapling(((IPlantable)BlockRegistry.darkwood_sapling)).build();
+        BiomeFeatures.darkwood_bush_feature = new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.darkwood_log.getDefaultState()), new SimpleBlockStateProvider(BlockRegistry.darkwood_leaves.getDefaultState())).baseHeight(4).setSapling((IPlantable)BlockRegistry.darkwood_sapling).build();
         FeatureRegistry.elder_tree_feature = new ElderTreeFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.elder_wood.getDefaultState().with(WoodBlock.dropSelf, false)), new SimpleBlockStateProvider(BlockRegistry.elder_log.getDefaultState()), new SimpleBlockStateProvider(BlockRegistry.elder_leaves.getDefaultState())).baseHeight(6).setSapling((IPlantable)BlockRegistry.elder_sapling).build();
         FeatureRegistry.blueberry_bush_feature = new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.blueberry_bush.getDefaultState().with(BerryBushBlock.AGE, 3)), new SimpleBlockPlacer()).tries(64).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK.getBlock())).func_227317_b_().build();
         FeatureRegistry.lavender_feature = new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.lavender.getDefaultState()), new SimpleBlockPlacer()).tries(64).build();

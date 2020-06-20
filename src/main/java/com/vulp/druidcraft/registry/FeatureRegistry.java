@@ -24,10 +24,7 @@ public class FeatureRegistry {
 
     public static Feature<ElderTreeFeatureConfig> elder_tree;
 
-    public static BaseTreeFeatureConfig darkwood_bush_feature;
     public static ElderTreeFeatureConfig elder_tree_feature;
-    public static TreeFeatureConfig darkwood_tree_feature;
-    public static HugeTreeFeatureConfig giant_darkwood_tree_feature;
     public static BlockClusterFeatureConfig blueberry_bush_feature;
     public static BlockClusterFeatureConfig lavender_feature;
 
