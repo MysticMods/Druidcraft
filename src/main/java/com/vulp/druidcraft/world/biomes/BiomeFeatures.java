@@ -1,20 +1,24 @@
 package com.vulp.druidcraft.world.biomes;
 
 import com.google.common.collect.ImmutableList;
+import com.vulp.druidcraft.registry.BlockRegistry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.foliageplacer.SpruceFoliagePlacer;
 import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
 import net.minecraft.world.gen.placement.Placement;
+import net.minecraftforge.common.IPlantable;
 
 import java.util.Random;
 
 public class BiomeFeatures {
 
     public static Random rand = new Random();
-    public static TreeFeatureConfig darkwood_tree_feature;
-    public static BaseTreeFeatureConfig darkwood_bush_feature;
-    public static HugeTreeFeatureConfig mega_darkwood_tree_feature;
+    public static final TreeFeatureConfig darkwood_tree_feature = new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.darkwood_log.getDefaultState()), new SimpleBlockStateProvider(BlockRegistry.darkwood_leaves.getDefaultState()), new SpruceFoliagePlacer(2, 1)).baseHeight(6).heightRandA(3).trunkHeight(1).trunkHeightRandom(1).trunkTopOffsetRandom(2).ignoreVines().setSapling((IPlantable)BlockRegistry.darkwood_sapling).build();
+    public static final HugeTreeFeatureConfig mega_darkwood_tree_feature = new HugeTreeFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.darkwood_log.getDefaultState()), new SimpleBlockStateProvider(BlockRegistry.darkwood_leaves.getDefaultState())).baseHeight(13).heightInterval(15).crownHeight(13).setSapling(((IPlantable)BlockRegistry.darkwood_sapling)).build();
+    public static final BaseTreeFeatureConfig darkwood_bush_feature = new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.darkwood_log.getDefaultState()), new SimpleBlockStateProvider(BlockRegistry.darkwood_leaves.getDefaultState())).baseHeight(4).setSapling((IPlantable)BlockRegistry.darkwood_sapling).build();
 
 /*    @SubscribeEvent
     public static void registerFeatures(RegistryEvent.Register<Feature<?>> event) {
