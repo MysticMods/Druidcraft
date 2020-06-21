@@ -1,6 +1,6 @@
 package com.vulp.druidcraft.entities;
 
-import com.vulp.druidcraft.Druidcraft;
+import com.vulp.druidcraft.api.ICooldownAttackMob;
 import com.vulp.druidcraft.entities.AI.goals.*;
 import com.vulp.druidcraft.events.EventFactory;
 import com.vulp.druidcraft.pathfinding.ImprovedFlyingPathNavigator;
@@ -9,13 +9,14 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.controller.FlyingMovementController;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.monster.AbstractSkeletonEntity;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.SkeletonEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
+import net.minecraft.entity.projectile.LlamaSpitEntity;
+import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -25,7 +26,9 @@ import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.LightType;
@@ -38,12 +41,16 @@ import java.util.Random;
 import java.util.function.Predicate;
 
 @SuppressWarnings("unchecked")
-public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAnimal
+public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAnimal, IRangedAttackMob, ICooldownAttackMob
 {
     private static final Predicate<LivingEntity> isPlayer;
     private static final DataParameter<Integer> SMOKE_COLOR = EntityDataManager.createKey(DreadfishEntity.class, DataSerializers.VARINT);
     private static final Map<DyeColor, int[]> DYE_COLOR_MAP = new HashMap<>();
     private DyeColor smokeColor = null;
+    private final RangedAttackGoal breathAttack = new RangedAttackGoal(this, 1.5D, 10, 20.0F);
+    private final MeleeAttackGoal meleeAttack = new MeleeAttackGoal(this, 3.0D, true);
+    private int cooldown;
+
 
     static {
         DYE_COLOR_MAP.put(DyeColor.BLACK, new int[]{15, 15, 15});
@@ -79,10 +86,11 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
         super.registerGoals();
         this.sitGoal = new SitGoalMonster(this);
         this.goalSelector.addGoal(1, this.sitGoal);
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 3.0, true));
-        this.goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.addGoal(4, new FollowOwnerGoalMonster(this, 2.0D, 5.0F, 1.0F));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomFlyingGoal(this, 1.0D));
+        this.goalSelector.addGoal(2, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+        this.goalSelector.addGoal(3, new RangedAttackGoal(this, 1.5D, 60, 20.0F));
+        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 3.0D, true));
+        this.goalSelector.addGoal(5, new FollowOwnerGoalMonster(this, 2.0D, 5.0F, 1.0F));
+        this.goalSelector.addGoal(6, new WaterAvoidingRandomFlyingGoal(this, 1.0D));
 
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoalMonster(this));
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoalMonster(this));
@@ -104,6 +112,29 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
     protected void registerData() {
         super.registerData();
         this.dataManager.register(SMOKE_COLOR, DyeColor.PURPLE.getId());
+    }
+
+    @Override
+    public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
+        ItemStack itemstack = this.findAmmo(new ItemStack(Items.SPECTRAL_ARROW));
+        AbstractArrowEntity abstractarrowentity = this.fireArrow(itemstack, distanceFactor);
+        double d0 = target.getPosX() - this.getPosX();
+        double d1 = target.getPosYHeight(0.3333333333333333D) - abstractarrowentity.getPosY();
+        double d2 = target.getPosZ() - this.getPosZ();
+        double d3 = (double)MathHelper.sqrt(d0 * d0 + d2 * d2);
+        abstractarrowentity.shoot(d0, d1 + d3 * (double)0.2F, d2, 1.6F, (float)(14 - this.world.getDifficulty().getId() * 4));
+        this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
+        this.world.addEntity(abstractarrowentity);
+        this.cooldown = 0;
+    }
+
+    protected AbstractArrowEntity fireArrow(ItemStack arrowStack, float distanceFactor) {
+        return ProjectileHelper.fireArrow(this, arrowStack, distanceFactor);
+    }
+
+    @Override
+    public boolean canUseAttack(LivingEntity entity) {
+        return this.cooldown <= 50;
     }
 
     @Override
@@ -373,6 +404,10 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
                     particle();
                 }
             }
+        }
+
+        if (this.cooldown < 50) {
+            this.cooldown++;
         }
 
         if (!this.world.isRemote && this.getAttackTarget() == null && this.isHostile()) {
