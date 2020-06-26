@@ -2,6 +2,7 @@ package com.vulp.druidcraft.items;
 
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.tags.ItemTags;
@@ -28,6 +29,11 @@ public class BasicShieldItem extends Item {
         DispenserBlock.registerDispenseBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
         this.durabilityValue = durability;
         this.repairMaterial = repairItem;
+    }
+
+    @Override
+    public boolean isShield(ItemStack stack, @Nullable LivingEntity entity) {
+        return true;
     }
 
     @Override
