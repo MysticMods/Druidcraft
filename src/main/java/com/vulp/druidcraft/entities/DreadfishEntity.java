@@ -1,7 +1,9 @@
 package com.vulp.druidcraft.entities;
 
-import com.vulp.druidcraft.api.ICooldownAttackMob;
+import com.vulp.druidcraft.Druidcraft;
+import com.vulp.druidcraft.api.IConditionalRangedAttackMob;
 import com.vulp.druidcraft.entities.AI.goals.*;
+import com.vulp.druidcraft.entities.projectiles.DreadfishFireBurst;
 import com.vulp.druidcraft.events.EventFactory;
 import com.vulp.druidcraft.pathfinding.ImprovedFlyingPathNavigator;
 import com.vulp.druidcraft.registry.ParticleRegistry;
@@ -10,7 +12,6 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.controller.FlyingMovementController;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.CreeperEntity;
-import net.minecraft.entity.monster.SkeletonEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -41,35 +42,13 @@ import java.util.Random;
 import java.util.function.Predicate;
 
 @SuppressWarnings("unchecked")
-public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAnimal, IRangedAttackMob, ICooldownAttackMob
+public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAnimal, IConditionalRangedAttackMob
 {
     private static final Predicate<LivingEntity> isPlayer;
     private static final DataParameter<Integer> SMOKE_COLOR = EntityDataManager.createKey(DreadfishEntity.class, DataSerializers.VARINT);
     private static final Map<DyeColor, int[]> DYE_COLOR_MAP = new HashMap<>();
     private DyeColor smokeColor = null;
-    private final RangedAttackGoal breathAttack = new RangedAttackGoal(this, 1.5D, 10, 20.0F);
-    private final MeleeAttackGoal meleeAttack = new MeleeAttackGoal(this, 3.0D, true);
     private int cooldown;
-
-
-    static {
-        DYE_COLOR_MAP.put(DyeColor.BLACK, new int[]{15, 15, 15});
-        DYE_COLOR_MAP.put(DyeColor.RED, new int[]{255, 50, 40});
-        DYE_COLOR_MAP.put(DyeColor.GREEN, new int[]{15, 150, 45});
-        DYE_COLOR_MAP.put(DyeColor.BROWN, new int[]{130, 70, 45});
-        DYE_COLOR_MAP.put(DyeColor.BLUE, new int[]{30, 60, 225});
-        DYE_COLOR_MAP.put(DyeColor.PURPLE, new int[]{135, 45, 245});
-        DYE_COLOR_MAP.put(DyeColor.CYAN, new int[]{20, 125, 130});
-        DYE_COLOR_MAP.put(DyeColor.LIGHT_GRAY, new int[]{160, 160, 155});
-        DYE_COLOR_MAP.put(DyeColor.GRAY, new int[]{90, 90, 90});
-        DYE_COLOR_MAP.put(DyeColor.PINK, new int[]{255, 115, 170});
-        DYE_COLOR_MAP.put(DyeColor.LIME, new int[]{135, 250, 35});
-        DYE_COLOR_MAP.put(DyeColor.YELLOW, new int[]{240, 240, 50});
-        DYE_COLOR_MAP.put(DyeColor.LIGHT_BLUE, new int[]{50, 200, 255});
-        DYE_COLOR_MAP.put(DyeColor.MAGENTA, new int[]{230, 65, 170});
-        DYE_COLOR_MAP.put(DyeColor.ORANGE, new int[]{240, 135, 30});
-        DYE_COLOR_MAP.put(DyeColor.WHITE, new int[]{215, 215, 215});
-    }
 
     public DreadfishEntity(EntityType<? extends TameableMonsterEntity> type, World worldIn) {
         super(type, worldIn);
@@ -86,11 +65,11 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
         super.registerGoals();
         this.sitGoal = new SitGoalMonster(this);
         this.goalSelector.addGoal(1, this.sitGoal);
-        this.goalSelector.addGoal(2, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.addGoal(3, new RangedAttackGoal(this, 1.5D, 60, 20.0F));
-        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 3.0D, true));
-        this.goalSelector.addGoal(5, new FollowOwnerGoalMonster(this, 2.0D, 5.0F, 1.0F));
-        this.goalSelector.addGoal(6, new WaterAvoidingRandomFlyingGoal(this, 1.0D));
+        this.goalSelector.addGoal(2, new ConditionalRangedAttackGoal(this, 1.5D, 20.0F));
+        this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 3.0D, true));
+        this.goalSelector.addGoal(4, new FollowOwnerGoalMonster(this, 2.0D, 5.0F, 1.0F));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomFlyingGoal(this, 1.0D));
+        this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoalMonster(this));
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoalMonster(this));
@@ -116,15 +95,18 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
 
     @Override
     public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
-        ItemStack itemstack = this.findAmmo(new ItemStack(Items.SPECTRAL_ARROW));
-        AbstractArrowEntity abstractarrowentity = this.fireArrow(itemstack, distanceFactor);
-        double d0 = target.getPosX() - this.getPosX();
-        double d1 = target.getPosYHeight(0.3333333333333333D) - abstractarrowentity.getPosY();
-        double d2 = target.getPosZ() - this.getPosZ();
-        double d3 = (double)MathHelper.sqrt(d0 * d0 + d2 * d2);
-        abstractarrowentity.shoot(d0, d1 + d3 * (double)0.2F, d2, 1.6F, (float)(14 - this.world.getDifficulty().getId() * 4));
-        this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-        this.world.addEntity(abstractarrowentity);
+        DreadfishFireBurst lvt_2_1_ = new DreadfishFireBurst(this.world, this);
+        double lvt_3_1_ = target.getPosX() - this.getPosX();
+        double lvt_5_1_ = target.getPosYHeight(0.3333333333333333D) - lvt_2_1_.getPosY();
+        double lvt_7_1_ = target.getPosZ() - this.getPosZ();
+        float lvt_9_1_ = MathHelper.sqrt(lvt_3_1_ * lvt_3_1_ + lvt_7_1_ * lvt_7_1_) * 0.2F;
+        lvt_2_1_.shoot(lvt_3_1_, lvt_5_1_ + (double)lvt_9_1_, lvt_7_1_, 1.5F, 10.0F);
+        this.world.playSound((PlayerEntity)null, this.getPosX(), this.getPosY(), this.getPosZ(), SoundEvents.ENTITY_LLAMA_SPIT, this.getSoundCategory(), 1.0F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F);
+        this.world.addEntity(lvt_2_1_);
+    }
+
+    @Override
+    public void resetCondition() {
         this.cooldown = 0;
     }
 
@@ -133,8 +115,8 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
     }
 
     @Override
-    public boolean canUseAttack(LivingEntity entity) {
-        return this.cooldown <= 50;
+    public boolean shouldAttackWithRange() {
+        return this.cooldown == 120;
     }
 
     @Override
@@ -386,7 +368,7 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
 
     public void particle() {
         int[] color = getSmokeColorArray();
-        world.addParticle(ParticleRegistry.magic_smoke, false, this.getPosX(), this.getPosY() + (((rand.nextDouble() - 0.5) + 0.2) / 4) + 0.1F, this.getPosZ() + (((rand.nextDouble() - 0.5) + 0.2) / 3), color[0] / 255.f, color[1] / 255.f, color[2] / 255.f);
+        world.addParticle(ParticleRegistry.magic_smoke, false, this.getPosX(), this.getPosY() + (((rand.nextDouble() - 0.5) + 0.25) / 4) + 0.1F, this.getPosZ() + (((rand.nextDouble() - 0.5) + 0.2) / 3), color[0] / 255.f, color[1] / 255.f, color[2] / 255.f);
     }
 
     @Override
@@ -406,7 +388,7 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
             }
         }
 
-        if (this.cooldown < 50) {
+        if (this.cooldown < 120) {
             this.cooldown++;
         }
 
@@ -418,6 +400,25 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
     @Override
     public boolean isOnLadder() {
         return false;
+    }
+
+    static {
+        DYE_COLOR_MAP.put(DyeColor.BLACK, new int[]{15, 15, 15});
+        DYE_COLOR_MAP.put(DyeColor.RED, new int[]{255, 50, 40});
+        DYE_COLOR_MAP.put(DyeColor.GREEN, new int[]{15, 150, 45});
+        DYE_COLOR_MAP.put(DyeColor.BROWN, new int[]{130, 70, 45});
+        DYE_COLOR_MAP.put(DyeColor.BLUE, new int[]{30, 60, 225});
+        DYE_COLOR_MAP.put(DyeColor.PURPLE, new int[]{135, 45, 245});
+        DYE_COLOR_MAP.put(DyeColor.CYAN, new int[]{20, 125, 130});
+        DYE_COLOR_MAP.put(DyeColor.LIGHT_GRAY, new int[]{160, 160, 155});
+        DYE_COLOR_MAP.put(DyeColor.GRAY, new int[]{90, 90, 90});
+        DYE_COLOR_MAP.put(DyeColor.PINK, new int[]{255, 115, 170});
+        DYE_COLOR_MAP.put(DyeColor.LIME, new int[]{135, 250, 35});
+        DYE_COLOR_MAP.put(DyeColor.YELLOW, new int[]{240, 240, 50});
+        DYE_COLOR_MAP.put(DyeColor.LIGHT_BLUE, new int[]{50, 200, 255});
+        DYE_COLOR_MAP.put(DyeColor.MAGENTA, new int[]{230, 65, 170});
+        DYE_COLOR_MAP.put(DyeColor.ORANGE, new int[]{240, 135, 30});
+        DYE_COLOR_MAP.put(DyeColor.WHITE, new int[]{215, 215, 215});
     }
 
 }
