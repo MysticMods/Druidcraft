@@ -1,8 +1,5 @@
 package com.vulp.druidcraft.blocks;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
-import com.sun.scenario.effect.Crop;
 import com.vulp.druidcraft.api.CropLifeStageType;
 import com.vulp.druidcraft.registry.BlockRegistry;
 import com.vulp.druidcraft.registry.ItemRegistry;
@@ -12,10 +9,9 @@ import net.minecraft.entity.monster.RavagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.*;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -25,23 +21,19 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.WorldInfo;
-import net.minecraft.world.storage.WorldSummary;
-import net.minecraftforge.server.permission.context.WorldContext;
+import net.minecraft.world.storage.loot.conditions.BlockStateProperty;
 
 import javax.annotation.Nullable;
-import java.util.Map;
 import java.util.Random;
 
 
-public class ElderFruitBlock extends CropBlock implements IGrowable {
+public class ElderFruitBlock extends DynamicCropBlock implements IGrowable {
 
-    public static final DirectionProperty FACING = DirectionalBlock.FACING;
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_3;
+    public static final DirectionProperty FACING = DirectionalBlock.FACING;
     public static final BooleanProperty MID_BERRY = BooleanProperty.create("mid_berry");
 
     public static final EnumProperty<CropLifeStageType> LIFE_STAGE = EnumProperty.create("life_stage", CropLifeStageType.class);
@@ -50,6 +42,17 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
         super(properties);
         this.setDefaultState(this.stateContainer.getBaseState().with(this.getAgeProperty(), 0).with(LIFE_STAGE, CropLifeStageType.FLOWER).with(MID_BERRY, false).with(FACING, Direction.NORTH));
     }
+
+    @Override
+    public IntegerProperty getAgeProperty () {
+        return AGE;
+    }
+
+    @Override
+    public int getMaxAge() {
+        return 3;
+    }
+
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
@@ -86,11 +89,6 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
                 !(state.get(FACING) == Direction.NORTH || state.get(FACING) == Direction.SOUTH) ? (((i >> 8 & 15L) / 15.0F) - 0.5D) * 0.5D : 0.0D);
     }
 
-    @Override
-    public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
-        return new ItemStack(this);
-    }
-
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
@@ -120,20 +118,11 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
         return null;
     }
 
-    public IntegerProperty getAgeProperty() {
-        return AGE;
-    }
 
-    public int getMaxAge() {
-        return 3;
-    }
 
-    protected int getAge(BlockState state) {
-        return state.get(this.getAgeProperty());
-    }
-
-    public boolean isMaxAge(BlockState state) {
-        return state.get(this.getAgeProperty()) >= this.getMaxAge();
+    @Override
+    protected IItemProvider getSeedsItem() {
+        return ItemRegistry.elderberries;
     }
 
     public boolean isGrowable(World worldIn, BlockPos pos) {
@@ -175,8 +164,28 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
         if (!worldIn.isRemote && (worldIn.rand.nextInt(8) == 0)) {
             if (CropLifeStageType.checkCropLife(worldIn) == CropLifeStageType.NONE) {
                     worldIn.destroyBlock(pos, false);
-                    if (worldIn.rand.nextInt(10) == 0) {
-                        spawnAsEntity(worldIn, pos, new ItemStack(ItemRegistry.elderberries, 1));
+                    if (worldIn.rand.nextInt(7) == 0) {
+                        createLeafLayer(worldIn, state, pos, random);
+                        // spawnAsEntity(worldIn, pos, new ItemStack(ItemRegistry.elderberries, 1));
+                }
+            }
+        }
+    }
+
+
+    public void createLeafLayer(ServerWorld world, BlockState state, BlockPos pos, Random rand) {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 2; j++) {
+                for (int k = 0; k < 2; k++) {
+                    BlockPos checkPos = new BlockPos(pos.getX() + (j - 1), pos.getY() - i - 1, pos.getZ() + (k - 1));
+                    if (world.getBlockState(checkPos.offset(Direction.UP)).getMaterial().isReplaceable()) {
+                        if (world.getBlockState(checkPos).isSolidSide(world, checkPos, Direction.UP)) {
+                            if (rand.nextInt(3) == 0) {
+                                world.setBlockState(checkPos.offset(Direction.UP), BlockRegistry.elder_leaf_layer.getDefaultState());
+                                return;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -206,6 +215,7 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
         return true;
     }
 
+    @Override
     protected int getBonemealAgeIncrease(World worldIn) {
         return 1;
     }
@@ -234,15 +244,6 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        if (entityIn instanceof RavagerEntity && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(worldIn, entityIn)) {
-            worldIn.destroyBlock(pos, true);
-        }
-
-        super.onEntityCollision(state, worldIn, pos, entityIn);
-    }
-
-    @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (worldIn.isRemote) {
             return ActionResultType.CONSUME;
@@ -265,11 +266,6 @@ public class ElderFruitBlock extends CropBlock implements IGrowable {
     @Override
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
         return isGrowable(worldIn, pos);
-    }
-
-    @Override
-    public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-        this.grow(worldIn, pos, state);
     }
 
     @Override

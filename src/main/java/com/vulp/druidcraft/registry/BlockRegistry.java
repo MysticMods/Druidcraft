@@ -51,6 +51,7 @@ public class BlockRegistry
     public static Block elder_trapdoor;
     public static Block elder_door;
     public static Block elder_fruit;
+    public static Block elder_leaf_layer;
     public static Block fruit_log;
     public static Block stripped_fruit_log;
     public static Block fruit_leaves;

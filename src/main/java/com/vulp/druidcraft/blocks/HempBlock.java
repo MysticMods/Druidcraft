@@ -4,7 +4,6 @@ import com.vulp.druidcraft.registry.BlockRegistry;
 import com.vulp.druidcraft.registry.ItemRegistry;
 import net.minecraft.block.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.IProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -23,19 +22,21 @@ import net.minecraftforge.common.PlantType;
 
 import java.util.Random;
 
-public class HempBlock extends CropBlock implements IGrowable {
+public class HempBlock extends DynamicCropBlock implements IGrowable {
 
-    private static boolean topBlockValid;
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_3;
+    private static boolean topBlockValid;
 
     public HempBlock(Properties properties) {
         super(properties);
     }
 
+    @Override
     public IntegerProperty getAgeProperty () {
         return AGE;
     }
 
+    @Override
     public int getMaxAge() {
         return 3;
     }
@@ -46,30 +47,9 @@ public class HempBlock extends CropBlock implements IGrowable {
         return (blockState.getBlock() instanceof FarmlandBlock || blockState == BlockRegistry.hemp_crop.getDefaultState().with(AGE, 3));
     }
 
-    protected int getAge(BlockState state) {
-        return state.get(this.getAgeProperty());
-    }
-
-    public BlockState withAge(int age) {
-        return this.getDefaultState().with(this.getAgeProperty(), age);
-    }
-
-    public boolean isMaxAge(BlockState state) {
-        return state.get(this.getAgeProperty()) >= this.getMaxAge();
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    protected IItemProvider getSeedsItem() {
-        return ItemRegistry.hemp_seeds;
-    }
-
+    @Override
     public boolean canGrow(IBlockReader world, BlockPos pos, BlockState state, boolean isClient) {
         return (!isMaxAge(state)) || (!(world.getBlockState(pos.down()).getBlock() instanceof HempBlock)) && (!(world.getBlockState(pos.up()).getBlock() instanceof HempBlock));
-    }
-
-    @Override
-    public boolean canUseBonemeal(World world, Random random, BlockPos blockPos, BlockState blockState) {
-        return true;
     }
 
     @Override
@@ -87,6 +67,7 @@ public class HempBlock extends CropBlock implements IGrowable {
             serverWorld.setBlockState(blockPos.up(), this.getDefaultState());
         }
     }
+
 
     @Override
     public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
@@ -117,12 +98,8 @@ public class HempBlock extends CropBlock implements IGrowable {
         super.tick(state, world, pos, random);
     }
 
-    public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
-        return new ItemStack(this.getSeedsItem());
-    }
-
     protected static float getGrowthChance(Block blockIn, IBlockReader worldIn, BlockPos pos) {
-        float f = 1.2F;
+        float f = 1.1F;
         BlockPos blockpos = pos.down();
         for(int i = -1; i <= 1; ++i) {
             for(int j = -1; j <= 1; ++j) {
@@ -161,13 +138,13 @@ public class HempBlock extends CropBlock implements IGrowable {
         return f;
     }
 
-    protected int getBonemealAgeIncrease(World worldIn) {
-        return new Random().nextInt(1) + 1;
+    @Override
+    protected IItemProvider getSeedsItem() {
+        return ItemRegistry.hemp_seeds;
     }
 
-    @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(AGE);
+    protected int getBonemealAgeIncrease(World worldIn) {
+        return new Random().nextInt(1) + 1;
     }
 
     @Override
@@ -184,4 +161,10 @@ public class HempBlock extends CropBlock implements IGrowable {
     public VoxelShape getShape(BlockState state, IBlockReader blockReader, BlockPos pos, ISelectionContext selectionContext) {
         return Block.makeCuboidShape(4, 0, 4, 12.0d, 4.0d * (state.get(getAgeProperty()) + 1), 12.0d);
     }
+
+    @Override
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(AGE);
+    }
+
 }

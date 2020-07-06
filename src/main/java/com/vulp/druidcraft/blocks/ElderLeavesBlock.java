@@ -42,10 +42,8 @@ public class ElderLeavesBlock extends LeavesBlock {
                     if (worldIn.getBlockState(pos.offset(direction)).getMaterial().isReplaceable()) {
                         if (worldIn.rand.nextInt(3) == 0) {
                             worldIn.setBlockState(pos.offset(direction), BlockRegistry.elder_fruit.getDefaultState().with(ElderFruitBlock.FACING, direction.getOpposite()));
-                        } else {
                         }
                         worldIn.setBlockState(pos, state.with(GROWTH_TRIES, state.get(GROWTH_TRIES) + 1));
-                    } else {
                     }
                 }
             }

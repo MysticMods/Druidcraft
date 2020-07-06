@@ -9,9 +9,9 @@ import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Direction;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
@@ -19,12 +19,10 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.PlantType;
 
-import java.util.List;
 import java.util.Random;
 
-public class AloeVeraBlock extends CropBlock implements IGrowable, IPlantable {
+public class AloeVeraBlock extends DynamicCropBlock implements IGrowable, IPlantable {
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_2;
     private static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 5.0D, 12.0D), Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 7.0D, 13.0D), Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 10.0D, 15.0D)};
@@ -33,45 +31,35 @@ public class AloeVeraBlock extends CropBlock implements IGrowable, IPlantable {
         super(properties);
     }
 
-    public IntegerProperty getAgeProperty() {
-        return AGE;
-    }
-
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return SHAPE_BY_AGE[state.get(this.getAgeProperty())];
     }
 
     @Override
-    public boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return BlockTags.SAND.contains(state.getBlock());
+    public IntegerProperty getAgeProperty () {
+        return AGE;
     }
 
+    @Override
     public int getMaxAge() {
         return 2;
     }
 
-    protected int getAge(BlockState state) {
-        return state.get(this.getAgeProperty());
-    }
-
-    public BlockState withAge(int age) {
-        return this.getDefaultState().with(this.getAgeProperty(), age);
-    }
-
-    public boolean isMaxAge(BlockState state) {
-        return state.get(this.getAgeProperty()) >= this.getMaxAge();
-    }
 
     @Override
-    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-        super.tick(state, worldIn, pos, random);
+    public boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
+        return BlockTags.SAND.contains(state.getBlock());
+    }
+
+    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
+        super.tick(state, worldIn, pos, rand);
         if (!worldIn.isAreaLoaded(pos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
         if (worldIn.getLightSubtracted(pos, 0) >= 9) {
             int i = this.getAge(state);
             if (i < this.getMaxAge()) {
                 float f = getGrowthChance(this, worldIn, pos);
-                if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt((int)(25.0F / f) + 1) == 0)) {
+                if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt((int)(25.0F / f) + 1) == 0)) {
                     worldIn.setBlockState(pos, this.withAge(i + 1), 2);
                     net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
                 }
@@ -80,7 +68,7 @@ public class AloeVeraBlock extends CropBlock implements IGrowable, IPlantable {
 
     }
 
-    protected static float getGrowthChance(Block blockIn, IBlockReader worldIn, BlockPos pos) {
+    public static float getGrowthChance(Block blockIn, IBlockReader worldIn, BlockPos pos) {
         float f = 1.0F;
         BlockPos blockpos = pos.down();
 
@@ -122,58 +110,13 @@ public class AloeVeraBlock extends CropBlock implements IGrowable, IPlantable {
     }
 
     @Override
-    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        return (worldIn.getLightSubtracted(pos, 0) >= 8 || worldIn.canSeeSky(pos)) && super.isValidPosition(state, worldIn, pos);
-    }
-
-    @Override
-    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        if (entityIn instanceof RavagerEntity && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(worldIn, entityIn)) {
-            worldIn.destroyBlock(pos, true);
-        }
-
-        super.onEntityCollision(state, worldIn, pos, entityIn);
-    }
-
-    public void grow(World worldIn, BlockPos pos, BlockState state) {
-        int i = this.getAge(state) + this.getBonemealAgeIncrease(worldIn);
-        int j = this.getMaxAge();
-        if (i > j) {
-            i = j;
-        }
-
-        worldIn.setBlockState(pos, this.withAge(i), 2);
-    }
-
-    protected int getBonemealAgeIncrease(World worldIn) {
-        return 1;
-    }
-
     protected IItemProvider getSeedsItem() {
         return ItemRegistry.aloe_vera;
     }
 
     @Override
-    public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
-        return new ItemStack(this.getSeedsItem());
-    }
-
-    /**
-     * Whether this IGrowable can grow
-     */
-    @Override
-    public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-        return !this.isMaxAge(state);
-    }
-
-    @Override
-    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
-        return true;
-    }
-
-    @Override
-    public void grow(ServerWorld serverWorld, Random random, BlockPos blockPos, BlockState blockState) {
-        this.grow(serverWorld, blockPos, blockState);
+    protected int getBonemealAgeIncrease(World worldIn) {
+        return 1;
     }
 
     @Override

@@ -60,6 +60,7 @@ public class RenderRegistry
         RenderTypeLookup.setRenderLayer(BlockRegistry.elder_leaves, RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockRegistry.elder_sapling, RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockRegistry.elder_fruit, RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BlockRegistry.elder_leaf_layer, RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockRegistry.elder_trapdoor, RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockRegistry.fiery_torch, RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BlockRegistry.wall_fiery_torch, RenderType.getCutout());

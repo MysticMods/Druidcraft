@@ -121,6 +121,7 @@ public class ItemRegistry
     public static Item elder_log;
     public static Item stripped_elder_log;
     public static Item elder_leaves;
+    public static Item elder_leaf_layer;
     public static Item elder_sapling;
     public static Item elder_planks;
     public static Item stripped_elder_wood;

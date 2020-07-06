@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "decay=0": { "model": "druidcraft:block/elder_leaf_layer_0" },
+        "decay=1": { "model": "druidcraft:block/elder_leaf_layer_1" },
+		"decay=2": { "model": "druidcraft:block/elder_leaf_layer_2" }
+    }
+}

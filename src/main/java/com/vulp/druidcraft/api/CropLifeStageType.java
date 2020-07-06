@@ -15,23 +15,19 @@ public enum CropLifeStageType implements IStringSerializable {
         return name().toLowerCase(Locale.ROOT);
     }
 
-    public static double getTwoDayCycle(World world) {
-        double timeValue = world.getWorldInfo().getDayTime() % 24000L;
-        if ((world.getWorldInfo().getDayTime() / 24000L % 2147483647L) % 2 == 1) {
-            return timeValue + 24000L;
-        }
-        else return timeValue;
+    public static int getTwoDayCycle(World world) {
+        return (int)world.getWorldInfo().getDayTime() % (int)96000L;
     }
 
     public static CropLifeStageType checkCropLife(World world) {
         double stageDouble = getTwoDayCycle(world);
-        if (stageDouble >= 6000 || stageDouble >= 24000) {
-            if (stageDouble >= 24000) {
-                return CropLifeStageType.BERRY;
+        if (stageDouble >= 48000) {
+            if (stageDouble >= 72000) {
+                return CropLifeStageType.NONE;
             }
-            return CropLifeStageType.FLOWER;
+            return CropLifeStageType.BERRY;
         }
-        else return CropLifeStageType.NONE;
+        else return CropLifeStageType.FLOWER;
     }
 
 }
