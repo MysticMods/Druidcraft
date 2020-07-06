@@ -1,0 +1,58 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "druidcraft:block/candle_1",
+		"particle": "druidcraft:block/candle_1"
+	},
+	"elements": [
+		{
+			"name": "candle",
+			"from": [5, 0, 5],
+			"to": [10, 8, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7.5, 4, 7.5]},
+			"faces": {
+				"north": {"uv": [0, 8, 5, 16], "texture": "#0"},
+				"east": {"uv": [5, 8, 10, 16], "texture": "#0"},
+				"south": {"uv": [0, 8, 5, 16], "texture": "#0"},
+				"west": {"uv": [5, 8, 10, 16], "texture": "#0"},
+				"up": {"uv": [0, 3, 5, 8], "texture": "#0"},
+				"down": {"uv": [0, 11, 5, 16], "texture": "#0"}
+			}
+		},
+		{
+			"name": "wick1",
+			"from": [7, 8, 7.5],
+			"to": [8, 9, 7.5],
+			"rotation": {"angle": 45, "axis": "y", "origin": [7.5, 8.5, 7.5]},
+			"faces": {
+				"north": {"uv": [2, 5, 3, 6], "texture": "#0"},
+				"east": {"uv": [0, 0, 0, 1], "texture": "#missing"},
+				"south": {"uv": [2, 5, 3, 6], "texture": "#0"},
+				"west": {"uv": [0, 0, 0, 1], "texture": "#missing"},
+				"up": {"uv": [0, 0, 1, 0], "texture": "#missing"},
+				"down": {"uv": [0, 0, 1, 0], "texture": "#missing"}
+			}
+		},
+		{
+			"name": "wick2",
+			"from": [7, 8, 7.5],
+			"to": [8, 9, 7.5],
+			"rotation": {"angle": -45, "axis": "y", "origin": [7.5, 8.5, 7.5]},
+			"faces": {
+				"north": {"uv": [2, 5, 3, 6], "texture": "#0"},
+				"east": {"uv": [0, 0, 0, 1], "texture": "#0"},
+				"south": {"uv": [2, 5, 3, 6], "texture": "#0"},
+				"west": {"uv": [0, 0, 0, 1], "texture": "#0"},
+				"up": {"uv": [0, 0, 1, 0], "texture": "#0"},
+				"down": {"uv": [0, 0, 1, 0], "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "1",
+			"origin": [8, 8, 8],
+			"children": [0, 1, 2]
+		}
+	]
+}
