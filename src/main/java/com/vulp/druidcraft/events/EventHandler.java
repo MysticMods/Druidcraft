@@ -3,26 +3,49 @@ package com.vulp.druidcraft.events;
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.api.BedrollDyeColorIndex;
 import com.vulp.druidcraft.blocks.BedrollBlock;
+import com.vulp.druidcraft.config.DropRateConfig;
 import com.vulp.druidcraft.inventory.TravelPackInventory;
-import com.vulp.druidcraft.items.BedrollItem;
+import com.vulp.druidcraft.items.BasicShieldItem;
 import com.vulp.druidcraft.items.TravelPackItem;
+import com.vulp.druidcraft.registry.ItemRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class SpawnHandler {
+public class EventHandler {
+
+    @SubscribeEvent
+    public void onGrassBroken(BlockEvent.BreakEvent event) {
+        if (DropRateConfig.drop_seeds.get()) {
+            if (!event.getWorld().isRemote()) {
+                if ((event.getPlayer().getHeldItemMainhand().getItem() != Items.SHEARS) && (!event.getPlayer().isCreative())) {
+                    if (event.getState().getBlock() == Blocks.GRASS || event.getState().getBlock() == Blocks.TALL_GRASS || event.getState().getBlock() == Blocks.FERN || event.getState().getBlock() == Blocks.LARGE_FERN) {
+                        if (Math.random() <= (double) DropRateConfig.hemp_seed_drops.get() / 100) {
+                            event.getWorld().setBlockState(event.getPos(), Blocks.AIR.getDefaultState(), 2);
+                            event.getWorld().addEntity(new ItemEntity((World) event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), new ItemStack(ItemRegistry.hemp_seeds, 1)));
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     @SubscribeEvent
     public void onPlayerSetSpawn(PlayerSetSpawnEvent event) {
@@ -141,4 +164,5 @@ public class SpawnHandler {
             }
         }
     }*/
+
 }
