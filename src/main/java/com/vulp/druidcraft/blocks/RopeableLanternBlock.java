@@ -40,11 +40,8 @@ public class RopeableLanternBlock extends Block implements IWaterLoggable {
         IFluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
         for(Direction direction : context.getNearestLookingDirections()) {
             if (direction.getAxis() == Direction.Axis.Y) {
-                BlockState blockstate = this.getDefaultState().with(HANGING, direction == Direction.UP);
-                if (context.getWorld().getBlockState(context.getPos().offset(Direction.UP)).getBlock() instanceof RopeBlock)
-                {
-                    blockstate = this.getDefaultState().with(HANGING, direction == Direction.UP).with(ROPED, true);
-                }
+                boolean flag = direction == Direction.UP;
+                BlockState blockstate = this.getDefaultState().with(HANGING, flag).with(ROPED, flag && context.getWorld().getBlockState(context.getPos().offset(Direction.UP)).getBlock() instanceof RopeBlock);
                 if (blockstate.isValidPosition(context.getWorld(), context.getPos())) {
                     return blockstate.with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
                 }
@@ -76,7 +73,7 @@ public class RopeableLanternBlock extends Block implements IWaterLoggable {
     @Override
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
         Direction direction = func_220277_j(state).getOpposite();
-        return Block.hasEnoughSolidSide(worldIn, pos.offset(direction), direction.getOpposite()) || worldIn.getBlockState(pos.offset(Direction.UP)).getBlock() instanceof RopeBlock;
+        return Block.hasEnoughSolidSide(worldIn, pos.offset(direction), direction.getOpposite()) || (state.get(ROPED) && worldIn.getBlockState(pos.offset(Direction.UP)).getBlock() instanceof RopeBlock);
     }
 
     protected static Direction func_220277_j(BlockState p_220277_0_) {
