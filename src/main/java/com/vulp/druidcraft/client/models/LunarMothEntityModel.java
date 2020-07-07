@@ -61,9 +61,7 @@ public class LunarMothEntityModel<T extends LunarMothEntity> extends EntityModel
 
     @Override
     public void render(MatrixStack matrixStack, IVertexBuilder iVertexBuilder, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        GLX.glMultiTexCoord2f(GLX.GL_TEXTURE1, 240.0F, 240.0F);
-        iVertexBuilder.lightmap()
-        this.main.render(matrixStack, iVertexBuilder.lightmap(), packedLight, packedOverlay);
+        this.main.render(matrixStack, iVertexBuilder, packedLight, packedOverlay);
     }
 
 
