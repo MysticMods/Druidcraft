@@ -97,7 +97,7 @@ public class TravelPackItem extends Item {
                 Direction direction = player.getHorizontalFacing();
                     IForgeDimension.SleepResult sleep = world.dimension.canSleepAt(player, pos);
                     if (!player.isCreative()) {
-                        List<MonsterEntity> list = world.getEntitiesWithinAABB(MonsterEntity.class, new AxisAlignedBB((double) pos.getX() - 8.0D, (double) pos.getY() - 5.0D, (double) pos.getZ() - 8.0D, (double) pos.getX() + 8.0D, (double) pos.getY() + 5.0D, (double) pos.getZ() + 8.0D), (p_213820_1_) -> p_213820_1_.isPreventingPlayerRest(player));
+                        List<MonsterEntity> list = world.getEntitiesWithinAABB(MonsterEntity.class, new AxisAlignedBB((double) pos.getX() - 10.0D, (double) pos.getY() - 6.0D, (double) pos.getZ() - 10.0D, (double) pos.getX() + 10.0D, (double) pos.getY() + 6.0D, (double) pos.getZ() + 10.0D), (p_213820_1_) -> p_213820_1_.isPreventingPlayerRest(player));
                         if (!list.isEmpty()) {
                             player.sendStatusMessage(new TranslationTextComponent("block.druidcraft.bedroll.fail.monsters"), true);
                             return;
