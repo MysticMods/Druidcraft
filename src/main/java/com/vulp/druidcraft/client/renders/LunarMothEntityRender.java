@@ -34,6 +34,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
+import javax.annotation.Nullable;
 import java.util.Map;
 
 @OnlyIn(Dist.CLIENT)
@@ -51,7 +52,6 @@ public class LunarMothEntityRender extends MobRenderer<LunarMothEntity, LunarMot
     private static final RenderType RENDER_TYPE_ORANGE = RenderTypeDictionary.getEntityGlow(MOTH_ORANGE);
     private static final RenderType RENDER_TYPE_PINK = RenderTypeDictionary.getEntityGlow(MOTH_PINK);
     private static final RenderType RENDER_TYPE_YELLOW = RenderTypeDictionary.getEntityGlow(MOTH_YELLOW);
-
 
     public LunarMothEntityRender(EntityRendererManager manager)
     {
@@ -77,10 +77,10 @@ public class LunarMothEntityRender extends MobRenderer<LunarMothEntity, LunarMot
         return MOTH_WHITE;
     }
 
-    public RenderType getRenderType(LunarMothEntity entity) {
+    @Nullable
+    @Override
+    protected RenderType func_230042_a_(LunarMothEntity entity, boolean p_230042_2_, boolean p_230042_3_) {
         switch (entity.getColor()) {
-            case TURQUOISE:
-                return RENDER_TYPE_TURQUOISE;
             case WHITE:
                 return RENDER_TYPE_WHITE;
             case LIME:
@@ -91,8 +91,9 @@ public class LunarMothEntityRender extends MobRenderer<LunarMothEntity, LunarMot
                 return RENDER_TYPE_PINK;
             case YELLOW:
                 return RENDER_TYPE_YELLOW;
+            default:
+                return RENDER_TYPE_TURQUOISE;
         }
-        return RENDER_TYPE_WHITE;
     }
 
     public static class RenderFactory implements IRenderFactory<LunarMothEntity>

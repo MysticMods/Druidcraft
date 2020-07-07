@@ -1,5 +1,7 @@
 package com.vulp.druidcraft.client.renders;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.RenderState;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -16,7 +18,15 @@ public class RenderTypeDictionary extends RenderState{
 
     public static RenderType getEntityGlow(ResourceLocation resourceLocation) {
         RenderState.TextureState textureState = new RenderState.TextureState(resourceLocation, false, false);
-        return RenderType.makeType("glow", DefaultVertexFormats.ENTITY, 7, 256, false, true, RenderType.State.getBuilder().texture(textureState).transparency(ADDITIVE_TRANSPARENCY).writeMask(COLOR_WRITE).fog(BLACK_FOG).build(false));
+        return RenderType.makeType("glow", DefaultVertexFormats.ENTITY, 7, 256, false, true, RenderType.State.getBuilder().texture(textureState).transparency(CUTOUT_TRANSPARENCY).writeMask(COLOR_WRITE).fog(NO_FOG).build(false));
     }
+
+    public static final RenderState.TransparencyState CUTOUT_TRANSPARENCY = new RenderState.TransparencyState("cutout_transparency", () -> {
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+    }, () -> {
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.disableBlend();
+    });
 
 }
