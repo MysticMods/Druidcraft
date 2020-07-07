@@ -204,7 +204,7 @@
   "block.druidcraft.woodcutter": "Woodcutter",
   "block.druidcraft.debug_block": "Debug Block",
   "block.druidcraft.debug_block.description1": "Developer block, may cause problems for your game.",
-
+  "block.druidcraft.elder_leaf_layer": "Decaying Elder Fruit",
 
   "entity.druidcraft.dreadfish": "Dreadfish",
   "entity.druidcraft.beetle": "Beetle",
