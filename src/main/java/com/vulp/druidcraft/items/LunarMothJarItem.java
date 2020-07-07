@@ -6,6 +6,7 @@ import com.vulp.druidcraft.entities.LunarMothColors;
 import com.vulp.druidcraft.entities.LunarMothEntity;
 import com.vulp.druidcraft.registry.BlockRegistry;
 import com.vulp.druidcraft.registry.EntityRegistry;
+import com.vulp.druidcraft.registry.ItemRegistry;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -29,25 +30,12 @@ import java.util.Map;
 import java.util.Objects;
 
 public class LunarMothJarItem extends BlockItem {
-    private static Map<LunarMothColors, LunarMothJarItem> map = Maps.newEnumMap(LunarMothColors.class);
+
     private final LunarMothColors color;
 
     public LunarMothJarItem(Block block, LunarMothColors color, Properties properties) {
         super(block, properties);
-        map.put(color, this);
         this.color = color;
-    }
-
-    @Override
-    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-        if (this.isInGroup(group)) {
-            ItemStack stack = new ItemStack(this);
-            CompoundNBT tag = stack.getOrCreateTag();
-            CompoundNBT entityData = new CompoundNBT();
-            entityData.putInt("Color", LunarMothColors.colorToInt(color));
-            tag.put("EntityData", entityData);
-            items.add(stack);
-        }
     }
 
     public LunarMothColors getColor() {
@@ -86,12 +74,9 @@ public class LunarMothJarItem extends BlockItem {
 
             LunarMothEntity moth = (LunarMothEntity) EntityRegistry.lunar_moth_entity.spawn(world, itemstack, player, blockpos1, SpawnReason.SPAWN_EGG, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP);
             if (moth != null) {
-                if (itemstack.getTag() != null) {
-                    CompoundNBT tag = itemstack.getTag();
-                    if (tag.contains("EntityData")) {
-                        moth.readAdditional(tag.getCompound("EntityData"));
-                    }
-                }
+                CompoundNBT nbt = new CompoundNBT();
+                nbt.putInt("Color", LunarMothColors.colorToInt(color));
+                moth.readAdditional(nbt);
                 itemstack.shrink(1);
                 ItemStack bottle = new ItemStack(Items.GLASS_BOTTLE);
                 if (player != null) {
@@ -108,7 +93,20 @@ public class LunarMothJarItem extends BlockItem {
     }
 
     public static LunarMothJarItem getItemByColor (LunarMothColors color) {
-        return map.get(color);
+        switch(color) {
+            case YELLOW:
+                return (LunarMothJarItem)ItemRegistry.lunar_moth_jar_yellow;
+            case PINK:
+                return (LunarMothJarItem)ItemRegistry.lunar_moth_jar_pink;
+            case LIME:
+                return (LunarMothJarItem)ItemRegistry.lunar_moth_jar_lime;
+            case WHITE:
+                return (LunarMothJarItem)ItemRegistry.lunar_moth_jar_white;
+            case ORANGE:
+                return (LunarMothJarItem)ItemRegistry.lunar_moth_jar_orange;
+            default:
+                return (LunarMothJarItem)ItemRegistry.lunar_moth_jar_turquoise;
+        }
     }
 
     public static ItemStack getItemStackByColor (LunarMothColors color) {

@@ -21,25 +21,12 @@ import java.util.Map;
 import java.util.Objects;
 
 public class LunarMothEggItem extends Item {
-    private static Map<LunarMothColors, LunarMothEggItem> map = Maps.newEnumMap(LunarMothColors.class);
+
     private final LunarMothColors color;
 
     public LunarMothEggItem(LunarMothColors color, Properties properties) {
         super(properties);
-        map.put(color, this);
         this.color = color;
-    }
-
-    @Override
-    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-        if (this.isInGroup(group)) {
-            ItemStack stack = new ItemStack(this);
-            CompoundNBT tag = stack.getOrCreateTag();
-            CompoundNBT entityData = new CompoundNBT();
-            entityData.putInt("Color", LunarMothColors.colorToInt(color));
-            tag.put("EntityData", entityData);
-            items.add(stack);
-        }
     }
 
     @Override
@@ -64,12 +51,9 @@ public class LunarMothEggItem extends Item {
 
             LunarMothEntity moth = (LunarMothEntity) EntityRegistry.lunar_moth_entity.spawn(world, itemstack, player, blockpos1, SpawnReason.SPAWN_EGG, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP);
             if (moth != null) {
-                if (itemstack.getTag() != null) {
-                    CompoundNBT tag = itemstack.getTag();
-                    if (tag.contains("EntityData")) {
-                        moth.readAdditional(tag.getCompound("EntityData"));
-                    }
-                }
+                CompoundNBT nbt = new CompoundNBT();
+                nbt.putInt("Color", LunarMothColors.colorToInt(color));
+                moth.readAdditional(nbt);
                 itemstack.shrink(1);
             }
 
