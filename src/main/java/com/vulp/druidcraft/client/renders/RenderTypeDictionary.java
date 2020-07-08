@@ -18,15 +18,7 @@ public class RenderTypeDictionary extends RenderState{
 
     public static RenderType getEntityGlow(ResourceLocation resourceLocation) {
         RenderState.TextureState textureState = new RenderState.TextureState(resourceLocation, false, false);
-        return RenderType.makeType("glow", DefaultVertexFormats.ENTITY, 7, 256, false, true, RenderType.State.getBuilder().texture(textureState).transparency(CUTOUT_TRANSPARENCY).writeMask(COLOR_WRITE).fog(NO_FOG).build(false));
+        return RenderType.makeType("glow", DefaultVertexFormats.ENTITY, 7, 256, false, true, RenderType.State.getBuilder().texture(textureState).transparency(NO_TRANSPARENCY).diffuseLighting(DIFFUSE_LIGHTING_DISABLED).alpha(DEFAULT_ALPHA).cull(CULL_DISABLED).lightmap(LIGHTMAP_DISABLED).build(false));
     }
-
-    public static final RenderState.TransparencyState CUTOUT_TRANSPARENCY = new RenderState.TransparencyState("cutout_transparency", () -> {
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-    }, () -> {
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.disableBlend();
-    });
 
 }

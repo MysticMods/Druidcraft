@@ -1,23 +1,10 @@
 package com.vulp.druidcraft.client.models;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GLX;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import com.vulp.druidcraft.client.renders.LunarMothEntityRender;
-import com.vulp.druidcraft.entities.BeetleEntity;
 import com.vulp.druidcraft.entities.LunarMothEntity;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.SpiderRenderer;
-import net.minecraft.client.renderer.entity.layers.SpiderEyesLayer;
-import net.minecraft.client.renderer.entity.model.BlazeModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.entity.model.PhantomModel;
-import net.minecraft.client.renderer.entity.model.SpiderModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
