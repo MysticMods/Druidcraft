@@ -3,16 +3,15 @@ package com.vulp.druidcraft.blocks.tileentities;
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.api.CrateType;
 import com.vulp.druidcraft.blocks.CrateBlock;
+import com.vulp.druidcraft.inventory.DoubleSidedItemStackHandler;
 import com.vulp.druidcraft.inventory.OctoSidedInventory;
 import com.vulp.druidcraft.inventory.QuadSidedInventory;
 import com.vulp.druidcraft.inventory.container.CrateContainer;
 import com.vulp.druidcraft.registry.BlockRegistry;
 import com.vulp.druidcraft.registry.SoundEventRegistry;
 import com.vulp.druidcraft.registry.TileEntityRegistry;
-import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.DoubleSidedInventory;
@@ -23,7 +22,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.*;
-import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -32,19 +30,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 public class CrateTileEntity extends LockableLootTileEntity {
-    private NonNullList<ItemStack> contents = NonNullList.withSize(27, ItemStack.EMPTY);
+    private ItemStackHandler itemHandler = mainHandler();
     private ArrayList<BlockPos> neighbors;
     private int numPlayersUsing;
-    private net.minecraftforge.common.util.LazyOptional<net.minecraftforge.items.IItemHandlerModifiable> crateHandler;
+    private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
 
     private CrateTileEntity(TileEntityType<?> tileEntityType) {
         super(tileEntityType);
@@ -56,6 +53,14 @@ public class CrateTileEntity extends LockableLootTileEntity {
 
     public ArrayList<BlockPos> getNeighbors() {
         return this.neighbors;
+    }
+
+    public NonNullList<ItemStack> getItemList() {
+        NonNullList<ItemStack> inv = NonNullList.create();
+        for (int i = 0; i < 27; i++) {
+            inv.add(this.itemHandler.getStackInSlot(i));
+        }
+        return inv;
     }
 
     @Override
@@ -73,7 +78,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
         compound.putIntArray("CoordY", y);
         compound.putIntArray("CoordZ", z);
         if (!this.checkLootAndWrite(compound)) {
-            ItemStackHelper.saveAllItems(compound, this.contents);
+            ItemStackHelper.saveAllItems(compound, this.itemHandler);
         }
 
         return compound;
@@ -87,9 +92,9 @@ public class CrateTileEntity extends LockableLootTileEntity {
             neighborArray.add(new BlockPos(compound.getIntArray("CoordX")[i], compound.getIntArray("CoordY")[i], compound.getIntArray("CoordZ")[i]));
         }
         this.neighbors = neighborArray;
-        this.contents = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        this.itemHandler = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
         if (!this.checkLootAndRead(compound)) {
-            ItemStackHelper.loadAllItems(compound, this.contents);
+            ItemStackHelper.loadAllItems(compound, this.itemHandler);
         }
 
     }
@@ -114,7 +119,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
 
     @Override
     public boolean isEmpty() {
-        for(ItemStack itemstack : this.contents) {
+        for(ItemStack itemstack : this.itemHandler) {
             if (!itemstack.isEmpty()) {
                 return false;
             }
@@ -128,7 +133,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
      */
     @Override
     public ItemStack getStackInSlot(int index) {
-        return this.contents.get(index);
+        return this.itemHandler.get(index);
     }
 
     /**
@@ -136,7 +141,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
      */
     @Override
     public ItemStack decrStackSize(int index, int count) {
-        return ItemStackHelper.getAndSplit(this.contents, index, count);
+        return ItemStackHelper.getAndSplit(this.itemHandler, index, count);
     }
 
     /**
@@ -144,7 +149,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
      */
     @Override
     public ItemStack removeStackFromSlot(int index) {
-        return ItemStackHelper.getAndRemove(this.contents, index);
+        return ItemStackHelper.getAndRemove(this.itemHandler, index);
     }
 
     /**
@@ -152,7 +157,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
      */
     @Override
     public void setInventorySlotContents(int index, ItemStack stack) {
-        this.contents.set(index, stack);
+        this.itemHandler.set(index, stack);
         if (stack.getCount() > this.getInventoryStackLimit()) {
             stack.setCount(this.getInventoryStackLimit());
         }
@@ -161,17 +166,17 @@ public class CrateTileEntity extends LockableLootTileEntity {
 
     @Override
     public void clear() {
-        this.contents.clear();
+        this.itemHandler.clear();
     }
 
     @Override
     protected NonNullList<ItemStack> getItems() {
-        return this.contents;
+        return this.itemHandler;
     }
 
     @Override
     protected void setItems(NonNullList<ItemStack> itemsIn) {
-        this.contents = itemsIn;
+        this.itemHandler = itemsIn;
     }
 
     @Override
@@ -268,24 +273,70 @@ public class CrateTileEntity extends LockableLootTileEntity {
     @Override
     public void updateContainingBlockInfo() {
         super.updateContainingBlockInfo();
-        if (this.crateHandler != null) {
-            this.crateHandler.invalidate();
-            this.crateHandler = null;
+        if (this.handler != null) {
+            this.handler.invalidate();
+            this.handler = null;
         }
     }
 
     @Override
     public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> cap, @javax.annotation.Nullable net.minecraft.util.Direction side) {
         if (!this.removed && cap == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            if (this.crateHandler == null) {
-                this.crateHandler = net.minecraftforge.common.util.LazyOptional.of(this::createHandler);
+            if (this.handler == null) {
+                this.handler = net.minecraftforge.common.util.LazyOptional.of(this::DEFcreateHandler);
             }
-            return this.crateHandler.cast();
+            return this.handler.cast();
         }
         return super.getCapability(cap, side);
     }
 
-    private net.minecraftforge.items.IItemHandlerModifiable createHandler() {
+    private ItemStackHandler mainHandler() {
+        return new ItemStackHandler(27) {
+
+            @Override
+            protected void onContentsChanged(int slot) {
+                markDirty();
+            }
+        };
+    }
+    @Nullable
+    private ItemStackHandler createHandler() {
+        if (world != null) {
+            ArrayList<BlockPos> neighbors = this.neighbors;
+            for (int i = 0; i < this.neighbors.size(); i++) {
+                if (!(world.getBlockState(this.neighbors.get(i)).getBlock() instanceof CrateBlock && world.getTileEntity(this.neighbors.get(i)) instanceof CrateTileEntity)) {
+                    return (ItemStackHandler)super.createUnSidedHandler();
+                }
+            }
+            if (neighbors.size() > 1) {
+                if (neighbors.size() == 2) {
+                    return new DoubleSidedItemStackHandler((CrateTileEntity)this.world.getTileEntity(neighbors.get(0)).)
+                            IInventory inven1 = (IInventory) this.getWorld().getTileEntity(neighbors.get(0));
+                    IInventory inven2 = (IInventory) this.getWorld().getTileEntity(neighbors.get(1));
+                }
+                if (neighbors.size() == 4) {
+
+                }
+                if (neighbors.size() == 8) {
+
+                }
+            }
+            return (ItemStackHandler)super.createUnSidedHandler();
+        }
+        return null;
+    }
+
+    public void markDirty() {
+        if (world != null) {
+            for (int i = 0; i < neighbors.size(); i++) {
+                if (world.getTileEntity(neighbors.get(i)) instanceof CrateTileEntity) {
+                    world.getTileEntity(neighbors.get(i)).markDirty();
+                }
+            }
+        }
+    }
+
+    private net.minecraftforge.items.IItemHandlerModifiable DEFcreateHandler() {
         ArrayList<BlockPos> neighbors = getNeighbors();
         int size = neighbors.size();
         for (int i = 0; i < size; i++) {
@@ -337,8 +388,8 @@ public class CrateTileEntity extends LockableLootTileEntity {
     @Override
     public void remove() {
         super.remove();
-        if (crateHandler != null)
-            crateHandler.invalidate();
+        if (handler != null)
+            handler.invalidate();
     }
 
     @Override
