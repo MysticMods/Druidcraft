@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.blocks.tileentities;
 
+import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.api.CrateType;
 import com.vulp.druidcraft.blocks.CrateBlock;
 import com.vulp.druidcraft.inventory.OctoSidedInventory;
@@ -22,6 +23,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.*;
+import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -30,9 +32,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.items.ItemStackHandler;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
 public class CrateTileEntity extends LockableLootTileEntity {
@@ -94,6 +99,9 @@ public class CrateTileEntity extends LockableLootTileEntity {
         super.onLoad();
         if (this.neighbors == null)
         this.neighbors = CrateBlock.getBlockPositions(world, pos);
+        for (int i = 0; i < this.neighbors.size(); i++) {
+            Druidcraft.LOGGER.debug("onLoad() : " + this.neighbors.get(i));
+        }
     }
 
     /**
@@ -201,6 +209,10 @@ public class CrateTileEntity extends LockableLootTileEntity {
             }
         }
 
+        for (int b = 0; b < this.neighbors.size(); b++) {
+            Druidcraft.LOGGER.debug("crateTick() : " + this.neighbors.get(b));
+        }
+
     }
 
     public static int calculatePlayersUsing(World world, LockableTileEntity lockableTileEntity, int posX, int posY, int posZ, boolean isQuadOrOcto) {
@@ -270,29 +282,30 @@ public class CrateTileEntity extends LockableLootTileEntity {
             }
             return this.crateHandler.cast();
         }
-        return LazyOptional.empty();
+        return super.getCapability(cap, side);
     }
 
     private net.minecraftforge.items.IItemHandlerModifiable createHandler() {
-        int size = this.neighbors.size();
+        ArrayList<BlockPos> neighbors = getNeighbors();
+        int size = neighbors.size();
         for (int i = 0; i < size; i++) {
-            if (!(this.world.getBlockState(this.neighbors.get(i)).getBlock() instanceof CrateBlock) || size < 2) {
+            if (!(this.world.getBlockState(neighbors.get(i)).getBlock() instanceof CrateBlock) || size < 2) {
                 return new net.minecraftforge.items.wrapper.InvWrapper(this);
             }
-            if (!(this.getWorld().getTileEntity(this.neighbors.get(i)) instanceof CrateTileEntity)) {
+            if (!(this.getWorld().getTileEntity(neighbors.get(i)) instanceof CrateTileEntity)) {
                 return new net.minecraftforge.items.wrapper.InvWrapper(this);
             }
         }
 
-        IInventory inven1 = (IInventory) this.getWorld().getTileEntity(this.neighbors.get(0));
-        IInventory inven2 = (IInventory) this.getWorld().getTileEntity(this.neighbors.get(1));
+        IInventory inven1 = (IInventory) this.getWorld().getTileEntity(neighbors.get(0));
+        IInventory inven2 = (IInventory) this.getWorld().getTileEntity(neighbors.get(1));
         if (size == 2) {
             return new net.minecraftforge.items.wrapper.CombinedInvWrapper(
                     new net.minecraftforge.items.wrapper.InvWrapper(inven1),
                     new net.minecraftforge.items.wrapper.InvWrapper(inven2));
         }
-        IInventory inven3 = (IInventory) this.getWorld().getTileEntity(this.neighbors.get(2));
-        IInventory inven4 = (IInventory) this.getWorld().getTileEntity(this.neighbors.get(3));
+        IInventory inven3 = (IInventory) this.getWorld().getTileEntity(neighbors.get(2));
+        IInventory inven4 = (IInventory) this.getWorld().getTileEntity(neighbors.get(3));
         if (size == 4) {
             return new net.minecraftforge.items.wrapper.CombinedInvWrapper(
                     new net.minecraftforge.items.wrapper.InvWrapper(inven1),
@@ -300,10 +313,10 @@ public class CrateTileEntity extends LockableLootTileEntity {
                     new net.minecraftforge.items.wrapper.InvWrapper(inven3),
                     new net.minecraftforge.items.wrapper.InvWrapper(inven4));
         }
-        IInventory inven5 = (IInventory) this.getWorld().getTileEntity(this.neighbors.get(4));
-        IInventory inven6 = (IInventory) this.getWorld().getTileEntity(this.neighbors.get(5));
-        IInventory inven7 = (IInventory) this.getWorld().getTileEntity(this.neighbors.get(6));
-        IInventory inven8 = (IInventory) this.getWorld().getTileEntity(this.neighbors.get(7));
+        IInventory inven5 = (IInventory) this.getWorld().getTileEntity(neighbors.get(4));
+        IInventory inven6 = (IInventory) this.getWorld().getTileEntity(neighbors.get(5));
+        IInventory inven7 = (IInventory) this.getWorld().getTileEntity(neighbors.get(6));
+        IInventory inven8 = (IInventory) this.getWorld().getTileEntity(neighbors.get(7));
         if (size == 8) {
             return new net.minecraftforge.items.wrapper.CombinedInvWrapper(
                     new net.minecraftforge.items.wrapper.InvWrapper(inven1),
