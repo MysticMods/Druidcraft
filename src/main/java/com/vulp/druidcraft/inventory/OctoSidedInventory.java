@@ -113,7 +113,7 @@ public class OctoSidedInventory implements IInventory {
                                 if (index >= this.inv7.getSizeInventory() + this.inv6.getSizeInventory() + this.inv5.getSizeInventory() + this.inv4.getSizeInventory() + this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                                     return this.inv8.removeStackFromSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory() + this.inv5.getSizeInventory() + this.inv6.getSizeInventory() + this.inv7.getSizeInventory()));
                                 } return this.inv7.removeStackFromSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory() + this.inv5.getSizeInventory() + this.inv6.getSizeInventory()));
-                            } return this.inv6.removeStackFromSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory() + inv5.getSizeInventory()));
+                            } return this.inv6.removeStackFromSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory() + this.inv5.getSizeInventory()));
                         } return this.inv5.removeStackFromSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory() + this.inv4.getSizeInventory()));
                     } return this.inv4.removeStackFromSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory()));
                 } return this.inv3.removeStackFromSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()));
@@ -144,6 +144,7 @@ public class OctoSidedInventory implements IInventory {
                 } this.inv3.setInventorySlotContents(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()), stack);
                 return;
             } this.inv2.setInventorySlotContents(index - this.inv1.getSizeInventory(), stack);
+            return;
         } else this.inv1.setInventorySlotContents(index, stack);
     }
 

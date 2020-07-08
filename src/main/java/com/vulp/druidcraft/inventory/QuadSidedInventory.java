@@ -54,12 +54,9 @@ public class QuadSidedInventory implements IInventory {
             if (index >= this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                 if (index >= this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                     return this.inv4.getStackInSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory()));
-                }
-                return this.inv3.getStackInSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()));
-            }
-            return this.inv2.getStackInSlot(index - this.inv1.getSizeInventory());
-        }
-        return this.inv1.getStackInSlot(index);
+                } return this.inv3.getStackInSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()));
+            } return this.inv2.getStackInSlot(index - this.inv1.getSizeInventory());
+        } else return this.inv1.getStackInSlot(index);
     }
 
     @Override
@@ -69,12 +66,9 @@ public class QuadSidedInventory implements IInventory {
             if (index >= this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                 if (index >= this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                     return this.inv4.decrStackSize(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory()), count);
-                }
-                return this.inv3.decrStackSize(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()), count);
-            }
-            return this.inv2.decrStackSize(index - this.inv1.getSizeInventory(), count);
-        }
-        return this.inv1.decrStackSize(index, count);
+                } return this.inv3.decrStackSize(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()), count);
+            } return this.inv2.decrStackSize(index - this.inv1.getSizeInventory(), count);
+        } else return this.inv1.decrStackSize(index, count);
     }
 
     @Override
@@ -84,12 +78,9 @@ public class QuadSidedInventory implements IInventory {
             if (index >= this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                 if (index >= this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                     return this.inv4.removeStackFromSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory()));
-                }
-                return this.inv3.removeStackFromSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()));
-            }
-            return this.inv2.removeStackFromSlot(index - this.inv1.getSizeInventory());
-        }
-        return this.inv1.removeStackFromSlot(index);
+                } return this.inv3.removeStackFromSlot(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()));
+            } return this.inv2.removeStackFromSlot(index - this.inv1.getSizeInventory());
+        } else return this.inv1.removeStackFromSlot(index);
     }
 
     @Override
@@ -100,13 +91,11 @@ public class QuadSidedInventory implements IInventory {
                 if (index >= this.inv3.getSizeInventory() + this.inv2.getSizeInventory() + this.inv1.getSizeInventory()) {
                     this.inv4.setInventorySlotContents(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory() + this.inv3.getSizeInventory()), stack);
                     return;
-                }
-                this.inv3.setInventorySlotContents(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()), stack);
+                } this.inv3.setInventorySlotContents(index - (this.inv1.getSizeInventory() + this.inv2.getSizeInventory()), stack);
                 return;
-            }
-            this.inv2.setInventorySlotContents(index - this.inv1.getSizeInventory(), stack);
-        }
-        this.inv1.setInventorySlotContents(index, stack);
+            } this.inv2.setInventorySlotContents(index - this.inv1.getSizeInventory(), stack);
+            return;
+        } this.inv1.setInventorySlotContents(index, stack);
     }
 
     @Override

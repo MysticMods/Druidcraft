@@ -284,9 +284,6 @@ public class CrateTileEntity extends LockableLootTileEntity {
             }
         }
 
-        if (size <= 1) {
-            return new net.minecraftforge.items.wrapper.InvWrapper(this);
-        }
         IInventory inven1 = (IInventory) this.getWorld().getTileEntity(this.neighbors.get(0));
         IInventory inven2 = (IInventory) this.getWorld().getTileEntity(this.neighbors.get(1));
         if (size == 2) {

@@ -9,9 +9,11 @@ import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.items.IItemHandler;
 
 public class CrateContainer extends Container {
 
+    private IItemHandler crateInv;
     private final IInventory mainCrateInv;
     private final int numRows;
 
@@ -36,6 +38,9 @@ public class CrateContainer extends Container {
         super(type, id);
         assertInventorySize(inventory, rows * 9);
         this.mainCrateInv = inventory;
+        for (int i = 0; i < inventory.getSizeInventory(); i++) {
+            this.crateInv.insertItem(i, mainCrateInv.getStackInSlot(i), false);
+        }
         this.numRows = rows;
         inventory.openInventory(playerInventoryIn.player);
         int i1;
