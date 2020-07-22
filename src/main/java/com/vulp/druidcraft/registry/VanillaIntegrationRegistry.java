@@ -5,7 +5,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.FireBlock;
+import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.item.AxeItem;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.stats.IStatFormatter;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
@@ -13,6 +15,8 @@ import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.data.ForgeBlockTagsProvider;
+
+import java.util.Arrays;
 
 public class VanillaIntegrationRegistry {
 
@@ -96,6 +100,8 @@ public class VanillaIntegrationRegistry {
         addFlammables(BlockRegistry.blueberry_bush, 60, 100);
         addFlammables(BlockRegistry.rope, 30, 60);
 
+        // Handle Chicken tameables
+        ChickenEntity.TEMPTATION_ITEMS = Ingredient.merge(Arrays.asList(ChickenEntity.TEMPTATION_ITEMS, Ingredient.fromItems(ItemRegistry.hemp_seeds)));
     }
 
     public static void addFlammables(Block blockIn, int encouragement, int flammability)
