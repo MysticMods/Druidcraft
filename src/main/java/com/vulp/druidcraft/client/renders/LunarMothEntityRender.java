@@ -59,8 +59,11 @@ public class LunarMothEntityRender extends MobRenderer<LunarMothEntity, LunarMot
 
     @Nullable
     @Override
-    protected RenderType func_230042_a_(LunarMothEntity p_230042_1_, boolean p_230042_2_, boolean p_230042_3_) {
-        return getTrueRenderType(p_230042_1_);
+    protected RenderType func_230042_a_(LunarMothEntity entity, boolean p_230042_2_, boolean p_230042_3_) {
+        if (!entity.isResting()) {
+            return getTrueRenderType(entity);
+        }
+        return super.func_230042_a_(entity, p_230042_2_, p_230042_3_);
     }
 
     public RenderType getTrueRenderType(LunarMothEntity entity) {

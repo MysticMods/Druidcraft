@@ -36,9 +36,7 @@ import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Predicate;
 
 @SuppressWarnings("unchecked")
@@ -57,6 +55,9 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
         this.setPathPriority(PathNodeType.DAMAGE_FIRE, -1.0F);
         this.setPathPriority(PathNodeType.WATER, -1.0F);
         this.setPathPriority(PathNodeType.WATER_BORDER, -1.0F);
+        this.setPathPriority(PathNodeType.WATER, -1.0F);
+        this.setPathPriority(PathNodeType.COCOA, -1.0F);
+        this.setPathPriority(PathNodeType.FENCE, -1.0F);
         this.setTamed(false);
     }
 
