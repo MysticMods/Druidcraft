@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 
+@Deprecated
 public class QuadSidedInventory implements IInventory {
     private final IInventory inv1;
     private final IInventory inv2;

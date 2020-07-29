@@ -14,7 +14,6 @@ import net.minecraft.block.*;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.DoubleSidedInventory;
@@ -28,15 +27,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.*;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.BarrelTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
@@ -68,6 +64,7 @@ public class CrateBlock extends ContainerBlock {
     public static final BooleanProperty PROPERTY_OPEN = BlockStateProperties.OPEN;
     public static final EnumProperty<CrateIndex> INDEX = EnumProperty.create("index", CrateIndex.class);
     public static final BooleanProperty ROTATED = BooleanProperty.create("rot");
+    @Deprecated
     private static final CrateBlock.InventoryFactory<IInventory> inventoryFactory = new CrateBlock.InventoryFactory<IInventory>() {
         @Override
         public IInventory forOcto(CrateTileEntity inv1, CrateTileEntity inv2, CrateTileEntity inv3, CrateTileEntity inv4, CrateTileEntity inv5, CrateTileEntity inv6, CrateTileEntity inv7, CrateTileEntity inv8) {
@@ -89,6 +86,7 @@ public class CrateBlock extends ContainerBlock {
             return tileEntity;
         }
     };
+    @Deprecated
     private static final CrateBlock.InventoryFactory<INamedContainerProvider> guiFactory = new CrateBlock.InventoryFactory<INamedContainerProvider>() {
 
         @Override
@@ -166,7 +164,7 @@ public class CrateBlock extends ContainerBlock {
                     if (tileEntity1.hasCustomName()) {
                         return tileEntity1.getDisplayName();
                     } else {
-                        return (ITextComponent)(tileEntity2.hasCustomName() ? tileEntity2.getDisplayName() : new TranslationTextComponent("container." + Druidcraft.MODID + ".crate_double"));
+                        return (tileEntity2.hasCustomName() ? tileEntity2.getDisplayName() : new TranslationTextComponent("container." + Druidcraft.MODID + ".crate_double"));
                     }
                 }
             };
@@ -186,6 +184,7 @@ public class CrateBlock extends ContainerBlock {
                 .with(ROTATED, false));
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         ItemStack itemstack = player.getHeldItem(handIn);
@@ -506,6 +505,7 @@ public class CrateBlock extends ContainerBlock {
         return shapeConfig;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
         TileEntity tileentity = worldIn.getTileEntity(pos);
@@ -738,6 +738,7 @@ public class CrateBlock extends ContainerBlock {
         return config;
     }
 
+    @Deprecated
     public static boolean checkBlockPositions(World world, BlockPos pos, CrateType type, ArrayList<BlockPos> posList) {
         int num = world.getBlockState(pos).get(INDEX).getPosNumber();
 
@@ -928,6 +929,7 @@ public class CrateBlock extends ContainerBlock {
         return true;
     }
 
+    // TODO: Convert to varargs
     public boolean checkCrateBlocks(World world, BlockPos pos1) {
         if (world.getBlockState(pos1).getBlock() instanceof CrateBlock) {
             return true;
@@ -951,22 +953,14 @@ public class CrateBlock extends ContainerBlock {
         return false;
     }
 
-    public boolean rotateCrate(BlockPos pos) {
-        Random bool = new Random();
+    private static Random bool = new Random();
+    private boolean rotateCrate(BlockPos pos) {
         bool.setSeed(pos.getX() + pos.getY() + pos.getZ());
         bool.nextBoolean();
         return (bool.nextBoolean());
     }
 
-    public int getCrateNumber(BlockPos pos, ArrayList<BlockPos> blockPosList) {
-        for (int i = 0; i < blockPosList.size(); i++) {
-            if (blockPosList.get(i) == pos) {
-                return i;
-            }
-        }
-        return 0;
-    }
-
+    @Deprecated
     public BlockPos getCrateByNumber(int num, ArrayList<BlockPos> blockPosList) {
         return blockPosList.get(num);
     }
@@ -1007,7 +1001,7 @@ public class CrateBlock extends ContainerBlock {
         return null;
     }
 
-    public ArrayList<CrateDataCarrier> calculateSides(ArrayList<BlockPos> blockPosList, World world) {
+    public ArrayList<CrateDataCarrier> calculateSides(ArrayList<BlockPos> blockPosList) {
         ArrayList<CrateDataCarrier> crateDataList = new ArrayList<>();
         for (int i = 0; i < blockPosList.size(); i++) {
             CrateType type = getCrateType(blockPosList);
@@ -1086,7 +1080,7 @@ public class CrateBlock extends ContainerBlock {
     // DO THIS AND REMEMBER TO KEEP MATCHING CHESTBLOCK CODE TO THIS CLASS.
 
     @Nullable
-    public static <T> T getCrateInventory(BlockState state, IWorld world, BlockPos pos, boolean allowBlocked, CrateBlock.InventoryFactory<T> factory) {
+    public static <T> T getCrateInventory(IWorld world, BlockPos pos, CrateBlock.InventoryFactory<T> factory) {
 
         // \/ REWRITE \/ (Remember the new code I created.)
 
@@ -1112,6 +1106,7 @@ public class CrateBlock extends ContainerBlock {
         return factory.forSingle((CrateTileEntity)tileentity);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
@@ -1127,14 +1122,16 @@ public class CrateBlock extends ContainerBlock {
     }
 
     @Nullable
-    public static IInventory getInventory(BlockState state, World world, BlockPos pos, boolean allowBlocked) {
-        return getCrateInventory(state, world, pos, allowBlocked, inventoryFactory);
+    @Deprecated
+    public static IInventory getInventory(World world, BlockPos pos) {
+        return getCrateInventory(world, pos, inventoryFactory);
     }
 
     @Override
     @Nullable
+    @Deprecated
     public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
-        return getCrateInventory(state, worldIn, pos, false, guiFactory);
+        return getCrateInventory(worldIn, pos, guiFactory);
     }
 
     @Override
@@ -1142,11 +1139,11 @@ public class CrateBlock extends ContainerBlock {
         return new CrateTileEntity();
     }
 
-    private static boolean isBlocked(IWorld world, BlockPos pos) {
+/*    private static boolean isBlocked(IWorld world, BlockPos pos) {
         return isCatSittingOn(world, pos);
-    }
+    }*/
 
-    private static boolean isCatSittingOn(IWorld world, BlockPos pos) {
+/*    private static boolean isCatSittingOn(IWorld world, BlockPos pos) {
         List<CatEntity> list = world.getEntitiesWithinAABB(CatEntity.class, new AxisAlignedBB((double)pos.getX(), (double)(pos.getY() + 1), (double)pos.getZ(), (double)(pos.getX() + 1), (double)(pos.getY() + 2), (double)(pos.getZ() + 1)));
         if (!list.isEmpty()) {
             for(CatEntity catentity : list) {
@@ -1157,32 +1154,26 @@ public class CrateBlock extends ContainerBlock {
         }
 
         return false;
-    }
+    }*/
 
-    /** @deprecated */
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
 
-
-    /** @deprecated */
+    @SuppressWarnings("deprecation")
     @Override
     public boolean hasComparatorInputOverride(BlockState state) {
         return true;
     }
 
-    /** @deprecated */
+    @SuppressWarnings("deprecation")
     @Override
     public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
-        return Container.calcRedstoneFromInventory(getInventory(blockState, worldIn, pos, false));
+        return Container.calcRedstoneFromInventory(getInventory(worldIn, pos));
     }
 
-    protected boolean checkPosition() {
-        return true;
-    }
-
-    public ArrayList<Boolean> checkMissingCrates(World world, BlockPos pos, ArrayList<BlockPos> neighborList) {
+    public ArrayList<Boolean> checkMissingCrates(World world, ArrayList<BlockPos> neighborList) {
         ArrayList<Boolean> missingList = new ArrayList<>();
         for (int i = 0; i < neighborList.size(); i++) {
             missingList.add(world.getBlockState(neighborList.get(i)).getBlock() instanceof CrateBlock);
@@ -1192,18 +1183,17 @@ public class CrateBlock extends ContainerBlock {
 
     public Pair<ArrayList<BlockPos>, ArrayList<Boolean>> updateCrateShapeHelper(ArrayList<BlockPos> neighborList, ArrayList<Boolean> missingList, int num1, int num2, int num3, int num4) {
         ArrayList<BlockPos> newNeighborList = new ArrayList<>();
-        ArrayList<Boolean> newMissingList = missingList;
         if (missingList.get(num1) && missingList.get(num2) && missingList.get(num3) && missingList.get(num4)) {
             newNeighborList.add(neighborList.get(num1));
             newNeighborList.add(neighborList.get(num2));
             newNeighborList.add(neighborList.get(num3));
             newNeighborList.add(neighborList.get(num4));
-            newMissingList.set(num1, false);
-            newMissingList.set(num2, false);
-            newMissingList.set(num3, false);
-            newMissingList.set(num4, false);
+            missingList.set(num1, false);
+            missingList.set(num2, false);
+            missingList.set(num3, false);
+            missingList.set(num4, false);
         }
-        return new Pair<>(newNeighborList, newMissingList);
+        return new Pair<>(newNeighborList, missingList);
     }
 
     public Pair<ArrayList<BlockPos>, ArrayList<Boolean>> updateCrateShapeHelper(ArrayList<BlockPos> neighborList, ArrayList<Boolean> missingList, int num1, int num2) {
@@ -1218,7 +1208,7 @@ public class CrateBlock extends ContainerBlock {
         return new Pair<>(newNeighborList, newMissingList);
     }
 
-    public ArrayList<ArrayList<BlockPos>> updateCrateShape(World world, BlockState state, BlockPos pos, ArrayList<BlockPos> neighborList, ArrayList<Boolean> missingList) {
+    public ArrayList<ArrayList<BlockPos>> updateCrateShape(ArrayList<BlockPos> neighborList, ArrayList<Boolean> missingList) {
         CrateType type = getCrateType(neighborList);
         ArrayList<ArrayList<BlockPos>> cratesList = new ArrayList<>();
         if (type == CrateType.OCTO) {
@@ -1345,16 +1335,17 @@ public class CrateBlock extends ContainerBlock {
         return cratesList;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
         World world = (World) worldIn;
         ArrayList<BlockPos> neighborList = getBlockPositions(world, currentPos);
-        ArrayList<Boolean> missingList = checkMissingCrates(world, currentPos, neighborList);
+        ArrayList<Boolean> missingList = checkMissingCrates(world, neighborList);
         if (missingList.contains(false)) {
             // Block is missing.
-            ArrayList<ArrayList<BlockPos>> cratesList = updateCrateShape(world, stateIn, currentPos, neighborList, missingList);
+            ArrayList<ArrayList<BlockPos>> cratesList = updateCrateShape(neighborList, missingList);
             for (int i = 0; i < cratesList.size(); i++) {
-                ArrayList<CrateDataCarrier> cardinalData = calculateSides(cratesList.get(i), world);
+                ArrayList<CrateDataCarrier> cardinalData = calculateSides(cratesList.get(i));
                 for (int j = 0; j < cardinalData.size(); j++) {
                     boolean rotate = rotateCrate(cratesList.get(i).get(0));
                     CrateIndex index = CrateIndex.matchCrateIndex(getCrateType(cratesList.get(i)), j + 1, cardinalData.get(j).isNorth(), cardinalData.get(j).isSouth(), cardinalData.get(j).isEast(), cardinalData.get(j).isWest(), cardinalData.get(j).isUp(), cardinalData.get(j).isDown());
@@ -1375,7 +1366,7 @@ public class CrateBlock extends ContainerBlock {
             if (!placer.getEntity().isSneaking()) {
                 ArrayList<BlockPos> positionList = checkForCrates(world, pos);
                 boolean rotate = rotateCrate(positionList.get(0));
-                ArrayList<CrateDataCarrier> cardinalList = calculateSides(positionList, world);
+                ArrayList<CrateDataCarrier> cardinalList = calculateSides(positionList);
                 for (int i = 0; i < positionList.size(); i++) {
                     CrateIndex index = CrateIndex.matchCrateIndex(getCrateType(positionList), i + 1, cardinalList.get(i).isNorth(), cardinalList.get(i).isSouth(), cardinalList.get(i).isEast(), cardinalList.get(i).isWest(), cardinalList.get(i).isUp(), cardinalList.get(i).isDown());
                     world.setBlockState(positionList.get(i), state.with(INDEX, index).with(ROTATED, rotate));
@@ -1408,6 +1399,7 @@ public class CrateBlock extends ContainerBlock {
         }
     }
 
+    @Deprecated
     interface InventoryFactory<T> {
         T forOcto(CrateTileEntity var1, CrateTileEntity var2, CrateTileEntity var3, CrateTileEntity var4, CrateTileEntity var5, CrateTileEntity var6, CrateTileEntity var7, CrateTileEntity var8);
 

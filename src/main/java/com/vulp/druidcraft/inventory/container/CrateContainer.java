@@ -11,6 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.IItemHandler;
 
+@Deprecated
 public class CrateContainer extends Container {
 
     private final IInventory mainCrateInv;

@@ -3,23 +3,15 @@ package com.vulp.druidcraft.blocks.tileentities;
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.api.CrateType;
 import com.vulp.druidcraft.blocks.CrateBlock;
-import com.vulp.druidcraft.inventory.OctoSidedInventory;
-import com.vulp.druidcraft.inventory.QuadSidedInventory;
 import com.vulp.druidcraft.inventory.container.CrateContainer;
 import com.vulp.druidcraft.registry.BlockRegistry;
 import com.vulp.druidcraft.registry.SoundEventRegistry;
 import com.vulp.druidcraft.registry.TileEntityRegistry;
-import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.DoubleSidedInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.container.ChestContainer;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.*;
@@ -29,52 +21,44 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
+import javax.annotation.Nullable;
+import java.util.*;
+import java.util.stream.Collectors;
 
-public class CrateTileEntity extends LockableLootTileEntity {
-    private NonNullList<ItemStack> contents = NonNullList.withSize(27, ItemStack.EMPTY);
+public class CrateTileEntity extends TileEntity {
+    private ItemStackHandler inventory = new ItemStackHandler(27);
     private ArrayList<BlockPos> neighbors;
     private int numPlayersUsing;
-    private net.minecraftforge.common.util.LazyOptional<net.minecraftforge.items.IItemHandlerModifiable> crateHandler;
-
-    private CrateTileEntity(TileEntityType<?> tileEntityType) {
-        super(tileEntityType);
-    }
+    private LazyOptional<IItemHandlerModifiable> crateHandler;
+    private UUID crateId;
 
     public CrateTileEntity() {
-        this(TileEntityRegistry.crate);
+        super(TileEntityRegistry.crate);
+        this.crateId = UUID.randomUUID();
     }
 
-    public ArrayList<BlockPos> getNeighbors() {
+    private List<BlockPos> getNeighbors() {
         return this.neighbors;
     }
 
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         super.write(compound);
-        ArrayList<Integer> x = new ArrayList<>();
-        ArrayList<Integer> y = new ArrayList<>();
-        ArrayList<Integer> z = new ArrayList<>();
-        for (int i = 0; i < this.neighbors.size(); i++) {
-            x.add(this.neighbors.get(i).getX());
-            y.add(this.neighbors.get(i).getY());
-            z.add(this.neighbors.get(i).getZ());
-        }
-        compound.putIntArray("CoordX", x);
-        compound.putIntArray("CoordY", y);
-        compound.putIntArray("CoordZ", z);
-        if (!this.checkLootAndWrite(compound)) {
-            ItemStackHelper.saveAllItems(compound, this.contents);
-        }
+        compound.putIntArray("CoordX", this.neighbors.stream().map(Vec3i::getX).collect(Collectors.toList()));
+        compound.putIntArray("CoordY", this.neighbors.stream().map(Vec3i::getY).collect(Collectors.toList()));
+        compound.putIntArray("CoordZ", this.neighbors.stream().map(Vec3i::getZ).collect(Collectors.toList()));
+        compound.put("inventory", inventory.serializeNBT());
+        compound.putUniqueId("uuid", crateId);
 
         return compound;
     }
@@ -82,106 +66,33 @@ public class CrateTileEntity extends LockableLootTileEntity {
     @Override
     public void read(CompoundNBT compound) {
         super.read(compound);
-        ArrayList<BlockPos> neighborArray = new ArrayList<>();
+        this.neighbors = new ArrayList<>();
         for (int i = 0; i < compound.getIntArray("CoordX").length; i++) {
-            neighborArray.add(new BlockPos(compound.getIntArray("CoordX")[i], compound.getIntArray("CoordY")[i], compound.getIntArray("CoordZ")[i]));
+            this.neighbors.add(new BlockPos(compound.getIntArray("CoordX")[i], compound.getIntArray("CoordY")[i], compound.getIntArray("CoordZ")[i]));
         }
-        this.neighbors = neighborArray;
-        this.contents = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
-        if (!this.checkLootAndRead(compound)) {
-            ItemStackHelper.loadAllItems(compound, this.contents);
+        if (compound.contains("Items", Constants.NBT.TAG_COMPOUND)) {
+            NonNullList<ItemStack> items = NonNullList.withSize(27, ItemStack.EMPTY);
+            ItemStackHelper.loadAllItems(compound, items);
+            this.inventory = new ItemStackHandler(items);
+        } else {
+            this.inventory.deserializeNBT(compound.getCompound("inventory"));
         }
-
+        if (compound.hasUniqueId("uuid")) {
+            this.crateId = compound.getUniqueId("uuid");
+        } else if (this.crateId == null) {
+            this.crateId = UUID.randomUUID();
+        }
     }
 
     @Override
     public void onLoad() {
         super.onLoad();
-        if (this.neighbors == null)
-        this.neighbors = CrateBlock.getBlockPositions(world, pos);
+        if (this.neighbors == null) {
+            this.neighbors = CrateBlock.getBlockPositions(world, pos);
+        }
         for (int i = 0; i < this.neighbors.size(); i++) {
             Druidcraft.LOGGER.debug("onLoad() : " + this.neighbors.get(i));
         }
-    }
-
-    /**
-     * Returns the number of slots in the inventory.
-     */
-    @Override
-    public int getSizeInventory() {
-        return 27;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        for(ItemStack itemstack : this.contents) {
-            if (!itemstack.isEmpty()) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Returns the stack in the given slot.
-     */
-    @Override
-    public ItemStack getStackInSlot(int index) {
-        return this.contents.get(index);
-    }
-
-    /**
-     * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
-     */
-    @Override
-    public ItemStack decrStackSize(int index, int count) {
-        return ItemStackHelper.getAndSplit(this.contents, index, count);
-    }
-
-    /**
-     * Removes a stack from the given slot and returns it.
-     */
-    @Override
-    public ItemStack removeStackFromSlot(int index) {
-        return ItemStackHelper.getAndRemove(this.contents, index);
-    }
-
-    /**
-     * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
-     */
-    @Override
-    public void setInventorySlotContents(int index, ItemStack stack) {
-        this.contents.set(index, stack);
-        if (stack.getCount() > this.getInventoryStackLimit()) {
-            stack.setCount(this.getInventoryStackLimit());
-        }
-
-    }
-
-    @Override
-    public void clear() {
-        this.contents.clear();
-    }
-
-    @Override
-    protected NonNullList<ItemStack> getItems() {
-        return this.contents;
-    }
-
-    @Override
-    protected void setItems(NonNullList<ItemStack> itemsIn) {
-        this.contents = itemsIn;
-    }
-
-    @Override
-    protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container.druidcraft.crate");
-    }
-
-    @Override
-    protected Container createMenu(int id, PlayerInventory player) {
-        return ChestContainer.createGeneric9X3(id, player, this);
     }
 
     public void crateTick() {
@@ -189,8 +100,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
         int j = this.pos.getY();
         int k = this.pos.getZ();
         BlockState blockState = world.getBlockState(new BlockPos(i, j, k));
-        this.numPlayersUsing = calculatePlayersUsing(this.world, this, i, j, k, (blockState.get(CrateBlock.INDEX).getType() == CrateType.QUAD_X ||
-                blockState.get(CrateBlock.INDEX).getType() == CrateType.QUAD_Y || blockState.get(CrateBlock.INDEX).getType() == CrateType.QUAD_Z || blockState.get(CrateBlock.INDEX).getType() == CrateType.OCTO));
+        this.numPlayersUsing = calculatePlayersUsing(this.world, i, j, k); //(blockState.get(CrateBlock.INDEX).getType() == CrateType.QUAD_X || blockState.get(CrateBlock.INDEX).getType() == CrateType.QUAD_Y || blockState.get(CrateBlock.INDEX).getType() == CrateType.QUAD_Z || blockState.get(CrateBlock.INDEX).getType() == CrateType.OCTO));
         if (this.numPlayersUsing > 0) {
             this.scheduleTick();
         } else {
@@ -215,29 +125,31 @@ public class CrateTileEntity extends LockableLootTileEntity {
 
     }
 
-    public static int calculatePlayersUsing(World world, LockableTileEntity lockableTileEntity, int posX, int posY, int posZ, boolean isQuadOrOcto) {
+    @Deprecated
+    public static int calculatePlayersUsing(World world, int posX, int posY, int posZ) {
         int i = 0;
         float f = 6.0F;
 
+        Set<UUID> inventoryIds = null; //getInventoryIds();
         for(PlayerEntity playerentity : world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB((double)((float)posX - f), (double)((float)posY - f), (double)((float)posZ - f), (double)((float)(posX + 1) + f), (double)((float)(posY + 1) + f), (double)((float)(posZ + 1) + f)))) {
-            if (playerentity.openContainer instanceof CrateContainer && isQuadOrOcto) {
-                IInventory iinventory = ((CrateContainer)playerentity.openContainer).getMainInventory();
-                if ((iinventory == lockableTileEntity || (iinventory instanceof QuadSidedInventory && ((QuadSidedInventory)iinventory).isPartOfQuadCrate(lockableTileEntity))) || (iinventory instanceof OctoSidedInventory && ((OctoSidedInventory)iinventory).isPartOfOctoCrate(lockableTileEntity))) {
-                    ++i;
-                }
+            if (playerentity.openContainer instanceof CrateContainer) {
+                CrateContainer crate = (CrateContainer) playerentity.openContainer;
+/*                if (inventoryIds.contains(crate.getCrateId())) {
+                    i++;
+                }*/
             }
-            if (playerentity.openContainer instanceof ChestContainer && !isQuadOrOcto) {
+/*            if (playerentity.openContainer instanceof ChestContainer && !isQuadOrOcto) {
                 IInventory iinventory = ((ChestContainer)playerentity.openContainer).getLowerChestInventory();
                 if (iinventory == lockableTileEntity || iinventory instanceof DoubleSidedInventory && ((DoubleSidedInventory)iinventory).isPartOfLargeChest(lockableTileEntity)) {
                     ++i;
                 }
-            }
+            }*/
         }
 
         return i;
     }
 
-    @Override
+/*    @Override
     public void openInventory(PlayerEntity player) {
         if (!player.isSpectator()) {
             if (this.numPlayersUsing < 0) {
@@ -257,7 +169,7 @@ public class CrateTileEntity extends LockableLootTileEntity {
             this.scheduleTick();
         }
 
-    }
+    }*/
 
     private void scheduleTick() {
         Block block = this.getBlockState().getBlock();
@@ -269,71 +181,51 @@ public class CrateTileEntity extends LockableLootTileEntity {
     public void updateContainingBlockInfo() {
         super.updateContainingBlockInfo();
         if (this.crateHandler != null) {
+            // TODO: Invalidate after crate formation change
             this.crateHandler.invalidate();
-            this.crateHandler = null;
+/*            this.crateHandler = null;*/
         }
     }
 
     @Override
-    public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> cap, @javax.annotation.Nullable net.minecraft.util.Direction side) {
-        if (!this.removed && cap == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
+        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             if (this.crateHandler == null) {
-                this.crateHandler = net.minecraftforge.common.util.LazyOptional.of(this::createHandler);
+                this.crateHandler = LazyOptional.of(this::createHandler);
             }
             return this.crateHandler.cast();
         }
         return super.getCapability(cap, side);
     }
 
-    private net.minecraftforge.items.IItemHandlerModifiable createHandler() {
-        ArrayList<BlockPos> neighbors = getNeighbors();
-        int size = neighbors.size();
-        for (int i = 0; i < size; i++) {
-            if (!(this.world.getBlockState(neighbors.get(i)).getBlock() instanceof CrateBlock) || size < 2) {
-                return new net.minecraftforge.items.wrapper.InvWrapper(this);
-            }
-            if (!(this.getWorld().getTileEntity(neighbors.get(i)) instanceof CrateTileEntity)) {
-                return new net.minecraftforge.items.wrapper.InvWrapper(this);
-            }
-        }
-
-        IInventory inven1 = (IInventory) this.getWorld().getTileEntity(neighbors.get(0));
-        IInventory inven2 = (IInventory) this.getWorld().getTileEntity(neighbors.get(1));
-        if (size == 2) {
-            return new net.minecraftforge.items.wrapper.CombinedInvWrapper(
-                    new net.minecraftforge.items.wrapper.InvWrapper(inven1),
-                    new net.minecraftforge.items.wrapper.InvWrapper(inven2));
-        }
-        IInventory inven3 = (IInventory) this.getWorld().getTileEntity(neighbors.get(2));
-        IInventory inven4 = (IInventory) this.getWorld().getTileEntity(neighbors.get(3));
-        if (size == 4) {
-            return new net.minecraftforge.items.wrapper.CombinedInvWrapper(
-                    new net.minecraftforge.items.wrapper.InvWrapper(inven1),
-                    new net.minecraftforge.items.wrapper.InvWrapper(inven2),
-                    new net.minecraftforge.items.wrapper.InvWrapper(inven3),
-                    new net.minecraftforge.items.wrapper.InvWrapper(inven4));
-        }
-        IInventory inven5 = (IInventory) this.getWorld().getTileEntity(neighbors.get(4));
-        IInventory inven6 = (IInventory) this.getWorld().getTileEntity(neighbors.get(5));
-        IInventory inven7 = (IInventory) this.getWorld().getTileEntity(neighbors.get(6));
-        IInventory inven8 = (IInventory) this.getWorld().getTileEntity(neighbors.get(7));
-        if (size == 8) {
-            return new net.minecraftforge.items.wrapper.CombinedInvWrapper(
-                    new net.minecraftforge.items.wrapper.InvWrapper(inven1),
-                    new net.minecraftforge.items.wrapper.InvWrapper(inven2),
-                    new net.minecraftforge.items.wrapper.InvWrapper(inven3),
-                    new net.minecraftforge.items.wrapper.InvWrapper(inven4),
-                    new net.minecraftforge.items.wrapper.InvWrapper(inven5),
-                    new net.minecraftforge.items.wrapper.InvWrapper(inven6),
-                    new net.minecraftforge.items.wrapper.InvWrapper(inven7),
-                    new net.minecraftforge.items.wrapper.InvWrapper(inven8));
-        }
-        return new net.minecraftforge.items.wrapper.InvWrapper(this);
+    public ItemStackHandler getInventory () {
+        return inventory;
     }
 
-    /**
-     * invalidates a tile entity
-     */
+    private IItemHandlerModifiable getFullInventory () {
+        int size = neighbors.size();
+        List<TileEntity> tiles;
+        if (size == 2 || size == 4 || size == 8) {
+            tiles = neighbors.stream().map(o -> world.getTileEntity(o)).collect(Collectors.toList());
+        } else {
+            return getInventory();
+        }
+        List<CrateTileEntity> crates = new ArrayList<>();
+        for (TileEntity te : tiles) {
+            if (!(te instanceof CrateTileEntity)) {
+                throw new IllegalStateException("Neighbouring tile entity of crate is not a crate tile entity.");
+            }
+            crates.add((CrateTileEntity) te);
+        }
+        crates.sort(Comparator.comparing(CrateTileEntity::getCrateId));
+        ItemStackHandler[] handlers = crates.stream().map(CrateTileEntity::getInventory).toArray(ItemStackHandler[]::new);
+        return new CombinedInvWrapper(handlers);
+    }
+
+    public UUID getCrateId () {
+        return crateId;
+    }
+
     @Override
     public void remove() {
         super.remove();
@@ -341,19 +233,19 @@ public class CrateTileEntity extends LockableLootTileEntity {
             crateHandler.invalidate();
     }
 
-    @Override
+/*    @Override
     public void closeInventory(PlayerEntity player) {
         if (!player.isSpectator()) {
             --this.numPlayersUsing;
         }
-    }
+    }*/
 
     private void setCrateState(BlockState state, boolean isOpening) {
         this.world.setBlockState(this.getPos(), state.with(CrateBlock.PROPERTY_OPEN, isOpening), 3);
     }
 
     public float checkCrateShape(BlockState state) {
-        CrateType type = (CrateType) state.get(CrateBlock.INDEX).getType();
+        CrateType type = state.get(CrateBlock.INDEX).getType();
         if (type == CrateType.DOUBLE_X || type == CrateType.DOUBLE_Y || type == CrateType.DOUBLE_Z)
             return 0.8F;
         if (type == CrateType.QUAD_X || type == CrateType.QUAD_Y || type == CrateType.QUAD_Z)
@@ -367,6 +259,6 @@ public class CrateTileEntity extends LockableLootTileEntity {
         double d0 = (double)this.pos.getX() + 0.5D;
         double d1 = (double)this.pos.getY() + 0.5D;
         double d2 = (double)this.pos.getZ() + 0.5D;
-        this.world.playSound((PlayerEntity)null, d0, d1, d2, p_213965_2_, SoundCategory.BLOCKS, 0.65F, this.world.rand.nextFloat() * 0.1F + checkCrateShape(state));
+        this.world.playSound(null, d0, d1, d2, p_213965_2_, SoundCategory.BLOCKS, 0.65F, this.world.rand.nextFloat() * 0.1F + checkCrateShape(state));
     }
 }
