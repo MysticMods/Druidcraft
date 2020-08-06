@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
 
+@SuppressWarnings("deprecation")
 @OnlyIn(Dist.CLIENT)
 public class ItemTileEntityRenderer extends ItemStackTileEntityRenderer {
 

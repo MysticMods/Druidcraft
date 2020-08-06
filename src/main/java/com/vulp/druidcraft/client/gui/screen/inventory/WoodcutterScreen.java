@@ -3,6 +3,7 @@ package com.vulp.druidcraft.client.gui.screen.inventory;
 import com.mojang.blaze3d.platform.GlStateManager;
 import java.util.List;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.vulp.druidcraft.inventory.container.WoodcutterContainer;
 import com.vulp.druidcraft.recipes.WoodcuttingRecipe;
 import net.minecraft.client.Minecraft;
@@ -45,7 +46,7 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
     @Override
     protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
         this.renderBackground();
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
         int lvt_4_1_ = this.guiLeft;
         int lvt_5_1_ = this.guiTop;

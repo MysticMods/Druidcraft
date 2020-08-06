@@ -20,6 +20,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("deprecation")
 @OnlyIn(Dist.CLIENT)
 public class SmallBeamTileEntityRenderer extends TileEntityRenderer<SmallBeamTileEntity> {
 
@@ -50,7 +51,6 @@ public class SmallBeamTileEntityRenderer extends TileEntityRenderer<SmallBeamTil
         }
         Material material = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, texture);
         SmallBeamRopeModel model = this.model;
-        model.getClass();
         IVertexBuilder iVertexBuilder = material.getBuffer(iRenderTypeBuffer, model::getRenderType);
         this.model.render(matrixStack, iVertexBuilder, i, i1, 1.0F, 1.0F, 1.0F, 1.0F);
         matrixStack.pop();

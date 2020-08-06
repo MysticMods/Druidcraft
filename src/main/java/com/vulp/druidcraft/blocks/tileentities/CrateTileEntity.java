@@ -10,7 +10,6 @@ import com.vulp.druidcraft.registry.TileEntityRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -31,6 +30,7 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -38,6 +38,7 @@ import java.util.stream.Collectors;
 public class CrateTileEntity extends TileEntity {
     private ItemStackHandler inventory = new ItemStackHandler(27);
     private ArrayList<BlockPos> neighbors;
+    @SuppressWarnings("FieldCanBeLocal")
     private int numPlayersUsing;
     private LazyOptional<IItemHandlerModifiable> crateHandler;
     private UUID crateId;
@@ -47,13 +48,14 @@ public class CrateTileEntity extends TileEntity {
         this.crateId = UUID.randomUUID();
     }
 
-    private List<BlockPos> getNeighbors() {
+/*    private List<BlockPos> getNeighbors() {
         return this.neighbors;
-    }
+    }*/
 
+    @Nonnull
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
+    public CompoundNBT write(@Nonnull CompoundNBT compound) {
+        compound = super.write(compound);
         compound.putIntArray("CoordX", this.neighbors.stream().map(Vec3i::getX).collect(Collectors.toList()));
         compound.putIntArray("CoordY", this.neighbors.stream().map(Vec3i::getY).collect(Collectors.toList()));
         compound.putIntArray("CoordZ", this.neighbors.stream().map(Vec3i::getZ).collect(Collectors.toList()));
@@ -64,7 +66,7 @@ public class CrateTileEntity extends TileEntity {
     }
 
     @Override
-    public void read(CompoundNBT compound) {
+    public void read(@Nonnull CompoundNBT compound) {
         super.read(compound);
         this.neighbors = new ArrayList<>();
         for (int i = 0; i < compound.getIntArray("CoordX").length; i++) {
@@ -87,15 +89,19 @@ public class CrateTileEntity extends TileEntity {
     @Override
     public void onLoad() {
         super.onLoad();
-        if (this.neighbors == null) {
+        if (this.neighbors == null && this.world != null) {
             this.neighbors = CrateBlock.getBlockPositions(world, pos);
-        }
-        for (int i = 0; i < this.neighbors.size(); i++) {
-            Druidcraft.LOGGER.debug("onLoad() : " + this.neighbors.get(i));
+            for (BlockPos neighbor : this.neighbors) {
+                Druidcraft.LOGGER.debug("onLoad() : " + neighbor);
+            }
         }
     }
 
     public void crateTick() {
+        if (this.world == null) {
+            return;
+        }
+
         int i = this.pos.getX();
         int j = this.pos.getY();
         int k = this.pos.getZ();
@@ -115,12 +121,12 @@ public class CrateTileEntity extends TileEntity {
                 if (blockState.get(CrateBlock.INDEX).isParent()) {
                     this.playSound(blockState, SoundEventRegistry.close_crate);
                 }
-                this.setCrateState(blockstate, false);
+                this.setCrateState(blockstate);
             }
         }
 
-        for (int b = 0; b < this.neighbors.size(); b++) {
-            Druidcraft.LOGGER.debug("crateTick() : " + this.neighbors.get(b));
+        for (BlockPos neighbor : this.neighbors) {
+            Druidcraft.LOGGER.debug("crateTick() : " + neighbor);
         }
 
     }
@@ -172,9 +178,11 @@ public class CrateTileEntity extends TileEntity {
     }*/
 
     private void scheduleTick() {
-        Block block = this.getBlockState().getBlock();
-        this.world.getPendingBlockTicks().scheduleTick(this.getPos(), block, 5);
-        this.world.notifyNeighborsOfStateChange(this.pos, block);
+        if (this.world != null) {
+            Block block = this.getBlockState().getBlock();
+            this.world.getPendingBlockTicks().scheduleTick(this.getPos(), block, 5);
+            this.world.notifyNeighborsOfStateChange(this.pos, block);
+        }
     }
 
     @Override
@@ -187,22 +195,29 @@ public class CrateTileEntity extends TileEntity {
         }
     }
 
+    @Nonnull
     @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             if (this.crateHandler == null) {
-                this.crateHandler = LazyOptional.of(this::createHandler);
+                this.crateHandler = LazyOptional.of(this::getFullInventory);
             }
             return this.crateHandler.cast();
         }
         return super.getCapability(cap, side);
     }
 
+    @Nonnull
     public ItemStackHandler getInventory () {
         return inventory;
     }
 
+    @Nonnull
     private IItemHandlerModifiable getFullInventory () {
+        if (this.world == null) {
+            return inventory;
+        }
+
         int size = neighbors.size();
         List<TileEntity> tiles;
         if (size == 2 || size == 4 || size == 8) {
@@ -222,6 +237,8 @@ public class CrateTileEntity extends TileEntity {
         return new CombinedInvWrapper(handlers);
     }
 
+    // TODO: Remove annotation
+    @SuppressWarnings("WeakerAccess")
     public UUID getCrateId () {
         return crateId;
     }
@@ -240,11 +257,13 @@ public class CrateTileEntity extends TileEntity {
         }
     }*/
 
-    private void setCrateState(BlockState state, boolean isOpening) {
-        this.world.setBlockState(this.getPos(), state.with(CrateBlock.PROPERTY_OPEN, isOpening), 3);
+    private void setCrateState(BlockState state) {
+        if (this.world != null) {
+            this.world.setBlockState(this.getPos(), state.with(CrateBlock.PROPERTY_OPEN, false), 3);
+        }
     }
 
-    public float checkCrateShape(BlockState state) {
+    private float checkCrateShape(BlockState state) {
         CrateType type = state.get(CrateBlock.INDEX).getType();
         if (type == CrateType.DOUBLE_X || type == CrateType.DOUBLE_Y || type == CrateType.DOUBLE_Z)
             return 0.8F;
@@ -256,9 +275,11 @@ public class CrateTileEntity extends TileEntity {
     }
 
     private void playSound(BlockState state, SoundEvent p_213965_2_) {
-        double d0 = (double)this.pos.getX() + 0.5D;
-        double d1 = (double)this.pos.getY() + 0.5D;
-        double d2 = (double)this.pos.getZ() + 0.5D;
-        this.world.playSound(null, d0, d1, d2, p_213965_2_, SoundCategory.BLOCKS, 0.65F, this.world.rand.nextFloat() * 0.1F + checkCrateShape(state));
+        if (this.world != null) {
+            double d0 = (double) this.pos.getX() + 0.5D;
+            double d1 = (double) this.pos.getY() + 0.5D;
+            double d2 = (double) this.pos.getZ() + 0.5D;
+            this.world.playSound(null, d0, d1, d2, p_213965_2_, SoundCategory.BLOCKS, 0.65F, this.world.rand.nextFloat() * 0.1F + checkCrateShape(state));
+        }
     }
 }
