@@ -5,12 +5,17 @@ import com.vulp.druidcraft.api.CrateType;
 import com.vulp.druidcraft.blocks.CrateBlock;
 import com.vulp.druidcraft.inventory.container.CrateContainer;
 import com.vulp.druidcraft.registry.BlockRegistry;
+import com.vulp.druidcraft.registry.GUIRegistry;
 import com.vulp.druidcraft.registry.SoundEventRegistry;
 import com.vulp.druidcraft.registry.TileEntityRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.*;
@@ -21,11 +26,13 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
@@ -35,22 +42,19 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class CrateTileEntity extends TileEntity {
+public class CrateTileEntity extends TileEntity implements INamedContainerProvider {
     private ItemStackHandler inventory = new ItemStackHandler(27);
     private ArrayList<BlockPos> neighbors;
     @SuppressWarnings("FieldCanBeLocal")
     private int numPlayersUsing;
     private LazyOptional<IItemHandlerModifiable> crateHandler;
     private UUID crateId;
+    private ITextComponent displayName;
 
     public CrateTileEntity() {
         super(TileEntityRegistry.crate);
         this.crateId = UUID.randomUUID();
     }
-
-/*    private List<BlockPos> getNeighbors() {
-        return this.neighbors;
-    }*/
 
     @Nonnull
     @Override
@@ -106,7 +110,7 @@ public class CrateTileEntity extends TileEntity {
         int j = this.pos.getY();
         int k = this.pos.getZ();
         BlockState blockState = world.getBlockState(new BlockPos(i, j, k));
-        this.numPlayersUsing = calculatePlayersUsing(this.world, i, j, k); //(blockState.get(CrateBlock.INDEX).getType() == CrateType.QUAD_X || blockState.get(CrateBlock.INDEX).getType() == CrateType.QUAD_Y || blockState.get(CrateBlock.INDEX).getType() == CrateType.QUAD_Z || blockState.get(CrateBlock.INDEX).getType() == CrateType.OCTO));
+        this.numPlayersUsing = calculatePlayersUsing(this.world, i, j, k);
         if (this.numPlayersUsing > 0) {
             this.scheduleTick();
         } else {
@@ -121,7 +125,7 @@ public class CrateTileEntity extends TileEntity {
                 if (blockState.get(CrateBlock.INDEX).isParent()) {
                     this.playSound(blockState, SoundEventRegistry.close_crate);
                 }
-                this.setCrateState(blockstate);
+                this.setCrateState(blockstate, true);
             }
         }
 
@@ -155,7 +159,6 @@ public class CrateTileEntity extends TileEntity {
         return i;
     }
 
-/*    @Override
     public void openInventory(PlayerEntity player) {
         if (!player.isSpectator()) {
             if (this.numPlayersUsing < 0) {
@@ -175,7 +178,7 @@ public class CrateTileEntity extends TileEntity {
             this.scheduleTick();
         }
 
-    }*/
+    }
 
     private void scheduleTick() {
         if (this.world != null) {
@@ -250,16 +253,15 @@ public class CrateTileEntity extends TileEntity {
             crateHandler.invalidate();
     }
 
-/*    @Override
     public void closeInventory(PlayerEntity player) {
         if (!player.isSpectator()) {
             --this.numPlayersUsing;
         }
-    }*/
+    }
 
-    private void setCrateState(BlockState state) {
+    private void setCrateState(BlockState state, boolean open) {
         if (this.world != null) {
-            this.world.setBlockState(this.getPos(), state.with(CrateBlock.PROPERTY_OPEN, false), 3);
+            this.world.setBlockState(this.getPos(), state.with(CrateBlock.PROPERTY_OPEN, open), 3);
         }
     }
 
@@ -281,5 +283,38 @@ public class CrateTileEntity extends TileEntity {
             double d2 = (double) this.pos.getZ() + 0.5D;
             this.world.playSound(null, d0, d1, d2, p_213965_2_, SoundCategory.BLOCKS, 0.65F, this.world.rand.nextFloat() * 0.1F + checkCrateShape(state));
         }
+    }
+
+    // TODO: Some custom name shenanigans
+    public void setDisplayName (ITextComponent name) {
+        this.displayName = name;
+    }
+
+    @Override
+    public ITextComponent getDisplayName() {
+        return displayName;
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+        IItemHandler inventory = getFullInventory();
+        ContainerType<?> type;
+        switch (inventory.getSlots() / 9) {
+            default:
+            case 3:
+                type = GUIRegistry.generic_9X3;
+                break;
+            case 6:
+                type = GUIRegistry.generic_9X6;
+                break;
+            case 12:
+                type = GUIRegistry.generic_9X12;
+                break;
+            case 24:
+                type = GUIRegistry.generic_9X24;
+                break;
+        }
+        return new CrateContainer(type, i, playerInventory, inventory, inventory.getSlots() / 9, this);
     }
 }

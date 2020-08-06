@@ -462,6 +462,8 @@ public class DruidcraftRegistry {
         ContainerRegistryEvent.getRegistry().registerAll
                 (
                         GUIRegistry.beetle_inv,
+                        GUIRegistry.generic_9X3,
+                        GUIRegistry.generic_9X6,
                         GUIRegistry.generic_9X12,
                         GUIRegistry.generic_9X24,
                         GUIRegistry.woodcutter,
