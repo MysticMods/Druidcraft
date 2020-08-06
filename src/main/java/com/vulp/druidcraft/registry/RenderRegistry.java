@@ -96,6 +96,8 @@ public class RenderRegistry
 
         // SCREENS
         ScreenManager.registerFactory(GUIRegistry.beetle_inv, BeetleInventoryScreen::new);
+        ScreenManager.registerFactory(GUIRegistry.generic_9X3, SingleCrateScreen::new);
+        ScreenManager.registerFactory(GUIRegistry.generic_9X6, DoubleCrateScreen::new);
         ScreenManager.registerFactory(GUIRegistry.generic_9X12, QuadCrateScreen::new);
         ScreenManager.registerFactory(GUIRegistry.generic_9X24, OctoCrateScreen::new);
         ScreenManager.registerFactory(GUIRegistry.woodcutter, WoodcutterScreen::new);
