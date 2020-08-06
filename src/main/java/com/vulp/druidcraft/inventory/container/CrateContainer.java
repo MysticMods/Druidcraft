@@ -25,6 +25,10 @@ public class CrateContainer extends Container {
         this(type, id, player, new ItemStackHandler(9 * rows), rows, null);
     }
 
+    public CrateTileEntity getCrate() {
+        return crate;
+    }
+
     public static CrateContainer createGeneric9X3(int id, PlayerInventory player) {
         return new CrateContainer(GUIRegistry.generic_9X3, id, player, 3);
     }
@@ -56,37 +60,26 @@ public class CrateContainer extends Container {
         }
         int i1;
         int j1;
+        int playerInventoryStart = numRows * 18;
 
-        if (rows == 3) {
-            for (int j = 0; j < 9; ++j) {
-                for (int k = 0; k < 3; ++k) {
-                    this.addSlot(new SlotItemHandler(inventory, k + j * 12, 8 + k * 18, 18 + j * 18));
+        if (rows == 3 || rows == 6) {
+            for (int i = 0; i < numRows; i++) {
+                for (int j = 0; j < 9; j++) {
+                    addSlot(new SlotItemHandler(inventory, j + i * 9, 8 + j * 18, 18 + i * 18));
                 }
             }
-            for (i1 = 0; i1 < 3; ++i1) {
-                for (j1 = 0; j1 < 9; ++j1) {
-                    this.addSlot(new Slot(playerInventoryIn, j1 + i1 * 9 + 9, 35 + j1 * 18, 194 + i1 * 18));
+
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 9; j++) {
+                    addSlot(new Slot(playerInventoryIn, j + i * 9 + 9, 8 + j * 18, 31 + i * 18 + playerInventoryStart));
                 }
             }
-            for (i1 = 0; i1 < 9; ++i1) {
-                this.addSlot(new Slot(playerInventoryIn, i1, 35 + i1 * 18, 252));
+
+            for (int i = 0; i < 9; i++) {
+                addSlot(new Slot(playerInventoryIn, i, 8 + i * 18, 89 + playerInventoryStart));
             }
         }
-        if (rows == 6) {
-            for (int j = 0; j < 9; ++j) {
-                for (int k = 0; k < 6; ++k) {
-                    this.addSlot(new SlotItemHandler(inventory, k + j * 12, 8 + k * 18, 18 + j * 18));
-                }
-            }
-            for (i1 = 0; i1 < 3; ++i1) {
-                for (j1 = 0; j1 < 9; ++j1) {
-                    this.addSlot(new Slot(playerInventoryIn, j1 + i1 * 9 + 9, 35 + j1 * 18, 194 + i1 * 18));
-                }
-            }
-            for (i1 = 0; i1 < 9; ++i1) {
-                this.addSlot(new Slot(playerInventoryIn, i1, 35 + i1 * 18, 252));
-            }
-        }
+
         if (rows == 12) {
             for (int j = 0; j < 9; ++j) {
                 for (int k = 0; k < 12; ++k) {

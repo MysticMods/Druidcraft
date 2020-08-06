@@ -524,8 +524,8 @@ public class DruidcraftRegistry {
             event.addSprite(ItemTileEntityRenderer.chitin_shield_tex);
             event.addSprite(ItemTileEntityRenderer.moonstone_shield_tex);
             event.addSprite(SmallBeamTileEntityRenderer.texture);
+            LOGGER.info("Textures stitched.");
         }
-        LOGGER.info("Textures stitched.");
     }
 
     public static ResourceLocation location(String name)

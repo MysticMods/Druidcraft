@@ -27,6 +27,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
@@ -90,17 +91,6 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
         }
     }
 
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        if (this.neighbors == null && this.world != null) {
-            this.neighbors = CrateBlock.getBlockPositions(world, pos);
-            for (BlockPos neighbor : this.neighbors) {
-                Druidcraft.LOGGER.debug("onLoad() : " + neighbor);
-            }
-        }
-    }
-
     public void crateTick() {
         if (this.world == null) {
             return;
@@ -125,10 +115,13 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
                 if (blockState.get(CrateBlock.INDEX).isParent()) {
                     this.playSound(blockState, SoundEventRegistry.close_crate);
                 }
-                this.setCrateState(blockstate, true);
+                this.setCrateState(blockstate, false);
             }
         }
 
+        if (this.neighbors == null) {
+            this.neighbors = CrateBlock.getBlockPositions(world, this.getPos());
+        }
         for (BlockPos neighbor : this.neighbors) {
             Druidcraft.LOGGER.debug("crateTick() : " + neighbor);
         }
@@ -140,20 +133,23 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
         int i = 0;
         float f = 6.0F;
 
-        Set<UUID> inventoryIds = null; //getInventoryIds();
+        Set<UUID> inventoryIds = new HashSet<>();
+        CrateBlock.getBlockPositions(world, new BlockPos(posX, posY, posZ)).forEach(o -> {
+            TileEntity te = world.getTileEntity(o);
+            if (te instanceof CrateTileEntity) {
+                inventoryIds.add(((CrateTileEntity) te).getCrateId());
+            }
+        });
         for(PlayerEntity playerentity : world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB((double)((float)posX - f), (double)((float)posY - f), (double)((float)posZ - f), (double)((float)(posX + 1) + f), (double)((float)(posY + 1) + f), (double)((float)(posZ + 1) + f)))) {
             if (playerentity.openContainer instanceof CrateContainer) {
                 CrateContainer crate = (CrateContainer) playerentity.openContainer;
-/*                if (inventoryIds.contains(crate.getCrateId())) {
-                    i++;
-                }*/
-            }
-/*            if (playerentity.openContainer instanceof ChestContainer && !isQuadOrOcto) {
-                IInventory iinventory = ((ChestContainer)playerentity.openContainer).getLowerChestInventory();
-                if (iinventory == lockableTileEntity || iinventory instanceof DoubleSidedInventory && ((DoubleSidedInventory)iinventory).isPartOfLargeChest(lockableTileEntity)) {
-                    ++i;
+                CrateTileEntity tile = crate.getCrate();
+                if (tile != null) {
+                    if (inventoryIds.contains(tile.getCrateId())) {
+                        i++;
+                    }
                 }
-            }*/
+            }
         }
 
         return i;
@@ -221,6 +217,10 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
             return inventory;
         }
 
+        this.neighbors = CrateBlock.getBlockPositions(world, pos);
+        for (BlockPos neighbor : this.neighbors) {
+            Druidcraft.LOGGER.debug("onLoad() : " + neighbor);
+        }
         int size = neighbors.size();
         List<TileEntity> tiles;
         if (size == 2 || size == 4 || size == 8) {
@@ -292,7 +292,7 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
 
     @Override
     public ITextComponent getDisplayName() {
-        return displayName;
+        return displayName == null ? new TranslationTextComponent("block.druidcraft.crate") : displayName;
     }
 
     @Nullable
@@ -300,7 +300,8 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
     public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         IItemHandler inventory = getFullInventory();
         ContainerType<?> type;
-        switch (inventory.getSlots() / 9) {
+        int numRows = inventory.getSlots() / 9;
+        switch (numRows) {
             default:
             case 3:
                 type = GUIRegistry.generic_9X3;
@@ -315,6 +316,6 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
                 type = GUIRegistry.generic_9X24;
                 break;
         }
-        return new CrateContainer(type, i, playerInventory, inventory, inventory.getSlots() / 9, this);
+        return new CrateContainer(type, i, playerInventory, inventory, numRows, this);
     }
 }

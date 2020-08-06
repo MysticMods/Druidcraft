@@ -14,6 +14,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
@@ -41,6 +42,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -69,16 +71,13 @@ public class CrateBlock extends ContainerBlock {
     if (item == ItemRegistry.crate) {
       return ActionResultType.PASS;
     }
-    if (worldIn.isRemote) {
-      return ActionResultType.SUCCESS;
-    } else {
-      // TODO: What is this
-/*      INamedContainerProvider inamedcontainerprovider = this.getContainer(state, worldIn, pos);
-      if (inamedcontainerprovider != null) {
-        player.openContainer(inamedcontainerprovider);
-      }*/
-      return ActionResultType.SUCCESS;
+    TileEntity te = worldIn.getTileEntity(pos);
+    if (te instanceof CrateTileEntity) {
+        if (!worldIn.isRemote) {
+          NetworkHooks.openGui((ServerPlayerEntity) player, (CrateTileEntity) te, pos);
+        }
     }
+    return ActionResultType.SUCCESS;
   }
 
   private ArrayList<BlockPos> checkForCrates(World world, BlockPos pos) {
@@ -1203,10 +1202,9 @@ public class CrateBlock extends ContainerBlock {
     }
     if (stack.hasDisplayName()) {
       TileEntity tileentity = world.getTileEntity(pos);
-      //if (tileentity instanceof CrateTileEntity) {
-        // TODO:
-        //((CrateTileEntity) tileentity).setCustomName(stack.getDisplayName());
-      //}
+      if (tileentity instanceof CrateTileEntity) {
+        ((CrateTileEntity) tileentity).setDisplayName(stack.getDisplayName());
+      }
     }
 
   }
