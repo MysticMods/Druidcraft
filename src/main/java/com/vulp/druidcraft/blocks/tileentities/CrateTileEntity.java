@@ -25,7 +25,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -45,10 +44,8 @@ import java.util.stream.Collectors;
 
 public class CrateTileEntity extends TileEntity implements INamedContainerProvider {
     private ItemStackHandler inventory = new ItemStackHandler(27);
-    private ArrayList<BlockPos> neighbors;
     @SuppressWarnings("FieldCanBeLocal")
     private int numPlayersUsing;
-    private LazyOptional<IItemHandlerModifiable> crateHandler;
     private UUID crateId;
     private ITextComponent displayName;
 
@@ -61,9 +58,9 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
     @Override
     public CompoundNBT write(@Nonnull CompoundNBT compound) {
         compound = super.write(compound);
-        compound.putIntArray("CoordX", this.neighbors.stream().map(Vec3i::getX).collect(Collectors.toList()));
+/*        compound.putIntArray("CoordX", this.neighbors.stream().map(Vec3i::getX).collect(Collectors.toList()));
         compound.putIntArray("CoordY", this.neighbors.stream().map(Vec3i::getY).collect(Collectors.toList()));
-        compound.putIntArray("CoordZ", this.neighbors.stream().map(Vec3i::getZ).collect(Collectors.toList()));
+        compound.putIntArray("CoordZ", this.neighbors.stream().map(Vec3i::getZ).collect(Collectors.toList()));*/
         compound.put("inventory", inventory.serializeNBT());
         compound.putUniqueId("uuid", crateId);
 
@@ -73,10 +70,10 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
     @Override
     public void read(@Nonnull CompoundNBT compound) {
         super.read(compound);
-        this.neighbors = new ArrayList<>();
+/*        this.neighbors = new ArrayList<>();
         for (int i = 0; i < compound.getIntArray("CoordX").length; i++) {
             this.neighbors.add(new BlockPos(compound.getIntArray("CoordX")[i], compound.getIntArray("CoordY")[i], compound.getIntArray("CoordZ")[i]));
-        }
+        }*/
         if (compound.contains("Items", Constants.NBT.TAG_COMPOUND)) {
             NonNullList<ItemStack> items = NonNullList.withSize(27, ItemStack.EMPTY);
             ItemStackHelper.loadAllItems(compound, items);
@@ -118,18 +115,9 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
                 this.setCrateState(blockstate, false);
             }
         }
-
-        if (this.neighbors == null) {
-            this.neighbors = CrateBlock.getBlockPositions(world, this.getPos());
-        }
-        for (BlockPos neighbor : this.neighbors) {
-            Druidcraft.LOGGER.debug("crateTick() : " + neighbor);
-        }
-
     }
 
-    @Deprecated
-    public static int calculatePlayersUsing(World world, int posX, int posY, int posZ) {
+    private static int calculatePlayersUsing(World world, int posX, int posY, int posZ) {
         int i = 0;
         float f = 6.0F;
 
@@ -184,24 +172,11 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
         }
     }
 
-    @Override
-    public void updateContainingBlockInfo() {
-        super.updateContainingBlockInfo();
-        if (this.crateHandler != null) {
-            // TODO: Invalidate after crate formation change
-            this.crateHandler.invalidate();
-/*            this.crateHandler = null;*/
-        }
-    }
-
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            if (this.crateHandler == null) {
-                this.crateHandler = LazyOptional.of(this::getFullInventory);
-            }
-            return this.crateHandler.cast();
+            return LazyOptional.of(this::getFullInventory).cast();
         }
         return super.getCapability(cap, side);
     }
@@ -217,10 +192,7 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
             return inventory;
         }
 
-        this.neighbors = CrateBlock.getBlockPositions(world, pos);
-        for (BlockPos neighbor : this.neighbors) {
-            Druidcraft.LOGGER.debug("onLoad() : " + neighbor);
-        }
+        ArrayList<BlockPos> neighbors = CrateBlock.getBlockPositions(world, pos);
         int size = neighbors.size();
         List<TileEntity> tiles;
         if (size == 2 || size == 4 || size == 8) {
@@ -240,17 +212,8 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
         return new CombinedInvWrapper(handlers);
     }
 
-    // TODO: Remove annotation
-    @SuppressWarnings("WeakerAccess")
-    public UUID getCrateId () {
+    private UUID getCrateId() {
         return crateId;
-    }
-
-    @Override
-    public void remove() {
-        super.remove();
-        if (crateHandler != null)
-            crateHandler.invalidate();
     }
 
     public void closeInventory(PlayerEntity player) {
@@ -285,7 +248,6 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
         }
     }
 
-    // TODO: Some custom name shenanigans
     public void setDisplayName (ITextComponent name) {
         this.displayName = name;
     }

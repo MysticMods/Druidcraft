@@ -8,6 +8,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.IItemHandler;
@@ -164,8 +165,12 @@ public class CrateContainer extends Container {
      */
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        // TODO: Check distance
-        return true;
+        if (this.crate.isRemoved()) {
+            return false;
+        } else {
+            BlockPos pos = this.crate.getPos();
+            return playerIn.getDistanceSq(pos.getX(), pos.getY(), pos.getZ()) <= 64.0D;
+        }
     }
 
    private static void assertIItemHandlerSize(IItemHandler inventoryIn, int minSize) {

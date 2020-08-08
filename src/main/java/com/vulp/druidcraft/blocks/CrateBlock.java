@@ -6,6 +6,7 @@ import com.vulp.druidcraft.api.CrateIndex;
 import com.vulp.druidcraft.api.CrateType;
 import com.vulp.druidcraft.blocks.tileentities.CrateTileEntity;
 import com.vulp.druidcraft.registry.ItemRegistry;
+import com.vulp.druidcraft.util.ItemUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -43,6 +44,8 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -806,7 +809,6 @@ public class CrateBlock extends ContainerBlock {
     return true;
   }
 
-  // TODO: Convert to varargs(?)
   private boolean checkCrateBlocks(World world, BlockPos... positions) {
     for (BlockPos pos : positions) {
       if (!(world.getBlockState(pos).getBlock() instanceof CrateBlock)) {
@@ -942,8 +944,15 @@ public class CrateBlock extends ContainerBlock {
   public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
       TileEntity tileentity = worldIn.getTileEntity(pos);
-      if (tileentity instanceof IInventory) {
-        InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory) tileentity);
+      if (tileentity instanceof CrateTileEntity) {
+        IItemHandler inventory = ((CrateTileEntity) tileentity).getInventory();
+        for (int i = 0; i < inventory.getSlots(); i++) {
+          ItemStack stack = inventory.getStackInSlot(i);
+          if (stack.isEmpty()) {
+            continue;
+          }
+          InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack);
+        }
         worldIn.updateComparatorOutputLevel(pos, this);
       }
 
@@ -957,30 +966,12 @@ public class CrateBlock extends ContainerBlock {
   @Deprecated
   public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
     return null;
-    // return getCrateInventory(worldIn, pos, guiFactory);
   }
 
   @Override
   public TileEntity createNewTileEntity(IBlockReader worldIn) {
     return new CrateTileEntity();
   }
-
-/*    private static boolean isBlocked(IWorld world, BlockPos pos) {
-        return isCatSittingOn(world, pos);
-    }*/
-
-/*    private static boolean isCatSittingOn(IWorld world, BlockPos pos) {
-        List<CatEntity> list = world.getEntitiesWithinAABB(CatEntity.class, new AxisAlignedBB((double)pos.getX(), (double)(pos.getY() + 1), (double)pos.getZ(), (double)(pos.getX() + 1), (double)(pos.getY() + 2), (double)(pos.getZ() + 1)));
-        if (!list.isEmpty()) {
-            for(CatEntity catentity : list) {
-                if (catentity.isSitting()) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }*/
 
   @Override
   public BlockRenderType getRenderType(BlockState state) {
@@ -996,15 +987,21 @@ public class CrateBlock extends ContainerBlock {
   @SuppressWarnings("deprecation")
   @Override
   public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
-    // TODO
-    //return Container.calcRedstoneFromInventory(getInventory(worldIn, pos));
+    TileEntity te = worldIn.getTileEntity(pos);
+    if (te instanceof CrateTileEntity) {
+      IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).orElse(null);
+      if (handler == null) {
+        return 0;
+      }
+      return ItemUtil.calcRedstoneFromItemHandler(handler);
+    }
     return 0;
   }
 
   private ArrayList<Boolean> checkMissingCrates(World world, ArrayList<BlockPos> neighborList) {
     ArrayList<Boolean> missingList = new ArrayList<>();
-    for (int i = 0; i < neighborList.size(); i++) {
-      missingList.add(world.getBlockState(neighborList.get(i)).getBlock() instanceof CrateBlock);
+    for (BlockPos blockPos : neighborList) {
+      missingList.add(world.getBlockState(blockPos).getBlock() instanceof CrateBlock);
     }
     return missingList;
   }
