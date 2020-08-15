@@ -74,7 +74,7 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
         for (int i = 0; i < compound.getIntArray("CoordX").length; i++) {
             this.neighbors.add(new BlockPos(compound.getIntArray("CoordX")[i], compound.getIntArray("CoordY")[i], compound.getIntArray("CoordZ")[i]));
         }*/
-        if (compound.contains("Items", Constants.NBT.TAG_COMPOUND)) {
+        if (compound.contains("Items", Constants.NBT.TAG_LIST)) {
             NonNullList<ItemStack> items = NonNullList.withSize(27, ItemStack.EMPTY);
             ItemStackHelper.loadAllItems(compound, items);
             this.inventory = new ItemStackHandler(items);
