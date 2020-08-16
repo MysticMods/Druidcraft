@@ -66,11 +66,11 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
         super.registerGoals();
         this.sitGoal = new SitGoalMonster(this);
         this.goalSelector.addGoal(1, this.sitGoal);
-        this.goalSelector.addGoal(2, new ConditionalRangedAttackGoal(this, 1.5D, 20.0F));
-        this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 3.0D, true));
-        this.goalSelector.addGoal(4, new FollowOwnerGoalMonster(this, 2.0D, 5.0F, 1.0F));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomFlyingGoal(this, 1.0D));
-        this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+        // this.goalSelector.addGoal(2, new ConditionalRangedAttackGoal(this, 1.5D, 20.0F));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 3.0D, true));
+        this.goalSelector.addGoal(3, new FollowOwnerGoalMonster(this, 2.0D, 5.0F, 1.0F));
+        this.goalSelector.addGoal(4, new WaterAvoidingRandomFlyingGoal(this, 1.0D));
+        this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoalMonster(this));
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoalMonster(this));

@@ -7,12 +7,20 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -22,6 +30,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -32,6 +41,7 @@ import java.util.Random;
 public class LunarMothJarBlock extends RopeableLanternBlock {
 
     public static IntegerProperty COLOR = IntegerProperty.create("color", 1, 6);
+    public static IntegerProperty FULLNESS = IntegerProperty.create("fullness", 0, 3);
 
     public LunarMothJarBlock(Block.Properties properties, int mothColor) {
         super(properties);
@@ -50,13 +60,43 @@ public class LunarMothJarBlock extends RopeableLanternBlock {
     }
 
     @Override
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
+        if (!isFull(state) && rand.nextInt(20) == 0) {
+            world.setBlockState(pos, state.with(FULLNESS, state.get(FULLNESS) + 1));
+        }
+        super.randomTick(state, world, pos, rand);
+    }
+
+    public boolean isFull(BlockState state) {
+        return state.get(FULLNESS) > 2;
+    }
+
+    @Override
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult) {
+        if (state.get(FULLNESS) > 0) {
+            spawnAsEntity(world, pos, new ItemStack(Items.GLOWSTONE_DUST, state.get(FULLNESS)));
+            world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1.0F, 0.8F + world.rand.nextFloat() * 0.4F);
+            world.setBlockState(pos, state.with(FULLNESS, 0), 2);
+            return ActionResultType.SUCCESS;
+        } else {
+            return super.onBlockActivated(state, world, pos, player, hand, blockRayTraceResult);
+        }
+    }
+
+    @Override
+    public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity entity) {
+        spawnAsEntity(world, pos, new ItemStack(Items.GLOWSTONE_DUST, state.get(FULLNESS)));
+        super.onBlockHarvested(world, pos, state, entity);
+    }
+
+    @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(HANGING, ROPED, WATERLOGGED, COLOR);
+        builder.add(HANGING, ROPED, WATERLOGGED, COLOR, FULLNESS);
     }
 
     public int[] colorLib(BlockState stateIn, Random rand) {
@@ -142,7 +182,7 @@ public class LunarMothJarBlock extends RopeableLanternBlock {
             case LIME:
                 return TextFormatting.GREEN;
             case PINK:
-                return TextFormatting.RED;
+                return TextFormatting.LIGHT_PURPLE;
             case YELLOW:
                 return TextFormatting.YELLOW;
             default:

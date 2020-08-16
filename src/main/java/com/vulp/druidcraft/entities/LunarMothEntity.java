@@ -60,13 +60,13 @@ public class LunarMothEntity extends AnimalEntity {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.fromItems(Items.TORCH, Items.REDSTONE_TORCH, Items.LANTERN, ItemRegistry.fiery_torch, ItemRegistry.ceramic_lantern, ItemRegistry.growth_lamp), false));
-        this.goalSelector.addGoal(5, new FollowParentLunarMothGoal(this, 1.25D));
+        this.goalSelector.addGoal(1, new BreedGoal(this, 1.0D));
+        this.goalSelector.addGoal(2, new TemptGoal(this, 1.25D, Ingredient.fromItems(Items.TORCH, Items.REDSTONE_TORCH, Items.LANTERN, ItemRegistry.fiery_torch, ItemRegistry.ceramic_lantern, ItemRegistry.growth_lamp), false));
+        this.goalSelector.addGoal(3, new FollowParentLunarMothGoal(this, 1.25D));
 /*        this.goalSelector.addGoal(5, new RestGoal(this));
         this.goalSelector.addGoal(5, new HoverAtLight(this));*/
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomFlyingGoal(this, 1.0D));
-        this.goalSelector.addGoal(9, new SwimGoal(this));
+        this.goalSelector.addGoal(4, new WaterAvoidingRandomFlyingGoal(this, 1.0D));
+        this.goalSelector.addGoal(5, new SwimGoal(this));
     }
 
     @Override
@@ -101,6 +101,10 @@ public class LunarMothEntity extends AnimalEntity {
         this.dataManager.set(IDLING, direction);
     }
 
+    public boolean isBreedingItem(ItemStack itemStack) {
+        return Ingredient.fromItems(Items.SUGAR).test(itemStack);
+    }
+
     @Override
     public boolean processInteract(PlayerEntity player, Hand hand) {
         ItemStack itemstack = player.getHeldItem(hand);
@@ -132,16 +136,7 @@ public class LunarMothEntity extends AnimalEntity {
         return LunarMothColors.colorArray().get(this.dataManager.get(COLOR));
     }
 
-    @Override
-    public void tick() {
-        super.tick();
-        if (this.isResting()) {
-            this.setMotion(Vec3d.ZERO);
-        } else {
-            this.setMotion(this.getMotion().mul(1.0D, 0.6D, 1.0D));
-        }
 
-    }
 
     @Override
     protected void updateAITasks() {
@@ -309,6 +304,12 @@ public class LunarMothEntity extends AnimalEntity {
                 world.addParticle(ParticleRegistry.magic_glitter, false, this.getPosX() + (((rand.nextDouble() - 0.5)) / 3), this.getPosY() + ((rand.nextDouble() - 0.5) / 3) + 0.2, this.getPosZ() + (((rand.nextDouble() - 0.5)) / 3), (red / 255.f) * colorMod, (green / 255.f) * colorMod, (blue / 255.f) * colorMod);
             }
         }
+
+        if (this.isSleeping() || this.isMovementBlocked()) {
+            this.moveStrafing = 0.0F;
+            this.moveForward = 0.0F;
+        }
+
     }
 
     @Override

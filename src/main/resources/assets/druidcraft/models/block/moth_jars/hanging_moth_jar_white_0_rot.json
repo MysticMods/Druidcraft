@@ -1,0 +1,132 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "druidcraft:block/jar",
+		"1": "druidcraft:block/jar_moth_white_1inv",
+		"2": "druidcraft:block/jar_moth_white_1",
+		"particle": "druidcraft:block/jar"
+	},
+	"elements": [
+		{
+			"name": "moth_right",
+			"from": [4.5, 1.5, 11.5],
+			"to": [11.5, 8.5, 11.5],
+			"shade": false,
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 7, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 7, 7], "texture": "#1"},
+				"south": {"uv": [9, 0, 16, 7], "texture": "#2"}
+			}
+		},
+		{
+			"name": "moth_left",
+			"from": [4.5, 1.5, 4.5],
+			"to": [11.5, 8.5, 4.5],
+			"shade": false,
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 7, 8]},
+			"faces": {
+				"north": {"uv": [9, 9, 16, 16], "texture": "#2"},
+				"south": {"uv": [0, 9, 7, 16], "texture": "#1"}
+			}
+		},
+		{
+			"name": "moth_back",
+			"from": [11.5, 1.5, 4.5],
+			"to": [11.5, 8.5, 11.5],
+			"shade": false,
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 7, 8]},
+			"faces": {
+				"east": {"uv": [0, 9, 7, 16], "texture": "#2"},
+				"west": {"uv": [9, 9, 16, 16], "texture": "#1"}
+			}
+		},
+		{
+			"name": "moth_front",
+			"from": [4.5, 1.5, 4.5],
+			"to": [4.5, 8.5, 11.5],
+			"shade": false,
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 7, 8]},
+			"faces": {
+				"east": {"uv": [9, 0, 16, 7], "texture": "#1"},
+				"west": {"uv": [0, 0, 7, 7], "texture": "#2"}
+			}
+		},
+		{
+			"name": "jar",
+			"from": [4, 1, 4],
+			"to": [12, 9, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 7, 8]},
+			"faces": {
+				"north": {"uv": [8, 8, 16, 16], "texture": "#0"},
+				"east": {"uv": [0, 8, 8, 16], "texture": "#0"},
+				"south": {"uv": [8, 8, 16, 16], "texture": "#0"},
+				"west": {"uv": [0, 8, 8, 16], "texture": "#0"},
+				"up": {"uv": [8, 8, 16, 16], "rotation": 270, "texture": "#0"},
+				"down": {"uv": [8, 8, 16, 16], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"name": "lid",
+			"from": [5, 8, 5],
+			"to": [11, 11, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 7, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 6, 3], "texture": "#0"},
+				"east": {"uv": [0, 0, 6, 3], "texture": "#0"},
+				"south": {"uv": [0, 0, 6, 3], "texture": "#0"},
+				"west": {"uv": [0, 0, 6, 3], "texture": "#0"},
+				"up": {"uv": [0, 2, 6, 8], "rotation": 270, "texture": "#0"},
+				"down": {"uv": [0, 2, 6, 8], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"name": "handle",
+			"from": [8, 9, 2.8],
+			"to": [8, 14, 13.2],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 7, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 5], "texture": "#0"},
+				"east": {"uv": [6, 0, 16, 5], "texture": "#0"},
+				"south": {"uv": [0, 0, 0, 5], "texture": "#0"},
+				"west": {"uv": [6, 0, 16, 5], "texture": "#0"},
+				"up": {"uv": [0, 0, 0, 5], "texture": "#0"},
+				"down": {"uv": [0, 0, 0, 5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "hook",
+			"from": [6, 12, 8],
+			"to": [10, 15, 8],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 7, 8]},
+			"faces": {
+				"north": {"uv": [6, 5, 10, 8], "texture": "#0"},
+				"east": {"uv": [0, 0, 0, 4], "texture": "#0"},
+				"south": {"uv": [6, 5, 10, 8], "texture": "#0"},
+				"west": {"uv": [0, 0, 0, 4], "texture": "#0"},
+				"up": {"uv": [0, 0, 0, 5], "rotation": 270, "texture": "#0"},
+				"down": {"uv": [0, 0, 0, 5], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"name": "fixture",
+			"from": [6, 15, 6],
+			"to": [10, 16, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 7, 8]},
+			"faces": {
+				"north": {"uv": [10, 4, 14, 5], "texture": "#0"},
+				"east": {"uv": [10, 7, 14, 8], "texture": "#0"},
+				"south": {"uv": [10, 4, 14, 5], "texture": "#0"},
+				"west": {"uv": [10, 7, 14, 8], "texture": "#0"},
+				"up": {"uv": [10, 4, 14, 8], "rotation": 270, "texture": "#0"},
+				"down": {"uv": [10, 4, 14, 8], "rotation": 180, "texture": "#0"}
+			}
+		}
+	],
+	"groups": [0, 1, 2, 3, 4, 5,
+		{
+			"name": "hanging_jar",
+			"origin": [8, 8, 8],
+			"children": [6, 7, 8]
+		}
+	]
+}
