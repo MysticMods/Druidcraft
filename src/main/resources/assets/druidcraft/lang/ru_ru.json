@@ -42,6 +42,7 @@
   "item.druidcraft.bone_boots": "Костяные ботинки",
   "item.druidcraft.bone_shield": "Костяной щит",
 
+  
   "item.druidcraft.knife": "Нож",
   "item.druidcraft.knife.description1": "Используется для настройки веревочных блоков. (работа в процессе)",
   "block.druidcraft.turquoise_lunar_moth_lantern": "Баночка с бирюзовым лунным мотыльком",
@@ -60,7 +61,7 @@
 
   "item.druidcraft.blueberries": "Черника",
   "item.druidcraft.elderberries": "Бузиновые ягоды",
-  "item.druidcraft.apple_elderberry_crumble": "Яблочно-бузиновая запиканка",
+  "item.druidcraft.apple_elderberry_crumble": "Яблочно-бузиновая запеканка",
   "item.druidcraft.blueberry_muffin": "Черничный кекс",
   "item.druidcraft.elderflower": "Бузина",
   "item.druidcraft.elderflower_cordial": "Бузиновый ликёр",
@@ -201,8 +202,9 @@
   "block.druidcraft.bedroll.fail.time": "Вы можете спать только ночью и во время грозы",
   "block.druidcraft.bedroll.fail.placement": "Здесь нельзя разместить спальный мешок",
   "block.druidcraft.woodcutter": "Лесопилка",
-  "block.druidcraft.debug_block": "Debug block",
-  "block.druidcraft.debug_block.description1": "Developer block, may cause problems for your game.",
+  "block.druidcraft.debug_block": "Блок отладки",
+  "block.druidcraft.debug_block.description1": "Блок разработчика, может вызвать проблемы для вашей игры.",
+  "block.druidcraft.elder_leaf_layer": "Гниющий плод бузины",
 
   "entity.druidcraft.dreadfish": "Ужасающая рыба",
   "entity.druidcraft.beetle": "Жук",
@@ -240,6 +242,6 @@
   "advancements.druidcraft.collector.title": "Коллекционер",
   "advancements.druidcraft.collector.description": "Соберите лунный камень, пламенное стекло, камне-корень и янтарный блок",
   
-  "block.druidcraft.old_crate.update": "This block has been updated. Break to get the updated block."
+  "block.druidcraft.old_crate.update": "Этот блок обновлен. Разбейте, чтобы получить обновленный блок."
 
 }
