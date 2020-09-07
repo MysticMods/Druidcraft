@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.blocks.tileentities;
 
+import com.google.common.collect.Sets;
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.api.CrateType;
 import com.vulp.druidcraft.blocks.CrateBlock;
@@ -48,19 +49,38 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
     private int numPlayersUsing;
     private UUID crateId;
     private ITextComponent displayName;
+    private LazyOptional<IItemHandler> empty = null;
+    private LazyOptional<IItemHandler> combined = null;
+    private Set<BlockPos> combinedArray = null;
+
+    private LazyOptional<IItemHandler> getEmpty () {
+        if (empty == null || !empty.isPresent()) {
+            empty = LazyOptional.of(() -> new ItemStackHandler(27));
+        }
+        return empty;
+    }
 
     public CrateTileEntity() {
         super(TileEntityRegistry.crate);
         this.crateId = UUID.randomUUID();
     }
 
+    @Override
+    protected void invalidateCaps() {
+        super.invalidateCaps();
+        if (empty != null) {
+            empty.invalidate();
+        }
+        combinedArray = null;
+        if (combined != null) {
+            combined.invalidate();
+        }
+    }
+
     @Nonnull
     @Override
     public CompoundNBT write(@Nonnull CompoundNBT compound) {
         compound = super.write(compound);
-/*        compound.putIntArray("CoordX", this.neighbors.stream().map(Vec3i::getX).collect(Collectors.toList()));
-        compound.putIntArray("CoordY", this.neighbors.stream().map(Vec3i::getY).collect(Collectors.toList()));
-        compound.putIntArray("CoordZ", this.neighbors.stream().map(Vec3i::getZ).collect(Collectors.toList()));*/
         compound.put("inventory", inventory.serializeNBT());
         compound.putUniqueId("uuid", crateId);
 
@@ -70,10 +90,6 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
     @Override
     public void read(@Nonnull CompoundNBT compound) {
         super.read(compound);
-/*        this.neighbors = new ArrayList<>();
-        for (int i = 0; i < compound.getIntArray("CoordX").length; i++) {
-            this.neighbors.add(new BlockPos(compound.getIntArray("CoordX")[i], compound.getIntArray("CoordY")[i], compound.getIntArray("CoordZ")[i]));
-        }*/
         if (compound.contains("Items", Constants.NBT.TAG_LIST)) {
             NonNullList<ItemStack> items = NonNullList.withSize(27, ItemStack.EMPTY);
             ItemStackHelper.loadAllItems(compound, items);
@@ -175,8 +191,25 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+        if (world == null || world.isRemote) {
+            return getEmpty().cast();
+        }
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return LazyOptional.of(this::getFullInventory).cast();
+        Set<BlockPos> positions = Sets.newHashSet(CrateBlock.getBlockPositions(world, pos));
+            if (this.combinedArray == null) {
+                combinedArray = Sets.newHashSet(positions);
+                combined = null;
+            } else {
+                if (combinedArray != positions) {
+                    combined = null;
+                    combinedArray = positions;
+                }
+            }
+
+            if (combined == null || !combined.isPresent()) {
+                combined = LazyOptional.of(this::getFullInventory);
+            }
+            return combined.cast();
         }
         return super.getCapability(cap, side);
     }
@@ -192,11 +225,11 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
             return inventory;
         }
 
-        ArrayList<BlockPos> neighbors = CrateBlock.getBlockPositions(world, pos);
-        int size = neighbors.size();
+        List<BlockPos> positions = CrateBlock.getBlockPositions(world, pos);
+        int size = positions.size();
         List<TileEntity> tiles;
         if (size == 2 || size == 4 || size == 8) {
-            tiles = neighbors.stream().map(o -> world.getTileEntity(o)).collect(Collectors.toList());
+            tiles = positions.stream().map(o -> world.getTileEntity(o)).collect(Collectors.toList());
         } else {
             return getInventory();
         }
