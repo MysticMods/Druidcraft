@@ -1,13 +1,40 @@
 {
     "variants": {
-        "hanging=true,roped=true":
-		[ { "model": "druidcraft:block/rope_lunar_moth_jar_white_1" },
-		{ "model": "druidcraft:block/rope_lunar_moth_jar_white_2" } ],
-		"hanging=true,roped=false":
-		[ { "model": "druidcraft:block/hanging_lunar_moth_jar_white_1" },
-		{ "model": "druidcraft:block/hanging_lunar_moth_jar_white_2" } ],
-		"hanging=false":
-		[ { "model": "druidcraft:block/lunar_moth_jar_white_1" },
-		{ "model": "druidcraft:block/lunar_moth_jar_white_2" } ]
+        "hanging=true,roped=true,fullness=0":
+		[ { "model": "druidcraft:block/moth_jars/roped_moth_jar_white_0" },
+		{ "model": "druidcraft:block/moth_jars/roped_moth_jar_white_0_rot" } ],
+		"hanging=true,roped=true,fullness=1":
+		[ { "model": "druidcraft:block/moth_jars/roped_moth_jar_white_1" },
+		{ "model": "druidcraft:block/moth_jars/roped_moth_jar_white_1_rot" } ],
+		"hanging=true,roped=true,fullness=2":
+		[ { "model": "druidcraft:block/moth_jars/roped_moth_jar_white_2" },
+		{ "model": "druidcraft:block/moth_jars/roped_moth_jar_white_2_rot" } ],
+		"hanging=true,roped=true,fullness=3":
+		[ { "model": "druidcraft:block/moth_jars/roped_moth_jar_white_3" },
+		{ "model": "druidcraft:block/moth_jars/roped_moth_jar_white_3_rot" } ],
+		"hanging=true,roped=false,fullness=0":
+		[ { "model": "druidcraft:block/moth_jars/hanging_moth_jar_white_0" },
+		{ "model": "druidcraft:block/moth_jars/hanging_moth_jar_white_0_rot" } ],
+		"hanging=true,roped=false,fullness=1":
+		[ { "model": "druidcraft:block/moth_jars/hanging_moth_jar_white_1" },
+		{ "model": "druidcraft:block/moth_jars/hanging_moth_jar_white_1_rot" } ],
+		"hanging=true,roped=false,fullness=2":
+		[ { "model": "druidcraft:block/moth_jars/hanging_moth_jar_white_2" },
+		{ "model": "druidcraft:block/moth_jars/hanging_moth_jar_white_2_rot" } ],
+		"hanging=true,roped=false,fullness=3":
+		[ { "model": "druidcraft:block/moth_jars/hanging_moth_jar_white_3" },
+		{ "model": "druidcraft:block/moth_jars/hanging_moth_jar_white_3_rot" } ],
+		"hanging=false,fullness=0":
+		[ { "model": "druidcraft:block/moth_jars/moth_jar_white_0" },
+		{ "model": "druidcraft:block/moth_jars/moth_jar_white_0_rot" } ],
+		"hanging=false,fullness=1":
+		[ { "model": "druidcraft:block/moth_jars/moth_jar_white_1" },
+		{ "model": "druidcraft:block/moth_jars/moth_jar_white_1_rot" } ],
+		"hanging=false,fullness=2":
+		[ { "model": "druidcraft:block/moth_jars/moth_jar_white_2" },
+		{ "model": "druidcraft:block/moth_jars/moth_jar_white_2_rot" } ],
+		"hanging=false,fullness=3":
+		[ { "model": "druidcraft:block/moth_jars/moth_jar_white_3" },
+		{ "model": "druidcraft:block/moth_jars/moth_jar_white_3_rot" } ]
 	}
 }

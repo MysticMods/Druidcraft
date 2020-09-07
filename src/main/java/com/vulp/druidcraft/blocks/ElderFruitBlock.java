@@ -250,8 +250,10 @@ public class ElderFruitBlock extends DynamicCropBlock implements IGrowable {
         } else {
             if (isMaxAge(state) && !(state.get(MID_BERRY) && state.get(LIFE_STAGE) == CropLifeStageType.BERRY)) {
                 worldIn.destroyBlock(pos, true);
+            } else if (isMaxAge(state) && state.get(MID_BERRY)) {
+                return ActionResultType.FAIL;
             }
-            return ActionResultType.PASS;
+            return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
         }
     }
 
