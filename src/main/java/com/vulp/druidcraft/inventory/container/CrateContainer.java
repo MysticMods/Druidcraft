@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.inventory.container;
 
+import com.vulp.druidcraft.blocks.tileentities.CrateTileEntity;
 import com.vulp.druidcraft.registry.GUIRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -7,49 +8,83 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.SlotItemHandler;
+
+import javax.annotation.Nullable;
 
 public class CrateContainer extends Container {
-
-    private IItemHandler crateInv;
-    private final IInventory mainCrateInv;
+    private IItemHandler mainCrateInv;
     private final int numRows;
+    private CrateTileEntity crate;
 
     private CrateContainer(ContainerType<?> type, int id, PlayerInventory player, int rows) {
-        this(type, id, player, new Inventory(9 * rows), rows);
+        this(type, id, player, new ItemStackHandler(9 * rows), rows, null);
     }
 
+    public CrateTileEntity getCrate() {
+        return crate;
+    }
+
+    public static CrateContainer createGeneric9X3(int id, PlayerInventory player) {
+        return new CrateContainer(GUIRegistry.generic_9X3, id, player, 3);
+    }
+    public static CrateContainer createGeneric9X6(int id, PlayerInventory player) {
+        return new CrateContainer(GUIRegistry.generic_9X6, id, player, 6);
+    }
     public static CrateContainer createGeneric9X12(int id, PlayerInventory player) {
         return new CrateContainer(GUIRegistry.generic_9X12, id, player, 12);
     }
     public static CrateContainer createGeneric9X24(int id, PlayerInventory player) {
         return new CrateContainer(GUIRegistry.generic_9X24, id, player, 24);
     }
-    public static CrateContainer createGeneric9X12(int id, PlayerInventory player, IInventory blockEntity) {
+
+/*    public static CrateContainer createGeneric9X12(int id, PlayerInventory player, IInventory blockEntity) {
         return new CrateContainer(GUIRegistry.generic_9X12, id, player, blockEntity, 12);
     }
     public static CrateContainer createGeneric9X24(int id, PlayerInventory player, IInventory blockEntity) {
         return new CrateContainer(GUIRegistry.generic_9X24, id, player, blockEntity, 24);
-    }
+    }*/
 
-    public CrateContainer(ContainerType<?> type, int id, PlayerInventory playerInventoryIn, IInventory inventory, int rows) {
+    public CrateContainer(ContainerType<?> type, int id, PlayerInventory playerInventoryIn, IItemHandler inventory, int rows, @Nullable CrateTileEntity tile) {
         super(type, id);
-        assertInventorySize(inventory, rows * 9);
+        assertIItemHandlerSize(inventory, rows * 9);
         this.mainCrateInv = inventory;
-        for (int i = 0; i < inventory.getSizeInventory(); i++) {
-            this.crateInv.insertItem(i, mainCrateInv.getStackInSlot(i), false);
-        }
         this.numRows = rows;
-        inventory.openInventory(playerInventoryIn.player);
+        this.crate = tile;
+        if (this.crate != null) {
+            this.crate.openInventory(playerInventoryIn.player);
+        }
         int i1;
         int j1;
+        int playerInventoryStart = numRows * 18;
+
+        if (rows == 3 || rows == 6) {
+            for (int i = 0; i < numRows; i++) {
+                for (int j = 0; j < 9; j++) {
+                    addSlot(new SlotItemHandler(inventory, j + i * 9, 8 + j * 18, 18 + i * 18));
+                }
+            }
+
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 9; j++) {
+                    addSlot(new Slot(playerInventoryIn, j + i * 9 + 9, 8 + j * 18, 31 + i * 18 + playerInventoryStart));
+                }
+            }
+
+            for (int i = 0; i < 9; i++) {
+                addSlot(new Slot(playerInventoryIn, i, 8 + i * 18, 89 + playerInventoryStart));
+            }
+        }
 
         if (rows == 12) {
             for (int j = 0; j < 9; ++j) {
                 for (int k = 0; k < 12; ++k) {
-                    this.addSlot(new Slot(inventory, k + j * 12, 8 + k * 18, 18 + j * 18));
+                    this.addSlot(new SlotItemHandler(inventory, k + j * 12, 8 + k * 18, 18 + j * 18));
                 }
             }
             for (i1 = 0; i1 < 3; ++i1) {
@@ -64,7 +99,7 @@ public class CrateContainer extends Container {
         if (rows == 24) {
             for (int j = 0; j < 12; ++j) {
                 for (int k = 0; k < 18; ++k) {
-                    this.addSlot(new Slot(inventory, k + j * 18, 8 + k * 18, 18 + j * 18));
+                    this.addSlot(new SlotItemHandler(inventory, k + j * 18, 8 + k * 18, 18 + j * 18));
                 }
             }
             for (i1 = 0; i1 < 3; ++i1) {
@@ -85,7 +120,7 @@ public class CrateContainer extends Container {
     @Override
     public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = (Slot)this.inventorySlots.get(index);
+        Slot slot = this.inventorySlots.get(index);
         if (slot != null && slot.getHasStack()) {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
@@ -113,13 +148,15 @@ public class CrateContainer extends Container {
     @Override
     public void onContainerClosed(PlayerEntity playerIn) {
         super.onContainerClosed(playerIn);
-        this.mainCrateInv.closeInventory(playerIn);
+        if (this.crate != null) {
+            this.crate.closeInventory(playerIn);
+        }
     }
 
     /**
      * Gets the inventory associated with this chest container.
      */
-    public IInventory getMainInventory() {
+    public IItemHandler getMainInventory() {
         return this.mainCrateInv;
     }
 
@@ -128,6 +165,18 @@ public class CrateContainer extends Container {
      */
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return true;
+        if (this.crate.isRemoved()) {
+            return false;
+        } else {
+            BlockPos pos = this.crate.getPos();
+            return playerIn.getDistanceSq(pos.getX(), pos.getY(), pos.getZ()) <= 64.0D;
+        }
     }
+
+   private static void assertIItemHandlerSize(IItemHandler inventoryIn, int minSize) {
+      int i = inventoryIn.getSlots();
+      if (i < minSize) {
+         throw new IllegalArgumentException("Container size " + i + " is smaller than expected " + minSize);
+      }
+   }
 }

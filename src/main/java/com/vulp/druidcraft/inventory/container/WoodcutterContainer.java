@@ -23,6 +23,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.IWorldPosCallable;
@@ -237,14 +238,15 @@ public class WoodcutterContainer extends Container {
             ItemStack itemstack1 = slot.getStack();
             Item item = itemstack1.getItem();
             itemstack = itemstack1.copy();
-            boolean flag = true;
+            // TODO: This modifies itemstack1 to be a full stack resulting in duplication. I've replaced it with a call to the recipe manager similar to the stonecutter, but I'm not sure what this was meant for.
+/*            boolean flag = true;
             for (Tag<Item> tags : ACCEPTED_INPUT_ITEMS.asList()) {
                 if (tags.contains(item)) {
                     if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
                         flag = false;
                     }
                 }
-            }
+            }*/
             if (index == 1) {
                 item.onCreated(itemstack1, playerIn.world, playerIn);
                 if (!this.mergeItemStack(itemstack1, 2, 38, true)) {
@@ -256,13 +258,15 @@ public class WoodcutterContainer extends Container {
                 if (!this.mergeItemStack(itemstack1, 2, 38, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!flag) {
-                return ItemStack.EMPTY;
-            } else if (index >= 2 && index < 29) {
-                if (!this.mergeItemStack(itemstack1, 29, 38, false)) {
-                    return ItemStack.EMPTY;
+            }  else if (this.world.getRecipeManager().getRecipe(IModdedRecipeType.woodcutting, new Inventory(itemstack1), this.world).isPresent()) {
+                if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
+                  return ItemStack.EMPTY;
                 }
-            } else if (index >= 29 && index < 38 && !this.mergeItemStack(itemstack1, 2, 29, false)) {
+            } else if (index < 29) {
+                if (!this.mergeItemStack(itemstack1, 29, 38, false)) {
+                  return ItemStack.EMPTY;
+                }
+            } else if (index < 38 && !this.mergeItemStack(itemstack1, 2, 29, false)) {
                 return ItemStack.EMPTY;
             }
 

@@ -77,7 +77,9 @@ public class LunarMothJarItem extends BlockItem {
                 CompoundNBT nbt = new CompoundNBT();
                 nbt.putInt("Color", LunarMothColors.colorToInt(color));
                 moth.readAdditional(nbt);
-                itemstack.shrink(1);
+                if (player != null && !player.isCreative()) {
+                    itemstack.shrink(1);
+                }
                 ItemStack bottle = new ItemStack(Items.GLASS_BOTTLE);
                 if (player != null) {
                     if (!player.inventory.addItemStackToInventory(bottle)) {

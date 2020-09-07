@@ -1,8 +1,8 @@
 package com.vulp.druidcraft.client.gui.screen.inventory;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import java.util.List;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.vulp.druidcraft.inventory.container.WoodcutterContainer;
 import com.vulp.druidcraft.recipes.WoodcuttingRecipe;
 import net.minecraft.client.Minecraft;
@@ -45,18 +45,18 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
     @Override
     protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
         this.renderBackground();
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
-        int lvt_4_1_ = this.guiLeft;
-        int lvt_5_1_ = this.guiTop;
-        this.blit(lvt_4_1_, lvt_5_1_, 0, 0, this.xSize, this.ySize);
-        int lvt_6_1_ = (int)(41.0F * this.sliderProgress);
-        this.blit(lvt_4_1_ + 119, lvt_5_1_ + 15 + lvt_6_1_, 176 + (this.canScroll() ? 0 : 12), 0, 12, 15);
-        int lvt_7_1_ = this.guiLeft + 52;
-        int lvt_8_1_ = this.guiTop + 14;
-        int lvt_9_1_ = this.recipeIndexOffset + 12;
-        this.drawRecipesBackground(p_146976_2_, p_146976_3_, lvt_7_1_, lvt_8_1_, lvt_9_1_);
-        this.drawRecipesItems(lvt_7_1_, lvt_8_1_, lvt_9_1_);
+        int left = this.guiLeft;
+        int top = this.guiTop;
+        this.blit(left, top, 0, 0, this.xSize, this.ySize);
+        int progress = (int)(41.0F * this.sliderProgress);
+        this.blit(left + 119, top + 15 + progress, 176 + (this.canScroll() ? 0 : 12), 0, 12, 15);
+        int offsetX = this.guiLeft + 52;
+        int offsetY = this.guiTop + 14;
+        int recipeOffset = this.recipeIndexOffset + 12;
+        this.drawRecipesBackground(p_146976_2_, p_146976_3_, offsetX, offsetY, recipeOffset);
+        this.drawRecipesItems(offsetX, offsetY, recipeOffset);
     }
 
     private void drawRecipesBackground(int p_214141_1_, int p_214141_2_, int p_214141_3_, int p_214141_4_, int p_214141_5_) {
