@@ -53,6 +53,10 @@ public class ElderFruitBlock extends DynamicCropBlock implements IGrowable {
         return 3;
     }
 
+    @Override
+    public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
+        return null;
+    }
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
