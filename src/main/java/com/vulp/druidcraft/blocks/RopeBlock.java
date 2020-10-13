@@ -9,6 +9,7 @@ import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.*;
@@ -31,7 +32,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.Map;
 
-public class RopeBlock extends Block implements IKnifeable {
+public class RopeBlock extends Block implements IKnifeable, IBucketPickupHandler, ILiquidContainer {
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
     public static final BooleanProperty EAST = BooleanProperty.create("east");
     public static final BooleanProperty SOUTH = BooleanProperty.create("south");
@@ -273,4 +274,38 @@ public class RopeBlock extends Block implements IKnifeable {
     public PushReaction getPushReaction(BlockState state) {
         return PushReaction.DESTROY;
     }
+
+    @Override
+    public Fluid pickupFluid(IWorld worldIn, BlockPos pos, BlockState state) {
+        if (state.get(WATERLOGGED)) {
+            worldIn.setBlockState(pos, state.with(WATERLOGGED, false), 3);
+            return Fluids.WATER;
+        } else {
+            return Fluids.EMPTY;
+        }
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public IFluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+    }
+
+    @Override
+    public boolean canContainFluid(IBlockReader worldIn, BlockPos pos, BlockState state, Fluid fluidIn) {
+        return fluidIn == Fluids.WATER;
+    }
+
+    @Override
+    public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, IFluidState fluidStateIn) {
+        if (fluidStateIn.getFluid() == Fluids.WATER) {
+            if (!worldIn.isRemote()) {
+                worldIn.setBlockState(pos, state.with(WATERLOGGED, true), 3);
+                worldIn.getPendingFluidTicks().scheduleTick(pos, fluidStateIn.getFluid(), fluidStateIn.getFluid().getTickRate(worldIn));
+            }
+            return true;
+        }
+        return false;
+    }
+
 }
