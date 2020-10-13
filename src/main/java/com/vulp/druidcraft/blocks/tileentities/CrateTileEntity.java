@@ -125,9 +125,7 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
 
             boolean flag = blockstate.get(CrateBlock.PROPERTY_OPEN);
             if (flag) {
-                if (blockState.get(CrateBlock.INDEX).isParent()) {
-                    this.playSound(blockState, SoundEventRegistry.close_crate);
-                }
+                this.playSound(blockState, SoundEventRegistry.close_crate);
                 this.setCrateState(blockstate, false);
             }
         }
@@ -169,9 +167,7 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
             BlockState blockstate = this.getBlockState();
             boolean flag = blockstate.get(CrateBlock.PROPERTY_OPEN);
             if (!flag) {
-                if (blockstate.get(CrateBlock.INDEX).isParent()) {
-                    this.playSound(blockstate, SoundEventRegistry.open_crate);
-                }
+                this.playSound(blockstate, SoundEventRegistry.open_crate);
                 this.setCrateState(blockstate, true);
             }
 
@@ -258,6 +254,11 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
     private void setCrateState(BlockState state, boolean open) {
         if (this.world != null) {
             this.world.setBlockState(this.getPos(), state.with(CrateBlock.PROPERTY_OPEN, open), 3);
+            List<BlockPos> tiles = CrateBlock.getBlockPositions(world, pos);
+            for (int i = 0; i < tiles.size(); i++) {
+                BlockPos pos = tiles.get(i);
+                this.world.setBlockState(pos, world.getBlockState(pos).with(CrateBlock.PROPERTY_OPEN, open), 3);
+            }
         }
     }
 
