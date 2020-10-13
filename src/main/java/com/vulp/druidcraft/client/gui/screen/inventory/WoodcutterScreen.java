@@ -3,6 +3,7 @@ package com.vulp.druidcraft.client.gui.screen.inventory;
 import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.inventory.container.WoodcutterContainer;
 import com.vulp.druidcraft.recipes.WoodcuttingRecipe;
 import net.minecraft.client.Minecraft;
@@ -19,7 +20,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
-    private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation("textures/gui/container/stonecutter.png");
+    private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(Druidcraft.MODID, "textures/gui/container/woodcutter.png");
     private float sliderProgress;
     private boolean clickedOnSroll;
     private int recipeIndexOffset;
