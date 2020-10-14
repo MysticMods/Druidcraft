@@ -36,7 +36,7 @@ public class EntitySpawnConfig {
             server.comment("Mob Spawn Config");
 
             dreadfish_spawn = server.comment("Allow dreadfish to spawn?").define("entityspawning.dreadfish_spawn", true);
-            dreadfish_weight = server.comment("Determines the rarity of the dreadfish.").defineInRange("entityspawning.dreadfish_weight", 35, 1, 100);
+            dreadfish_weight = server.comment("Determines the rarity of the dreadfish.").defineInRange("entityspawning.dreadfish_weight", 40, 1, 100);
             dreadfish_min_group = server.comment("Minimum size of the group when spawned.").defineInRange("entityspawning.dreadfish_min_group_size", 1, 1, 5);
             dreadfish_max_group = server.comment("Maximum size of the group when spawned.").defineInRange("entityspawning.dreadfish_max_group_size", 3, 1, 10);
             dreadfish_biome_types = server.comment("List of biome types from the biome dictionary that the dreadfish can spawn in. Define as strings with \"s and separate with a comma.").define("entityspawning.dreadfish_biomes", Arrays.asList("SNOWY", "COLD"));

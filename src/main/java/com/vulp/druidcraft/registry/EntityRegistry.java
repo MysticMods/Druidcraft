@@ -80,7 +80,7 @@ public class EntityRegistry
         registerEntityWorldSpawn(EntitySpawnConfig.lunar_moth_spawn.get(), lunar_moth_entity, EntityClassification.CREATURE, EntitySpawnConfig.lunar_moth_weight.get(), EntitySpawnConfig.lunar_moth_min_group.get(), EntitySpawnConfig.lunar_moth_max_group.get(), EntitySpawnConfig.lunar_moth_biome_types.get(), EntitySpawnConfig.lunar_moth_biome_exclusions.get());
 
         EntitySpawnPlacementRegistry.register(beetle_entity, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, BeetleEntity::placement);
-        EntitySpawnPlacementRegistry.register(dreadfish_entity, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DreadfishEntity::placement);
+        EntitySpawnPlacementRegistry.register(dreadfish_entity, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DreadfishEntity::placement);
     }
 
     public static Item registerEntitySpawnEgg(EntityType<?> type, int color1, int color2, String name)

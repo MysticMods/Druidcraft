@@ -130,7 +130,7 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
     }
 
     public static boolean placement(EntityType<?> type, IWorld worldIn, SpawnReason reason, BlockPos pos, Random randomIn) {
-        return worldIn.getDifficulty() != Difficulty.PEACEFUL && isValidLightLevel(worldIn, pos, randomIn);
+        return worldIn.getDifficulty() != Difficulty.PEACEFUL && isValidLightLevel(worldIn, pos, randomIn) && (worldIn.getBlockState(pos.down()).canEntitySpawn(worldIn, pos.down(), type) || worldIn.getBlockState(pos.down()).canEntitySpawn(worldIn, pos.down(2), type));
     }
 
     @Override
