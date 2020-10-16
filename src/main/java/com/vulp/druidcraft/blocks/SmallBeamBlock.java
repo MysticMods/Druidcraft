@@ -3,8 +3,8 @@ package com.vulp.druidcraft.blocks;
 import com.vulp.druidcraft.blocks.tileentities.SmallBeamTileEntity;
 import net.minecraft.block.*;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.*;
@@ -94,8 +94,8 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        IFluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
-        return calculateState(getDefaultState(), context.getWorld(), context.getPos(), context.getFace().getAxis()).with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
+        FluidState fluidstate = context.getWorld().getFluidState(context.getPos());
+        return calculateState(getDefaultState(), context.getWorld(), context.getPos(), context.getFace().getAxis()).with(WATERLOGGED, fluidstate.getFluid() == Fluids.WATER);
     }
 
     @Override
@@ -163,7 +163,7 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
 
 
     @Override
-    public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, IFluidState fluidState) {
+    public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, FluidState fluidState) {
         if (!state.get(WATERLOGGED) && fluidState.getFluid() == Fluids.WATER) {
             if (!worldIn.isRemote()) {
                 worldIn.setBlockState(pos, state.with(WATERLOGGED, Boolean.valueOf(true)), 3);
@@ -187,7 +187,7 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
 
     @Override
     @SuppressWarnings("deprecation")
-    public IFluidState getFluidState(BlockState state) {
+    public FluidState getFluidState(BlockState state) {
         return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
     }
 

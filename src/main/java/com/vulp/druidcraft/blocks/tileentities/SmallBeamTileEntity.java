@@ -49,8 +49,8 @@ public class SmallBeamTileEntity extends TileEntity {
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
+    public void read(BlockState state, CompoundNBT compound) {
+        super.read(state, compound);
         this.NORTH = compound.getBoolean("North");
         this.EAST = compound.getBoolean("East");
         this.SOUTH = compound.getBoolean("South");
@@ -61,17 +61,15 @@ public class SmallBeamTileEntity extends TileEntity {
     }
 
     @Override
-    public CompoundNBT getUpdateTag()
-    {
+    public CompoundNBT getUpdateTag() {
         CompoundNBT nbtTagCompound = new CompoundNBT();
         write(nbtTagCompound);
         return nbtTagCompound;
     }
 
     @Override
-    public void handleUpdateTag(CompoundNBT tag)
-    {
-        this.read(tag);
+    public void handleUpdateTag(BlockState state, CompoundNBT tag) {
+        this.read(state, tag);
     }
 
     public int axisToInt(Direction.Axis axis) {

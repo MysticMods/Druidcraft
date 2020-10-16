@@ -9,8 +9,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
@@ -53,7 +53,10 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
         builder.add(HORIZONTAL_FACING, PART, OCCUPIED, WATERLOGGED);
     }
 
-    @Override
+    public static boolean doesBedWork(World world) {
+        return world.getDimensionType().doesBedWork();
+    }
+
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (worldIn.isRemote) {
             return ActionResultType.CONSUME;
@@ -61,35 +64,30 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
             if (state.get(PART) != BedPart.HEAD) {
                 pos = pos.offset(state.get(HORIZONTAL_FACING));
                 state = worldIn.getBlockState(pos);
-                if (state.getBlock() != this) {
+                if (!state.isIn(this)) {
                     return ActionResultType.CONSUME;
                 }
             }
 
-            net.minecraftforge.common.extensions.IForgeDimension.SleepResult sleepResult = worldIn.dimension.canSleepAt(player, pos);
-            if (sleepResult != net.minecraftforge.common.extensions.IForgeDimension.SleepResult.BED_EXPLODES) {
-                if (sleepResult == net.minecraftforge.common.extensions.IForgeDimension.SleepResult.DENY)
-                    return ActionResultType.SUCCESS;
-                if (state.get(OCCUPIED)) {
-                    player.sendStatusMessage(new TranslationTextComponent("block.druidcraft.bedroll.occupied"), true);
-                    return ActionResultType.SUCCESS;
-                } else {
-                    player.trySleep(pos).ifLeft((p_220173_1_) -> {
-                        if (p_220173_1_ != null) {
-                            player.sendStatusMessage(p_220173_1_.getMessage(), true);
-                        }
-
-                    });
-                    return ActionResultType.SUCCESS;
-                }
-            } else {
+            if (!doesBedWork(worldIn)) {
                 worldIn.removeBlock(pos, false);
                 BlockPos blockpos = pos.offset(state.get(HORIZONTAL_FACING).getOpposite());
-                if (worldIn.getBlockState(blockpos).getBlock() == this) {
+                if (worldIn.getBlockState(blockpos).isIn(this)) {
                     worldIn.removeBlock(blockpos, false);
                 }
 
-                worldIn.createExplosion((Entity)null, DamageSource.netherBedExplosion(), (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, 5.0F, true, Explosion.Mode.DESTROY);
+                worldIn.createExplosion((Entity)null, DamageSource.func_233546_a_(), (ExplosionContext)null, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, 5.0F, true, Explosion.Mode.DESTROY);
+                return ActionResultType.SUCCESS;
+            } else if (state.get(OCCUPIED)) {
+                player.sendStatusMessage(new TranslationTextComponent("block.druidcraft.bedroll.occupied"), true);
+                return ActionResultType.SUCCESS;
+            } else {
+                player.trySleep(pos).ifLeft((result) -> {
+                    if (result != null) {
+                        player.sendStatusMessage(result.getMessage(), true);
+                    }
+
+                });
                 return ActionResultType.SUCCESS;
             }
         }
@@ -107,7 +105,7 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
 
     @Override
     @SuppressWarnings("deprecation")
-    public IFluidState getFluidState(BlockState state) {
+    public FluidState getFluidState(BlockState state) {
         return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
     }
 
@@ -117,7 +115,7 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
     }
 
     @Override
-    public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, IFluidState fluidStateIn) {
+    public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn) {
         if (fluidStateIn.getFluid() == Fluids.WATER) {
             if (!worldIn.isRemote()) {
                 worldIn.setBlockState(pos, state.with(WATERLOGGED, true), 3);

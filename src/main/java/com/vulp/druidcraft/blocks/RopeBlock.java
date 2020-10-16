@@ -10,8 +10,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.*;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.state.BooleanProperty;
@@ -20,10 +20,10 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
@@ -74,7 +74,7 @@ public class RopeBlock extends Block implements IKnifeable, IBucketPickupHandler
         BlockPos pos = context.getPos();
         World world = context.getWorld();
         BlockState state = world.getBlockState(pos);
-        Vec3d relative = context.getHitVec().subtract(pos.getX(), pos.getY(), pos.getZ());
+        Vector3d relative = context.getHitVec().subtract(pos.getX(), pos.getY(), pos.getZ());
         Druidcraft.LOGGER.debug("onKnife: {}", relative);
 
         Direction side = getClickedConnection(relative);
@@ -111,7 +111,7 @@ public class RopeBlock extends Block implements IKnifeable, IBucketPickupHandler
     }
 
     @Nullable
-    private static Direction getClickedConnection(Vec3d relative) {
+    private static Direction getClickedConnection(Vector3d relative) {
         if (relative.x < 0.25)
             return Direction.WEST;
         if (relative.x > 0.75)
@@ -163,8 +163,8 @@ public class RopeBlock extends Block implements IKnifeable, IBucketPickupHandler
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        IFluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
-        return calculateState(getDefaultState(), context.getWorld(), context.getPos()).with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
+        FluidState fluidstate = context.getWorld().getFluidState(context.getPos());
+        return calculateState(getDefaultState(), context.getWorld(), context.getPos()).with(WATERLOGGED, fluidstate.getFluid() == Fluids.WATER);
     }
 
     private BlockState calculateKnot (BlockState currentState) {
@@ -287,7 +287,7 @@ public class RopeBlock extends Block implements IKnifeable, IBucketPickupHandler
 
     @Override
     @SuppressWarnings("deprecation")
-    public IFluidState getFluidState(BlockState state) {
+    public FluidState getFluidState(BlockState state) {
         return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
     }
 
@@ -297,7 +297,7 @@ public class RopeBlock extends Block implements IKnifeable, IBucketPickupHandler
     }
 
     @Override
-    public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, IFluidState fluidStateIn) {
+    public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn) {
         if (fluidStateIn.getFluid() == Fluids.WATER) {
             if (!worldIn.isRemote()) {
                 worldIn.setBlockState(pos, state.with(WATERLOGGED, true), 3);

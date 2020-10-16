@@ -8,8 +8,9 @@ import net.minecraft.block.FallingBlock;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.pathfinding.PathType;
@@ -73,8 +74,8 @@ public class WetMudBlock extends Block {
         Direction[] var3 = Direction.values();
 
         for (Direction direction : var3) {
-            IFluidState ifluidstate = p_203943_1_.getFluidState(p_203943_2_.offset(direction));
-            if (ifluidstate.isTagged(FluidTags.WATER)) {
+            FluidState fluidstate = p_203943_1_.getFluidState(p_203943_2_.offset(direction));
+            if (fluidstate.isTagged(FluidTags.WATER)) {
                 return true;
             }
         }
@@ -95,9 +96,9 @@ public class WetMudBlock extends Block {
         return false;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
-    public boolean canEntitySpawn(BlockState state, IBlockReader worldIn, BlockPos pos, EntityType<?> type) {
+    public boolean canCreatureSpawn(BlockState state, IBlockReader world, BlockPos pos, EntitySpawnPlacementRegistry.PlacementType type, @Nullable EntityType<?> entityType) {
         return true;
     }
+
 }

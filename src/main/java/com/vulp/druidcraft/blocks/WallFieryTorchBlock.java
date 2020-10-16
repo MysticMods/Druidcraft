@@ -7,8 +7,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
@@ -46,15 +46,14 @@ public class WallFieryTorchBlock extends FieryTorchBlock {
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
         Direction direction = state.get(HORIZONTAL_FACING);
         BlockPos blockpos = pos.offset(direction.getOpposite());
-        BlockState blockstate = worldIn.getBlockState(blockpos);
-        return Block.hasSolidSide(blockstate, worldIn, blockpos, direction);
+        return Block.hasEnoughSolidSide(worldIn, blockpos, direction);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         BlockState blockstate = this.getDefaultState();
         IWorldReader iworldreader = context.getWorld();
-        IFluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
+        FluidState fluidstate = context.getWorld().getFluidState(context.getPos());
         BlockPos blockpos = context.getPos();
         Direction[] adirection = context.getNearestLookingDirections();
         for (Direction direction : adirection) {
@@ -62,7 +61,7 @@ public class WallFieryTorchBlock extends FieryTorchBlock {
                 Direction direction1 = direction.getOpposite();
                 blockstate = blockstate.with(HORIZONTAL_FACING, direction1);
                 if (blockstate.isValidPosition(iworldreader, blockpos)) {
-                    return blockstate.with(WATERLOGGED, Boolean.valueOf(ifluidstate.getFluid() == Fluids.WATER));
+                    return blockstate.with(WATERLOGGED, fluidstate.getFluid() == Fluids.WATER);
                 }
             }
         }
@@ -71,7 +70,7 @@ public class WallFieryTorchBlock extends FieryTorchBlock {
 
     @Override
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        IFluidState ifluidstate = worldIn.getFluidState(currentPos);
+        FluidState ifluidstate = worldIn.getFluidState(currentPos);
         return facing.getOpposite() == stateIn.get(HORIZONTAL_FACING) && !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState() : stateIn.with(WATERLOGGED, Boolean.valueOf(ifluidstate.getFluid() == Fluids.WATER));
     }
 

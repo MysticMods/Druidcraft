@@ -20,6 +20,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
@@ -61,7 +62,7 @@ public class ElderFruitBlock extends DynamicCropBlock implements IGrowable {
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         VoxelShape voxelshape = VoxelShapes.empty();
-        Vec3d vec3d = state.getOffset(worldIn, pos);
+        Vector3d vec3d = state.getOffset(worldIn, pos);
 
         if (state.get(FACING) == Direction.UP) {
             voxelshape = VoxelShapes.or(voxelshape, Block.makeCuboidShape(2.0D, 15.0D, 2.0D, 14.0D, 16.0D, 14.0D));
@@ -85,9 +86,9 @@ public class ElderFruitBlock extends DynamicCropBlock implements IGrowable {
     }
 
     @Override
-    public Vec3d getOffset(BlockState state, IBlockReader worldIn, BlockPos pos) {
+    public Vector3d getOffset(BlockState state, IBlockReader worldIn, BlockPos pos) {
         long i = MathHelper.getCoordinateRandom(pos.getX(), pos.getY(), pos.getZ());
-        return new Vec3d(
+        return new Vector3d(
                 !(state.get(FACING) == Direction.EAST || state.get(FACING) == Direction.WEST) ?(((i & 15L) / 15.0F) - 0.5D) * 0.5D : 0.0D,
                 !(state.get(FACING) == Direction.UP || state.get(FACING) == Direction.DOWN) ? (((i >> 4 & 15L) / 15.0F) - 0.5D) * 0.5D : 0.0D,
                 !(state.get(FACING) == Direction.NORTH || state.get(FACING) == Direction.SOUTH) ? (((i >> 8 & 15L) / 15.0F) - 0.5D) * 0.5D : 0.0D);

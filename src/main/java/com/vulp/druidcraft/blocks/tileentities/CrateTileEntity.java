@@ -88,8 +88,8 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
     }
 
     @Override
-    public void read(@Nonnull CompoundNBT compound) {
-        super.read(compound);
+    public void read(BlockState state, CompoundNBT compound) {
+        super.read(state, compound);
         if (compound.contains("Items", Constants.NBT.TAG_LIST)) {
             NonNullList<ItemStack> items = NonNullList.withSize(27, ItemStack.EMPTY);
             ItemStackHelper.loadAllItems(compound, items);

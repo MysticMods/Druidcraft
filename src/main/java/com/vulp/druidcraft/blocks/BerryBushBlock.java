@@ -12,7 +12,7 @@ import net.minecraft.item.Items;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
@@ -54,7 +54,7 @@ public class BerryBushBlock extends SweetBerryBushBlock {
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
         if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.FOX) {
-            entityIn.setMotionMultiplier(state, new Vec3d(0.800000011920929D, 0.75D, 0.800000011920929D));
+            entityIn.setMotionMultiplier(state, new Vector3d(0.800000011920929D, 0.75D, 0.800000011920929D));
             if (!worldIn.isRemote && state.get(AGE) > 0 && (entityIn.lastTickPosX != entityIn.getPosX() || entityIn.lastTickPosZ != entityIn.getPosZ())) {
                 double d0 = Math.abs(entityIn.getPosX() - entityIn.lastTickPosX);
                 double d1 = Math.abs(entityIn.getPosZ() - entityIn.lastTickPosZ);

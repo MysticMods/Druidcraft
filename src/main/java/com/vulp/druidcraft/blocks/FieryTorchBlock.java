@@ -7,8 +7,8 @@ import net.minecraft.block.*;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
@@ -35,7 +35,7 @@ public class FieryTorchBlock extends TorchBlock implements IWaterLoggable {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     public FieryTorchBlock(Properties properties) {
-        super(properties);
+        super(properties, null);
         this.setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, false));
     }
 
@@ -54,18 +54,18 @@ public class FieryTorchBlock extends TorchBlock implements IWaterLoggable {
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        IFluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
-        return super.getStateForPlacement(context).with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
+        FluidState fluidstate = context.getWorld().getFluidState(context.getPos());
+        return super.getStateForPlacement(context).with(WATERLOGGED, fluidstate.getFluid() == Fluids.WATER);
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public IFluidState getFluidState(BlockState state) {
+    public FluidState getFluidState(BlockState state) {
         return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
     }
 
     @Override
-    public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, IFluidState fluidState) {
+    public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, FluidState fluidState) {
         if (!state.get(WATERLOGGED) && fluidState.getFluid() == Fluids.WATER) {
             if (!worldIn.isRemote()) {
                 worldIn.setBlockState(pos, state.with(WATERLOGGED, Boolean.valueOf(true)), 3);

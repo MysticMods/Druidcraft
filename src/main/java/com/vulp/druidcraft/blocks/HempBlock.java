@@ -154,7 +154,7 @@ public class HempBlock extends DynamicCropBlock implements IGrowable {
 
     @Override
     public PlantType getPlantType(IBlockReader world, BlockPos pos) {
-        return PlantType.Crop;
+        return PlantType.CROP;
     }
 
     @Override

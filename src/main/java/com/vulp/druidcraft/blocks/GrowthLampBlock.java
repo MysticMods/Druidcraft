@@ -5,8 +5,8 @@ import net.minecraft.block.*;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathType;
@@ -64,13 +64,13 @@ public class GrowthLampBlock extends ContainerBlock implements IWaterLoggable {
     @Override
     @Nullable
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        IFluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
+        FluidState fluidstate = context.getWorld().getFluidState(context.getPos());
         for (Direction direction : context.getNearestLookingDirections()) {
             if (direction.getAxis() == Direction.Axis.Y) {
                 boolean flag = direction == Direction.UP;
                 BlockState blockstate = this.getDefaultState().with(HANGING, flag).with(ROPED, flag && context.getWorld().getBlockState(context.getPos().offset(Direction.UP)).getBlock() instanceof RopeBlock);
                 if (blockstate.isValidPosition(context.getWorld(), context.getPos())) {
-                    return blockstate.with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
+                    return blockstate.with(WATERLOGGED, fluidstate.getFluid() == Fluids.WATER);
                 }
             }
         }
@@ -115,12 +115,12 @@ public class GrowthLampBlock extends ContainerBlock implements IWaterLoggable {
 
     @Override
     @SuppressWarnings("deprecation")
-    public IFluidState getFluidState(BlockState state) {
+    public FluidState getFluidState(BlockState state) {
         return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
     }
 
     @Override
-    public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, IFluidState fluidState) {
+    public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, FluidState fluidState) {
         if (!state.get(WATERLOGGED) && fluidState.getFluid() == Fluids.WATER) {
             if (!worldIn.isRemote()) {
                 worldIn.setBlockState(pos, state.with(WATERLOGGED, Boolean.valueOf(true)), 3);
