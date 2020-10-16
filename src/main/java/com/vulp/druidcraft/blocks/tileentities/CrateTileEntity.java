@@ -187,11 +187,11 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (world == null || world.isRemote) {
-            return getEmpty().cast();
-        }
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-        Set<BlockPos> positions = Sets.newHashSet(CrateBlock.getBlockPositions(world, pos));
+            if (world == null || world.isRemote) {
+                return getEmpty().cast();
+            }
+            Set<BlockPos> positions = Sets.newHashSet(CrateBlock.getBlockPositions(world, pos));
             if (this.combinedArray == null) {
                 combinedArray = Sets.newHashSet(positions);
                 combined = null;
