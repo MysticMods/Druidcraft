@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.client.gui.screen.inventory;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.vulp.druidcraft.inventory.container.CrateContainer;
 import net.minecraft.client.gui.IHasContainer;
@@ -22,25 +23,25 @@ public class DoubleCrateScreen extends ContainerScreen<CrateContainer> implement
     }
 
     @Override
-    public void render(int p_render_1_, int p_render_2_, float p_render_3_) {
-        this.renderBackground();
-        super.render(p_render_1_, p_render_2_, p_render_3_);
-        this.renderHoveredToolTip(p_render_1_, p_render_2_);
+    public void render(MatrixStack matrixStack, int p_render_1_, int p_render_2_, float p_render_3_) {
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, p_render_1_, p_render_2_, p_render_3_);
+        this.renderHoveredTooltip(matrixStack, p_render_1_, p_render_2_);
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        this.font.drawString(this.title.getFormattedText(), 8.0F, 6.0F, 4210752);
-        this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 35.0F, 182.0F, 4210752);
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
+        this.font.drawString(matrixStack, this.title.getString(), 8.0F, 6.0F, 4210752);
+        this.font.drawString(matrixStack, this.playerInventory.getDisplayName().getString(), 35.0F, 182.0F, 4210752);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float p_146976_1_, int p_146976_2_, int p_146976_3_) {
       RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
       this.minecraft.getTextureManager().bindTexture(CRATE_GUI_TEXTURE);
       int lvt_4_1_ = (this.width - this.xSize) / 2;
       int lvt_5_1_ = (this.height - this.ySize) / 2;
-      this.blit(lvt_4_1_, lvt_5_1_, 0, 0, this.xSize, 6 * 18 + 17);
-      this.blit(lvt_4_1_, lvt_5_1_ + 6 * 18 + 17, 0, 126, this.xSize, 96);
+      this.blit(matrixStack, lvt_4_1_, lvt_5_1_, 0, 0, this.xSize, 6 * 18 + 17);
+      this.blit(matrixStack, lvt_4_1_, lvt_5_1_ + 6 * 18 + 17, 0, 126, this.xSize, 96);
     }
 }

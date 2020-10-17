@@ -296,9 +296,6 @@ public class WaterDependentRecipe extends ShapedRecipe {
 
     public static ItemStack deserializeItem(JsonObject p_199798_0_) {
         String s = JSONUtils.getString(p_199798_0_, "item");
-        Item item = Registry.ITEM.getValue(new ResourceLocation(s)).orElseThrow(() -> {
-            return new JsonSyntaxException("Unknown item '" + s + "'");
-        });
         if (p_199798_0_.has("data")) {
             throw new JsonParseException("Disallowed data tag found");
         } else {

@@ -17,7 +17,6 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.IProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -25,6 +24,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.Map;
 import java.util.Objects;
@@ -58,13 +58,14 @@ public class LunarMothJarItem extends BlockItem {
         if (world.isRemote) {
             return ActionResultType.SUCCESS;
         } else {
+            ServerWorld serverWorld = (ServerWorld) world;
             ItemStack itemstack = context.getItem();
             BlockPos blockpos = context.getPos();
             Direction direction = context.getFace();
-            BlockState blockstate = world.getBlockState(blockpos);
+            BlockState blockstate = serverWorld.getBlockState(blockpos);
             BlockPos blockpos1;
 
-            if (blockstate.getCollisionShape(world, blockpos).isEmpty()) {
+            if (blockstate.getCollisionShape(serverWorld, blockpos).isEmpty()) {
                 blockpos1 = blockpos;
             } else {
                 blockpos1 = blockpos.offset(direction);
@@ -72,7 +73,7 @@ public class LunarMothJarItem extends BlockItem {
 
             PlayerEntity player = context.getPlayer();
 
-            LunarMothEntity moth = (LunarMothEntity) EntityRegistry.lunar_moth_entity.spawn(world, itemstack, player, blockpos1, SpawnReason.SPAWN_EGG, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP);
+            LunarMothEntity moth = (LunarMothEntity) EntityRegistry.lunar_moth_entity.spawn(serverWorld, itemstack, player, blockpos1, SpawnReason.SPAWN_EGG, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP);
             if (moth != null) {
                 CompoundNBT nbt = new CompoundNBT();
                 nbt.putInt("Color", LunarMothColors.colorToInt(color));
@@ -86,7 +87,7 @@ public class LunarMothJarItem extends BlockItem {
                         player.dropItem(bottle, false);
                     }
                 } else {
-                    InventoryHelper.spawnItemStack(world, blockpos1.getX() + 0.5, blockpos1.getY() + 0.5, blockpos1.getZ() + 0.5, bottle);
+                    InventoryHelper.spawnItemStack(serverWorld, blockpos1.getX() + 0.5, blockpos1.getY() + 0.5, blockpos1.getZ() + 0.5, bottle);
                 }
             }
 

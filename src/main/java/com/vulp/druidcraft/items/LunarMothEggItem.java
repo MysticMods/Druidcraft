@@ -16,6 +16,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.Map;
 import java.util.Objects;
@@ -35,13 +36,14 @@ public class LunarMothEggItem extends Item {
         if (world.isRemote) {
             return ActionResultType.SUCCESS;
         } else {
+            ServerWorld serverWorld = (ServerWorld) world;
             ItemStack itemstack = context.getItem();
             BlockPos blockpos = context.getPos();
             Direction direction = context.getFace();
-            BlockState blockstate = world.getBlockState(blockpos);
+            BlockState blockstate = serverWorld.getBlockState(blockpos);
             BlockPos blockpos1;
 
-            if (blockstate.getCollisionShape(world, blockpos).isEmpty()) {
+            if (blockstate.getCollisionShape(serverWorld, blockpos).isEmpty()) {
                 blockpos1 = blockpos;
             } else {
                 blockpos1 = blockpos.offset(direction);
@@ -49,7 +51,7 @@ public class LunarMothEggItem extends Item {
 
             PlayerEntity player = context.getPlayer();
 
-            LunarMothEntity moth = (LunarMothEntity) EntityRegistry.lunar_moth_entity.spawn(world, itemstack, player, blockpos1, SpawnReason.SPAWN_EGG, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP);
+            LunarMothEntity moth = (LunarMothEntity) EntityRegistry.lunar_moth_entity.spawn(serverWorld, itemstack, player, blockpos1, SpawnReason.SPAWN_EGG, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP);
             if (moth != null) {
                 CompoundNBT nbt = new CompoundNBT();
                 nbt.putInt("Color", LunarMothColors.colorToInt(color));

@@ -8,7 +8,7 @@ import net.minecraft.pathfinding.PathFinder;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class FlyingFishPathNavigator extends SwimmerPathNavigator {
@@ -35,8 +35,8 @@ public class FlyingFishPathNavigator extends SwimmerPathNavigator {
     }
 
     @Override
-    protected boolean isDirectPathBetweenPoints(Vec3d posVec31, Vec3d posVec32, int sizeX, int sizeY, int sizeZ) {
-        Vec3d vec3d = new Vec3d(posVec32.x, posVec32.y + (double)this.entity.getHeight() * 0.5D, posVec32.z);
+    protected boolean isDirectPathBetweenPoints(Vector3d posVec31, Vector3d posVec32, int sizeX, int sizeY, int sizeZ) {
+        Vector3d vec3d = new Vector3d(posVec32.x, posVec32.y + (double)this.entity.getHeight() * 0.5D, posVec32.z);
         return this.world.rayTraceBlocks(new RayTraceContext(posVec31, vec3d, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.ANY, this.entity)).getType() == RayTraceResult.Type.MISS;
     }
 

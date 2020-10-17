@@ -3,12 +3,13 @@ package com.vulp.druidcraft.entities;
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.api.IConditionalRangedAttackMob;
 import com.vulp.druidcraft.entities.AI.goals.*;
-import com.vulp.druidcraft.entities.projectiles.DreadfishFireBurst;
 import com.vulp.druidcraft.events.EventFactory;
 import com.vulp.druidcraft.pathfinding.ImprovedFlyingPathNavigator;
 import com.vulp.druidcraft.registry.ParticleRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.FlyingMovementController;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.CreeperEntity;
@@ -25,6 +26,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
@@ -40,7 +42,7 @@ import java.util.*;
 import java.util.function.Predicate;
 
 @SuppressWarnings("unchecked")
-public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAnimal, IConditionalRangedAttackMob
+public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAnimal
 {
     private static final Predicate<LivingEntity> isPlayer;
     private static final DataParameter<Integer> SMOKE_COLOR = EntityDataManager.createKey(DreadfishEntity.class, DataSerializers.VARINT);
@@ -79,45 +81,17 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
         this.targetSelector.addGoal(5, new NonTamedTargetGoalMonster(this, IronGolemEntity.class, false));
     }
 
-    @Override
-    protected void registerAttributes() {
-        super.registerAttributes();
-        this.getAttributes().registerAttribute(SharedMonsterAttributes.FLYING_SPEED);
-        this.getAttribute(SharedMonsterAttributes.FLYING_SPEED).setBaseValue(0.3F);
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.1F);
-        this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.975d);
+    public static AttributeModifierMap.MutableAttribute bakeAttributes() {
+        return MobEntity.func_233666_p_()
+                .createMutableAttribute(Attributes.FLYING_SPEED, 0.3F)
+                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.1F)
+                .createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.975D);
     }
 
     @Override
     protected void registerData() {
         super.registerData();
         this.dataManager.register(SMOKE_COLOR, DyeColor.PURPLE.getId());
-    }
-
-    @Override
-    public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
-        DreadfishFireBurst lvt_2_1_ = new DreadfishFireBurst(this.world, this);
-        double lvt_3_1_ = target.getPosX() - this.getPosX();
-        double lvt_5_1_ = target.getPosYHeight(0.3333333333333333D) - lvt_2_1_.getPosY();
-        double lvt_7_1_ = target.getPosZ() - this.getPosZ();
-        float lvt_9_1_ = MathHelper.sqrt(lvt_3_1_ * lvt_3_1_ + lvt_7_1_ * lvt_7_1_) * 0.2F;
-        lvt_2_1_.shoot(lvt_3_1_, lvt_5_1_ + (double)lvt_9_1_, lvt_7_1_, 1.5F, 10.0F);
-        this.world.playSound((PlayerEntity)null, this.getPosX(), this.getPosY(), this.getPosZ(), SoundEvents.ENTITY_LLAMA_SPIT, this.getSoundCategory(), 1.0F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F);
-        this.world.addEntity(lvt_2_1_);
-    }
-
-    @Override
-    public void resetCondition() {
-        this.cooldown = 0;
-    }
-
-    protected AbstractArrowEntity fireArrow(ItemStack arrowStack, float distanceFactor) {
-        return ProjectileHelper.fireArrow(this, arrowStack, distanceFactor);
-    }
-
-    @Override
-    public boolean shouldAttackWithRange() {
-        return this.cooldown == 120;
     }
 
     @Override
@@ -147,7 +121,7 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
         if (world.getLightFor(LightType.SKY, pos) > rand.nextInt(32)) {
             return false;
         } else {
-            int i = world.getWorld().isThundering() ? world.getNeighborAwareLightSubtracted(pos, 10) : world.getLight(pos);
+            int i = world.getWorldInfo().isThundering() ? world.getNeighborAwareLightSubtracted(pos, 10) : world.getLight(pos);
             return i <= rand.nextInt(8);
         }
     }
@@ -209,9 +183,9 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
     public void setTamed(boolean tamed) {
         super.setTamed(tamed);
         if (tamed) {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(24.0D);
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(24.0D);
         } else {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(16.0D);
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(16.0D);
         }
     }
 
@@ -243,7 +217,7 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
     }
 
     @Override
-    public boolean processInteract(PlayerEntity player, Hand hand) {
+    public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
         ItemStack itemstack = player.getHeldItem(hand);
         Item item = itemstack.getItem();
         if (this.isTamed()) {
@@ -254,7 +228,7 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
                     }
 
                     this.heal(4f);
-                    return true;
+                    return ActionResultType.func_233537_a_(this.world.isRemote);
                 }
 
                 else if (item instanceof DyeItem) {
@@ -265,7 +239,7 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
                             itemstack.shrink(1);
                         }
 
-                        return true;
+                        return ActionResultType.func_233537_a_(this.world.isRemote);
                     }
                 }
             }
@@ -295,10 +269,10 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
                 }
             }
 
-            return true;
+            return ActionResultType.func_233537_a_(this.world.isRemote);
         }
 
-        return super.processInteract(player, hand);
+        return ActionResultType.PASS;
     }
 
     @Override

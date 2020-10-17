@@ -9,7 +9,10 @@ import com.vulp.druidcraft.registry.ItemRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.CatEntity;
@@ -32,10 +35,11 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -80,16 +84,14 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         this.targetSelector.addGoal(5, new NonTamedTargetGoalMonster<>(this, IronGolemEntity.class, false));
     }
 
-
-    @Override
-    protected void registerAttributes() {
-        super.registerAttributes();
-        this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(20.0d);
-        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0d);
-        this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.5d);
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.15d);
-        this.getAttribute(SharedMonsterAttributes.ATTACK_KNOCKBACK).setBaseValue(1.5d);
-        this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0d);
+    public static AttributeModifierMap.MutableAttribute bakeAttributes() {
+        return MobEntity.func_233666_p_()
+                .createMutableAttribute(Attributes.ARMOR, 20.0D)
+                .createMutableAttribute(Attributes.MAX_HEALTH, 40.0D)
+                .createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.5D)
+                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.15D)
+                .createMutableAttribute(Attributes.ATTACK_KNOCKBACK, 1.5D)
+                .createMutableAttribute(Attributes.ATTACK_DAMAGE, 3.0D);
     }
 
     public static boolean placement(EntityType<?> type, IWorld worldIn, SpawnReason reason, BlockPos pos, Random randomIn) {
@@ -245,12 +247,12 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
     }
 
     @Override
-    public boolean processInteract(PlayerEntity player, Hand hand) {
+    public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
         ItemStack itemstack = player.getHeldItem(hand);
         Item item = itemstack.getItem();
         if (this.isTamed() && player.isSneaking()) {
             this.openGUI(player);
-            return true;
+            return ActionResultType.func_233537_a_(this.world.isRemote);
         }
         if (!itemstack.isEmpty()) {
             if (item == Items.APPLE && this.getHealth() < this.getMaxHealth()) {
@@ -259,7 +261,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
                 }
 
                 this.heal(8f);
-                return true;
+                return ActionResultType.func_233537_a_(this.world.isRemote);
             }
             if (!this.isTamed() || itemstack.getItem() == Items.NAME_TAG) {
                 if (itemstack.getItem() == Items.GOLDEN_APPLE) {
@@ -281,11 +283,11 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
                         }
                     }
 
-                    return true;
+                    return ActionResultType.func_233537_a_(this.world.isRemote);
                 }
 
-                if (itemstack.interactWithEntity(player, this, hand)) {
-                    return true;
+                if (itemstack.interactWithEntity(player, this, hand).isSuccessOrConsume()) {
+                    return itemstack.interactWithEntity(player, this, hand);
                 }
             } else if (this.isTamed()) {
                 if (!this.world.isRemote) {
@@ -296,12 +298,12 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
                         if (!player.isCreative()) {
                             itemstack.shrink(1);
                         }
-                        return true;
+                        return ActionResultType.func_233537_a_(this.world.isRemote);
                     }
 
                     if (!this.hasSaddle() && itemstack.getItem() == Items.SADDLE) {
                         this.openGUI(player);
-                        return true;
+                        return ActionResultType.func_233537_a_(this.world.isRemote);
                     }
                 }
             }
@@ -309,11 +311,11 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
               if (!this.world.isRemote) {
                   if (this.hasSaddle() && !this.isBeingRidden()) {
                       this.mountTo(player);
-                      return true;
+                      return ActionResultType.func_233537_a_(this.world.isRemote);
                   }
               }
         }
-        return super.processInteract(player, hand);
+        return ActionResultType.PASS;
     }
 
    private void mountTo(PlayerEntity player) {
@@ -435,7 +437,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
     }
 
     @Override
-    public void travel(Vec3d vec) {
+    public void travel(Vector3d vec) {
         if (this.isAlive()) {
             if (this.isBeingRidden() && this.canBeSteered() && this.hasSaddle()) {
                 LivingEntity livingentity = (LivingEntity) this.getControllingPassenger();
@@ -450,10 +452,10 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
                 float f1 = livingentity.moveForward * 1F;
 
                 if (this.canPassengerSteer()) {
-                    this.setAIMoveSpeed((float)this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue());
-                    super.travel(new Vec3d((double)f, vec.y, (double)f1));
+                    this.setAIMoveSpeed((float)this.getAttribute(Attributes.MOVEMENT_SPEED).getValue());
+                    super.travel(new Vector3d((double)f, vec.y, (double)f1));
                 } else if (livingentity instanceof PlayerEntity) {
-                    this.setMotion(Vec3d.ZERO);
+                    this.setMotion(Vector3d.ZERO);
                 }
             } else {
                 this.stepHeight = 0.5F;

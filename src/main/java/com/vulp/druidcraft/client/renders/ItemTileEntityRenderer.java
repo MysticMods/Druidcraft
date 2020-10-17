@@ -16,8 +16,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.Material;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.model.ModelBakery;
+import net.minecraft.client.renderer.model.RenderMaterial;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.tileentity.BannerTileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
@@ -53,23 +54,23 @@ public class ItemTileEntityRenderer extends ItemStackTileEntityRenderer {
     public static final ResourceLocation moonstone_shield_tex = DruidcraftRegistry.location("entity/shields/moonstone");
 
     @Override
-    public void render(ItemStack itemStack, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int packedLight, int packedOverlay) {
-        Item item = itemStack.getItem();
+    public void func_239207_a_(ItemStack stack, ItemCameraTransforms.TransformType p_239207_2_, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+        Item item = stack.getItem();
         if (item instanceof BasicShieldItem) {
             matrixStack.push();
             matrixStack.scale(1.0F, -1.0F, -1.0F);
             if (item == ItemRegistry.bone_shield) {
-                Material material = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, bone_shield_tex);
-                IVertexBuilder vertexBuilder = material.getSprite().wrapBuffer(ItemRenderer.getBuffer(renderTypeBuffer, this.bone_shield.getRenderType(material.getAtlasLocation()), false, itemStack.hasEffect()));
-                this.bone_shield.render(matrixStack, vertexBuilder, packedLight, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+                RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, bone_shield_tex);
+                IVertexBuilder vertexBuilder = material.getSprite().wrapBuffer(ItemRenderer.getBuffer(buffer, this.bone_shield.getRenderType(material.getAtlasLocation()), false, stack.hasEffect()));
+                this.bone_shield.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
             } else if (item == ItemRegistry.chitin_shield) {
-                Material material = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, chitin_shield_tex);
-                IVertexBuilder vertexBuilder = material.getSprite().wrapBuffer(ItemRenderer.getBuffer(renderTypeBuffer, this.chitin_shield.getRenderType(material.getAtlasLocation()), false, itemStack.hasEffect()));
-                this.chitin_shield.render(matrixStack, vertexBuilder, packedLight, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+                RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, chitin_shield_tex);
+                IVertexBuilder vertexBuilder = material.getSprite().wrapBuffer(ItemRenderer.getBuffer(buffer, this.chitin_shield.getRenderType(material.getAtlasLocation()), false, stack.hasEffect()));
+                this.chitin_shield.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
             } else { // item == ItemRegistry.moonstone_shield
-                Material material = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, moonstone_shield_tex);
-                IVertexBuilder vertexBuilder = material.getSprite().wrapBuffer(ItemRenderer.getBuffer(renderTypeBuffer, this.moonstone_shield.getRenderType(material.getAtlasLocation()), false, itemStack.hasEffect()));
-                this.moonstone_shield.render(matrixStack, vertexBuilder, packedLight, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+                RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, moonstone_shield_tex);
+                IVertexBuilder vertexBuilder = material.getSprite().wrapBuffer(ItemRenderer.getBuffer(buffer, this.moonstone_shield.getRenderType(material.getAtlasLocation()), false, stack.hasEffect()));
+                this.moonstone_shield.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
             }
             matrixStack.pop();
         }

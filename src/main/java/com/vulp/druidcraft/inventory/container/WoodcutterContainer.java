@@ -24,6 +24,7 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.IWorldPosCallable;
@@ -37,7 +38,7 @@ public class WoodcutterContainer extends Container {
     /**
      * The list of items that can be accepted into the input slot of the Woodcutter container.
      */
-    static final ImmutableList<Tag<Item>> ACCEPTED_INPUT_ITEMS = ImmutableList.of(ItemTags.LOGS, ItemTags.PLANKS);
+    static final ImmutableList<ITag.INamedTag<Item>> ACCEPTED_INPUT_ITEMS = ImmutableList.of(ItemTags.LOGS, ItemTags.PLANKS);
     private final IWorldPosCallable worldPosCallable;
     /**
      * The index of the selected recipe in the GUI.

@@ -2,10 +2,11 @@ package com.vulp.druidcraft.util;
 
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 
 public class VectorUtil {
 
-    public static Direction getDirection(Vec3d original, Vec3d destination) {
+    public static Direction getDirection(Vector3d original, Vector3d destination) {
         double a = Math.abs(original.x) - Math.abs(destination.x);
         double b = Math.abs(original.y) - Math.abs(destination.y);
         double c = Math.abs(original.z) - Math.abs(destination.z);

@@ -2,6 +2,7 @@ package com.vulp.druidcraft.client.gui.screen.inventory;
 
 import java.util.List;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.inventory.container.WoodcutterContainer;
@@ -32,35 +33,35 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
     }
 
     @Override
-    public void render(int p_render_1_, int p_render_2_, float p_render_3_) {
-        super.render(p_render_1_, p_render_2_, p_render_3_);
-        this.renderHoveredToolTip(p_render_1_, p_render_2_);
+    public void render(MatrixStack matrixStack, int p_render_1_, int p_render_2_, float p_render_3_) {
+        super.render(matrixStack, p_render_1_, p_render_2_, p_render_3_);
+        this.renderHoveredTooltip(matrixStack, p_render_1_, p_render_2_);
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
-        this.font.drawString(this.title.getFormattedText(), 8.0F, 4.0F, 4210752);
-        this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0F, (float)(this.ySize - 94), 4210752);
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int p_146979_1_, int p_146979_2_) {
+        this.font.drawString(matrixStack, this.title.getString(), 8.0F, 4.0F, 4210752);
+        this.font.drawString(matrixStack, this.playerInventory.getDisplayName().getString(), 8.0F, (float)(this.ySize - 94), 4210752);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
-        this.renderBackground();
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float p_146976_1_, int p_146976_2_, int p_146976_3_) {
+        this.renderBackground(matrixStack);
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
         int left = this.guiLeft;
         int top = this.guiTop;
-        this.blit(left, top, 0, 0, this.xSize, this.ySize);
+        this.blit(matrixStack, left, top, 0, 0, this.xSize, this.ySize);
         int progress = (int)(41.0F * this.sliderProgress);
-        this.blit(left + 119, top + 15 + progress, 176 + (this.canScroll() ? 0 : 12), 0, 12, 15);
+        this.blit(matrixStack, left + 119, top + 15 + progress, 176 + (this.canScroll() ? 0 : 12), 0, 12, 15);
         int offsetX = this.guiLeft + 52;
         int offsetY = this.guiTop + 14;
         int recipeOffset = this.recipeIndexOffset + 12;
-        this.drawRecipesBackground(p_146976_2_, p_146976_3_, offsetX, offsetY, recipeOffset);
+        this.drawRecipesBackground(matrixStack, p_146976_2_, p_146976_3_, offsetX, offsetY, recipeOffset);
         this.drawRecipesItems(offsetX, offsetY, recipeOffset);
     }
 
-    private void drawRecipesBackground(int p_214141_1_, int p_214141_2_, int p_214141_3_, int p_214141_4_, int p_214141_5_) {
+    private void drawRecipesBackground(MatrixStack matrixStack, int p_214141_1_, int p_214141_2_, int p_214141_3_, int p_214141_4_, int p_214141_5_) {
         for(int lvt_6_1_ = this.recipeIndexOffset; lvt_6_1_ < p_214141_5_ && lvt_6_1_ < (this.container).getRecipeListSize(); ++lvt_6_1_) {
             int lvt_7_1_ = lvt_6_1_ - this.recipeIndexOffset;
             int lvt_8_1_ = p_214141_3_ + lvt_7_1_ % 4 * 16;
@@ -73,7 +74,7 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
                 lvt_11_1_ += 36;
             }
 
-            this.blit(lvt_8_1_, lvt_10_1_ - 1, 0, lvt_11_1_, 16, 18);
+            this.blit(matrixStack, lvt_8_1_, lvt_10_1_ - 1, 0, lvt_11_1_, 16, 18);
         }
 
     }

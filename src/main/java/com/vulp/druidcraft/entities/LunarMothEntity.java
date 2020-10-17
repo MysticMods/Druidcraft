@@ -12,6 +12,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DoublePlantBlock;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.FlyingMovementController;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.ZombieEntity;
@@ -31,10 +33,11 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -69,12 +72,18 @@ public class LunarMothEntity extends AnimalEntity {
         this.goalSelector.addGoal(5, new SwimGoal(this));
     }
 
+    public static AttributeModifierMap.MutableAttribute bakeAttributes() {
+        return MobEntity.func_233666_p_()
+                .createMutableAttribute(Attributes.MAX_HEALTH, 6.0D)
+                .createMutableAttribute(Attributes.FLYING_SPEED, 0.6F);
+    }
+
+
+    // Child spawning thingy.
+    @Nullable
     @Override
-    protected void registerAttributes() {
-        super.registerAttributes();
-        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(6.0D);
-        this.getAttributes().registerAttribute(SharedMonsterAttributes.FLYING_SPEED);
-        this.getAttribute(SharedMonsterAttributes.FLYING_SPEED).setBaseValue(0.6);
+    public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
+        return null;
     }
 
     @Override
@@ -106,16 +115,16 @@ public class LunarMothEntity extends AnimalEntity {
     }
 
     @Override
-    public boolean processInteract(PlayerEntity player, Hand hand) {
+    public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
         ItemStack itemstack = player.getHeldItem(hand);
         Item item = itemstack.getItem();
         if (item == Items.GLASS_BOTTLE) {
             player.getEntityWorld().playSound(player, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEventRegistry.fill_bottle, SoundCategory.NEUTRAL, 1.0F, 1.0F);
             this.bottleToMothJar(itemstack, player);
             remove();
-            return true;
+            return ActionResultType.func_233537_a_(this.world.isRemote);
         }
-        return super.processInteract(player, hand);
+        return ActionResultType.PASS;
     }
 
     protected void bottleToMothJar(ItemStack itemstack, PlayerEntity player) {
@@ -141,7 +150,7 @@ public class LunarMothEntity extends AnimalEntity {
     @Override
     protected void updateAITasks() {
         super.updateAITasks();
-        BlockPos blockpos = new BlockPos(this);
+        BlockPos blockpos = this.getPosition();
         BlockPos blockpos1 = blockpos.up();
         if (this.isResting()) {
             if (this.world.getBlockState(blockpos1).isNormalCube(this.world, blockpos)) {
@@ -169,8 +178,8 @@ public class LunarMothEntity extends AnimalEntity {
             double d0 = (double)this.spawnPosition.getX() + 0.5D - this.getPosX();
             double d1 = (double)this.spawnPosition.getY() + 0.1D - this.getPosY();
             double d2 = (double)this.spawnPosition.getZ() + 0.5D - this.getPosZ();
-            Vec3d vec3d = this.getMotion();
-            Vec3d vec3d1 = vec3d.add((Math.signum(d0) * 0.5D - vec3d.x) * 0.10000000149011612D, (Math.signum(d1) * 0.699999988079071D - vec3d.y) * 0.10000000149011612D, (Math.signum(d2) * 0.5D - vec3d.z) * 0.10000000149011612D);
+            Vector3d vec3d = this.getMotion();
+            Vector3d vec3d1 = vec3d.add((Math.signum(d0) * 0.5D - vec3d.x) * 0.10000000149011612D, (Math.signum(d1) * 0.699999988079071D - vec3d.y) * 0.10000000149011612D, (Math.signum(d2) * 0.5D - vec3d.z) * 0.10000000149011612D);
             this.setMotion(vec3d1);
             float f = (float)(MathHelper.atan2(vec3d1.z, vec3d1.x) * 57.2957763671875D) - 90.0F;
             float f1 = MathHelper.wrapDegrees(f - this.rotationYaw);
@@ -244,12 +253,6 @@ public class LunarMothEntity extends AnimalEntity {
 
     public static boolean placement(EntityType<LunarMothEntity> entity, IWorld world, SpawnReason reason, BlockPos pos, Random rand) {
         return world.getBlockState(pos.down()).getBlock() != Blocks.AIR;
-    }
-
-    @Nullable
-    @Override
-    public AgeableEntity createChild(AgeableEntity ageable) {
-        return null;
     }
 
     @Override
@@ -357,8 +360,8 @@ public class LunarMothEntity extends AnimalEntity {
 
         @Override
         public void tick() {
-            Vec3d vec3d = getPositionVec();
-            Vec3d vec3d1 = new Vec3d(destinationBlock.getX(), destinationBlock.getY(), destinationBlock.getZ());
+            Vector3d vec3d = getPositionVec();
+            Vector3d vec3d1 = new Vector3d(destinationBlock.getX(), destinationBlock.getY(), destinationBlock.getZ());
             Direction direction = VectorUtil.getDirection(vec3d, vec3d1);
             if (world.getBlockState(destinationBlock).isSolidSide(world, destinationBlock, direction)) {
 

@@ -1,6 +1,7 @@
 package com.vulp.druidcraft.particle;
 
 import net.minecraft.client.particle.*;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particles.BasicParticleType;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -11,7 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class FierySparkParticle extends SpriteTexturedParticle {
     private final IAnimatedSprite spriteSet;
 
-    public FierySparkParticle(World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, IAnimatedSprite sprite) {
+    public FierySparkParticle(ClientWorld world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, IAnimatedSprite sprite) {
         super(world, posX, posY, posZ, motionX, motionY, motionZ);
         this.spriteSet = sprite;
         this.motionX = this.motionX * 0.01d;
@@ -74,7 +75,7 @@ public class FierySparkParticle extends SpriteTexturedParticle {
         }
 
         @Override
-        public Particle makeParticle(BasicParticleType typeIn, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle makeParticle(BasicParticleType typeIn, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             FierySparkParticle particle = new FierySparkParticle(world, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
             return particle;
         }

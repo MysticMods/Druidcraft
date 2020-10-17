@@ -6,9 +6,9 @@ import com.vulp.druidcraft.DruidcraftRegistry;
 import com.vulp.druidcraft.blocks.tileentities.SmallBeamTileEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.Material;
 import net.minecraft.client.renderer.model.Model;
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.renderer.model.RenderMaterial;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
@@ -49,7 +49,7 @@ public class SmallBeamTileEntityRenderer extends TileEntityRenderer<SmallBeamTil
             this.model.center_y.showModel = hasRope & axis == Direction.Axis.Y;
             this.model.center_z.showModel = hasRope & axis == Direction.Axis.Z;
         }
-        Material material = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, texture);
+        RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, texture);
         SmallBeamRopeModel model = this.model;
         IVertexBuilder iVertexBuilder = material.getBuffer(iRenderTypeBuffer, model::getRenderType);
         this.model.render(matrixStack, iVertexBuilder, i, i1, 1.0F, 1.0F, 1.0F, 1.0F);

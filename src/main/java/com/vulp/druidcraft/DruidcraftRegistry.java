@@ -17,6 +17,7 @@ import com.vulp.druidcraft.blocks.trees.DarkwoodTree;
 import com.vulp.druidcraft.blocks.trees.ElderTree;
 import com.vulp.druidcraft.client.renders.ItemTileEntityRenderer;
 import com.vulp.druidcraft.client.renders.SmallBeamTileEntityRenderer;
+import com.vulp.druidcraft.entities.BeetleEntity;
 import com.vulp.druidcraft.entities.LunarMothColors;
 import com.vulp.druidcraft.items.*;
 import com.vulp.druidcraft.recipes.RecipeSerializers;
@@ -29,6 +30,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.*;
@@ -424,6 +426,7 @@ public class DruidcraftRegistry {
                         EntityRegistry.lunar_moth_entity
                 );
 
+        EntityRegistry.registerEntityAttributes();
         EntityRegistry.registerEntityWorldSpawns();
         LOGGER.info("Entities registered.");
     }
@@ -493,7 +496,7 @@ public class DruidcraftRegistry {
     {
         IForgeRegistry<Biome> registry = BiomeRegistryEvent.getRegistry();
 
-        BiomeRegistry.darkwood_forest = BiomeRegistry.registerBiome(registry, new DarkwoodForest(), "darkwood_forest", 5, false, BiomeManager.BiomeType.COOL, BiomeDictionary.Type.CONIFEROUS, BiomeDictionary.Type.OVERWORLD);
+        BiomeRegistry.registerBiome(registry, BiomeRegistry.darkwood_forest, "darkwood_forest", 5, false, BiomeManager.BiomeType.COOL, BiomeDictionary.Type.CONIFEROUS, BiomeDictionary.Type.OVERWORLD);
 
         LOGGER.info("Biomes registered.");
     }

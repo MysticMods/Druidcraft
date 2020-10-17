@@ -8,7 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.state.IProperty;
+import net.minecraft.state.Property;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Util;
@@ -47,7 +47,7 @@ public class KnifeItem extends Item {
             }
         }
 
-        if (player.isSneaking() && state.has(BlockStateProperties.HORIZONTAL_FACING)) {
+        if (player.isSneaking() && state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
             BlockState state1 = cycleProperty(state, BlockStateProperties.HORIZONTAL_FACING);
             world.setBlockState(pos, state1, 18);
             return ActionResultType.SUCCESS;
@@ -56,7 +56,7 @@ public class KnifeItem extends Item {
         return super.onItemUse(context);
     }
 
-    private static <T extends Comparable<T>> BlockState cycleProperty(BlockState state, IProperty<T> propertyIn) {
+    private static <T extends Comparable<T>> BlockState cycleProperty(BlockState state, Property<T> propertyIn) {
         return state.with(propertyIn, getAdjacentValue(propertyIn.getAllowedValues(), state.get(propertyIn)));
     }
 

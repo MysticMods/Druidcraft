@@ -11,9 +11,9 @@ import net.minecraft.util.SoundEvent;
 
 public enum ArmorMaterialRegistry implements IArmorMaterial
 {
-    bone("bone", 15, new int[] {1, 4, 5, 2}, 18, Items.BONE, "item.armor.equip.gold", 0.0f),
-    chitin("chitin", 24, new int[] {3, 5, 7, 3}, 12, ItemRegistry.chitin, "item.armor.equip.leather", 1.0f),
-    moonstone("moonstone", 40, new int[] {3, 7, 9, 4}, 15, ItemRegistry.moonstone, "item.armor.equip.diamond", 3.0f);
+    bone("bone", 15, new int[] {1, 4, 5, 2}, 18, Items.BONE, "item.armor.equip.gold", 0.0f, 0.0F),
+    chitin("chitin", 24, new int[] {3, 5, 7, 3}, 12, ItemRegistry.chitin, "item.armor.equip.leather", 1.0f, 0.0F),
+    moonstone("moonstone", 40, new int[] {3, 7, 9, 4}, 15, ItemRegistry.moonstone, "item.armor.equip.diamond", 3.0f, 0.0F);
 
     private static final int[] max_damage_array = new int[]{13, 15, 16, 11};
     private String name, equipSound;
@@ -21,8 +21,9 @@ public enum ArmorMaterialRegistry implements IArmorMaterial
     private Item repairItem;
     private int[] damageReductionAmount;
     private float toughness;
+    private float knockbackResistance;
 
-    ArmorMaterialRegistry(String name, int durability, int[] damageReductionAmount, int enchantability, Item repairItem, String equipSound, float toughness)
+    ArmorMaterialRegistry(String name, int durability, int[] damageReductionAmount, int enchantability, Item repairItem, String equipSound, float toughness, float knockbackResistance)
     {
         this.name = name;
         this.equipSound = equipSound;
@@ -31,6 +32,7 @@ public enum ArmorMaterialRegistry implements IArmorMaterial
         this.repairItem = repairItem;
         this.damageReductionAmount = damageReductionAmount;
         this.toughness = toughness;
+        this.knockbackResistance = knockbackResistance;
     }
 
     @Override
@@ -66,5 +68,10 @@ public enum ArmorMaterialRegistry implements IArmorMaterial
     @Override
     public float getToughness() {
         return this.toughness;
+    }
+
+    @Override
+    public float getKnockbackResistance() {
+        return this.knockbackResistance;
     }
 }

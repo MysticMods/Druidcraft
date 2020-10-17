@@ -1,8 +1,9 @@
 package com.vulp.druidcraft.entities;
 
-import com.vulp.druidcraft.registry.AdvancementRegistry;
 import com.vulp.druidcraft.entities.AI.goals.SitGoalMonster;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -14,10 +15,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.server.management.PreYggdrasilConverter;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
@@ -57,10 +55,8 @@ public class TameableMonsterEntity extends CreatureEntity {
         this.dataManager.register(OWNER_UNIQUE_ID, Optional.empty());
     }
 
-    @Override
-    protected void registerAttributes() {
-       super.registerAttributes();
-       this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+    public static AttributeModifierMap.MutableAttribute registerAttributes() {
+        return MobEntity.func_233666_p_().createMutableAttribute(Attributes.ATTACK_DAMAGE);
     }
 
     @Override
@@ -81,17 +77,17 @@ public class TameableMonsterEntity extends CreatureEntity {
     @Override
     public void readAdditional(CompoundNBT compound) {
         super.readAdditional(compound);
-        String s;
+        UUID s;
         if (compound.contains("OwnerUUID", 8)) {
-            s = compound.getString("OwnerUUID");
+            s = compound.getUniqueId("OwnerUUID");
         } else {
             String s1 = compound.getString("Owner");
             s = PreYggdrasilConverter.convertMobOwnerIfNeeded(Objects.requireNonNull(this.getServer()), s1);
         }
 
-        if (!s.isEmpty()) {
+        if (s != null) {
             try {
-                this.setOwnerId(UUID.fromString(s));
+                this.setOwnerId(s);
                 this.setTamed(true);
             } catch (Throwable var4) {
                 this.setTamed(false);
@@ -120,7 +116,7 @@ public class TameableMonsterEntity extends CreatureEntity {
         return !this.getLeashed();
     }
 
-    public boolean isPreventingPlayerRest(PlayerEntity playerIn) {
+    public boolean preventPlayerSleep(PlayerEntity player) {
         return !this.isTamed();
     }
 
@@ -297,7 +293,7 @@ public class TameableMonsterEntity extends CreatureEntity {
     @Override
     public void onDeath(DamageSource cause) {
         if (!this.world.isRemote && this.world.getGameRules().getBoolean(GameRules.SHOW_DEATH_MESSAGES) && this.getOwner() instanceof ServerPlayerEntity) {
-            this.getOwner().sendMessage(this.getCombatTracker().getDeathMessage());
+            this.getOwner().sendMessage(this.getCombatTracker().getDeathMessage(), Util.DUMMY_UUID);
         }
 
         super.onDeath(cause);

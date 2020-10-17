@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.client.gui.screen.inventory;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.vulp.druidcraft.Druidcraft;
@@ -24,20 +25,20 @@ public class OctoCrateScreen extends ContainerScreen<CrateContainer> implements 
     }
 
     @Override
-    public void render(int p_render_1_, int p_render_2_, float p_render_3_) {
-        this.renderBackground();
-        super.render(p_render_1_, p_render_2_, p_render_3_);
-        this.renderHoveredToolTip(p_render_1_, p_render_2_);
+    public void render(MatrixStack matrixStack, int p_render_1_, int p_render_2_, float p_render_3_) {
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, p_render_1_, p_render_2_, p_render_3_);
+        this.renderHoveredTooltip(matrixStack, p_render_1_, p_render_2_);
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        this.font.drawString(this.title.getFormattedText(), 8.0F, 6.0F, 4210752);
-        this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 89.0F, 236.0F, 4210752);
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
+        this.font.drawString(matrixStack, this.title.getString(), 8.0F, 6.0F, 4210752);
+        this.font.drawString(matrixStack, this.playerInventory.getDisplayName().getString(), 89.0F, 236.0F, 4210752);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(CRATE_GUI_TEXTURE);
         int i = (this.width - this.xSize) / 2;
@@ -47,36 +48,36 @@ public class OctoCrateScreen extends ContainerScreen<CrateContainer> implements 
         // Crate inventory slots.
         for (int a = 0; a < 18; a++) {
             for (int b = 0; b < 12; b++) {
-                this.blit(i + 7 + (a * 18), j - l + 17 + (b * 18), 7, 4, 18, 18);
+                this.blit(matrixStack, i + 7 + (a * 18), j - l + 17 + (b * 18), 7, 4, 18, 18);
             }
         }
         // Player inventory.
-        this.blit(i + 81, j - l + 243, 0, 0, 176, 87);
+        this.blit(matrixStack, i + 81, j - l + 243, 0, 0, 176, 87);
         // Corners.
-        this.blit(i, j - l, 10, 87, 7, 7);
-        this.blit(i + 331, j - l, 17, 87, 7, 7);
-        this.blit(i, j - l + 233, 10, 94, 7, 7);
-        this.blit(i + 331, j - l + 233, 17, 94, 7, 7);
-        this.blit(i + 78, j - l + 233, 0, 87, 10, 10);
-        this.blit(i + 250, j - l + 233, 0, 97, 10, 10);
+        this.blit(matrixStack, i, j - l, 10, 87, 7, 7);
+        this.blit(matrixStack, i + 331, j - l, 17, 87, 7, 7);
+        this.blit(matrixStack, i, j - l + 233, 10, 94, 7, 7);
+        this.blit(matrixStack, i + 331, j - l + 233, 17, 94, 7, 7);
+        this.blit(matrixStack, i + 78, j - l + 233, 0, 87, 10, 10);
+        this.blit(matrixStack, i + 250, j - l + 233, 0, 97, 10, 10);
         // Edges.
         for (int a = 0; a < 113; a++) {
-            this.blit(i, j - l + 7 + (a * 2), 24, 87, 7, 2);
-            this.blit(i + 331, j - l + 7 + (a * 2), 24, 89, 7, 2);
+            this.blit(matrixStack, i, j - l + 7 + (a * 2), 24, 87, 7, 2);
+            this.blit(matrixStack, i + 331, j - l + 7 + (a * 2), 24, 89, 7, 2);
         }
         for (int a = 0; a < 162; a++) {
-            this.blit(i + 7 + (a * 2), j - l, 24, 91, 2, 7);
+            this.blit(matrixStack, i + 7 + (a * 2), j - l, 24, 91, 2, 7);
         }
         for (int a = 0; a < 36; a++) {
-            this.blit(i + 7 + (a * 2), j - l + 233, 26, 91, 2, 7);
-            this.blit(i + 260 + (a * 2), j - l + 233, 26, 91, 2, 7);
+            this.blit(matrixStack, i + 7 + (a * 2), j - l + 233, 26, 91, 2, 7);
+            this.blit(matrixStack, i + 260 + (a * 2), j - l + 233, 26, 91, 2, 7);
         }
         for (int a = 0; a < 5; a++) {
             for (int b = 0; b < 162; b++) {
-                this.blit(i + 7 + (b * 2), j - l + 7 + (a * 2), 28, 91, 2, 2);
+                this.blit(matrixStack, i + 7 + (b * 2), j - l + 7 + (a * 2), 28, 91, 2, 2);
             }
             for (int b = 0; b < 81; b++) {
-                this.blit(i + 88 + (b * 2), j - l + 233 + (a * 2), 28, 91, 2, 2);
+                this.blit(matrixStack, i + 88 + (b * 2), j - l + 233 + (a * 2), 28, 91, 2, 2);
             }
         }
     }

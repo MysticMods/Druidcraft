@@ -11,6 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
@@ -33,8 +34,6 @@ public class EntityRegistry
     public static final EntityType<DreadfishEntity> dreadfish_entity = createEntity(DreadfishEntity::new, EntityClassification.MONSTER, "dreadfish", 0.8f, 0.4f);
     public static final EntityType<BeetleEntity> beetle_entity = createEntity(BeetleEntity::new, EntityClassification.MONSTER, "beetle", 1.5f, 1.5f);
     public static final EntityType<LunarMothEntity> lunar_moth_entity = createEntity(LunarMothEntity::new, EntityClassification.CREATURE, "lunar_moth", 0.5f, 0.5f);
-
-    public static final EntityType<DreadfishFireBurst> dreadfish_fire_burst = createEntity(DreadfishFireBurst::new, EntityClassification.MISC, "dreadfish_fire_burst", 0.5f, 0.5f);
 
     private static <T extends Entity> EntityType<T> createEntity(EntityType.IFactory<T> factory, EntityClassification entityClassification, String name, float width, float height) {
         return createEntity(factory, entityClassification, name, width, height, -1, null);
@@ -60,6 +59,12 @@ public class EntityRegistry
         entity.setRegistryName(location);
 
         return entity;
+    }
+
+    public static void registerEntityAttributes() {
+        GlobalEntityTypeAttributes.put(dreadfish_entity, DreadfishEntity.bakeAttributes().create());
+        GlobalEntityTypeAttributes.put(beetle_entity, BeetleEntity.bakeAttributes().create());
+        GlobalEntityTypeAttributes.put(lunar_moth_entity, LunarMothEntity.bakeAttributes().create());
     }
 
     public static void registerEntitySpawnEggs(final RegistryEvent.Register<Item> event)

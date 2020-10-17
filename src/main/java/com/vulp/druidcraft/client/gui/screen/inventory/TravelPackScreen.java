@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.client.gui.screen.inventory;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.vulp.druidcraft.Druidcraft;
@@ -12,6 +13,7 @@ import com.vulp.druidcraft.items.TravelPackItem;
 import com.vulp.druidcraft.network.PacketHandler;
 import com.vulp.druidcraft.network.message.DeployBedrollMessage;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.DialogTexts;
 import net.minecraft.client.gui.IHasContainer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.BeaconScreen;
@@ -73,36 +75,36 @@ public class TravelPackScreen extends ContainerScreen<TravelPackContainer> imple
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        this.font.drawString(this.title.getFormattedText(), 8.0F, 6.0F, 4210752);
-        this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0F, 57.0F, 4210752);
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
+        this.font.drawString(matrixStack, this.title.getString(), 8.0F, 6.0F, 4210752);
+        this.font.drawString(matrixStack, this.playerInventory.getDisplayName().getString(), 8.0F, 57.0F, 4210752);
         for(Widget widget : this.buttons) {
             if (widget.isHovered()) {
-                widget.renderToolTip(mouseX - this.guiLeft, mouseY - this.guiTop);
+                widget.renderToolTip(matrixStack, mouseX - this.guiLeft, mouseY - this.guiTop);
                 break;
             }
         }
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(TRAVEL_PACK_GUI_TEXTURE);
         int i = (this.width - this.xSize) / 2;
         int j = (this.height - this.ySize) / 2;
-        this.blit(i, j, 0, 0, this.xSize, this.ySize);
+        this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
         for(int a = 0; a < 2; a++) {
             for(int b = 0; b < 2; b++) {
-                this.blit(i + 18 + 134 * b, j + 20 + 18 * a, 12, 151, 6, 16);
+                this.blit(matrixStack, i + 18 + 134 * b, j + 20 + 18 * a, 12, 151, 6, 16);
             }
         }
     }
 
     @Override
-    public void render(int p_render_1_, int p_render_2_, float p_render_3_) {
-        this.renderBackground();
-        super.render(p_render_1_, p_render_2_, p_render_3_);
-        this.renderHoveredToolTip(p_render_1_, p_render_2_);
+    public void render(MatrixStack matrixStack, int p_render_1_, int p_render_2_, float p_render_3_) {
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, p_render_1_, p_render_2_, p_render_3_);
+        this.renderHoveredTooltip(matrixStack, p_render_1_, p_render_2_);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -139,8 +141,8 @@ public class TravelPackScreen extends ContainerScreen<TravelPackContainer> imple
         }
 
         @Override
-        public void renderToolTip(int p_renderToolTip_1_, int p_renderToolTip_2_) {
-            TravelPackScreen.this.renderTooltip(I18n.format(resourceLocation), p_renderToolTip_1_, p_renderToolTip_2_);
+        public void renderToolTip(MatrixStack matrixStack, int p_renderToolTip_1_, int p_renderToolTip_2_) {
+            TravelPackScreen.this.renderTooltip(matrixStack, ITextComponent.getTextComponentOrEmpty(I18n.format(resourceLocation)), p_renderToolTip_1_, p_renderToolTip_2_);
         }
     }
 
@@ -149,11 +151,11 @@ public class TravelPackScreen extends ContainerScreen<TravelPackContainer> imple
         private boolean selected;
 
         protected Button(int xIn, int yIn) {
-            super(xIn, yIn, 6, 16, "");
+            super(xIn, yIn, 6, 16, ITextComponent.getTextComponentOrEmpty(""));
         }
 
         @Override
-        public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+        public void renderButton(MatrixStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
             Minecraft.getInstance().getTextureManager().bindTexture(TRAVEL_PACK_GUI_TEXTURE);
             GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             int lvt_5_1_ = 0;
@@ -165,7 +167,7 @@ public class TravelPackScreen extends ContainerScreen<TravelPackContainer> imple
                 lvt_5_1_ += this.width * 3;
             }
 
-            this.blit(this.x, this.y, lvt_5_1_, 151, this.width, this.height);
+            this.blit(matrixStack, this.x, this.y, lvt_5_1_, 151, this.width, this.height);
         }
 
         public boolean isSelected() {

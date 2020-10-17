@@ -1,5 +1,7 @@
 package com.vulp.druidcraft.registry;
 
+import com.vulp.druidcraft.Druidcraft;
+import com.vulp.druidcraft.DruidcraftRegistry;
 import com.vulp.druidcraft.blocks.tileentities.SmallBeamTileEntity;
 import com.vulp.druidcraft.client.gui.screen.inventory.*;
 import com.vulp.druidcraft.client.models.BedrollTravelPackModel;
@@ -24,7 +26,11 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
 import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -44,8 +50,21 @@ public class RenderRegistry
         RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.beetle_entity, new BeetleEntityRender.RenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.lunar_moth_entity, new LunarMothEntityRender.RenderFactory());
 
-        // TILE ENTITIES
+        // BLOCK TILE ENTITIES
         ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.small_beam, SmallBeamTileEntityRenderer::new);
+
+        // ITEM TILE ENTITIES
+        ItemModelsProperties.registerProperty(ItemRegistry.chitin_shield, new ResourceLocation("blocking"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
+        ItemModelsProperties.registerProperty(ItemRegistry.bone_shield, new ResourceLocation("blocking"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
+        ItemModelsProperties.registerProperty(ItemRegistry.moonstone_shield, new ResourceLocation("blocking"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
+
+        ItemModelsProperties.registerProperty(ItemRegistry.travel_pack, new ResourceLocation(Druidcraft.MODID, "color"), (itemStack, world, livingEntity) -> {
+            CompoundNBT nbt = itemStack.getOrCreateTag();
+            if (nbt.contains("Color")) {
+                return nbt.getInt("Color");
+            }
+            else return -1;
+        });
 
         // BLOCKS
     //    RenderTypeLookup.setRenderLayer(BlockRegistry.aloe_vera_crop, RenderType.getCutout());

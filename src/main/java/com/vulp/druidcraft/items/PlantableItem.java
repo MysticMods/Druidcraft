@@ -59,17 +59,17 @@ public class PlantableItem extends Item implements IPlantable
     }
 
     @Override
-    public boolean itemInteractionForEntity(ItemStack itemstack, PlayerEntity player, LivingEntity entity, Hand hand) {
+    public ActionResultType itemInteractionForEntity(ItemStack itemstack, PlayerEntity player, LivingEntity entity, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (!entity.world.isRemote && !entity.isChild() && ((AgeableEntity) entity).getGrowingAge() == 0) {
             if (entity instanceof ChickenEntity) {
                 if (((ChickenEntity) entity).isInLove()) {
-                    return false;
+                    return ActionResultType.FAIL;
                 } else {
                     ((ChickenEntity) entity).setInLove(player);
                     if (!player.isCreative())
                         stack.shrink(1);
-                    return true;
+                    return ActionResultType.func_233537_a_(entity.world.isRemote);
                 }
             }
 
@@ -90,9 +90,9 @@ public class PlantableItem extends Item implements IPlantable
                 stack.shrink(1);
             ((AgeableEntity) entity).ageUp((int) ((float) (-((AgeableEntity) entity).getGrowingAge() / 20) * 0.1F),
                     true);
-            return true;
+            return ActionResultType.func_233537_a_(entity.world.isRemote);
         }
-        return false;
+        return ActionResultType.PASS;
     }
 
     @Override
