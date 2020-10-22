@@ -29,7 +29,7 @@ public class JEIDruidcraftPlugin implements IModPlugin {
 
     @Override
     public ResourceLocation getPluginUid() {
-        return null;
+        return UID;
     }
 
     @Override
