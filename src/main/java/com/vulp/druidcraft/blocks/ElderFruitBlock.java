@@ -55,7 +55,7 @@ public class ElderFruitBlock extends DynamicCropBlock implements IGrowable {
 
     @Override
     public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
-        return null;
+        return Items.AIR;
     }
 
     @Override
