@@ -46,9 +46,9 @@ public class DebugBlock extends Block {
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (worldIn == null) return;
         if (!Screen.hasShiftDown()) {
-            tooltip.add(new TranslationTextComponent("block.druidcraft.hold_shift").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+            tooltip.add(new TranslationTextComponent("block.druidcraft.hold_shift").mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
         } else {
-            tooltip.add(new TranslationTextComponent("block.druidcraft.debug_block.description1").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+            tooltip.add(new TranslationTextComponent("block.druidcraft.debug_block.description1").mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
         }
     }
 

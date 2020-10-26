@@ -137,9 +137,9 @@ public class GrowthLampBlock extends ContainerBlock implements IWaterLoggable {
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (worldIn == null) return;
         if (!Screen.hasShiftDown()) {
-            tooltip.add(new TranslationTextComponent("block.druidcraft.hold_shift").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+            tooltip.add(new TranslationTextComponent("block.druidcraft.hold_shift").mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
         } else {
-            tooltip.add(new TranslationTextComponent("block.druidcraft.growth_lamp.description1").setStyle(new Style().setColor(TextFormatting.GREEN).setItalic(true)));
+            tooltip.add(new TranslationTextComponent("block.druidcraft.growth_lamp.description1").mergeStyle(TextFormatting.GREEN, TextFormatting.ITALIC));
         }
     }
 

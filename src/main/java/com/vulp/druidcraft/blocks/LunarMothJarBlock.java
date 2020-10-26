@@ -167,9 +167,9 @@ public class LunarMothJarBlock extends RopeableLanternBlock {
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (worldIn == null) return;
         if (!Screen.hasShiftDown()) {
-            tooltip.add(new TranslationTextComponent("block.druidcraft.hold_shift").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+            tooltip.add(new TranslationTextComponent("block.druidcraft.hold_shift").mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
         } else {
-            tooltip.add(new TranslationTextComponent("block.druidcraft.lunar_moth_lantern.description1").setStyle(new Style().setColor(getTextColor((LunarMothJarItem)stack.getItem())).setItalic(true)));
+            tooltip.add(new TranslationTextComponent("block.druidcraft.lunar_moth_lantern.description1").mergeStyle(getTextColor((LunarMothJarItem)stack.getItem()), TextFormatting.ITALIC));
         }
     }
 

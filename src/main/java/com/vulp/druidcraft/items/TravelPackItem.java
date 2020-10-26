@@ -212,9 +212,9 @@ public class TravelPackItem extends Item {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (worldIn == null) return;
         if (!Screen.hasShiftDown()) {
-            tooltip.add(new TranslationTextComponent("item.druidcraft.hold_shift").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+            tooltip.add(new TranslationTextComponent("item.druidcraft.hold_shift").mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
         } else {
-            tooltip.add(new TranslationTextComponent("item.druidcraft.travel_pack.description1").setStyle(new Style().setColor(TextFormatting.GRAY).setItalic(true)));
+            tooltip.add(new TranslationTextComponent("item.druidcraft.travel_pack.description1").mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
         }
     }
 

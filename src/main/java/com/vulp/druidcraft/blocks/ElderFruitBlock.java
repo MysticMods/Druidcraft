@@ -10,13 +10,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.Items;
 import net.minecraft.state.*;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -25,7 +25,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.loot.conditions.BlockStateProperty;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -56,13 +55,13 @@ public class ElderFruitBlock extends DynamicCropBlock implements IGrowable {
 
     @Override
     public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
-        return Items.AIR;
+        return new ItemStack(Items.AIR);
     }
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         VoxelShape voxelshape = VoxelShapes.empty();
-        Vector3d vec3d = state.getOffset(worldIn, pos);
+        Vector3d vec3d = getCustomOffset(state, worldIn, pos);
 
         if (state.get(FACING) == Direction.UP) {
             voxelshape = VoxelShapes.or(voxelshape, Block.makeCuboidShape(2.0D, 15.0D, 2.0D, 14.0D, 16.0D, 14.0D));
@@ -86,7 +85,11 @@ public class ElderFruitBlock extends DynamicCropBlock implements IGrowable {
     }
 
     @Override
-    public Vector3d getOffset(BlockState state, IBlockReader worldIn, BlockPos pos) {
+    public OffsetType getOffsetType() {
+        return super.getOffsetType();
+    }
+
+    public Vector3d getCustomOffset(BlockState state, IBlockReader worldIn, BlockPos pos) {
         long i = MathHelper.getCoordinateRandom(pos.getX(), pos.getY(), pos.getZ());
         return new Vector3d(
                 !(state.get(FACING) == Direction.EAST || state.get(FACING) == Direction.WEST) ?(((i & 15L) / 15.0F) - 0.5D) * 0.5D : 0.0D,

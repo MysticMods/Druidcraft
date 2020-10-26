@@ -59,11 +59,11 @@ public class SaplingBlock extends BushBlock implements IGrowable {
     @Override
     public void grow(ServerWorld world, Random rand, BlockPos pos, BlockState state) {
         if (state.get(STAGE) == 0) {
-            world.setBlockState(pos, state.cycle(STAGE), 4);
+            world.setBlockState(pos, state.func_235896_a_(STAGE), 4);
         } else {
             if (!ForgeEventFactory.saplingGrowTree(world, rand, pos))
                 return;
-            this.tree.get().place(world, world.getChunkProvider().getChunkGenerator(), pos, state, rand);
+            this.tree.get().attemptGrowTree(world, world.getChunkProvider().getChunkGenerator(), pos, state, rand);
         }
     }
 
