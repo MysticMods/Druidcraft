@@ -78,11 +78,9 @@ public class LunarMothEntity extends AnimalEntity {
                 .createMutableAttribute(Attributes.FLYING_SPEED, 0.6F);
     }
 
-
-    // Child spawning thingy.
     @Nullable
     @Override
-    public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
+    public AgeableEntity createChild(AgeableEntity ageableEntity) {
         return null;
     }
 

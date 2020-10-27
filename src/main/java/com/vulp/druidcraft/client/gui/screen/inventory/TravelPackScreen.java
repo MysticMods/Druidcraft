@@ -142,7 +142,7 @@ public class TravelPackScreen extends ContainerScreen<TravelPackContainer> imple
 
         @Override
         public void renderToolTip(MatrixStack matrixStack, int p_renderToolTip_1_, int p_renderToolTip_2_) {
-            TravelPackScreen.this.renderTooltip(matrixStack, ITextComponent.getTextComponentOrEmpty(I18n.format(resourceLocation)), p_renderToolTip_1_, p_renderToolTip_2_);
+            TravelPackScreen.this.renderTooltip(matrixStack, ITextComponent.func_241827_a_(I18n.format(resourceLocation)), p_renderToolTip_1_, p_renderToolTip_2_);
         }
     }
 
@@ -151,7 +151,7 @@ public class TravelPackScreen extends ContainerScreen<TravelPackContainer> imple
         private boolean selected;
 
         protected Button(int xIn, int yIn) {
-            super(xIn, yIn, 6, 16, ITextComponent.getTextComponentOrEmpty(""));
+            super(xIn, yIn, 6, 16, ITextComponent.func_241827_a_(""));
         }
 
         @Override

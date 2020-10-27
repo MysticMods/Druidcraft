@@ -7,7 +7,9 @@ import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeAmbience;
 import net.minecraft.world.biome.DefaultBiomeFeatures;
+import net.minecraft.world.biome.MoodSoundAmbience;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.structure.MineshaftConfig;
@@ -19,12 +21,11 @@ import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
 public class DarkwoodForest extends Biome {
     public DarkwoodForest() {
         super((new Biome.Builder()).surfaceBuilder(new ConfiguredSurfaceBuilder<SurfaceBuilderConfig>(SurfaceBuilder.DEFAULT, new SurfaceBuilderConfig(Blocks.GRASS_BLOCK.getDefaultState(), Blocks.DIRT.getDefaultState(), Blocks.SAND.getDefaultState())))
-                .precipitation(RainType.RAIN).category(Category.TAIGA).downfall(0.8f).depth(0.3f).scale(0.2f).temperature(0.25f).waterColor(0x5786E5).waterFogColor(0x38577F).parent(null));
+                .precipitation(RainType.RAIN).category(Category.TAIGA).downfall(0.8f).depth(0.3f).scale(0.2f).temperature(0.25f).func_235097_a_((new BiomeAmbience.Builder()).setWaterColor(0x5786E5).setWaterFogColor(0x38577F).setFogColor(12638463).setMoodSound(MoodSoundAmbience.field_235027_b_).build()).parent(null));
 
-        this.addStructure(Feature.MINESHAFT.withConfiguration(new MineshaftConfig(0.004D, MineshaftStructure.Type.NORMAL)));
-        this.addStructure(Feature.STRONGHOLD.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
         DefaultBiomeFeatures.addCarvers(this);
-        DefaultBiomeFeatures.addStructures(this);
+        DefaultBiomeFeatures.func_235196_b_(this);
+        this.func_235063_a_(DefaultBiomeFeatures.RUINED_PORTAL_STANDARD);
         DefaultBiomeFeatures.addLakes(this);
         DefaultBiomeFeatures.addMonsterRooms(this);
         DefaultBiomeFeatures.addTaigaLargeFerns(this);

@@ -5,7 +5,6 @@ import com.vulp.druidcraft.blocks.*;
 import com.vulp.druidcraft.blocks.DoorBlock;
 import com.vulp.druidcraft.blocks.OreBlock;
 import com.vulp.druidcraft.blocks.PressurePlateBlock;
-import com.vulp.druidcraft.blocks.SaplingBlock;
 import com.vulp.druidcraft.blocks.StairsBlock;
 import com.vulp.druidcraft.blocks.FieryTorchBlock;
 import com.vulp.druidcraft.blocks.TrapDoorBlock;
@@ -17,20 +16,15 @@ import com.vulp.druidcraft.blocks.trees.DarkwoodTree;
 import com.vulp.druidcraft.blocks.trees.ElderTree;
 import com.vulp.druidcraft.client.renders.ItemTileEntityRenderer;
 import com.vulp.druidcraft.client.renders.SmallBeamTileEntityRenderer;
-import com.vulp.druidcraft.entities.BeetleEntity;
 import com.vulp.druidcraft.entities.LunarMothColors;
 import com.vulp.druidcraft.items.*;
 import com.vulp.druidcraft.recipes.RecipeSerializers;
 import com.vulp.druidcraft.registry.*;
-import com.vulp.druidcraft.world.biomes.DarkwoodForest;
 import com.vulp.druidcraft.world.features.ElderTreeFeature;
-import com.vulp.druidcraft.world.features.ElderTreeFeatureConfig;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.*;
@@ -281,7 +275,6 @@ public class DruidcraftRegistry {
                         BlockRegistry.darkwood_log = new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE).harvestLevel(0).sound(SoundType.WOOD)).setRegistryName(location("darkwood_log")),
                         BlockRegistry.stripped_darkwood_log = new RotatedPillarBlock(RotatedPillarBlock.Properties.from(BlockRegistry.darkwood_log)).setRegistryName(location("stripped_darkwood_log")),
                         BlockRegistry.darkwood_leaves = new LeavesBlock(LeavesBlock.Properties.create(Material.LEAVES).hardnessAndResistance(0.2f).tickRandomly().sound(SoundType.PLANT).notSolid()).setRegistryName(location("darkwood_leaves")),
-                        BlockRegistry.darkwood_sapling = new SaplingBlock(DarkwoodTree::new, SaplingBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).tickRandomly().doesNotBlockMovement().sound(SoundType.PLANT)).setRegistryName(location("darkwood_sapling")),
                         BlockRegistry.potted_darkwood_sapling = new FlowerPotBlock(null, () -> BlockRegistry.darkwood_sapling, FlowerPotBlock.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.0f).sound(SoundType.STONE)).setRegistryName(location("potted_darkwood_sapling")),
                         BlockRegistry.darkwood_planks = new Block(Block.Properties.create(Material.WOOD).hardnessAndResistance(2.0F, 3.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("darkwood_planks")),
                         BlockRegistry.stripped_darkwood_wood = new RotatedPillarBlock(RotatedPillarBlock.Properties.from(BlockRegistry.darkwood_log)).setRegistryName(location("stripped_darkwood_wood")),
@@ -294,11 +287,11 @@ public class DruidcraftRegistry {
                         BlockRegistry.darkwood_button = new WoodButtonBlock(WoodButtonBlock.Properties.create(Material.WOOD).hardnessAndResistance(0.5f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("darkwood_button")),
                         BlockRegistry.darkwood_trapdoor = new TrapDoorBlock(TrapDoorBlock.Properties.create(Material.WOOD).hardnessAndResistance(3.0f).harvestTool(ToolType.AXE).notSolid().sound(SoundType.WOOD)).setRegistryName(location("darkwood_trapdoor")),
                         BlockRegistry.darkwood_door = new DoorBlock(DoorBlock.Properties.create(Material.WOOD).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.AXE).notSolid().sound(SoundType.WOOD)).setRegistryName(location("darkwood_door")),
+                        BlockRegistry.darkwood_sapling = new SaplingBlock(new DarkwoodTree(), SaplingBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).tickRandomly().doesNotBlockMovement().sound(SoundType.PLANT)).setRegistryName(location("darkwood_sapling")),
 
                         BlockRegistry.elder_log = new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("elder_log")),
                         BlockRegistry.stripped_elder_log = new RotatedPillarBlock(RotatedPillarBlock.Properties.from(BlockRegistry.elder_log)).setRegistryName(location("stripped_elder_log")),
                         BlockRegistry.elder_leaves = new ElderLeavesBlock(ElderLeavesBlock.Properties.create(Material.LEAVES).hardnessAndResistance(0.2f).tickRandomly().sound(SoundType.PLANT).notSolid()).setRegistryName(location("elder_leaves")),
-                        BlockRegistry.elder_sapling = new SaplingBlock(ElderTree::new, SaplingBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).tickRandomly().doesNotBlockMovement().sound(SoundType.PLANT)).setRegistryName(location("elder_sapling")),
                         BlockRegistry.potted_elder_sapling = new FlowerPotBlock(null, () -> BlockRegistry.elder_sapling, FlowerPotBlock.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.0f).sound(SoundType.STONE)).setRegistryName(location("potted_elder_sapling")),
                         BlockRegistry.elder_planks = new Block(Block.Properties.create(Material.WOOD).hardnessAndResistance(2.0F, 3.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("elder_planks")),
                         BlockRegistry.stripped_elder_wood = new RotatedPillarBlock(RotatedPillarBlock.Properties.from(BlockRegistry.elder_log)).setRegistryName(location("stripped_elder_wood")),
@@ -311,6 +304,7 @@ public class DruidcraftRegistry {
                         BlockRegistry.elder_button = new WoodButtonBlock(WoodButtonBlock.Properties.create(Material.WOOD).hardnessAndResistance(0.5f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)).setRegistryName(location("elder_button")),
                         BlockRegistry.elder_trapdoor = new TrapDoorBlock(TrapDoorBlock.Properties.create(Material.WOOD).hardnessAndResistance(3.0f).harvestTool(ToolType.AXE).notSolid().sound(SoundType.WOOD)).setRegistryName(location("elder_trapdoor")),
                         BlockRegistry.elder_door = new DoorBlock(DoorBlock.Properties.create(Material.WOOD).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.AXE).notSolid().sound(SoundType.WOOD)).setRegistryName(location("elder_door")),
+                        BlockRegistry.elder_sapling = new SaplingBlock(new ElderTree(), SaplingBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).tickRandomly().doesNotBlockMovement().sound(SoundType.PLANT)).setRegistryName(location("elder_sapling")),
                         BlockRegistry.elder_fruit = new ElderFruitBlock(ElderFruitBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).doesNotBlockMovement().sound(SoundType.CROP).tickRandomly()).setRegistryName(location("elder_fruit")),
                         BlockRegistry.elder_leaf_layer = new ElderLeafLayerBlock(ElderLeafLayerBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.2f).doesNotBlockMovement().sound(SoundType.CROP).tickRandomly().notSolid()).setRegistryName(location("elder_leaf_layer")),
                         BlockRegistry.lavender = new FlowerBlock(Effects.HASTE, 8, FlowerBlock.Properties.create(Material.PLANTS).doesNotBlockMovement().hardnessAndResistance(0.0f).sound(SoundType.PLANT)).setRegistryName(location("lavender")),
@@ -507,9 +501,8 @@ public class DruidcraftRegistry {
     {
         IForgeRegistry<Feature<?>> registry = FeatureRegistryEvent.getRegistry();
 
-        FeatureRegistry.elder_tree = FeatureRegistry.register(registry, new ElderTreeFeature(ElderTreeFeatureConfig::deserialize), "elder_tree");
+        FeatureRegistry.elder_tree_feature = FeatureRegistry.register(registry, new ElderTreeFeature(), "elder_tree");
 
-        FeatureRegistry.elder_tree_feature = new ElderTreeFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.elder_wood.getDefaultState().with(WoodBlock.dropSelf, false)), new SimpleBlockStateProvider(BlockRegistry.elder_log.getDefaultState()), new SimpleBlockStateProvider(BlockRegistry.elder_leaves.getDefaultState())).baseHeight(6).setSapling((IPlantable)BlockRegistry.elder_sapling).build();
         FeatureRegistry.blueberry_bush_feature = new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.blueberry_bush.getDefaultState().with(BerryBushBlock.AGE, 3)), new SimpleBlockPlacer()).tries(64).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK.getBlock())).func_227317_b_().build();
         FeatureRegistry.lavender_feature = new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.lavender.getDefaultState()), new SimpleBlockPlacer()).tries(64).build();
 

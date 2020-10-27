@@ -116,8 +116,6 @@ public class ElderFruitBlock extends DynamicCropBlock implements IGrowable {
                 blockstate = this.getDefaultState().with(FACING, Direction.WEST);
             }
 
-            this.setDefaultState(blockstate.with(this.getAgeProperty(), 0).with(LIFE_STAGE, CropLifeStageType.FLOWER).with(MID_BERRY, false));
-
             if (context.getWorld().getBlockState(context.getPos()).getBlock() instanceof ElderLeavesBlock) {
                 return blockstate;
 
@@ -141,24 +139,32 @@ public class ElderFruitBlock extends DynamicCropBlock implements IGrowable {
     }
 
     @Override
-    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-        if (!worldIn.isAreaLoaded(pos, 1) && state.get(LIFE_STAGE) == CropLifeStageType.NONE) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
+    public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+        if (!worldIn.isAreaLoaded(pos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
+        if (!worldIn.isRemote && (worldIn.rand.nextInt(8) == 0)) {
+            if (CropLifeStageType.checkCropLife(worldIn) == CropLifeStageType.NONE) {
+                worldIn.destroyBlock(pos, false);
+                if (worldIn.rand.nextInt(7) == 0) {
+                    createLeafLayer(worldIn, state, pos, random);
+                    // spawnAsEntity(worldIn, pos, new ItemStack(ItemRegistry.elderberries, 1));
+                }
+                return;
+            }
+        }
         if (worldIn.getLightSubtracted(pos, 0) >= 9 && isGrowable(worldIn, pos)) {
             int i = this.getAge(state);
             float f = getGrowthChance(this, worldIn, pos);
             if (i < this.getMaxAge()) {
                 if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt((int)(25.0F / f) + 1) == 0)) {
-                    BlockState lastState = state.getBlockState();
-                    worldIn.setBlockState(pos, lastState.with(AGE, state.get(AGE) + 1));
+                    worldIn.setBlockState(pos, state.with(AGE, state.get(AGE) + 1));
                     net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
                 }
             } else if ((CropLifeStageType.checkCropLife(worldIn) == CropLifeStageType.BERRY) && state.get(LIFE_STAGE) != CropLifeStageType.BERRY || state.get(MID_BERRY)) {
                 if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt((int)(25.0F / f) + 1) == 0) && i == this.getMaxAge()) {
-                    BlockState lastState = state.getBlockState();
                     if (state.get(LIFE_STAGE) == CropLifeStageType.BERRY && state.get(MID_BERRY)) {
-                        worldIn.setBlockState(pos, lastState.with(MID_BERRY, false));
-                    } else if (lastState.get(LIFE_STAGE) != CropLifeStageType.BERRY) {
-                        worldIn.setBlockState(pos, lastState.with(MID_BERRY, true).with(LIFE_STAGE, CropLifeStageType.BERRY));
+                        worldIn.setBlockState(pos, state.with(MID_BERRY, false));
+                    } else if (state.get(LIFE_STAGE) != CropLifeStageType.BERRY) {
+                        worldIn.setBlockState(pos, state.with(MID_BERRY, true).with(LIFE_STAGE, CropLifeStageType.BERRY));
                     }
                     net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
                 }
@@ -166,19 +172,6 @@ public class ElderFruitBlock extends DynamicCropBlock implements IGrowable {
         }
     }
 
-    @Override
-    public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-        super.randomTick(state, worldIn, pos, random);
-        if (!worldIn.isRemote && (worldIn.rand.nextInt(8) == 0)) {
-            if (CropLifeStageType.checkCropLife(worldIn) == CropLifeStageType.NONE) {
-                    worldIn.destroyBlock(pos, false);
-                    if (worldIn.rand.nextInt(7) == 0) {
-                        createLeafLayer(worldIn, state, pos, random);
-                        // spawnAsEntity(worldIn, pos, new ItemStack(ItemRegistry.elderberries, 1));
-                }
-            }
-        }
-    }
 
 
     public void createLeafLayer(ServerWorld world, BlockState state, BlockPos pos, Random rand) {
@@ -201,11 +194,10 @@ public class ElderFruitBlock extends DynamicCropBlock implements IGrowable {
 
     public void grow(World worldIn, BlockPos pos, BlockState state) {
         if (isGrowable(worldIn, pos)) {
-            BlockState lastState = state.getBlockState();
-            if (CropLifeStageType.checkCropLife(worldIn) == CropLifeStageType.BERRY && lastState.get(LIFE_STAGE) != CropLifeStageType.BERRY && isMaxAge(lastState)) {
-                worldIn.setBlockState(pos, lastState.with(MID_BERRY, true).with(LIFE_STAGE, CropLifeStageType.BERRY));
-            } else if (worldIn.getBlockState(pos).get(MID_BERRY) && isMaxAge(lastState)) {
-                worldIn.setBlockState(pos, lastState.with(MID_BERRY, false).with(LIFE_STAGE, CropLifeStageType.BERRY));
+            if (CropLifeStageType.checkCropLife(worldIn) == CropLifeStageType.BERRY && state.get(LIFE_STAGE) != CropLifeStageType.BERRY && isMaxAge(state)) {
+                worldIn.setBlockState(pos, state.with(MID_BERRY, true).with(LIFE_STAGE, CropLifeStageType.BERRY));
+            } else if (worldIn.getBlockState(pos).get(MID_BERRY) && isMaxAge(state)) {
+                worldIn.setBlockState(pos, state.with(MID_BERRY, false).with(LIFE_STAGE, CropLifeStageType.BERRY));
             } else {
                 int i = this.getAge(state) + this.getBonemealAgeIncrease(worldIn);
                 int j = this.getMaxAge();
@@ -213,7 +205,7 @@ public class ElderFruitBlock extends DynamicCropBlock implements IGrowable {
                     i = j;
                 }
 
-                worldIn.setBlockState(pos, lastState.with(AGE, i));
+                worldIn.setBlockState(pos, state.with(AGE, i));
             }
         }
     }

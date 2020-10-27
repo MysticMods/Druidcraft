@@ -54,11 +54,11 @@ public class RenderRegistry
         ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.small_beam, SmallBeamTileEntityRenderer::new);
 
         // ITEM TILE ENTITIES
-        ItemModelsProperties.registerProperty(ItemRegistry.chitin_shield, new ResourceLocation("blocking"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
-        ItemModelsProperties.registerProperty(ItemRegistry.bone_shield, new ResourceLocation("blocking"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
-        ItemModelsProperties.registerProperty(ItemRegistry.moonstone_shield, new ResourceLocation("blocking"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
+        ItemModelsProperties.func_239418_a_(ItemRegistry.chitin_shield, new ResourceLocation("blocking"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
+        ItemModelsProperties.func_239418_a_(ItemRegistry.bone_shield, new ResourceLocation("blocking"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
+        ItemModelsProperties.func_239418_a_(ItemRegistry.moonstone_shield, new ResourceLocation("blocking"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
 
-        ItemModelsProperties.registerProperty(ItemRegistry.travel_pack, new ResourceLocation(Druidcraft.MODID, "color"), (itemStack, world, livingEntity) -> {
+        ItemModelsProperties.func_239418_a_(ItemRegistry.travel_pack, new ResourceLocation(Druidcraft.MODID, "color"), (itemStack, world, livingEntity) -> {
             CompoundNBT nbt = itemStack.getOrCreateTag();
             if (nbt.contains("Color")) {
                 return nbt.getInt("Color");

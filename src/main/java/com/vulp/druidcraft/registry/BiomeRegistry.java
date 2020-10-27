@@ -15,18 +15,16 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class BiomeRegistry
 {
-    public static final RegistryObject<Biome> darkwood_forest_key = RegistryKey.getOrCreateKey(Registry.BIOME_KEY, new ResourceLocation(Druidcraft.MODID, "darkwood_forest"));
-    public static Biome darkwood_forest;
+    public static Biome darkwood_forest = new DarkwoodForest();
 
-    public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, Druidcraft.MODID);
-
-    public static final RegistryObject<Biome> DARKWOOD_FOREST = BIOMES.register("darkwood_forest", DarkwoodForest::new);
-
-    public static Biome registerBiome(IForgeRegistry<Biome> registry, RegistryKey<Biome> biomeKey, Biome biome, String name, int weight, boolean spawn, BiomeManager.BiomeType type, BiomeDictionary.Type... types)
+    public static Biome registerBiome(IForgeRegistry<Biome> registry, Biome biome, String name, int weight, boolean spawn, BiomeManager.BiomeType type, BiomeDictionary.Type... types)
     {
         registry.register(biome.setRegistryName(Druidcraft.MODID, name));
-        BiomeManager.addBiome(type, new BiomeManager.BiomeEntry(biomeKey, weight));
-        BiomeDictionary.addTypes(biomeKey, types);
+        BiomeManager.addBiome(type, new BiomeManager.BiomeEntry(biome, weight));
+        if (spawn == true) {
+            BiomeManager.addSpawnBiome(biome);
+        }
+        BiomeDictionary.addTypes(biome, types);
         return biome;
     }
 }
