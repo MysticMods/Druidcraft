@@ -32,7 +32,7 @@ apply plugin: 'maven-publish'
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
-version = '1.16.1-0.4.42'
+version = '1.16.1-0.4.43'
 group = 'com.vulp.druidcraft' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Druidcraft'
 
