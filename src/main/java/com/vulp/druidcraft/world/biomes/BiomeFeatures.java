@@ -45,6 +45,6 @@ public class BiomeFeatures {
     }
 
     public static void addElderTree(Biome biomeIn) {
-        biomeIn.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, FeatureRegistry.elder_tree_feature.withConfiguration(empty).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.configure(new AtSurfaceWithExtraConfig(2, 0.3F, 1))));
+        biomeIn.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, FeatureRegistry.elder_tree_feature.withConfiguration(empty).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.configure(new AtSurfaceWithExtraConfig(0, 0.01F, 1))));
     }
 }
