@@ -16,11 +16,10 @@ public interface ICustomParticleRender extends IParticleRenderType {
         @Override
         public void beginRender(BufferBuilder buffer, TextureManager textureManager) {
             RenderHelper.disableStandardItemLighting();
-            GlStateManager.enableAlphaTest();
             GlStateManager.enableBlend();
             GlStateManager.depthMask(false);
             textureManager.bindTexture(AtlasTexture.LOCATION_PARTICLES_TEXTURE);
-            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA.param, GlStateManager.DestFactor.ONE.param);
+            GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE.param, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR.param);
             GlStateManager.alphaFunc(516, 0.003921569F);
             GlStateManager.disableCull();
             buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);

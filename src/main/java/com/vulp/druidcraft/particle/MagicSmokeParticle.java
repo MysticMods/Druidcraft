@@ -53,9 +53,6 @@ public class MagicSmokeParticle extends SpriteTexturedParticle {
             this.motionZ += this.rand.nextFloat() / 5000.0F * (float)(this.rand.nextBoolean() ? 1 : -1);
             this.motionY -= this.rand.nextFloat() / 5000.0F;
             this.move(this.motionX, this.motionY, this.motionZ);
-            if (this.age >= this.maxAge - 10 && this.particleAlpha > 0.01F) {
-                this.particleAlpha -= 0.05F;
-            }
         } else {
             this.setExpired();
         }

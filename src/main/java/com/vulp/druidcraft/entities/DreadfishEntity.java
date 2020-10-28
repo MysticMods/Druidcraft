@@ -379,20 +379,20 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
 
     static {
         DYE_COLOR_MAP.put(DyeColor.BLACK, new int[]{15, 15, 15});
-        DYE_COLOR_MAP.put(DyeColor.RED, new int[]{255, 50, 40});
-        DYE_COLOR_MAP.put(DyeColor.GREEN, new int[]{15, 150, 45});
-        DYE_COLOR_MAP.put(DyeColor.BROWN, new int[]{130, 70, 45});
-        DYE_COLOR_MAP.put(DyeColor.BLUE, new int[]{30, 60, 225});
-        DYE_COLOR_MAP.put(DyeColor.PURPLE, new int[]{135, 45, 245});
-        DYE_COLOR_MAP.put(DyeColor.CYAN, new int[]{20, 125, 130});
-        DYE_COLOR_MAP.put(DyeColor.LIGHT_GRAY, new int[]{160, 160, 155});
-        DYE_COLOR_MAP.put(DyeColor.GRAY, new int[]{90, 90, 90});
+        DYE_COLOR_MAP.put(DyeColor.RED, new int[]{255, 20, 10});
+        DYE_COLOR_MAP.put(DyeColor.GREEN, new int[]{18, 150, 13});
+        DYE_COLOR_MAP.put(DyeColor.BROWN, new int[]{90, 45, 5});
+        DYE_COLOR_MAP.put(DyeColor.BLUE, new int[]{15, 20, 255});
+        DYE_COLOR_MAP.put(DyeColor.PURPLE, new int[]{140, 15, 220});
+        DYE_COLOR_MAP.put(DyeColor.CYAN, new int[]{15, 150, 130});
+        DYE_COLOR_MAP.put(DyeColor.LIGHT_GRAY, new int[]{125, 125, 125});
+        DYE_COLOR_MAP.put(DyeColor.GRAY, new int[]{60, 60, 60});
         DYE_COLOR_MAP.put(DyeColor.PINK, new int[]{255, 115, 170});
-        DYE_COLOR_MAP.put(DyeColor.LIME, new int[]{135, 250, 35});
-        DYE_COLOR_MAP.put(DyeColor.YELLOW, new int[]{240, 240, 50});
+        DYE_COLOR_MAP.put(DyeColor.LIME, new int[]{130, 255, 20});
+        DYE_COLOR_MAP.put(DyeColor.YELLOW, new int[]{255, 230, 2});
         DYE_COLOR_MAP.put(DyeColor.LIGHT_BLUE, new int[]{50, 200, 255});
-        DYE_COLOR_MAP.put(DyeColor.MAGENTA, new int[]{230, 65, 170});
-        DYE_COLOR_MAP.put(DyeColor.ORANGE, new int[]{240, 135, 30});
+        DYE_COLOR_MAP.put(DyeColor.MAGENTA, new int[]{205, 60, 155});
+        DYE_COLOR_MAP.put(DyeColor.ORANGE, new int[]{250, 135, 5});
         DYE_COLOR_MAP.put(DyeColor.WHITE, new int[]{215, 215, 215});
     }
 
