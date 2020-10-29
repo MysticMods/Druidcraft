@@ -25,7 +25,6 @@ import java.util.List;
 public class JEIDruidcraftPlugin implements IModPlugin {
 
     private static final ResourceLocation UID = new ResourceLocation(Druidcraft.MODID, "main");
-    public static final List<WoodcuttingRecipe> WOODCUTTER_LIST = new ArrayList<>();
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -41,7 +40,7 @@ public class JEIDruidcraftPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        registration.addRecipes(WOODCUTTER_LIST, WoodcutterRecipeCategory.UID);
+        registration.addRecipes(WoodcuttingRecipe.WOODCUTTER_LIST, WoodcutterRecipeCategory.UID);
     }
 
     @Override
