@@ -54,7 +54,7 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
     }
 
     public static boolean doesBedWork(World world) {
-        return world.func_230315_m_().func_241510_j_();
+        return world.getDimensionType().doesBedWork();
     }
 
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
@@ -76,7 +76,7 @@ public class BedrollBlock extends BedBlock implements IBucketPickupHandler, ILiq
                     worldIn.removeBlock(blockpos, false);
                 }
 
-                worldIn.createExplosion((Entity)null, DamageSource.func_233546_a_(), (IExplosionContext) null, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, 5.0F, true, Explosion.Mode.DESTROY);
+                worldIn.createExplosion((Entity)null, DamageSource.func_233546_a_(), (ExplosionContext) null, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, 5.0F, true, Explosion.Mode.DESTROY);
                 return ActionResultType.SUCCESS;
             } else if (state.get(OCCUPIED)) {
                 player.sendStatusMessage(new TranslationTextComponent("block.druidcraft.bedroll.occupied"), true);

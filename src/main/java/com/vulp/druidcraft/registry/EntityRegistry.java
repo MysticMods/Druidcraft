@@ -78,12 +78,8 @@ public class EntityRegistry
 
     }
 
-    public static void registerEntityWorldSpawns()
+    public static void registerEntityPlacements()
     {
-        registerEntityWorldSpawn(EntitySpawnConfig.dreadfish_spawn.get(), dreadfish_entity, EntityClassification.MONSTER, EntitySpawnConfig.dreadfish_weight.get(), EntitySpawnConfig.dreadfish_min_group.get(), EntitySpawnConfig.dreadfish_max_group.get(), EntitySpawnConfig.dreadfish_biome_types.get(), EntitySpawnConfig.dreadfish_biome_exclusions.get());
-        registerEntityWorldSpawn(EntitySpawnConfig.beetle_spawn.get(), beetle_entity, EntityClassification.MONSTER, EntitySpawnConfig.beetle_weight.get(), EntitySpawnConfig.beetle_min_group.get(), EntitySpawnConfig.beetle_max_group.get(), EntitySpawnConfig.beetle_biome_types.get(), EntitySpawnConfig.beetle_biome_exclusions.get());
-        registerEntityWorldSpawn(EntitySpawnConfig.lunar_moth_spawn.get(), lunar_moth_entity, EntityClassification.CREATURE, EntitySpawnConfig.lunar_moth_weight.get(), EntitySpawnConfig.lunar_moth_min_group.get(), EntitySpawnConfig.lunar_moth_max_group.get(), EntitySpawnConfig.lunar_moth_biome_types.get(), EntitySpawnConfig.lunar_moth_biome_exclusions.get());
-
         EntitySpawnPlacementRegistry.register(beetle_entity, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, BeetleEntity::placement);
         EntitySpawnPlacementRegistry.register(dreadfish_entity, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DreadfishEntity::placement);
     }
@@ -93,26 +89,5 @@ public class EntityRegistry
         SpawnEggItem item = new SpawnEggItem(type, color1, color2, new Item.Properties().group(DruidcraftRegistry.DRUIDCRAFT));
         item.setRegistryName(DruidcraftRegistry.location(name));
         return item;
-    }
-
-    public static void registerEntityWorldSpawn(boolean spawnEnabled, EntityType<?> entity, EntityClassification classification, int weight, int minGroupCountIn, int maxGroupCountIn, List<String> biomes, List<String> exclusions) {
-        Set<Biome> biomeSet = new HashSet<>();
-
-        if (spawnEnabled) {
-            for (String biomeName : biomes) {
-                biomeSet.addAll(BiomeDictionary.getBiomes(BiomeDictionary.Type.getType(biomeName)));
-            }
-            Set<BiomeDictionary.Type> exclusionTypes = exclusions.stream().filter(o -> !o.isEmpty()).map(BiomeDictionary.Type::getType).collect(Collectors.toCollection(HashSet::new));
-            biomeSet.forEach(o -> {
-                    for (BiomeDictionary.Type type : exclusionTypes) {
-                        if (BiomeDictionary.hasType(o, type)) {
-                            return;
-                        }
-                    }
-                    o.getSpawns(classification).add(new Biome.SpawnListEntry(entity, weight, minGroupCountIn, maxGroupCountIn));
-                });
-        }
-
-        biomeSet.clear();
     }
 }

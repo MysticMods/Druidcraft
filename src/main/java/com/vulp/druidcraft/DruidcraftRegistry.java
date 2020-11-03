@@ -421,7 +421,7 @@ public class DruidcraftRegistry {
                 );
 
         EntityRegistry.registerEntityAttributes();
-        EntityRegistry.registerEntityWorldSpawns();
+        EntityRegistry.registerEntityPlacements();
         LOGGER.info("Entities registered.");
     }
 
@@ -490,7 +490,7 @@ public class DruidcraftRegistry {
     {
         IForgeRegistry<Biome> registry = BiomeRegistryEvent.getRegistry();
 
-        BiomeRegistry.registerBiome(registry, BiomeRegistry.darkwood_forest, "darkwood_forest", 5, false, BiomeManager.BiomeType.COOL, BiomeDictionary.Type.CONIFEROUS, BiomeDictionary.Type.OVERWORLD);
+        registry.register(BiomeRegistry.darkwood_forest);
 
         LOGGER.info("Biomes registered.");
     }
@@ -502,11 +502,9 @@ public class DruidcraftRegistry {
         IForgeRegistry<Feature<?>> registry = FeatureRegistryEvent.getRegistry();
 
         FeatureRegistry.elder_tree_feature = FeatureRegistry.register(registry, new ElderTreeFeature(), "elder_tree");
-
         FeatureRegistry.blueberry_bush_feature = new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.blueberry_bush.getDefaultState().with(BerryBushBlock.AGE, 3)), new SimpleBlockPlacer()).tries(64).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK.getBlock())).func_227317_b_().build();
         FeatureRegistry.lavender_feature = new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.lavender.getDefaultState()), new SimpleBlockPlacer()).tries(64).build();
 
-        FeatureRegistry.spawnFeatures();
         LOGGER.info("Features registered.");
     }
 

@@ -1,10 +1,10 @@
 package com.vulp.druidcraft;
 
 import com.vulp.druidcraft.config.Configuration;
+import com.vulp.druidcraft.events.BiomeLoadEventHandler;
 import com.vulp.druidcraft.events.EventHandler;
 import com.vulp.druidcraft.network.PacketHandler;
 import com.vulp.druidcraft.registry.*;
-import com.vulp.druidcraft.world.OreGeneration;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -44,11 +44,12 @@ public class Druidcraft {
     private void setup(final FMLCommonSetupEvent event) {
         PacketHandler.init();
 
-        OreGeneration.setupOreGeneration();
+        BiomeRegistry.addBiomes();
         VanillaIntegrationRegistry.setup();
 
         MinecraftForge.EVENT_BUS.register(new GUIRegistry());
         MinecraftForge.EVENT_BUS.register(new EventHandler());
+        MinecraftForge.EVENT_BUS.register(new BiomeLoadEventHandler());
         LOGGER.info("Setup method registered.");
     }
 

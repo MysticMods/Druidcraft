@@ -19,12 +19,12 @@ public class DarkwoodTree extends SpruceTree {
     @Override
     @Nullable
     protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getTreeFeature(Random p_225546_1_, boolean p_225546_2_) {
-        return Feature.field_236291_c_.withConfiguration(BiomeFeatures.darkwood_tree_feature);
+        return Feature.TREE.withConfiguration(BiomeFeatures.darkwood_tree_feature);
     }
 
     @Override
     @Nullable
     protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getHugeTreeFeature(Random p_225547_1_) {
-        return Feature.field_236291_c_.withConfiguration(BiomeFeatures.mega_darkwood_tree_feature);
+        return Feature.TREE.withConfiguration(BiomeFeatures.mega_darkwood_tree_feature);
     }
 }

@@ -98,7 +98,7 @@ public class TravelPackItem extends Item {
                             return;
                         }
                     }
-                    if (!world.func_230315_m_().func_241510_j_()) {
+                    if (!world.getDimensionType().doesBedWork()) {
                         player.sendStatusMessage(new TranslationTextComponent("block.druidcraft.bedroll.fail.dimension"), true);
                         return;
                     }

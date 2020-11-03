@@ -38,12 +38,13 @@ public class CustomTreeFeature extends Feature<BaseTreeFeatureConfig> {
         this.leaves = leaves;
     }
 
-    public final boolean func_230362_a_(ISeedReader seedReader, StructureManager strucManager, ChunkGenerator chunkGen, Random rand, BlockPos pos, BaseTreeFeatureConfig config) {
+    @Override
+    public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, BaseTreeFeatureConfig config) {
         Set<BlockPos> lvt_7_1_ = Sets.newHashSet();
         Set<BlockPos> lvt_8_1_ = Sets.newHashSet();
         Set<BlockPos> lvt_9_1_ = Sets.newHashSet();
         MutableBoundingBox lvt_10_1_ = MutableBoundingBox.getNewBoundingBox();
-        boolean lvt_11_1_ = this.place(seedReader, rand, pos, lvt_7_1_, lvt_8_1_, lvt_10_1_);
+        boolean lvt_11_1_ = this.place(reader, rand, pos, lvt_7_1_, lvt_8_1_, lvt_10_1_);
         if (lvt_11_1_ && !lvt_7_1_.isEmpty()) {
             if (!config.decorators.isEmpty()) {
                 List<BlockPos> lvt_12_1_ = Lists.newArrayList(lvt_7_1_);
@@ -51,12 +52,12 @@ public class CustomTreeFeature extends Feature<BaseTreeFeatureConfig> {
                 lvt_12_1_.sort(Comparator.comparingInt(Vector3i::getY));
                 lvt_13_1_.sort(Comparator.comparingInt(Vector3i::getY));
                 config.decorators.forEach((p_236405_6_) -> {
-                    p_236405_6_.func_225576_a_(seedReader, rand, lvt_12_1_, lvt_13_1_, lvt_9_1_, lvt_10_1_);
+                    p_236405_6_.func_225576_a_(reader, rand, lvt_12_1_, lvt_13_1_, lvt_9_1_, lvt_10_1_);
                 });
             }
 
-            VoxelShapePart lvt_12_2_ = this.func_236403_a_(seedReader, lvt_10_1_, lvt_7_1_, lvt_9_1_);
-            Template.func_222857_a(seedReader, 3, lvt_12_2_, lvt_10_1_.minX, lvt_10_1_.minY, lvt_10_1_.minZ);
+            VoxelShapePart lvt_12_2_ = this.func_236403_a_(reader, lvt_10_1_, lvt_7_1_, lvt_9_1_);
+            Template.func_222857_a(reader, 3, lvt_12_2_, lvt_10_1_.minX, lvt_10_1_.minY, lvt_10_1_.minZ);
             return true;
         } else {
             return false;
@@ -91,7 +92,7 @@ public class CustomTreeFeature extends Feature<BaseTreeFeatureConfig> {
             } else {
                 blockType = blockType.with(WoodBlock.AXIS, setAxis);
             }
-            this.func_230367_a_(seedReader, pos, blockType);
+            this.setBlockState(seedReader, pos, blockType);
             blockPosSet.add(pos.toImmutable());
             return true;
         }
@@ -128,7 +129,7 @@ public class CustomTreeFeature extends Feature<BaseTreeFeatureConfig> {
         if (!isAirOrLeaves(p_227219_1_, p_227219_3_) && !isTallPlants(p_227219_1_, p_227219_3_) && !isFluid(p_227219_1_, p_227219_3_)) {
             return false;
         } else {
-            this.func_230367_a_(p_227219_1_, p_227219_3_, this.leaves.getDefaultState());
+            this.setBlockState(p_227219_1_, p_227219_3_, this.leaves.getDefaultState());
             p_227219_4_.add(p_227219_3_.toImmutable());
             return true;
         }

@@ -80,7 +80,7 @@ public class LunarMothEntity extends AnimalEntity {
 
     @Nullable
     @Override
-    public AgeableEntity createChild(AgeableEntity ageableEntity) {
+    public AgeableEntity func_241840_a(ServerWorld serverWorld, AgeableEntity ageableEntity) {
         return null;
     }
 
