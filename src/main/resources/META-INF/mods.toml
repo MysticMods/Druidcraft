@@ -5,7 +5,7 @@ license="GNU Lesser General Public License"
 
 [[mods]]
 modId="druidcraft"
-version="0.4.44"
+version="0.4.45"
 mcversion= "1.16.1"
 displayName="Druidcraft"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/druidcraft"
