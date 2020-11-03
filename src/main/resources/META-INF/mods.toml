@@ -1,10 +1,10 @@
 modLoader="javafml"
 loaderVersion="[31,)"
-issueTrackerURL="https://github.com/MysticMods/Druidcraft/issues"
+issueTrackerURL="github.com/MysticMods/Druidcraft/issues"
 
 [[mods]]
 modId="druidcraft"
-version="0.4.43"
+version="0.4.44"
 mcversion= "1.15,"
 displayName="Druidcraft"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/druidcraft"
