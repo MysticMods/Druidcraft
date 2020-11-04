@@ -1,6 +1,6 @@
 modLoader="javafml"
 loaderVersion="[32,)"
-issueTrackerURL="github.com/MysticMods/Druidcraft/issues"
+issueTrackerURL="https://github.com/MysticMods/Druidcraft/issues"
 license="GNU Lesser General Public License"
 
 [[mods]]
