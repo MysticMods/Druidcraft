@@ -9,21 +9,13 @@ import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.biome.*;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.carver.WorldCarver;
-import net.minecraft.world.gen.feature.ProbabilityConfig;
 import net.minecraft.world.gen.feature.structure.StructureFeatures;
 import net.minecraft.world.gen.surfacebuilders.*;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
-import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
-import net.minecraftforge.common.world.MobSpawnInfoBuilder;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.*;
 
 public class BiomeRegistry {
 
@@ -51,7 +43,7 @@ public class BiomeRegistry {
         DefaultBiomeFeatures.withOverworldOres(settings);
         DefaultBiomeFeatures.withDisks(settings);
         BiomeFeatures.addDarkwoodTrees(settings);
-        BiomeFeatures.addDarkwoodShrubs(settings);
+        BiomeFeatures.addDarkwoodBushes(settings);
         DefaultBiomeFeatures.withDefaultFlowers(settings);
         DefaultBiomeFeatures.withTaigaGrassVegetation(settings);
         DefaultBiomeFeatures.withNormalMushroomGeneration(settings);

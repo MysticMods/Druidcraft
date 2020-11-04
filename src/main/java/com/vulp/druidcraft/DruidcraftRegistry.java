@@ -1,5 +1,6 @@
 package com.vulp.druidcraft;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.vulp.druidcraft.blocks.*;
 import com.vulp.druidcraft.blocks.DoorBlock;
@@ -20,6 +21,7 @@ import com.vulp.druidcraft.entities.LunarMothColors;
 import com.vulp.druidcraft.items.*;
 import com.vulp.druidcraft.recipes.RecipeSerializers;
 import com.vulp.druidcraft.registry.*;
+import com.vulp.druidcraft.world.biomes.BiomeFeatures;
 import com.vulp.druidcraft.world.features.ElderTreeFeature;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -38,6 +40,8 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
+import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -490,6 +494,10 @@ public class DruidcraftRegistry {
     {
         IForgeRegistry<Biome> registry = BiomeRegistryEvent.getRegistry();
 
+        // Creation of druidcraft-biome specific features needs to be done here.
+        BiomeFeatures.darkwood_trees_feature = FeatureRegistry.register("darkwood_trees", Feature.RANDOM_SELECTOR.withConfiguration(new MultipleRandomFeatureConfig(ImmutableList.of(Feature.TREE.withConfiguration(BiomeFeatures.mega_darkwood_tree_feature_config).withChance(0.5F), Feature.TREE.withConfiguration(BiomeFeatures.darkwood_tree_feature_config).withChance(0.5F)), Feature.TREE.withConfiguration(BiomeFeatures.darkwood_tree_feature_config))).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(12, 0.3F, 3))));
+        BiomeFeatures.darkwood_bushes_feature = FeatureRegistry.register("darkwood_bushes", Feature.TREE.withConfiguration(BiomeFeatures.darkwood_bush_feature_config).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(5, 0.1F, 2))));
+
         registry.register(BiomeRegistry.darkwood_forest);
 
         LOGGER.info("Biomes registered.");
@@ -501,9 +509,9 @@ public class DruidcraftRegistry {
     {
         IForgeRegistry<Feature<?>> registry = FeatureRegistryEvent.getRegistry();
 
-        FeatureRegistry.elder_tree_feature = FeatureRegistry.register(registry, new ElderTreeFeature(), "elder_tree");
-        FeatureRegistry.blueberry_bush_feature = new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.blueberry_bush.getDefaultState().with(BerryBushBlock.AGE, 3)), new SimpleBlockPlacer()).tries(64).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK.getBlock())).func_227317_b_().build();
-        FeatureRegistry.lavender_feature = new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.lavender.getDefaultState()), new SimpleBlockPlacer()).tries(64).build();
+        FeatureRegistry.elder_tree_feature_config = FeatureRegistry.register(registry, new ElderTreeFeature(), "elder_tree");
+        FeatureRegistry.blueberry_bush_feature_config = new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.blueberry_bush.getDefaultState().with(BerryBushBlock.AGE, 3)), new SimpleBlockPlacer()).tries(64).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK.getBlock())).func_227317_b_().build();
+        FeatureRegistry.lavender_feature_config = new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegistry.lavender.getDefaultState()), new SimpleBlockPlacer()).tries(64).build();
 
         LOGGER.info("Features registered.");
     }

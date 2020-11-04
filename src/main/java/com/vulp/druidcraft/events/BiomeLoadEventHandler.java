@@ -7,7 +7,6 @@ import com.vulp.druidcraft.registry.EntityRegistry;
 import com.vulp.druidcraft.registry.FeatureRegistry;
 import com.vulp.druidcraft.world.biomes.BiomeFeatures;
 import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.gen.GenerationStage;
@@ -15,13 +14,9 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.Features;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.placement.*;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class BiomeLoadEventHandler {
 
@@ -31,17 +26,17 @@ public class BiomeLoadEventHandler {
         // ELDER TREES
         if (event.getCategory() == Biome.Category.PLAINS || event.getCategory() == Biome.Category.FOREST || event.getCategory() == Biome.Category.RIVER) {
             BiomeGenerationSettingsBuilder settings = event.getGeneration();
-            settings.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, FeatureRegistry.elder_tree_feature.withConfiguration(BiomeFeatures.empty).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(0, 0.01F, 1))));
+            settings.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, FeatureRegistry.elder_tree_feature_config.withConfiguration(BiomeFeatures.empty_tree_config).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(0, 0.01F, 1))));
         }
         // BLUEBERRIES
         if (event.getCategory() == Biome.Category.PLAINS || event.getCategory() == Biome.Category.FOREST || event.getCategory() == Biome.Category.RIVER || event.getCategory() == Biome.Category.EXTREME_HILLS || event.getCategory() == Biome.Category.TAIGA) {
             BiomeGenerationSettingsBuilder settings = event.getGeneration();
-            settings.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.RANDOM_PATCH.withConfiguration(FeatureRegistry.blueberry_bush_feature).withPlacement(Placement.CHANCE.configure(new ChanceConfig(12))));
+            settings.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.RANDOM_PATCH.withConfiguration(FeatureRegistry.blueberry_bush_feature_config).withPlacement(Placement.CHANCE.configure(new ChanceConfig(100))));
         }
         // LAVENDER
         if (event.getCategory() == Biome.Category.PLAINS || event.getCategory() == Biome.Category.FOREST || event.getCategory() == Biome.Category.RIVER || event.getCategory() == Biome.Category.EXTREME_HILLS) {
             BiomeGenerationSettingsBuilder settings = event.getGeneration();
-            settings.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.FLOWER.withConfiguration(FeatureRegistry.lavender_feature).withPlacement(Features.Placements.FLOWER_TALL_GRASS_PLACEMENT).square().withPlacement(Placement.COUNT_NOISE.configure(new NoiseDependant(-0.8D, 16, 5))));
+            settings.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.FLOWER.withConfiguration(FeatureRegistry.lavender_feature_config).withPlacement(Features.Placements.FLOWER_TALL_GRASS_PLACEMENT).square().withPlacement(Placement.COUNT_NOISE.configure(new NoiseDependant(-0.8D, 16, 5))));
         }
 
         // -------------------------------------------------------------------------------------------------------------------
