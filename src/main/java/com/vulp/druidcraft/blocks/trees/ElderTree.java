@@ -1,7 +1,7 @@
 package com.vulp.druidcraft.blocks.trees;
 
 import com.vulp.druidcraft.registry.FeatureRegistry;
-import com.vulp.druidcraft.world.biomes.BiomeFeatures;
+import com.vulp.druidcraft.world.config.FeatureConfig;
 import net.minecraft.block.trees.Tree;
 import net.minecraft.world.gen.feature.*;
 
@@ -16,7 +16,7 @@ public class ElderTree extends Tree {
     @Nullable
     @Override
     protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getTreeFeature(Random random, boolean b) {
-        return FeatureRegistry.elder_tree_feature_config.withConfiguration(BiomeFeatures.empty_tree_config);
+        return FeatureRegistry.elder_tree.withConfiguration(FeatureConfig.Trees.elder_tree);
     }
 
 }

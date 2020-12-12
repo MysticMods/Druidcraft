@@ -18,9 +18,9 @@ public class RenderHandler {
 
     public static void registerColors() {
 
-        registerBlockColor(10276442, BlockRegistry.fruit_leaves);
+/*        registerBlockColor(10276442, BlockRegistry.fruit_leaves);
 
-        registerItemColor(10276442, ItemRegistry.fruit_leaves);
+        registerItemColor(10276442, ItemRegistry.fruit_leaves);*/
 
 
     }

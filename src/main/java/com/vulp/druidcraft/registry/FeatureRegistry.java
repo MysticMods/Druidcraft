@@ -1,35 +1,38 @@
 package com.vulp.druidcraft.registry;
 
 import com.vulp.druidcraft.Druidcraft;
-import com.vulp.druidcraft.world.biomes.BiomeFeatures;
+import com.vulp.druidcraft.world.config.BlockStateRadiusFeatureConfig;
 import com.vulp.druidcraft.world.features.ElderTreeFeature;
+import com.vulp.druidcraft.world.features.RadiusBlockBlobFeature;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.placement.*;
-import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
+import java.util.HashSet;
+import java.util.Set;
+
+@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public class FeatureRegistry {
+    private static Set<Feature<?>> FEATURES = new HashSet<>();
 
-    public static BlockClusterFeatureConfig blueberry_bush_feature_config;
-    public static BlockClusterFeatureConfig lavender_feature_config;
-    public static Feature<BaseTreeFeatureConfig> elder_tree_feature_config;
+    public static Feature<BaseTreeFeatureConfig> elder_tree = register("elder_tree", new ElderTreeFeature(BaseTreeFeatureConfig.CODEC));
+    public static Feature<BlockStateRadiusFeatureConfig> taiga_rock = register("taiga_rock", new RadiusBlockBlobFeature(BlockStateRadiusFeatureConfig.CODEC));
 
-    public static <V extends R, R extends IForgeRegistryEntry<R>> V register(IForgeRegistry<R> registry, V feature, String name) {
+    public static <V extends IFeatureConfig> Feature<V> register(String name, Feature<V> feature) {
         ResourceLocation id = new ResourceLocation(Druidcraft.MODID, name);
         feature.setRegistryName(id);
-        registry.register(feature);
+        FEATURES.add(feature);
         return feature;
     }
 
-    public static <FC extends IFeatureConfig> ConfiguredFeature<FC, ?> register(String p_243968_0_, ConfiguredFeature<FC, ?> p_243968_1_) {
-        return Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, p_243968_0_, p_243968_1_);
+    @SubscribeEvent
+    public static void register (RegistryEvent.Register<Feature<?>> event) {
+        event.getRegistry().registerAll(FEATURES.toArray(new Feature[0]));
     }
-
 }

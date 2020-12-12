@@ -68,7 +68,7 @@ public class WaterDependentRecipe extends ShapedRecipe {
                 return null;
             }
         } catch (Exception e) {
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -256,7 +256,7 @@ public class WaterDependentRecipe extends ShapedRecipe {
         if (astring.length > MAX_HEIGHT) {
             throw new JsonSyntaxException("Invalid pattern: too many rows, " + MAX_HEIGHT + " is maximum");
         } else if (astring.length == 0) {
-            throw new JsonSyntaxException("Invalid pattern: empty pattern not allowed");
+            throw new JsonSyntaxException("Invalid pattern: elder_tree pattern not allowed");
         } else {
             for(int i = 0; i < astring.length; ++i) {
                 String s = JSONUtils.getString(jsonArr.get(i), "pattern[" + i + "]");

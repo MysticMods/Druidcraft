@@ -1,6 +1,6 @@
 package com.vulp.druidcraft.blocks.trees;
 
-import com.vulp.druidcraft.world.biomes.BiomeFeatures;
+import com.vulp.druidcraft.registry.ConfiguredFeatureRegistry;
 import net.minecraft.block.trees.SpruceTree;
 import net.minecraft.world.gen.feature.BaseTreeFeatureConfig;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -17,12 +17,12 @@ public class DarkwoodTree extends SpruceTree {
     @Override
     @Nullable
     public ConfiguredFeature<BaseTreeFeatureConfig, ?> getTreeFeature(Random p_225546_1_, boolean p_225546_2_) {
-        return Feature.TREE.withConfiguration(BiomeFeatures.darkwood_tree_feature_config);
+        return ConfiguredFeatureRegistry.darkwood_tree;
     }
 
     @Override
     @Nullable
     public ConfiguredFeature<BaseTreeFeatureConfig, ?> getHugeTreeFeature(Random p_225547_1_) {
-        return Feature.TREE.withConfiguration(BiomeFeatures.mega_darkwood_tree_feature_config);
+        return ConfiguredFeatureRegistry.mega_darkwood_tree;
     }
 }

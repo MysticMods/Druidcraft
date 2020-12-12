@@ -44,7 +44,7 @@ public class Druidcraft {
     private void setup(final FMLCommonSetupEvent event) {
         PacketHandler.init();
 
-        BiomeRegistry.addBiomes();
+        BiomeRegistry.registerBiomes();
         VanillaIntegrationRegistry.setup();
 
         MinecraftForge.EVENT_BUS.register(new GUIRegistry());
