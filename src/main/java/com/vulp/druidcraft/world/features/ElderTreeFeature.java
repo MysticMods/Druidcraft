@@ -1,31 +1,43 @@
 package com.vulp.druidcraft.world.features;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
 import com.vulp.druidcraft.blocks.WoodBlock;
 import com.vulp.druidcraft.registry.BlockRegistry;
+import com.vulp.druidcraft.world.config.ElderTreeFeatureConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SaplingBlock;
 import net.minecraft.block.material.Material;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
+import net.minecraft.util.math.shapes.VoxelShapePart;
+import net.minecraft.util.math.vector.Vector3i;
+import net.minecraft.world.ISeedReader;
 import net.minecraft.world.IServerWorld;
+import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.IWorldGenerationBaseReader;
 import net.minecraft.world.gen.IWorldGenerationReader;
 import net.minecraft.world.gen.feature.BaseTreeFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.TreeFeature;
+import net.minecraft.world.gen.feature.template.Template;
 
 import javax.annotation.Nullable;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public class ElderTreeFeature extends TreeFeature {
+public class ElderTreeFeature extends Feature<ElderTreeFeatureConfig> {
   public static Random random = new Random();
 
-  public ElderTreeFeature(Codec<BaseTreeFeatureConfig> codec) {
+  public ElderTreeFeature(Codec<ElderTreeFeatureConfig> codec) {
     super(codec);
-    /* super(BlockRegistry.elder_log, BlockRegistry.elder_wood, BlockRegistry.elder_leaves);*/
   }
 
   public static boolean isDirtOrGrass(IWorldGenerationReader world, BlockPos pos) {
@@ -39,8 +51,44 @@ public class ElderTreeFeature extends TreeFeature {
     return (reader instanceof IServerWorld) ? ((IServerWorld) reader).getWorld().getHeight() : 256;
   }
 
+  public static boolean func_236410_c_(IWorldGenerationBaseReader p_236410_0_, BlockPos p_236410_1_) {
+    return isReplaceableAt(p_236410_0_, p_236410_1_) || p_236410_0_.hasBlockState(p_236410_1_, (p_236417_0_) -> {
+      return p_236417_0_.isIn(BlockTags.LOGS);
+    });
+  }
+  
+  public static boolean isReplaceableAt(IWorldGenerationBaseReader p_236404_0_, BlockPos p_236404_1_) {
+    return isAirOrLeavesAt(p_236404_0_, p_236404_1_) || isTallPlantAt(p_236404_0_, p_236404_1_) || isWaterAt(p_236404_0_, p_236404_1_);
+  }
+
+  private static boolean isWaterAt(IWorldGenerationBaseReader p_236416_0_, BlockPos p_236416_1_) {
+    return p_236416_0_.hasBlockState(p_236416_1_, (p_236413_0_) -> {
+      return p_236413_0_.isIn(Blocks.WATER);
+    });
+  }
+
+  public static boolean isAirOrLeavesAt(IWorldGenerationBaseReader p_236412_0_, BlockPos p_236412_1_) {
+    return p_236412_0_.hasBlockState(p_236412_1_, (p_236411_0_) -> {
+      return p_236411_0_.isAir() || p_236411_0_.isIn(BlockTags.LEAVES);
+    });
+  }
+
+  private static boolean isDirtOrFarmlandAt(IWorldGenerationBaseReader p_236418_0_, BlockPos p_236418_1_) {
+    return p_236418_0_.hasBlockState(p_236418_1_, (p_236409_0_) -> {
+      Block lvt_1_1_ = p_236409_0_.getBlock();
+      return isDirt(lvt_1_1_) || lvt_1_1_ == Blocks.FARMLAND;
+    });
+  }
+
+  private static boolean isTallPlantAt(IWorldGenerationBaseReader p_236419_0_, BlockPos p_236419_1_) {
+    return p_236419_0_.hasBlockState(p_236419_1_, (p_236406_0_) -> {
+      Material lvt_1_1_ = p_236406_0_.getMaterial();
+      return lvt_1_1_ == Material.TALL_PLANTS;
+    });
+  }
+  
   @Override
-  public boolean place(IWorldGenerationReader seedReader, Random rand, BlockPos position, Set<BlockPos> placedLogs, Set<BlockPos> placedLeaves, MutableBoundingBox boundsIn, BaseTreeFeatureConfig config) {
+  public boolean generate(ISeedReader seedReader, ChunkGenerator generator, Random rand, BlockPos position, ElderTreeFeatureConfig config) {
     int height = rand.nextInt(2) + 6;
     boolean canGrow = true;
 
@@ -77,6 +125,7 @@ public class ElderTreeFeature extends TreeFeature {
         int posX = position.getX();
         int posZ = position.getZ();
         int posY = 0;
+
         int logSide1 = rand.nextInt(3);
 
         for (int base = 0; base < height; ++base) {
@@ -87,91 +136,91 @@ public class ElderTreeFeature extends TreeFeature {
             if (base == 0) {
               if (rand.nextBoolean()) {
                 if (isReplaceableAt(seedReader, blockpos.north().down())) {
-                  this.placeLogAt(placedLogs, seedReader, blockpos.north().down(), true, config);
+                  this.placeLogAt(seedReader, blockpos.north().down(), true, config);
                 } else if (isReplaceableAt(seedReader, blockpos.north())) {
-                  this.placeLogAt(placedLogs, seedReader, blockpos.north(), true, config);
+                  this.placeLogAt(seedReader, blockpos.north(), true, config);
                 }
               }
               if (rand.nextBoolean()) {
                 if (isReplaceableAt(seedReader, blockpos.east().down())) {
-                  this.placeLogAt(placedLogs, seedReader, blockpos.east().down(), true, config);
+                  this.placeLogAt(seedReader, blockpos.east().down(), true, config);
                 } else if (isReplaceableAt(seedReader, blockpos.east())) {
-                  this.placeLogAt(placedLogs, seedReader, blockpos.east(), true, config);
+                  this.placeLogAt(seedReader, blockpos.east(), true, config);
                 }
               }
               if (rand.nextBoolean()) {
                 if (isReplaceableAt(seedReader, blockpos.south().down())) {
-                  this.placeLogAt(placedLogs, seedReader, blockpos.south().down(), true, config);
+                  this.placeLogAt(seedReader, blockpos.south().down(), true, config);
                 } else if (isReplaceableAt(seedReader, blockpos.south())) {
-                  this.placeLogAt(placedLogs, seedReader, blockpos.south(), true, config);
+                  this.placeLogAt(seedReader, blockpos.south(), true, config);
                 }
               }
               if (rand.nextBoolean()) {
                 if (isReplaceableAt(seedReader, blockpos.west().down())) {
-                  this.placeLogAt(placedLogs, seedReader, blockpos.west().down(), true, config);
+                  this.placeLogAt(seedReader, blockpos.west().down(), true, config);
                 } else if (isReplaceableAt(seedReader, blockpos.west())) {
-                  this.placeLogAt(placedLogs, seedReader, blockpos.west(), true, config);
+                  this.placeLogAt(seedReader, blockpos.west(), true, config);
                 }
               }
               if (rand.nextBoolean()) {
                 if (isReplaceableAt(seedReader, blockpos.north().east().down())) {
-                  this.placeLogAt(placedLogs, seedReader, blockpos.north().east().down(), true, config);
+                  this.placeLogAt(seedReader, blockpos.north().east().down(), true, config);
                 } else if (isReplaceableAt(seedReader, blockpos.north().east())) {
-                  this.placeLogAt(placedLogs, seedReader, blockpos.north().east(), true, config);
+                  this.placeLogAt(seedReader, blockpos.north().east(), true, config);
                 }
               }
               if (rand.nextBoolean()) {
                 if (isReplaceableAt(seedReader, blockpos.north().west().down())) {
-                  this.placeLogAt(placedLogs, seedReader, blockpos.north().west().down(), true, config);
+                  this.placeLogAt(seedReader, blockpos.north().west().down(), true, config);
                 } else if (isReplaceableAt(seedReader, blockpos.north().west())) {
-                  this.placeLogAt(placedLogs, seedReader, blockpos.north().west(), true, config);
+                  this.placeLogAt(seedReader, blockpos.north().west(), true, config);
                 }
               }
               if (rand.nextBoolean()) {
                 if (isReplaceableAt(seedReader, blockpos.south().east().down())) {
-                  this.placeLogAt(placedLogs, seedReader, blockpos.south().east().down(), true, config);
+                  this.placeLogAt(seedReader, blockpos.south().east().down(), true, config);
                 } else if (isReplaceableAt(seedReader, blockpos.south().east())) {
-                  this.placeLogAt(placedLogs, seedReader, blockpos.south().east(), true, config);
+                  this.placeLogAt(seedReader, blockpos.south().east(), true, config);
                 }
               }
               if (rand.nextBoolean()) {
                 if (isReplaceableAt(seedReader, blockpos.south().west().down())) {
-                  this.placeLogAt(placedLogs, seedReader, blockpos.south().west().down(), true, config);
+                  this.placeLogAt(seedReader, blockpos.south().west().down(), true, config);
                 } else if (isReplaceableAt(seedReader, blockpos.south().west())) {
-                  this.placeLogAt(placedLogs, seedReader, blockpos.south().west(), true, config);
+                  this.placeLogAt(seedReader, blockpos.south().west(), true, config);
                 }
               }
-              this.placeLogAt(placedLogs, seedReader, blockpos, false, config);
+              this.placeLogAt(seedReader, blockpos, false, config);
             }
 
             if (base <= height - 1) {
-              this.placeLogAt(placedLogs, seedReader, blockpos, false, config);
+              this.placeLogAt(seedReader, blockpos, false, config);
               if (base == height - 2 || base == height - 3) {
                 if (logSide1 == 0) {
-                  this.placeRotatedLog(placedLogs, seedReader, blockpos.north(1), Direction.Axis.Z, config);
+                  this.placeRotatedLog(seedReader, blockpos.north(1), Direction.Axis.Z, config);
                 }
                 if (logSide1 == 1) {
-                  this.placeRotatedLog(placedLogs, seedReader, blockpos.east(1), Direction.Axis.X, config);
+                  this.placeRotatedLog(seedReader, blockpos.east(1), Direction.Axis.X, config);
                 }
                 if (logSide1 == 2) {
-                  this.placeRotatedLog(placedLogs, seedReader, blockpos.south(1), Direction.Axis.Z, config);
+                  this.placeRotatedLog(seedReader, blockpos.south(1), Direction.Axis.Z, config);
                 }
                 if (logSide1 == 3) {
-                  this.placeRotatedLog(placedLogs, seedReader, blockpos.west(1), Direction.Axis.X, config);
+                  this.placeRotatedLog(seedReader, blockpos.west(1), Direction.Axis.X, config);
                 }
               }
               if (base == height - 2 || base == height - 3) {
                 if (logSide1 == 0) {
-                  this.placeRotatedLog(placedLogs, seedReader, blockpos.north(1), Direction.Axis.Z, config);
+                  this.placeRotatedLog(seedReader, blockpos.north(1), Direction.Axis.Z, config);
                 }
                 if (logSide1 == 1) {
-                  this.placeRotatedLog(placedLogs, seedReader, blockpos.east(1), Direction.Axis.X, config);
+                  this.placeRotatedLog(seedReader, blockpos.east(1), Direction.Axis.X, config);
                 }
                 if (logSide1 == 2) {
-                  this.placeRotatedLog(placedLogs, seedReader, blockpos.south(1), Direction.Axis.Z, config);
+                  this.placeRotatedLog(seedReader, blockpos.south(1), Direction.Axis.Z, config);
                 }
                 if (logSide1 == 3) {
-                  this.placeRotatedLog(placedLogs, seedReader, blockpos.west(1), Direction.Axis.X, config);
+                  this.placeRotatedLog(seedReader, blockpos.west(1), Direction.Axis.X, config);
                 }
               }
             }
@@ -179,20 +228,21 @@ public class ElderTreeFeature extends TreeFeature {
           }
         }
 
+        //LEAVES
         BlockPos blockpos2 = new BlockPos(posX, posY, posZ).down();
         for (int leafLayer1and3X = -3; leafLayer1and3X <= 3; ++leafLayer1and3X) {
           for (int leafLayer1and3Z = -3; leafLayer1and3Z <= 3; ++leafLayer1and3Z) {
             if (!((leafLayer1and3X == 3 || leafLayer1and3X == -3) && (leafLayer1and3Z == 3 || leafLayer1and3Z == -3))) {
               if ((leafLayer1and3X == -3 && (leafLayer1and3Z == -2 || leafLayer1and3Z == 2)) || (leafLayer1and3X == 3 && (leafLayer1and3Z == -2 || leafLayer1and3Z == 2)) || (leafLayer1and3Z == -3 && (leafLayer1and3X == -2 || leafLayer1and3X == 2)) || (leafLayer1and3Z == 3 && (leafLayer1and3X == -2 || leafLayer1and3X == 2))) {
                 if (rand.nextBoolean() || rand.nextBoolean()) {
-                  this.placeLeafAt(placedLeaves, seedReader, blockpos2.add(leafLayer1and3X, 0, leafLayer1and3Z), config);
+                  this.placeLeafAt(seedReader, blockpos2.add(leafLayer1and3X, 0, leafLayer1and3Z), config);
                 }
                 if (rand.nextBoolean() || rand.nextBoolean()) {
-                  this.placeLeafAt(placedLeaves, seedReader, blockpos2.add(leafLayer1and3X, -2, leafLayer1and3Z), config);
+                  this.placeLeafAt(seedReader, blockpos2.add(leafLayer1and3X, -2, leafLayer1and3Z), config);
                 }
               } else {
-                this.placeLeafAt(placedLeaves, seedReader, blockpos2.add(leafLayer1and3X, 0, leafLayer1and3Z), config);
-                this.placeLeafAt(placedLeaves, seedReader, blockpos2.add(leafLayer1and3X, -2, leafLayer1and3Z), config);
+                this.placeLeafAt(seedReader, blockpos2.add(leafLayer1and3X, 0, leafLayer1and3Z), config);
+                this.placeLeafAt(seedReader, blockpos2.add(leafLayer1and3X, -2, leafLayer1and3Z), config);
               }
             }
           }
@@ -203,10 +253,10 @@ public class ElderTreeFeature extends TreeFeature {
         for (int leafLayer4X = -2; leafLayer4X <= 2; ++leafLayer4X) {
           for (int leafLayer4Z = -2; leafLayer4Z <= 2; ++leafLayer4Z) {
             if (!((leafLayer4X == -2 || leafLayer4X == 2) && (leafLayer4Z == -2 || leafLayer4Z == 2))) {
-              this.placeLeafAt(placedLeaves, seedReader, blockpos2.add(leafLayer4X, 0, leafLayer4Z), config);
+              this.placeLeafAt(seedReader, blockpos2.add(leafLayer4X, 0, leafLayer4Z), config);
             } else {
               if (rand.nextBoolean()) {
-                this.placeLeafAt(placedLeaves, seedReader, blockpos2.add(leafLayer4X, 0, leafLayer4Z), config);
+                this.placeLeafAt(seedReader, blockpos2.add(leafLayer4X, 0, leafLayer4Z), config);
               }
             }
           }
@@ -217,7 +267,7 @@ public class ElderTreeFeature extends TreeFeature {
         for (int leafLayer5X = -1; leafLayer5X <= 1; ++leafLayer5X) {
           for (int leafLayer5Z = -1; leafLayer5Z <= 1; ++leafLayer5Z) {
             if (!((leafLayer5X == -1 || leafLayer5X == 1) && (leafLayer5Z == -1 || leafLayer5Z == 1)))
-              this.placeLeafAt(placedLeaves, seedReader, blockpos2.add(leafLayer5X, 0, leafLayer5Z), config);
+              this.placeLeafAt(seedReader, blockpos2.add(leafLayer5X, 0, leafLayer5Z), config);
           }
         }
 
@@ -225,7 +275,7 @@ public class ElderTreeFeature extends TreeFeature {
         for (int leafLayer2X = -3; leafLayer2X <= 3; ++leafLayer2X) {
           for (int leafLayer2Z = -3; leafLayer2Z <= 3; ++leafLayer2Z) {
             if (!((leafLayer2X == -3 || leafLayer2X == 3) && (leafLayer2Z == -3 || leafLayer2Z == 3)))
-              this.placeLeafAt(placedLeaves, seedReader, blockpos2.add(leafLayer2X, 0, leafLayer2Z), config);
+              this.placeLeafAt(seedReader, blockpos2.add(leafLayer2X, 0, leafLayer2Z), config);
           }
         }
         return true;
@@ -237,29 +287,27 @@ public class ElderTreeFeature extends TreeFeature {
     }
   }
 
-  private void placeRotatedLog(Set<BlockPos> setPos, IWorldGenerationReader reader, BlockPos pos, Direction.Axis setAxis, BaseTreeFeatureConfig config) {
-    this.setElderLog(reader, pos, setPos, false, setAxis, config);
+  private void placeRotatedLog(IWorldGenerationReader reader, BlockPos pos, Direction.Axis setAxis, ElderTreeFeatureConfig config) {
+    this.setElderLog(reader, pos, false, setAxis, config);
   }
 
-  private void placeLogAt(Set<BlockPos> setPos, IWorldGenerationReader reader, BlockPos pos, boolean isBaseWood, BaseTreeFeatureConfig config) {
-    this.setElderLog(reader, pos, setPos, isBaseWood, null, config);
+  private void placeLogAt(IWorldGenerationReader reader, BlockPos pos, boolean isBaseWood, ElderTreeFeatureConfig config) {
+    this.setElderLog(reader, pos, isBaseWood, null, config);
   }
 
-  private void placeLeafAt(Set<BlockPos> set, IWorldGenerationReader reader, BlockPos pos, BaseTreeFeatureConfig config) {
-    this.setElderLeaf(reader, random, pos, set, config);
+  private void placeLeafAt(IWorldGenerationReader reader, BlockPos pos, ElderTreeFeatureConfig config) {
+    this.setElderLeaf(reader, random, pos, config);
   }
 
-  private void setElderLeaf(IWorldGenerationReader world, Random random, BlockPos pos, Set<BlockPos> positions, BaseTreeFeatureConfig config) {
-    if (isAirOrLeavesAt(world, pos) || !world.hasBlockState(pos, (state) -> state.getMaterial() == Material.TALL_PLANTS) || !world.hasBlockState(pos, (state) -> state.isIn(Blocks.WATER))) {
+  private void setElderLeaf(IWorldGenerationReader world, Random random, BlockPos pos, ElderTreeFeatureConfig config) {
+    if (isAirOrLeavesAt(world, pos)) {
       this.setBlockState(world, pos, config.leavesProvider.getBlockState(random, pos));
-      positions.add(pos.toImmutable());
     }
   }
 
-  private void setElderLog(IWorldGenerationReader world, BlockPos pos, Set<BlockPos> logs, boolean isBaseWood, @Nullable Direction.Axis setAxis, BaseTreeFeatureConfig config) {
+  private void setElderLog(IWorldGenerationReader world, BlockPos pos, boolean isBaseWood, @Nullable Direction.Axis setAxis, ElderTreeFeatureConfig config) {
     if (isAirOrLeavesAt(world, pos) || !world.hasBlockState(pos, (state) -> state.getMaterial() == Material.TALL_PLANTS) || !world.hasBlockState(pos, (state) -> state.isIn(Blocks.WATER))) {
       BlockState blockType = config.trunkProvider.getBlockState(random, pos);
-      // TODO: Fix config
       BlockState baseType = BlockRegistry.elder_wood.getDefaultState().with(WoodBlock.dropSelf, false);
       if (setAxis == null) {
         Random rand = new Random();
@@ -276,7 +324,7 @@ public class ElderTreeFeature extends TreeFeature {
         blockType = blockType.with(WoodBlock.AXIS, setAxis);
       }
       this.setBlockState(world, pos, blockType);
-      logs.add(pos.toImmutable());
     }
   }
+
 }
