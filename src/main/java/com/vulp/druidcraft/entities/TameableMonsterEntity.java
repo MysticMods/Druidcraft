@@ -128,8 +128,15 @@ public class TameableMonsterEntity extends CreatureEntity {
         }
     }
 
+    public boolean burnsInDaylight() {
+        return false;
+    }
+
     @Override
     public void livingTick() {
+        if (this.isInDaylight() && this.burnsInDaylight()) {
+            this.setFire(8);
+        }
         this.updateArmSwingProgress();
         super.livingTick();
     }

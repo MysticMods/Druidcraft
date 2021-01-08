@@ -21,7 +21,8 @@ public class ConfiguredFeatureRegistry {
 
   public static ConfiguredFeature<?, ?> darkwood_bush = register("darkwood_bush", Feature.TREE.withConfiguration(FeatureConfigurations.Trees.darkwood_bush));
   public static ConfiguredFeature<?, ?> blueberry_bush = register("blueberry_bush", Feature.RANDOM_PATCH.withConfiguration(FeatureConfigurations.Bushes.blueberry_bush));
-  public static ConfiguredFeature<?, ?> lavender = register("lavender", Feature.FLOWER.withConfiguration(FeatureConfigurations.Bushes.lavender));
+  public static ConfiguredFeature<?, ?> lavender = register("lavender", Feature.FLOWER.withConfiguration(FeatureConfigurations.Bushes.lavender).withPlacement(Features.Placements.VEGETATION_PLACEMENT).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242731_b(2).chance(10));
+
 
   public static ConfiguredFeature<?, ?> darkwood_trees_feature = register("darkwood_trees", Feature.RANDOM_SELECTOR.withConfiguration(new MultipleRandomFeatureConfig(ImmutableList.of(mega_darkwood_tree.withChance(0.5F), ConfiguredFeatureRegistry.darkwood_tree.withChance(0.5F)), darkwood_tree)).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(12, 0.3F, 3))));
   public static ConfiguredFeature<?, ?> darkwood_bushes_feature = register("darkwood_bushes", darkwood_bush.withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(5, 0.1F, 2))));

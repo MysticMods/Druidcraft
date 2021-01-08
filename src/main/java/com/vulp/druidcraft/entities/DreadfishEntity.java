@@ -83,9 +83,11 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
 
     public static AttributeModifierMap.MutableAttribute bakeAttributes() {
         return MobEntity.func_233666_p_()
-                .createMutableAttribute(Attributes.FLYING_SPEED, 0.3F)
-                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.1F)
-                .createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.975D);
+                .createMutableAttribute(Attributes.FLYING_SPEED, 0.4F)
+                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.2F)
+                .createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.975D)
+                .createMutableAttribute(Attributes.ATTACK_DAMAGE, 4.0D);
+
     }
 
     @Override
@@ -341,6 +343,11 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
 
     }
 
+    @Override
+    public boolean burnsInDaylight() {
+        return !isTamed();
+    }
+
     public void particle() {
         int[] color = getSmokeColorArray();
         world.addParticle(ParticleRegistry.magic_smoke, false, this.getPosX(), this.getPosY() + (((rand.nextDouble() - 0.5) + 0.25) / 4) + 0.1F, this.getPosZ() + (((rand.nextDouble() - 0.5) + 0.2) / 3), color[0] / 255.f, color[1] / 255.f, color[2] / 255.f);
@@ -348,8 +355,6 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
 
     @Override
     public void livingTick() {
-
-        super.livingTick();
         if (this.world.isRemote) {
             if ((int)(this.limbSwing * 10) > 0 && rand.nextInt((int)(this.limbSwing * 10)) != 0) {
                 if (rand.nextInt(3) == 0) {
@@ -370,6 +375,7 @@ public class DreadfishEntity extends TameableMonsterEntity implements IFlyingAni
         if (!this.world.isRemote && this.getAttackTarget() == null && this.isHostile()) {
             this.setHostile(false);
         }
+        super.livingTick();
     }
 
     @Override
