@@ -26,7 +26,7 @@ public class BiomeLoadEventHandler {
         }
         if (event.getCategory() == Biome.Category.FOREST) {
             BiomeGenerationSettingsBuilder settings = event.getGeneration();
-            settings.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ConfiguredFeatureRegistry.elder_tree.withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(0, 0.25F, 1))));
+            settings.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ConfiguredFeatureRegistry.elder_tree.withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(0, 0.025F, 1))));
         }
         // BLUEBERRIES
         if (event.getCategory() == Biome.Category.PLAINS || event.getCategory() == Biome.Category.FOREST || event.getCategory() == Biome.Category.RIVER || event.getCategory() == Biome.Category.EXTREME_HILLS || event.getCategory() == Biome.Category.TAIGA) {
