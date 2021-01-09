@@ -5,14 +5,22 @@ import com.vulp.druidcraft.config.WorldGenConfig;
 import com.vulp.druidcraft.registry.EntityRegistry;
 import com.vulp.druidcraft.registry.ConfiguredFeatureRegistry;
 import net.minecraft.entity.EntityClassification;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Features;
 import net.minecraft.world.gen.placement.*;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 public class BiomeLoadEventHandler {
 
@@ -51,24 +59,31 @@ public class BiomeLoadEventHandler {
 
         // -------------------------------------------------------------------------------------------------------------------
 
-        // BEETLE
-        if (EntitySpawnConfig.beetle_biome_types.get().contains(event.getCategory().getName())) {
-            if (EntitySpawnConfig.beetle_spawn.get()) {
-                event.getSpawns().withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityRegistry.beetle_entity, EntitySpawnConfig.beetle_weight.get(), EntitySpawnConfig.beetle_min_group.get(), EntitySpawnConfig.beetle_max_group.get()));
+        if (event.getName() != null) {
+            Biome biome = ForgeRegistries.BIOMES.getValue(event.getName());
+            if (biome != null) {
+                List<BiomeDictionary.Type> biomeTypes = new ArrayList<>(BiomeDictionary.getTypes(RegistryKey.getOrCreateKey(ForgeRegistries.Keys.BIOMES, event.getName())));
+                for (BiomeDictionary.Type biomeType : biomeTypes) {
+                    // BEETLE
+                    if ((EntitySpawnConfig.beetle_biome_types.get().contains(biomeType.getName())) && !EntitySpawnConfig.beetle_biome_exclusions.get().contains(biomeType.getName())) {
+                        if (EntitySpawnConfig.beetle_spawn.get()) {
+                            event.getSpawns().withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityRegistry.beetle_entity, EntitySpawnConfig.beetle_weight.get(), EntitySpawnConfig.beetle_min_group.get(), EntitySpawnConfig.beetle_max_group.get()));
+                        }
+                    }
+                    // DREADFISH
+                    if ((EntitySpawnConfig.dreadfish_biome_types.get().contains(biomeType.getName())) && !EntitySpawnConfig.dreadfish_biome_exclusions.get().contains(biomeType.getName())) {
+                        if (EntitySpawnConfig.dreadfish_spawn.get()) {
+                            event.getSpawns().withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityRegistry.dreadfish_entity, EntitySpawnConfig.dreadfish_weight.get(), EntitySpawnConfig.dreadfish_min_group.get(), EntitySpawnConfig.dreadfish_max_group.get()));
+                        }
+                    }
+                    // LUNAR MOTH
+                    if ((EntitySpawnConfig.lunar_moth_biome_types.get().contains(biomeType.getName())) && !EntitySpawnConfig.lunar_moth_biome_exclusions.get().contains(biomeType.getName())) {
+                        if (EntitySpawnConfig.lunar_moth_spawn.get()) {
+                            event.getSpawns().withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityRegistry.lunar_moth_entity, EntitySpawnConfig.lunar_moth_weight.get(), EntitySpawnConfig.lunar_moth_min_group.get(), EntitySpawnConfig.lunar_moth_max_group.get()));
+                        }
+                    }
+                }
             }
         }
-        // DREADFISH
-        if (EntitySpawnConfig.dreadfish_biome_types.get().contains(event.getCategory().getName())) {
-            if (EntitySpawnConfig.dreadfish_spawn.get()) {
-                event.getSpawns().withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityRegistry.dreadfish_entity, EntitySpawnConfig.dreadfish_weight.get(), EntitySpawnConfig.dreadfish_min_group.get(), EntitySpawnConfig.dreadfish_max_group.get()));
-            }
-        }
-        // LUNAR MOTH
-        if (EntitySpawnConfig.lunar_moth_biome_types.get().contains(event.getCategory().getName())) {
-            if (EntitySpawnConfig.lunar_moth_spawn.get()) {
-                event.getSpawns().withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityRegistry.lunar_moth_entity, EntitySpawnConfig.lunar_moth_weight.get(), EntitySpawnConfig.lunar_moth_min_group.get(), EntitySpawnConfig.lunar_moth_max_group.get()));
-            }
-        }
-
     }
 }

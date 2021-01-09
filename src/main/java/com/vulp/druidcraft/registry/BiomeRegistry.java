@@ -41,5 +41,6 @@ public class BiomeRegistry {
     // TODO: Make weight of darkwood forest configurable
     BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(BiomeKeys.darkwood_forest, 1));
     BiomeDictionary.addTypes(BiomeKeys.darkwood_forest, BiomeDictionary.Type.CONIFEROUS, BiomeDictionary.Type.OVERWORLD, BiomeDictionary.Type.DENSE, BiomeDictionary.Type.MAGICAL);
+    BiomeDictionary.getBiomes(BiomeDictionary.Type.DENSE);
   }
 }
