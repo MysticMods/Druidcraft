@@ -65,27 +65,39 @@ public class BiomeLoadEventHandler {
             Biome biome = ForgeRegistries.BIOMES.getValue(event.getName());
             if (biome != null) {
                 List<BiomeDictionary.Type> biomeTypes = new ArrayList<>(BiomeDictionary.getTypes(RegistryKey.getOrCreateKey(ForgeRegistries.Keys.BIOMES, event.getName())));
-                for (BiomeDictionary.Type biomeType : biomeTypes) {
-                    // BEETLE
-                    if ((EntitySpawnConfig.beetle_biome_whitelist.contains(biomeType.getName())) && !EntitySpawnConfig.beetle_biome_blacklist.contains(biomeType.getName())) {
-                        if (EntitySpawnConfig.beetle_spawn.get()) {
-                            event.getSpawns().withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityRegistry.beetle_entity, EntitySpawnConfig.beetle_weight.get(), EntitySpawnConfig.beetle_min_group.get(), EntitySpawnConfig.beetle_max_group.get()));
-                        }
-                    }
-                    // DREADFISH
-                    if ((EntitySpawnConfig.dreadfish_biome_whitelist.contains(biomeType.getName())) && !EntitySpawnConfig.dreadfish_biome_blacklist.contains(biomeType.getName())) {
-                        if (EntitySpawnConfig.dreadfish_spawn.get()) {
-                            event.getSpawns().withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityRegistry.dreadfish_entity, EntitySpawnConfig.dreadfish_weight.get(), EntitySpawnConfig.dreadfish_min_group.get(), EntitySpawnConfig.dreadfish_max_group.get()));
-                        }
-                    }
-                    // LUNAR MOTH
-                    if ((EntitySpawnConfig.lunar_moth_biome_whitelist.contains(biomeType.getName())) && !EntitySpawnConfig.lunar_moth_biome_blacklist.contains(biomeType.getName())) {
-                        if (EntitySpawnConfig.lunar_moth_spawn.get()) {
-                            event.getSpawns().withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityRegistry.lunar_moth_entity, EntitySpawnConfig.lunar_moth_weight.get(), EntitySpawnConfig.lunar_moth_min_group.get(), EntitySpawnConfig.lunar_moth_max_group.get()));
-                        }
-                    }
+                // BEETLE
+                if (biomeCategoryChecker(EntitySpawnConfig.beetle_biome_whitelist, EntitySpawnConfig.beetle_biome_blacklist, biomeTypes, EntitySpawnConfig.beetle_spawn.get())) {
+                    event.getSpawns().withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityRegistry.beetle_entity, EntitySpawnConfig.beetle_weight.get(), EntitySpawnConfig.beetle_min_group.get(), EntitySpawnConfig.beetle_max_group.get()));
+                }
+
+                // DREADFISH
+                if (biomeCategoryChecker(EntitySpawnConfig.dreadfish_biome_whitelist, EntitySpawnConfig.dreadfish_biome_blacklist, biomeTypes, EntitySpawnConfig.dreadfish_spawn.get())) {
+                    event.getSpawns().withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityRegistry.dreadfish_entity, EntitySpawnConfig.dreadfish_weight.get(), EntitySpawnConfig.dreadfish_min_group.get(), EntitySpawnConfig.dreadfish_max_group.get()));
+                }
+
+                // LUNAR MOTH
+                if (biomeCategoryChecker(EntitySpawnConfig.lunar_moth_biome_whitelist, EntitySpawnConfig.lunar_moth_biome_blacklist, biomeTypes, EntitySpawnConfig.lunar_moth_spawn.get())) {
+                    event.getSpawns().withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityRegistry.lunar_moth_entity, EntitySpawnConfig.lunar_moth_weight.get(), EntitySpawnConfig.lunar_moth_min_group.get(), EntitySpawnConfig.lunar_moth_max_group.get()));
                 }
             }
         }
+
     }
+
+    public static boolean biomeCategoryChecker(ArrayList<String> whitelist, ArrayList<String> blacklist, List<BiomeDictionary.Type> biomeTypes, boolean canSpawn) {
+        if (canSpawn) {
+            boolean checker = false;
+            for (BiomeDictionary.Type biomeType : biomeTypes) {
+                if (whitelist.contains(biomeType.getName())) {
+                    checker = true;
+                }
+                if (blacklist.contains(biomeType.getName())) {
+                    return false;
+                }
+            }
+            return checker;
+        }
+        return false;
+    }
+
 }

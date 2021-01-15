@@ -62,12 +62,9 @@ public class TameableMonsterEntity extends CreatureEntity {
     @Override
     public void writeAdditional(CompoundNBT compound) {
         super.writeAdditional(compound);
-        if (this.getOwnerId() == null) {
-            compound.putString("OwnerUUID", "");
-        } else {
-            compound.putString("OwnerUUID", this.getOwnerId().toString());
+        if (this.getOwnerId() != null) {
+            compound.putUniqueId("Owner", this.getOwnerId());
         }
-
         compound.putBoolean("Sitting", this.isSitting());
     }
 
@@ -77,19 +74,19 @@ public class TameableMonsterEntity extends CreatureEntity {
     @Override
     public void readAdditional(CompoundNBT compound) {
         super.readAdditional(compound);
-        UUID s;
-        if (compound.contains("OwnerUUID", 8)) {
-            s = compound.getUniqueId("OwnerUUID");
+        UUID uuid;
+        if (compound.hasUniqueId("Owner")) {
+            uuid = compound.getUniqueId("Owner");
         } else {
-            String s1 = compound.getString("Owner");
-            s = PreYggdrasilConverter.convertMobOwnerIfNeeded(Objects.requireNonNull(this.getServer()), s1);
+            String s = compound.getString("Owner");
+            uuid = PreYggdrasilConverter.convertMobOwnerIfNeeded(this.getServer(), s);
         }
 
-        if (s != null) {
+        if (uuid != null) {
             try {
-                this.setOwnerId(s);
+                this.setOwnerId(uuid);
                 this.setTamed(true);
-            } catch (Throwable var4) {
+            } catch (Throwable throwable) {
                 this.setTamed(false);
             }
         }
@@ -103,7 +100,7 @@ public class TameableMonsterEntity extends CreatureEntity {
 
     @Override
     public boolean canDespawn(double distanceToClosestPlayer) {
-        return !this.isTamed() || !this.hasCustomName();
+        return !this.isTamed() && !this.hasCustomName();
     }
 
     @Override
@@ -211,13 +208,14 @@ public class TameableMonsterEntity extends CreatureEntity {
     }
 
     @Nullable
-    private UUID getOwnerId() {
-        return this.dataManager.get(OWNER_UNIQUE_ID).orElse(null);
+    public UUID getOwnerId() {
+        return this.dataManager.get(OWNER_UNIQUE_ID).orElse((UUID)null);
     }
 
-    private void setOwnerId(@Nullable UUID p_184754_1_) {
+    public void setOwnerId(@Nullable UUID p_184754_1_) {
         this.dataManager.set(OWNER_UNIQUE_ID, Optional.ofNullable(p_184754_1_));
     }
+
 
     void setTamedBy(PlayerEntity player) {
         this.setTamed(true);

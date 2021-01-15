@@ -240,6 +240,8 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
         }
     }
 
+
+
     private void updateBeetleSlots() {
         if (!this.world.isRemote) {
             this.setSaddled(!this.beetleChest.getStackInSlot(0).isEmpty() && this.canBeSaddled());
