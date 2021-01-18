@@ -56,9 +56,7 @@ public class Druidcraft {
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        event.enqueueWork(() -> {
-                RenderRegistry.registryRenders();
-            });
+        RenderRegistry.registryRenders(event);
         // RenderHandler.registerColors();
         LOGGER.info("Client registry method registered.");
     }
