@@ -35,7 +35,7 @@ public class DarkwoodForestBiome {
     DefaultBiomeFeatures.withLavaAndWaterLakes(settings);
     DefaultBiomeFeatures.withMonsterRoom(settings);
     DefaultBiomeFeatures.withLargeFern(settings);
-    settings.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, ConfiguredFeatureRegistry.boulder.withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(2));
+    settings.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, ConfiguredFeatureRegistry.boulder);
     DefaultBiomeFeatures.withCommonOverworldBlocks(settings);
     DefaultBiomeFeatures.withOverworldOres(settings);
     DefaultBiomeFeatures.withDisks(settings);

@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.blocks.trees;
 
+import com.vulp.druidcraft.registry.ConfiguredFeatureRegistry;
 import com.vulp.druidcraft.registry.FeatureRegistry;
 import com.vulp.druidcraft.world.config.ElderTreeFeatureConfig;
 import com.vulp.druidcraft.world.config.FeatureConfigurations;
@@ -18,7 +19,7 @@ public class ElderTree extends Tree {
 
     @Nullable
     protected ConfiguredFeature<ElderTreeFeatureConfig, ?> getElderTreeFeature (){
-        return FeatureRegistry.elder_tree.withConfiguration(FeatureConfigurations.Trees.elder_tree);
+        return ConfiguredFeatureRegistry.elder_tree;
     }
 
     @Override
