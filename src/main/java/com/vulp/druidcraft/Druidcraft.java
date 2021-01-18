@@ -49,9 +49,9 @@ public class Druidcraft {
                 VanillaIntegrationRegistry.setup();
             });
 
-        MinecraftForge.EVENT_BUS.register(new GUIRegistry());
-        MinecraftForge.EVENT_BUS.register(new EventHandler());
-        MinecraftForge.EVENT_BUS.register(new BiomeLoadEventHandler());
+        // Deferred to static methods
+        /*MinecraftForge.EVENT_BUS.register(new EventHandler());
+        MinecraftForge.EVENT_BUS.register(new BiomeLoadEventHandler());*/
         LOGGER.info("Setup method registered.");
     }
 

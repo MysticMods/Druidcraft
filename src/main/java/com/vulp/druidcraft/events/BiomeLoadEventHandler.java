@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.events;
 
+import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.config.EntitySpawnConfig;
 import com.vulp.druidcraft.config.WorldGenConfig;
 import com.vulp.druidcraft.registry.EntityRegistry;
@@ -15,6 +16,7 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -22,10 +24,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+@Mod.EventBusSubscriber(modid= Druidcraft.MODID, bus= Mod.EventBusSubscriber.Bus.FORGE)
 public class BiomeLoadEventHandler {
 
     @SubscribeEvent
-    public void onBiomeLoading(BiomeLoadingEvent event) {
+    public static void onBiomeLoading(BiomeLoadingEvent event) {
 
         EntitySpawnConfig.verifyLists();
 

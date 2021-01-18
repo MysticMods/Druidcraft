@@ -28,11 +28,13 @@ import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
+@Mod.EventBusSubscriber(modid=Druidcraft.MODID, bus= Mod.EventBusSubscriber.Bus.FORGE)
 public class EventHandler {
 
     @SubscribeEvent
-    public void onGrassBroken(BlockEvent.BreakEvent event) {
+    public static void onGrassBroken(BlockEvent.BreakEvent event) {
         if (DropRateConfig.drop_seeds.get()) {
             if (!event.getWorld().isRemote()) {
                 if ((event.getPlayer().getHeldItemMainhand().getItem() != Items.SHEARS) && (!event.getPlayer().isCreative())) {
@@ -48,12 +50,11 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    public void onPlayerSetSpawn(PlayerSetSpawnEvent event) {
+    public static void onPlayerSetSpawn(PlayerSetSpawnEvent event) {
         PlayerEntity player = event.getPlayer();
         BlockPos pos = event.getNewSpawn();
         World world = player.getEntityWorld();
         if (pos != null && !world.isRemote) {
-            Block block = world.getBlockState(pos).getBlock();
             if (player.getEntityWorld().getBlockState(pos).getBlock() instanceof BedrollBlock) {
                 event.setCanceled(true);
             }
@@ -61,7 +62,7 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    public void onPlayerWakeUp(PlayerWakeUpEvent event) {
+    public static void onPlayerWakeUp(PlayerWakeUpEvent event) {
         PlayerEntity player = event.getPlayer();
         ItemStack itemStack = player.getHeldItem(Hand.MAIN_HAND).getItem() instanceof TravelPackItem ? player.getHeldItem(Hand.MAIN_HAND) : player.getHeldItem(Hand.OFF_HAND);
         CompoundNBT nbt = itemStack.getOrCreateTag();
@@ -89,7 +90,7 @@ public class EventHandler {
 
 
 /*    @SubscribeEvent
-    public void onSpawn(PlayerEvent.PlayerRespawnEvent event) {
+    public static void onSpawn(PlayerEvent.PlayerRespawnEvent event) {
         World world = event.getPlayer().world;
         if (!world.isRemote()) {
             Druidcraft.LOGGER.debug("----------");
