@@ -67,8 +67,9 @@ public class Druidcraft {
         ParticleRegistry.registerFactories();
         LOGGER.info("Particle registry method registered.");
     }
-    @SubscribeEvent
+
+/*    @SubscribeEvent
     public void onServerStarting(FMLServerStartingEvent event) {
         LOGGER.info("HELLO from server starting");
-    }
+    }*/
 }
