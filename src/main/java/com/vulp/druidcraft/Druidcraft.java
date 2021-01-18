@@ -44,8 +44,10 @@ public class Druidcraft {
     private void setup(final FMLCommonSetupEvent event) {
         PacketHandler.init();
 
-        BiomeRegistry.registerBiomes();
-        VanillaIntegrationRegistry.setup();
+        event.enqueueWork(() -> {
+                BiomeRegistry.registerBiomes();
+                VanillaIntegrationRegistry.setup();
+            });
 
         MinecraftForge.EVENT_BUS.register(new GUIRegistry());
         MinecraftForge.EVENT_BUS.register(new EventHandler());
@@ -54,7 +56,9 @@ public class Druidcraft {
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        RenderRegistry.registryRenders();
+        event.enqueueWork(() -> {
+                RenderRegistry.registryRenders();
+            });
         // RenderHandler.registerColors();
         LOGGER.info("Client registry method registered.");
     }
