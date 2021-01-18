@@ -272,7 +272,7 @@ public class BeetleEntity extends TameableMonsterEntity implements IInventoryCha
                     }
 
                     if (!this.world.isRemote) {
-                        if (this.rand.nextInt(3) == 0 && !EventFactory.onMonsterTame(this, player)) {
+                        if (this.rand.nextBoolean() && !EventFactory.onMonsterTame(this, player)) {
                             this.playTameEffect(true);
                             this.setTamedBy(player);
                             this.navigator.clearPath();
