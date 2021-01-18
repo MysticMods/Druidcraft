@@ -7,6 +7,7 @@ import com.vulp.druidcraft.network.PacketHandler;
 import com.vulp.druidcraft.registry.*;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -31,9 +32,10 @@ public class Druidcraft {
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Configuration.server_config);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Configuration.client_config);
 
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doParticleStuff);
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        bus.addListener(this::setup);
+        bus.addListener(this::doClientStuff);
+        bus.addListener(this::doParticleStuff);
 
         Configuration.loadConfig(Configuration.server_config, FMLPaths.CONFIGDIR.get().resolve("druidcraft-server.toml").toString());
         Configuration.loadConfig(Configuration.client_config, FMLPaths.CONFIGDIR.get().resolve("druidcraft-client.toml").toString());
