@@ -5,25 +5,19 @@ import com.vulp.druidcraft.api.BedrollDyeColorIndex;
 import com.vulp.druidcraft.blocks.BedrollBlock;
 import com.vulp.druidcraft.config.DropRateConfig;
 import com.vulp.druidcraft.inventory.TravelPackInventory;
-import com.vulp.druidcraft.items.BasicShieldItem;
 import com.vulp.druidcraft.items.TravelPackItem;
 import com.vulp.druidcraft.registry.ItemRegistry;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -64,27 +58,33 @@ public class EventHandler {
     @SubscribeEvent
     public static void onPlayerWakeUp(PlayerWakeUpEvent event) {
         PlayerEntity player = event.getPlayer();
-        ItemStack itemStack = player.getHeldItem(Hand.MAIN_HAND).getItem() instanceof TravelPackItem ? player.getHeldItem(Hand.MAIN_HAND) : player.getHeldItem(Hand.OFF_HAND);
-        CompoundNBT nbt = itemStack.getOrCreateTag();
-        if (nbt.contains("BedrollPosX")) {
-            BlockPos pos = new BlockPos(nbt.getInt("BedrollPosX"), nbt.getInt("BedrollPosY"), nbt.getInt("BedrollPosZ"));
-            World world = player.getEntityWorld();
-            BlockState blockState = world.getBlockState(pos);
-            if (blockState.getBlock() instanceof BedrollBlock) {
-                BedrollDyeColorIndex bedrollDyeColor = BedrollDyeColorIndex.byBlock((BedrollBlock)blockState.getBlock());
-                nbt.putInt("Color", bedrollDyeColor.getIndex());
-                TravelPackInventory inventory = new TravelPackInventory(itemStack);
-                inventory.setInventorySlotContents(0, new ItemStack(bedrollDyeColor.getBedrollItem(), 1));
-                inventory.writeItemStack();
-                Direction facing = blockState.get(BedrollBlock.HORIZONTAL_FACING);
-                BlockState headBlock = world.getBlockState(pos);
-                BlockState footBlock = world.getBlockState(pos.offset(facing.getOpposite()));
-                world.setBlockState(pos, headBlock.get(BedrollBlock.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState());
-                world.setBlockState(pos.offset(facing.getOpposite()), footBlock.get(BedrollBlock.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState());
+        ItemStack itemStack = player.getHeldItemMainhand();
+        if (!(itemStack.getItem() instanceof TravelPackItem)) {
+            itemStack = player.getHeldItemOffhand();
+            if (!(itemStack.getItem() instanceof TravelPackItem)) {
+                return;
             }
-            nbt.remove("BedrollPosX");
-            nbt.remove("BedrollPosY");
-            nbt.remove("BedrollPosZ");
+            CompoundNBT nbt = itemStack.getOrCreateTag();
+            if (nbt.contains("BedrollPosX")) {
+                BlockPos pos = new BlockPos(nbt.getInt("BedrollPosX"), nbt.getInt("BedrollPosY"), nbt.getInt("BedrollPosZ"));
+                World world = player.getEntityWorld();
+                BlockState blockState = world.getBlockState(pos);
+                if (blockState.getBlock() instanceof BedrollBlock) {
+                    BedrollDyeColorIndex bedrollDyeColor = BedrollDyeColorIndex.byBlock((BedrollBlock) blockState.getBlock());
+                    nbt.putInt("Color", bedrollDyeColor.getIndex());
+                    TravelPackInventory inventory = new TravelPackInventory(itemStack);
+                    inventory.setInventorySlotContents(0, new ItemStack(bedrollDyeColor.getBedrollItem(), 1));
+                    inventory.writeItemStack();
+                    Direction facing = blockState.get(BedrollBlock.HORIZONTAL_FACING);
+                    BlockState headBlock = world.getBlockState(pos);
+                    BlockState footBlock = world.getBlockState(pos.offset(facing.getOpposite()));
+                    world.setBlockState(pos, headBlock.get(BedrollBlock.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState());
+                    world.setBlockState(pos.offset(facing.getOpposite()), footBlock.get(BedrollBlock.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState());
+                }
+                nbt.remove("BedrollPosX");
+                nbt.remove("BedrollPosY");
+                nbt.remove("BedrollPosZ");
+            }
         }
     }
 
