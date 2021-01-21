@@ -64,27 +64,27 @@ public class EventHandler {
             if (!(itemStack.getItem() instanceof TravelPackItem)) {
                 return;
             }
-            CompoundNBT nbt = itemStack.getOrCreateTag();
-            if (nbt.contains("BedrollPosX")) {
-                BlockPos pos = new BlockPos(nbt.getInt("BedrollPosX"), nbt.getInt("BedrollPosY"), nbt.getInt("BedrollPosZ"));
-                World world = player.getEntityWorld();
-                BlockState blockState = world.getBlockState(pos);
-                if (blockState.getBlock() instanceof BedrollBlock) {
-                    BedrollDyeColorIndex bedrollDyeColor = BedrollDyeColorIndex.byBlock((BedrollBlock) blockState.getBlock());
-                    nbt.putInt("Color", bedrollDyeColor.getIndex());
-                    TravelPackInventory inventory = new TravelPackInventory(itemStack);
-                    inventory.setInventorySlotContents(0, new ItemStack(bedrollDyeColor.getBedrollItem(), 1));
-                    inventory.writeItemStack();
-                    Direction facing = blockState.get(BedrollBlock.HORIZONTAL_FACING);
-                    BlockState headBlock = world.getBlockState(pos);
-                    BlockState footBlock = world.getBlockState(pos.offset(facing.getOpposite()));
-                    world.setBlockState(pos, headBlock.get(BedrollBlock.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState());
-                    world.setBlockState(pos.offset(facing.getOpposite()), footBlock.get(BedrollBlock.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState());
-                }
-                nbt.remove("BedrollPosX");
-                nbt.remove("BedrollPosY");
-                nbt.remove("BedrollPosZ");
+        }
+        CompoundNBT nbt = itemStack.getOrCreateTag();
+        if (nbt.contains("BedrollPosX")) {
+            BlockPos pos = new BlockPos(nbt.getInt("BedrollPosX"), nbt.getInt("BedrollPosY"), nbt.getInt("BedrollPosZ"));
+            World world = player.getEntityWorld();
+            BlockState blockState = world.getBlockState(pos);
+            if (blockState.getBlock() instanceof BedrollBlock) {
+                BedrollDyeColorIndex bedrollDyeColor = BedrollDyeColorIndex.byBlock((BedrollBlock) blockState.getBlock());
+                nbt.putInt("Color", bedrollDyeColor.getIndex());
+                TravelPackInventory inventory = new TravelPackInventory(itemStack);
+                inventory.setInventorySlotContents(0, new ItemStack(bedrollDyeColor.getBedrollItem(), 1));
+                inventory.writeItemStack();
+                Direction facing = blockState.get(BedrollBlock.HORIZONTAL_FACING);
+                BlockState headBlock = world.getBlockState(pos);
+                BlockState footBlock = world.getBlockState(pos.offset(facing.getOpposite()));
+                world.setBlockState(pos, headBlock.get(BedrollBlock.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState());
+                world.setBlockState(pos.offset(facing.getOpposite()), footBlock.get(BedrollBlock.WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState());
             }
+            nbt.remove("BedrollPosX");
+            nbt.remove("BedrollPosY");
+            nbt.remove("BedrollPosZ");
         }
     }
 
