@@ -96,7 +96,9 @@ public class ItemRegistry
     public static Item amber_ore;
     public static Item moonstone_ore;
     public static Item fiery_glass_ore;
+    public static Item nether_fiery_glass_ore;
     public static Item rockroot_ore;
+    public static Item brightstone_ore;
     public static Item amber_block;
     public static Item moonstone_block;
     public static Item fiery_glass_block;
@@ -213,4 +215,14 @@ public class ItemRegistry
 
     public static Item woodcutter;
     public static Item aloe_vera;
+
+    public static Item heart_of_blaze;
+    public static Item crushed_fiery_glass;
+    public static Item blazing_steel;
+    public static Item tempered_fiery_glass;
+    public static Item brightstone;
+
+    public static Item hellkiln_igniter;
+    public static Item hellkiln;
+
 }

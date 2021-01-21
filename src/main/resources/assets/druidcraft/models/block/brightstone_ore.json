@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-		"all": "druidcraft:block/fiery_glass_ore"
+		"all": "druidcraft:block/brightstone_ore"
     }
 }

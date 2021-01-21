@@ -62,6 +62,12 @@ public class BiomeLoadEventHandler {
             settings.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, ConfiguredFeatureRegistry.rockroot);
         }
 
+        if (event.getCategory() == Biome.Category.NETHER && WorldGenConfig.generate_wip.get()) {
+            BiomeGenerationSettingsBuilder settings = event.getGeneration();
+            settings.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, ConfiguredFeatureRegistry.nether_fiery_glass);
+            settings.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, ConfiguredFeatureRegistry.brightstone);
+        }
+
         // -------------------------------------------------------------------------------------------------------------------
 
         if (event.getName() != null) {

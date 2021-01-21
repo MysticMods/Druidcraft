@@ -4,16 +4,17 @@ import com.vulp.druidcraft.registry.ItemRegistry;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
-public class DruidcraftItemGroup extends ItemGroup
+public class DruidcraftWIPItemGroup extends ItemGroup
 {
-    public DruidcraftItemGroup()
+    public DruidcraftWIPItemGroup()
     {
-        super("druidcraft");
+        super("druidcraft_wip");
     }
 
     @Override
     public ItemStack createIcon() {
-        return new ItemStack(ItemRegistry.hemp);
+        return new ItemStack(ItemRegistry.knife
+        );
     }
 
 

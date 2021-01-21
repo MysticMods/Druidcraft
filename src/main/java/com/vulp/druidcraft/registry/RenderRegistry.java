@@ -122,6 +122,7 @@ public class RenderRegistry
             ScreenManager.registerFactory(GUIRegistry.generic_9X24, OctoCrateScreen::new);
             ScreenManager.registerFactory(GUIRegistry.woodcutter, WoodcutterScreen::new);
             ScreenManager.registerFactory(GUIRegistry.travel_pack, TravelPackScreen::new);
+            ScreenManager.registerFactory(GUIRegistry.hellkiln_igniter, HellKilnIgniterScreen::new);
 
             // PLAYER MODEL HOOK
             Map<String, PlayerRenderer> playerSkinMap = Minecraft.getInstance().getRenderManager().getSkinMap();

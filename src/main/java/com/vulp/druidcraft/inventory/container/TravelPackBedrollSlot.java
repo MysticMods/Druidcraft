@@ -7,11 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
 public class TravelPackBedrollSlot extends Slot {
-    private final TravelPackContainer container;
 
     public TravelPackBedrollSlot(TravelPackContainer container, IInventory inventory, int p_i50084_3_, int p_i50084_4_, int p_i50084_5_) {
         super(inventory, p_i50084_3_, p_i50084_4_, p_i50084_5_);
-        this.container = container;
     }
 
     @Override

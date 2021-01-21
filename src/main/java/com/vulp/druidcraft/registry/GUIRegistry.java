@@ -2,10 +2,7 @@ package com.vulp.druidcraft.registry;
 
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.client.gui.screen.inventory.BeetleInventoryScreen;
-import com.vulp.druidcraft.inventory.container.BeetleInventoryContainer;
-import com.vulp.druidcraft.inventory.container.CrateContainer;
-import com.vulp.druidcraft.inventory.container.TravelPackContainer;
-import com.vulp.druidcraft.inventory.container.WoodcutterContainer;
+import com.vulp.druidcraft.inventory.container.*;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -25,5 +22,6 @@ public class GUIRegistry {
     public static ContainerType<CrateContainer> generic_9X12 = (ContainerType<CrateContainer>) new ContainerType<>(CrateContainer::createGeneric9X12).setRegistryName(Druidcraft.MODID, "generic_9x12");
     public static ContainerType<CrateContainer> generic_9X24 = (ContainerType<CrateContainer>) new ContainerType<>(CrateContainer::createGeneric9X24).setRegistryName(Druidcraft.MODID, "generic_9x24");
     public static ContainerType<WoodcutterContainer> woodcutter = (ContainerType<WoodcutterContainer>) new ContainerType<>(WoodcutterContainer::new).setRegistryName(Druidcraft.MODID, "woodcutter");
+    public static ContainerType<HellKilnIgniterContainer> hellkiln_igniter = (ContainerType<HellKilnIgniterContainer>) new ContainerType<>(HellKilnIgniterContainer::new).setRegistryName(Druidcraft.MODID, "hellkiln_igniter");
     public static ContainerType<TravelPackContainer> travel_pack = (ContainerType<TravelPackContainer>) new ContainerType<>(TravelPackContainer::createClientContainer).setRegistryName(Druidcraft.MODID, "travel_pack");
 }

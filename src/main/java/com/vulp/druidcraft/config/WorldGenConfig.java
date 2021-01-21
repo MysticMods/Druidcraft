@@ -14,6 +14,8 @@ public class WorldGenConfig
     public static ForgeConfigSpec.IntValue rockroot_weight;
     public static ForgeConfigSpec.BooleanValue generate_ores;
 
+    public static ForgeConfigSpec.BooleanValue generate_wip;
+
     public static void init(ForgeConfigSpec.Builder server, ForgeConfigSpec.Builder client)
     {
         server.comment("World Generation Config");
@@ -27,5 +29,6 @@ public class WorldGenConfig
         rockroot_size = server.comment("Determines the size of a rockroot vein.").defineInRange("oregeneration.rockroot_size", 3, 1, 32);
         rockroot_weight = server.comment("Determines the rarity of rockroot veins.").defineInRange("oregeneration.rockroot_weight", 16, 0, 200);
         generate_ores = server.comment("Whether to have ores from this mod spawn at all.").define("oregeneration.generate_ores", true);
+        generate_wip = server.comment("Whether to spawn WIP features, some of which may be buggy or not work at all. Mainly here for dev use, leave off.").define("worldgeneration.generate_wip", false);
     }
 }

@@ -27,10 +27,10 @@ public class BlockRegistry {
 
   public static Block debug_block = register("debug", new DebugBlock(DebugBlock.Properties.create(Material.CLAY)));
   public static Block hemp_crop = register("hemp_crop", new HempBlock(HempBlock.Properties.create(Material.PLANTS).sound(SoundType.CROP).hardnessAndResistance(0.0f).doesNotBlockMovement().tickRandomly()));
-  public static Block amber_ore = register("amber_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(1), 6, 12));
-  public static Block moonstone_ore = register("moonstone_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(3), 6, 14));
-  public static Block fiery_glass_ore = register("fiery_glass_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(2), 4, 10));
-  public static Block rockroot_ore = register("rockroot_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(0), 2, 10));
+  public static Block amber_ore = register("amber_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(1), 3, 6));
+  public static Block moonstone_ore = register("moonstone_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(3), 3, 7));
+  public static Block fiery_glass_ore = register("fiery_glass_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(2), 2, 5));
+  public static Block rockroot_ore = register("rockroot_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(0), 1, 5));
   public static Block amber_block = register("amber_block", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f).setRequiresTool().notSolid().harvestTool(ToolType.PICKAXE).harvestLevel(1).sound(SoundType.STONE)));
   public static Block moonstone_block = register("moonstone_block", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(6.0f).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(2).sound(SoundType.STONE)));
   public static Block fiery_glass_block = register("fiery_glass_block", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(4.0f).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(2).setLightLevel((light) -> 15).sound(SoundType.STONE)));
@@ -151,6 +151,10 @@ public class BlockRegistry {
   public static Block red_soulfire = register("red_soulfire", new SoulfireBlock(DyeColor.RED, SoulfireBlock.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f).doesNotBlockMovement().setLightLevel((light) -> (13))));
   public static Block black_soulfire = register("black_soulfire", new SoulfireBlock(DyeColor.BLACK, SoulfireBlock.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f).doesNotBlockMovement().setLightLevel((light) -> (13))));
   public static Block woodcutter = register("woodcutter", new WoodcutterBlock(WoodcutterBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(1.75f)));
+
+  public static Block nether_fiery_glass_ore = register("nether_fiery_glass_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(1), 2, 5));
+  public static Block brightstone_ore = register("brightstone_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).setLightLevel((light) -> (5)).harvestTool(ToolType.PICKAXE).harvestLevel(3), 3, 8));
+  public static Block hellkiln_igniter = register("hellkiln_igniter", new HellkilnIgniter(HellkilnIgniter.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).tickRandomly().harvestTool(ToolType.PICKAXE).harvestLevel(0)));
 
   public static Block register (String name, Block block) {
     block.setRegistryName(DruidcraftRegistry.location(name));

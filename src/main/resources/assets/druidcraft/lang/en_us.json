@@ -223,7 +223,8 @@
   "subtitles.druidcraft.ui.woodcutter.take_result": "Woodcutter used",
 
   "itemGroup.druidcraft": "Druidcraft",
-  
+  "itemGroup.druidcraft_wip": "Druidcraft WIP - No Touchy!",
+
   "advancements.druidcraft.root.title": "Druidcraft",
   "advancements.druidcraft.root.description": "Forage through grass for some hemp seeds",
   "advancements.druidcraft.grow_hemp.title": "It's Industrial, I Swear!",

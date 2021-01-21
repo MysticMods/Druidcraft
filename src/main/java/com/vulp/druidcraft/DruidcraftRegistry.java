@@ -3,6 +3,7 @@ package com.vulp.druidcraft;
 import com.vulp.druidcraft.blocks.*;
 import com.vulp.druidcraft.blocks.tileentities.CrateTileEntity;
 import com.vulp.druidcraft.blocks.tileentities.GrowthLampTileEntity;
+import com.vulp.druidcraft.blocks.tileentities.HellkilnIgniterTileEntity;
 import com.vulp.druidcraft.blocks.tileentities.SmallBeamTileEntity;
 import com.vulp.druidcraft.client.renders.ItemTileEntityRenderer;
 import com.vulp.druidcraft.client.renders.SmallBeamTileEntityRenderer;
@@ -37,6 +38,7 @@ public class DruidcraftRegistry {
     public static final String MODID = "druidcraft";
     public static final Logger LOGGER = LogManager.getLogger(MODID);
     public static final ItemGroup DRUIDCRAFT = new DruidcraftItemGroup();
+    public static final ItemGroup DRUIDCRAFT_WIP = new DruidcraftWIPItemGroup();
 
     // ITEM REGISTRATION
     @SuppressWarnings("ConstantConditions")
@@ -53,8 +55,13 @@ public class DruidcraftRegistry {
                         ItemRegistry.amber = new Item(new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("amber")),
                         ItemRegistry.moonstone = new Item(new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("moonstone")),
                         ItemRegistry.fiery_glass = new SmeltableItem(new Item.Properties().group(DRUIDCRAFT), 2400).setRegistryName(location("fiery_glass")),
+                        ItemRegistry.crushed_fiery_glass = new SmeltableItem(new Item.Properties().group(DRUIDCRAFT_WIP), 2400).setRegistryName(location("crushed_fiery_glass")),
                         ItemRegistry.rockroot = new Item(new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("rockroot")),
+                        ItemRegistry.tempered_fiery_glass = new Item(new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("tempered_fiery_glass")),
+                        ItemRegistry.brightstone = new Item(new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("brightstone")),
+                        ItemRegistry.blazing_steel = new Item(new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("blazing_steel")),
                         ItemRegistry.chitin = new Item(new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("chitin")),
+                        ItemRegistry.heart_of_blaze = new Item(new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("heart_of_blaze")),
                         ItemRegistry.knife = new KnifeItem(new Item.Properties().group(DRUIDCRAFT).maxStackSize(1)).setRegistryName(location("knife")),
 
                         //Tools & Armour:
@@ -122,6 +129,8 @@ public class DruidcraftRegistry {
                         ItemRegistry.moonstone_ore = new BlockItem(BlockRegistry.moonstone_ore, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.moonstone_ore.getRegistryName()),
                         ItemRegistry.fiery_glass_ore = new BlockItem(BlockRegistry.fiery_glass_ore, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.fiery_glass_ore.getRegistryName()),
                         ItemRegistry.rockroot_ore = new BlockItem(BlockRegistry.rockroot_ore, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.rockroot_ore.getRegistryName()),
+                        ItemRegistry.nether_fiery_glass_ore = new BlockItem(BlockRegistry.nether_fiery_glass_ore, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.nether_fiery_glass_ore.getRegistryName()),
+                        ItemRegistry.brightstone_ore = new BlockItem(BlockRegistry.brightstone_ore, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.brightstone_ore.getRegistryName()),
                         ItemRegistry.amber_block = new BlockItem(BlockRegistry.amber_block, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.amber_block.getRegistryName()),
                         ItemRegistry.moonstone_block = new BlockItem(BlockRegistry.moonstone_block, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.moonstone_block.getRegistryName()),
                         ItemRegistry.fiery_glass_block = new SmeltableBlockItem(BlockRegistry.fiery_glass_block, 24000, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.fiery_glass_block.getRegistryName()),
@@ -229,7 +238,9 @@ public class DruidcraftRegistry {
                         ItemRegistry.red_soulfire = new BlockItem(BlockRegistry.red_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.red_soulfire.getRegistryName()),
                         ItemRegistry.black_soulfire = new BlockItem(BlockRegistry.black_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.black_soulfire.getRegistryName()),
 
-                        ItemRegistry.woodcutter = new BlockItem(BlockRegistry.woodcutter, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.woodcutter.getRegistryName())
+                        ItemRegistry.woodcutter = new BlockItem(BlockRegistry.woodcutter, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.woodcutter.getRegistryName()),
+                        ItemRegistry.hellkiln_igniter = new BlockItem(BlockRegistry.hellkiln_igniter, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.hellkiln_igniter.getRegistryName())
+
 
                 );
 
@@ -319,7 +330,8 @@ public class DruidcraftRegistry {
                         GUIRegistry.generic_9X12,
                         GUIRegistry.generic_9X24,
                         GUIRegistry.woodcutter,
-                        GUIRegistry.travel_pack
+                        GUIRegistry.travel_pack,
+                        GUIRegistry.hellkiln_igniter
                 );
 
         LOGGER.info("GUI registered.");
@@ -333,8 +345,9 @@ public class DruidcraftRegistry {
                 (
                         TileEntityRegistry.crate = TileEntityRegistry.register("crate", TileEntityType.Builder.create(CrateTileEntity::new, BlockRegistry.crate)),
                         TileEntityRegistry.growth_lamp = TileEntityRegistry.register("growth_lamp", TileEntityType.Builder.create(GrowthLampTileEntity::new, BlockRegistry.growth_lamp)),
-                        TileEntityRegistry.small_beam = TileEntityRegistry.register("small_beam", TileEntityType.Builder.create(SmallBeamTileEntity::new, BlockRegistry.acacia_small_beam, BlockRegistry.birch_small_beam, BlockRegistry.dark_oak_small_beam, BlockRegistry.darkwood_small_beam, BlockRegistry.elder_small_beam, BlockRegistry.jungle_small_beam, BlockRegistry.oak_small_beam, BlockRegistry.spruce_small_beam))
-                );
+                        TileEntityRegistry.small_beam = TileEntityRegistry.register("small_beam", TileEntityType.Builder.create(SmallBeamTileEntity::new, BlockRegistry.acacia_small_beam, BlockRegistry.birch_small_beam, BlockRegistry.dark_oak_small_beam, BlockRegistry.darkwood_small_beam, BlockRegistry.elder_small_beam, BlockRegistry.jungle_small_beam, BlockRegistry.oak_small_beam, BlockRegistry.spruce_small_beam)),
+                        TileEntityRegistry.hellkiln_igniter = TileEntityRegistry.register("hellkiln_igniter", TileEntityType.Builder.create(HellkilnIgniterTileEntity::new, BlockRegistry.hellkiln_igniter))
+                        );
 
         LOGGER.info("Tile Entities registered.");
     }
