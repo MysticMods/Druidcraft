@@ -4,11 +4,10 @@ import com.vulp.druidcraft.registry.ItemRegistry;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 
 public class HellkilnIgniterFuelSlot extends Slot {
 
-    public HellkilnIgniterFuelSlot(HellKilnIgniterContainer container, IInventory inventory, int p_i50084_3_, int p_i50084_4_, int p_i50084_5_) {
+    public HellkilnIgniterFuelSlot(HellkilnIgniterContainer container, IInventory inventory, int p_i50084_3_, int p_i50084_4_, int p_i50084_5_) {
         super(inventory, p_i50084_3_, p_i50084_4_, p_i50084_5_);
     }
 

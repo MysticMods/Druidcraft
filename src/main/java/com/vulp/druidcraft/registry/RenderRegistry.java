@@ -1,8 +1,6 @@
 package com.vulp.druidcraft.registry;
 
 import com.vulp.druidcraft.Druidcraft;
-import com.vulp.druidcraft.DruidcraftRegistry;
-import com.vulp.druidcraft.blocks.tileentities.SmallBeamTileEntity;
 import com.vulp.druidcraft.client.gui.screen.inventory.*;
 import com.vulp.druidcraft.client.models.BedrollTravelPackModel;
 import com.vulp.druidcraft.client.models.TravelPackModel;
@@ -11,25 +9,17 @@ import com.vulp.druidcraft.client.renders.DreadfishEntityRender;
 import com.vulp.druidcraft.client.renders.LunarMothEntityRender;
 import com.vulp.druidcraft.client.renders.SmallBeamTileEntityRenderer;
 import com.vulp.druidcraft.client.renders.layers.TravelPackLayer;
-import com.vulp.druidcraft.entities.BeetleEntity;
-import com.vulp.druidcraft.entities.DreadfishEntity;
-import com.vulp.druidcraft.entities.LunarMothEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.client.gui.screen.inventory.StonecutterScreen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
-import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemModelsProperties;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -38,7 +28,6 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -122,7 +111,8 @@ public class RenderRegistry
             ScreenManager.registerFactory(GUIRegistry.generic_9X24, OctoCrateScreen::new);
             ScreenManager.registerFactory(GUIRegistry.woodcutter, WoodcutterScreen::new);
             ScreenManager.registerFactory(GUIRegistry.travel_pack, TravelPackScreen::new);
-            ScreenManager.registerFactory(GUIRegistry.hellkiln_igniter, HellKilnIgniterScreen::new);
+            ScreenManager.registerFactory(GUIRegistry.hellkiln, HellkilnScreen::new);
+            ScreenManager.registerFactory(GUIRegistry.hellkiln_igniter, HellkilnIgniterScreen::new);
 
             // PLAYER MODEL HOOK
             Map<String, PlayerRenderer> playerSkinMap = Minecraft.getInstance().getRenderManager().getSkinMap();

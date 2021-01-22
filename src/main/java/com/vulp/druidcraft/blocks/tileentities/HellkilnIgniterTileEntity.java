@@ -1,9 +1,12 @@
 package com.vulp.druidcraft.blocks.tileentities;
 
-import com.vulp.druidcraft.inventory.container.HellKilnIgniterContainer;
+import com.vulp.druidcraft.blocks.Hellkiln;
+import com.vulp.druidcraft.blocks.HellkilnIgniter;
+import com.vulp.druidcraft.inventory.container.HellkilnIgniterContainer;
 import com.vulp.druidcraft.registry.GUIRegistry;
 import com.vulp.druidcraft.registry.ItemRegistry;
 import com.vulp.druidcraft.registry.TileEntityRegistry;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -11,11 +14,15 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
 
 public class HellkilnIgniterTileEntity extends LockableTileEntity implements ITickableTileEntity {
 
@@ -43,19 +50,54 @@ public class HellkilnIgniterTileEntity extends LockableTileEntity implements ITi
         super(typeIn);
     }
 
+    private boolean hasFuel() {
+        return this.fuel > 0;
+    }
+
+    private void updateMain() {
+        World world = this.getWorld();
+        BlockPos pos = this.getPos();
+        TileEntity hellkiln = world.getTileEntity(pos.offset(world.getBlockState(pos).get(HellkilnIgniter.FACING)));
+        if (hellkiln instanceof HellkilnTileEntity) {
+            ((HellkilnTileEntity) hellkiln).refreshIgniterList();
+        }
+    }
+
+    public int getFuel() {
+        return this.fuel;
+    }
+
     @Override
     public void tick() {
+        boolean flag = hasFuel();
         int missing = 100 - this.fuel;
         while (missing >= 20) {
             ItemStack itemStack = this.items.get(0);
-            if (itemStack.getItem() != ItemRegistry.crushed_fiery_glass || itemStack.getCount() <= 0) {
-                return;
+            if (itemStack.getItem() != ItemRegistry.crushed_fiery_glass) {
+                break;
             }
             this.fuel = this.fuel + 20;
             missing = missing - 20;
             this.items.get(0).setCount(itemStack.getCount() - 1);
             this.markDirty();
         }
+        if (flag != hasFuel()) {
+            World world = this.world;
+            BlockPos pos = this.pos;
+            world.setBlockState(pos, world.getBlockState(pos).with(Hellkiln.LIT, hasFuel()), 3);
+            BlockState state = this.getBlockState();
+            if (state.getBlock() instanceof HellkilnIgniter) {
+                Direction direction = state.get(HellkilnIgniter.FACING);
+                TileEntity tile = world.getTileEntity(pos.offset(direction));
+                if (tile instanceof HellkilnTileEntity) {
+                    ((HellkilnTileEntity)tile).refreshIgniterList();
+                }
+            }
+        }
+    }
+
+    public void deductFuel(int amount) {
+        this.fuel = this.fuel - amount;
     }
 
     @Override
@@ -65,7 +107,7 @@ public class HellkilnIgniterTileEntity extends LockableTileEntity implements ITi
 
     @Override
     protected Container createMenu(int id, PlayerInventory player) {
-        return new HellKilnIgniterContainer(GUIRegistry.hellkiln_igniter, id, player, this, this.hellkilnIgniterData);
+        return new HellkilnIgniterContainer(GUIRegistry.hellkiln_igniter, id, player, this, this.hellkilnIgniterData);
     }
 
     @Override

@@ -3,18 +3,17 @@ package com.vulp.druidcraft.client.gui.screen.inventory;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.vulp.druidcraft.Druidcraft;
-import com.vulp.druidcraft.inventory.container.HellKilnIgniterContainer;
+import com.vulp.druidcraft.inventory.container.HellkilnIgniterContainer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 
-public class HellKilnIgniterScreen extends ContainerScreen<HellKilnIgniterContainer> {
+public class HellkilnIgniterScreen extends ContainerScreen<HellkilnIgniterContainer> {
 
     private static final ResourceLocation HELLKILN_IGNITER_GUI_TEXTURES = new ResourceLocation(Druidcraft.MODID, "textures/gui/container/hellkiln_igniter.png");
 
-    public HellKilnIgniterScreen(HellKilnIgniterContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public HellkilnIgniterScreen(HellkilnIgniterContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
     }
 
@@ -38,7 +37,7 @@ public class HellKilnIgniterScreen extends ContainerScreen<HellKilnIgniterContai
         this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
         double fuelPercentage = ((double)this.container.getFuelLevel() / 100.0) * 20.0;
         if (fuelPercentage > 0) {
-            this.blit(matrixStack, i + 79, j + 52, 177, 0, (int) Math.round(fuelPercentage), 4);
+            this.blit(matrixStack, i + 78, j + 52, 176, 0, (int) Math.round(fuelPercentage), 4);
         }
 
     }

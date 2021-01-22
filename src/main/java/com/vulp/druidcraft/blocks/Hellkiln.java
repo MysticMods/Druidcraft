@@ -1,6 +1,7 @@
 package com.vulp.druidcraft.blocks;
 
 import com.vulp.druidcraft.blocks.tileentities.HellkilnIgniterTileEntity;
+import com.vulp.druidcraft.blocks.tileentities.HellkilnTileEntity;
 import com.vulp.druidcraft.registry.TileEntityRegistry;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
@@ -19,18 +20,20 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class HellkilnIgniter extends ContainerBlock {
+public class Hellkiln extends ContainerBlock {
 
     public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
+    public static final BooleanProperty BOTTOM = BlockStateProperties.BOTTOM;
 
-    public HellkilnIgniter(Properties builder) {
+    public Hellkiln(Properties builder) {
         super(builder);
-        this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(LIT, false));
+        this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(LIT, false).with(BOTTOM, true));
     }
 
     @Override
@@ -39,7 +42,7 @@ public class HellkilnIgniter extends ContainerBlock {
             return ActionResultType.SUCCESS;
         } else {
             TileEntity tileentity = worldIn.getTileEntity(pos);
-            if (tileentity instanceof HellkilnIgniterTileEntity) {
+            if (tileentity instanceof HellkilnTileEntity) {
                 player.openContainer((INamedContainerProvider) tileentity);
             }
             return ActionResultType.CONSUME;
@@ -50,11 +53,24 @@ public class HellkilnIgniter extends ContainerBlock {
     public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         if (stack.hasDisplayName()) {
             TileEntity tileentity = worldIn.getTileEntity(pos);
-            if (tileentity instanceof HellkilnIgniterTileEntity) {
-                ((HellkilnIgniterTileEntity)tileentity).setCustomName(stack.getDisplayName());
+            if (tileentity instanceof HellkilnTileEntity) {
+                ((HellkilnTileEntity)tileentity).setCustomName(stack.getDisplayName());
             }
         }
 
+    }
+
+    @Override
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!state.isIn(newState.getBlock())) {
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+            if (tileentity instanceof HellkilnTileEntity) {
+                InventoryHelper.dropInventoryItems(worldIn, pos, (HellkilnTileEntity)tileentity);
+                worldIn.updateComparatorOutputLevel(pos, this);
+            }
+
+            super.onReplaced(state, worldIn, pos, newState, isMoving);
+        }
     }
 
     public BlockState getStateForPlacement(BlockItemUseContext context) {
@@ -62,16 +78,12 @@ public class HellkilnIgniter extends ContainerBlock {
     }
 
     @Override
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!state.isIn(newState.getBlock())) {
-            TileEntity tileentity = worldIn.getTileEntity(pos);
-            if (tileentity instanceof HellkilnIgniterTileEntity) {
-                InventoryHelper.dropInventoryItems(worldIn, pos, (HellkilnIgniterTileEntity)tileentity);
-                worldIn.updateComparatorOutputLevel(pos, this);
-            }
-
-            super.onReplaced(state, worldIn, pos, newState, isMoving);
+    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+        TileEntity tileEntity = worldIn.getTileEntity(currentPos);
+        if (tileEntity instanceof HellkilnTileEntity) {
+            ((HellkilnTileEntity)tileEntity).refreshIgniterList();
         }
+        return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }
 
     @Override
@@ -102,12 +114,12 @@ public class HellkilnIgniter extends ContainerBlock {
     @Nullable
     @Override
     public TileEntity createNewTileEntity(IBlockReader worldIn) {
-        return new HellkilnIgniterTileEntity(TileEntityRegistry.hellkiln_igniter);
+        return new HellkilnTileEntity();
     }
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(FACING, LIT);
+        builder.add(FACING, LIT, BOTTOM);
     }
 
 }

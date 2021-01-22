@@ -154,6 +154,7 @@ public class BlockRegistry {
 
   public static Block nether_fiery_glass_ore = register("nether_fiery_glass_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(1), 2, 5));
   public static Block brightstone_ore = register("brightstone_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).setLightLevel((light) -> (5)).harvestTool(ToolType.PICKAXE).harvestLevel(3), 3, 8));
+  public static Block hellkiln = register("hellkiln", new Hellkiln(Hellkiln.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).tickRandomly().harvestTool(ToolType.PICKAXE).harvestLevel(0)));
   public static Block hellkiln_igniter = register("hellkiln_igniter", new HellkilnIgniter(HellkilnIgniter.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).tickRandomly().harvestTool(ToolType.PICKAXE).harvestLevel(0)));
 
   public static Block register (String name, Block block) {

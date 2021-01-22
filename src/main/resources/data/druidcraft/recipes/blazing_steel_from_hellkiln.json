@@ -1,0 +1,12 @@
+{
+  "type": "druidcraft:hellkiln_smelting",
+  "ingredient1": {
+    "item": "minecraft:blaze_powder"
+  },
+  "ingredient2": {
+    "item": "minecraft:iron_ingot"
+  },
+  "result": {
+    "item": "druidcraft:blazing_steel"
+  }
+}

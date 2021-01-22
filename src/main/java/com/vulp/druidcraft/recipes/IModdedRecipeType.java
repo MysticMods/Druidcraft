@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface IModdedRecipeType<T extends IRecipe<?>> {
 
     IRecipeType<WoodcuttingRecipe> woodcutting = register("woodcutting");
+    IRecipeType<HellkilnRecipe> hellkiln_smelting = register("hellkiln_smelting");
 
     static <T extends IRecipe<?>> IRecipeType<T> register(final String key) {
         return Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(Druidcraft.MODID, key), new IRecipeType<T>() {

@@ -1,10 +1,7 @@
 package com.vulp.druidcraft;
 
 import com.vulp.druidcraft.blocks.*;
-import com.vulp.druidcraft.blocks.tileentities.CrateTileEntity;
-import com.vulp.druidcraft.blocks.tileentities.GrowthLampTileEntity;
-import com.vulp.druidcraft.blocks.tileentities.HellkilnIgniterTileEntity;
-import com.vulp.druidcraft.blocks.tileentities.SmallBeamTileEntity;
+import com.vulp.druidcraft.blocks.tileentities.*;
 import com.vulp.druidcraft.client.renders.ItemTileEntityRenderer;
 import com.vulp.druidcraft.client.renders.SmallBeamTileEntityRenderer;
 import com.vulp.druidcraft.entities.LunarMothColors;
@@ -239,6 +236,7 @@ public class DruidcraftRegistry {
                         ItemRegistry.black_soulfire = new BlockItem(BlockRegistry.black_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.black_soulfire.getRegistryName()),
 
                         ItemRegistry.woodcutter = new BlockItem(BlockRegistry.woodcutter, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.woodcutter.getRegistryName()),
+                        ItemRegistry.hellkiln = new BlockItem(BlockRegistry.hellkiln, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.hellkiln.getRegistryName()),
                         ItemRegistry.hellkiln_igniter = new BlockItem(BlockRegistry.hellkiln_igniter, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.hellkiln_igniter.getRegistryName())
 
 
@@ -314,6 +312,7 @@ public class DruidcraftRegistry {
 
         RecipeRegistry.register(RecipeRegistryEvent);
         RecipeRegistryEvent.getRegistry().register(RecipeSerializers.woodcutting.setRegistryName(location("woodcutting")));
+        RecipeRegistryEvent.getRegistry().register(RecipeSerializers.hellkiln_smelting.setRegistryName(location("hellkiln_smelting")));
 
         LOGGER.info("Recipes registered.");
     }
@@ -331,6 +330,7 @@ public class DruidcraftRegistry {
                         GUIRegistry.generic_9X24,
                         GUIRegistry.woodcutter,
                         GUIRegistry.travel_pack,
+                        GUIRegistry.hellkiln,
                         GUIRegistry.hellkiln_igniter
                 );
 
@@ -346,6 +346,7 @@ public class DruidcraftRegistry {
                         TileEntityRegistry.crate = TileEntityRegistry.register("crate", TileEntityType.Builder.create(CrateTileEntity::new, BlockRegistry.crate)),
                         TileEntityRegistry.growth_lamp = TileEntityRegistry.register("growth_lamp", TileEntityType.Builder.create(GrowthLampTileEntity::new, BlockRegistry.growth_lamp)),
                         TileEntityRegistry.small_beam = TileEntityRegistry.register("small_beam", TileEntityType.Builder.create(SmallBeamTileEntity::new, BlockRegistry.acacia_small_beam, BlockRegistry.birch_small_beam, BlockRegistry.dark_oak_small_beam, BlockRegistry.darkwood_small_beam, BlockRegistry.elder_small_beam, BlockRegistry.jungle_small_beam, BlockRegistry.oak_small_beam, BlockRegistry.spruce_small_beam)),
+                        TileEntityRegistry.hellkiln = TileEntityRegistry.register("hellkiln", TileEntityType.Builder.create(HellkilnTileEntity::new, BlockRegistry.hellkiln)),
                         TileEntityRegistry.hellkiln_igniter = TileEntityRegistry.register("hellkiln_igniter", TileEntityType.Builder.create(HellkilnIgniterTileEntity::new, BlockRegistry.hellkiln_igniter))
                         );
 
