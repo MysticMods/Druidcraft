@@ -46,14 +46,20 @@ public class HellkilnRecipe implements IRecipe<IInventory> {
         return this.result;
     }
 
+    private NonNullList<Ingredient> ingredients = null;
+
     public NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> nonnulllist = NonNullList.create();
-        nonnulllist.add(this.ingredient1);
-        nonnulllist.add(this.ingredient2);
-        return nonnulllist;
+        if (ingredients == null) {
+            ingredients = NonNullList.create();
+            ingredients.add(this.ingredient1);
+            ingredients.add(this.ingredient2);
+        }
+        return ingredients;
     }
 
-
+    public boolean isIngredient (ItemStack stack) {
+        return this.ingredient1.test(stack) || this.ingredient2.test(stack);
+    }
 
     @Override
     public ResourceLocation getId() {

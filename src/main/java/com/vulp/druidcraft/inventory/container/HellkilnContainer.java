@@ -2,9 +2,7 @@ package com.vulp.druidcraft.inventory.container;
 
 import com.vulp.druidcraft.recipes.HellkilnRecipe;
 import com.vulp.druidcraft.recipes.IModdedRecipeType;
-import com.vulp.druidcraft.recipes.RecipeSerializers;
 import com.vulp.druidcraft.registry.GUIRegistry;
-import net.minecraft.client.util.RecipeBookCategories;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
@@ -80,8 +78,14 @@ public class HellkilnContainer extends RecipeBookContainer<IInventory> {
         this.hellkilnInventory.clear();
     }
 
-    protected boolean hasRecipe(ItemStack stack) {
-        return this.world.getRecipeManager().getRecipe(this.recipeType, new Inventory(stack), this.world).isPresent();
+    protected boolean hasRecipe(ItemStack stack1, ItemStack stack2) {
+        for (IRecipe<IInventory> recipe : this.world.getRecipeManager().getRecipes(this.recipeType).values()) {
+            HellkilnRecipe rec = (HellkilnRecipe) recipe;
+            if (rec.isIngredient(stack1) && (stack2.isEmpty() || rec.isIngredient(stack2))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
@@ -97,7 +101,15 @@ public class HellkilnContainer extends RecipeBookContainer<IInventory> {
 
                 slot.onSlotChange(itemstack1, itemstack);
             } else if (index != 1 && index != 0) {
-                if (this.hasRecipe(itemstack1)) {
+                ItemStack input1 = this.inventorySlots.get(0).getStack();
+                ItemStack input2 = this.inventorySlots.get(1).getStack();
+                if (!input1.isEmpty() && !input2.isEmpty()) {
+                    return ItemStack.EMPTY;
+                }
+                if (!input2.isEmpty()) {
+                    input1 = input2;
+                }
+                if (this.hasRecipe(itemstack1, input1)) {
                     if (!this.mergeItemStack(itemstack1, 0, 2, false)) {
                         return ItemStack.EMPTY;
                     }
