@@ -1,7 +1,7 @@
 package com.vulp.druidcraft.blocks.tileentities;
 
-import com.vulp.druidcraft.blocks.Hellkiln;
-import com.vulp.druidcraft.blocks.HellkilnIgniter;
+import com.vulp.druidcraft.blocks.HellkilnBlock;
+import com.vulp.druidcraft.blocks.HellkilnIgniterBlock;
 import com.vulp.druidcraft.inventory.container.HellkilnIgniterContainer;
 import com.vulp.druidcraft.registry.GUIRegistry;
 import com.vulp.druidcraft.registry.ItemRegistry;
@@ -12,11 +12,11 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -50,6 +50,20 @@ public class HellkilnIgniterTileEntity extends LockableTileEntity implements ITi
         super(typeIn);
     }
 
+    public void read(BlockState state, CompoundNBT nbt) {
+        super.read(state, nbt);
+        this.items = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        ItemStackHelper.loadAllItems(nbt, this.items);
+        this.fuel = nbt.getInt("Fuel");
+    }
+
+    public CompoundNBT write(CompoundNBT compound) {
+        super.write(compound);
+        compound.putInt("Fuel", this.fuel);
+        ItemStackHelper.saveAllItems(compound, this.items);
+        return compound;
+    }
+
     private boolean hasFuel() {
         return this.fuel > 0;
     }
@@ -57,7 +71,7 @@ public class HellkilnIgniterTileEntity extends LockableTileEntity implements ITi
     private void updateMain() {
         World world = this.getWorld();
         BlockPos pos = this.getPos();
-        TileEntity hellkiln = world.getTileEntity(pos.offset(world.getBlockState(pos).get(HellkilnIgniter.FACING)));
+        TileEntity hellkiln = world.getTileEntity(pos.offset(world.getBlockState(pos).get(HellkilnIgniterBlock.FACING)));
         if (hellkiln instanceof HellkilnTileEntity) {
             ((HellkilnTileEntity) hellkiln).refreshIgniterList();
         }
@@ -67,12 +81,16 @@ public class HellkilnIgniterTileEntity extends LockableTileEntity implements ITi
         return this.fuel;
     }
 
+    public ItemStack getItemstack() {
+        return this.items.get(0);
+    }
+
     @Override
     public void tick() {
         boolean flag = hasFuel();
         int missing = 100 - this.fuel;
         while (missing >= 20) {
-            ItemStack itemStack = this.items.get(0);
+            ItemStack itemStack = getItemstack();
             if (itemStack.getItem() != ItemRegistry.crushed_fiery_glass) {
                 break;
             }
@@ -84,20 +102,20 @@ public class HellkilnIgniterTileEntity extends LockableTileEntity implements ITi
         if (flag != hasFuel()) {
             World world = this.world;
             BlockPos pos = this.pos;
-            world.setBlockState(pos, world.getBlockState(pos).with(Hellkiln.LIT, hasFuel()), 3);
+            world.setBlockState(pos, world.getBlockState(pos).with(HellkilnBlock.LIT, hasFuel()), 3);
             BlockState state = this.getBlockState();
-            if (state.getBlock() instanceof HellkilnIgniter) {
-                Direction direction = state.get(HellkilnIgniter.FACING);
-                TileEntity tile = world.getTileEntity(pos.offset(direction));
-                if (tile instanceof HellkilnTileEntity) {
-                    ((HellkilnTileEntity)tile).refreshIgniterList();
-                }
+            if (state.getBlock() instanceof HellkilnIgniterBlock) {
+                updateMain();
             }
         }
     }
 
     public void deductFuel(int amount) {
         this.fuel = this.fuel - amount;
+        if (this.items.get(0).isEmpty() && this.fuel <= 0) {
+            world.setBlockState(pos, world.getBlockState(pos).with(HellkilnBlock.LIT, false), 3);
+            this.fuel = 0;
+        }
     }
 
     @Override
