@@ -1,0 +1,61 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"particle": "druidcraft:block/hellkiln_billow"
+	},
+	"elements": [
+		{
+			"from": [4, 0, 5],
+			"to": [12, 8, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 4, 8]},
+			"faces": {
+				"north": {"uv": [0, 8, 8, 16], "texture": "#particle"},
+				"east": {"uv": [8, 8, 14, 16], "texture": "#particle"},
+				"south": {"uv": [8, 0, 16, 8], "texture": "#particle"},
+				"west": {"uv": [8, 8, 14, 16], "texture": "#particle"},
+				"up": {"uv": [0, 2, 8, 8], "rotation": 180, "texture": "#particle"},
+				"down": {"uv": [0, 2, 8, 8], "rotation": 180, "texture": "#particle"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [0, 1.5, 0],
+			"scale": [0.75, 0.75, 0.75]
+		},
+		"fixed": {
+			"translation": [0, 2, -1.5],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"groups": [
+		{
+			"name": "chambers",
+			"origin": [8, 8, 8],
+			"children": [0]
+		}
+	]
+}
