@@ -224,5 +224,6 @@ public class ItemRegistry
 
     public static Item hellkiln_igniter;
     public static Item hellkiln;
+    public static Item infernal_lantern;
 
 }

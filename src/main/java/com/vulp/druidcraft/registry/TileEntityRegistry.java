@@ -12,6 +12,7 @@ public class TileEntityRegistry {
     public static TileEntityType<SmallBeamTileEntity> small_beam;
     public static TileEntityType<HellkilnTileEntity> hellkiln;
     public static TileEntityType<HellkilnIgniterTileEntity> hellkiln_igniter;
+    public static TileEntityType<InfernalFlareTileEntity> infernal_flare;
 
     public static <T extends TileEntity> TileEntityType<T> register(String id, TileEntityType.Builder<T> builder)
     {

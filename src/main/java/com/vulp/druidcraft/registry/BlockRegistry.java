@@ -158,6 +158,7 @@ public class BlockRegistry {
   public static Block brightstone_ore = register("brightstone_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).setLightLevel((light) -> (8)).harvestTool(ToolType.PICKAXE).harvestLevel(3), 3, 8));
   public static Block hellkiln = register("hellkiln", new HellkilnBlock(HellkilnBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).setLightLevel(getLightValueLit(15)).harvestTool(ToolType.PICKAXE).harvestLevel(0)));
   public static Block hellkiln_igniter = register("hellkiln_igniter", new HellkilnIgniterBlock(HellkilnIgniterBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).setLightLevel(getLightValueLit(13)).harvestTool(ToolType.PICKAXE).harvestLevel(0)));
+  public static Block infernal_flare = register("infernal_flare", new InfernalFlareBlock(InfernalFlareBlock.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f).doesNotBlockMovement().setLightLevel((light) -> (15))));
 
   public static Block register (String name, Block block) {
     block.setRegistryName(DruidcraftRegistry.location(name));
