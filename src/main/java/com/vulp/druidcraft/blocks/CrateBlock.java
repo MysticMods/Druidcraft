@@ -12,6 +12,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ContainerBlock;
+import net.minecraft.block.material.PushReaction;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -1162,6 +1163,14 @@ public class CrateBlock extends ContainerBlock {
       }
     }
     return cratesList;
+  }
+
+  // TODO: I'm not sure what else this impacts, but it seems a logical
+  // extension of the issue of #95.
+  @SuppressWarnings("deprecation")
+  @Override
+  public PushReaction getPushReaction(BlockState p_149656_1_) {
+    return PushReaction.BLOCK;
   }
 
   @SuppressWarnings("deprecation")
