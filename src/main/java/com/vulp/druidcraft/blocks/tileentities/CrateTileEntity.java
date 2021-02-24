@@ -240,7 +240,11 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
         List<CrateTileEntity> crates = new ArrayList<>();
         for (TileEntity te : tiles) {
             if (!(te instanceof CrateTileEntity)) {
-                throw new IllegalStateException("Neighbouring tile entity of crate is not a crate tile entity.");
+                Druidcraft.LOGGER.error("==============================");
+                Druidcraft.LOGGER.error("Neighbouring tile entity of crate at " + getPos().toString() + " in " + (getWorld() == null ? "unknown world key" : getWorld().getDimensionKey().toString()) + " is not a crate tile entity!");
+                Druidcraft.LOGGER.error("Bailing and returning single inventory.");
+                Druidcraft.LOGGER.error("==============================");
+                return getInventory();
             }
             crates.add((CrateTileEntity) te);
         }
