@@ -136,12 +136,13 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
         float f = 6.0F;
 
         Set<UUID> inventoryIds = new HashSet<>();
-        CrateBlock.getBlockPositions(world, new BlockPos(posX, posY, posZ)).forEach(o -> {
+        // Avoid using streams wherever possible
+        for (BlockPos o : CrateBlock.getBlockPositions(world, new BlockPos(posX, posY, posZ))) {
             TileEntity te = world.getTileEntity(o);
             if (te instanceof CrateTileEntity) {
                 inventoryIds.add(((CrateTileEntity) te).getCrateId());
             }
-        });
+        }
         for(PlayerEntity playerentity : world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB((double)((float)posX - f), (double)((float)posY - f), (double)((float)posZ - f), (double)((float)(posX + 1) + f), (double)((float)(posY + 1) + f), (double)((float)(posZ + 1) + f)))) {
             if (playerentity.openContainer instanceof CrateContainer) {
                 CrateContainer crate = (CrateContainer) playerentity.openContainer;
@@ -192,13 +193,16 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
                 return getEmpty().cast();
             }
             Set<BlockPos> positions = Sets.newHashSet(CrateBlock.getBlockPositions(world, pos));
-            if (this.combinedArray == null) {
-                combinedArray = Sets.newHashSet(positions);
-                combined = null;
-            } else {
-                if (combinedArray != positions) {
+            // Handle getBlockPositions returning empty as a fix for #91
+            if (!positions.isEmpty()) {
+                if (this.combinedArray == null) {
+                    combinedArray = Sets.newHashSet(positions);
                     combined = null;
-                    combinedArray = positions;
+                } else {
+                    if (combinedArray != positions) {
+                        combined = null;
+                        combinedArray = positions;
+                    }
                 }
             }
 
@@ -223,9 +227,13 @@ public class CrateTileEntity extends TileEntity implements INamedContainerProvid
 
         List<BlockPos> positions = CrateBlock.getBlockPositions(world, pos);
         int size = positions.size();
-        List<TileEntity> tiles;
+        List<TileEntity> tiles = new ArrayList<>();
+        // Re: #91, this is automatically handled in the size check
         if (size == 2 || size == 4 || size == 8) {
-            tiles = positions.stream().map(o -> world.getTileEntity(o)).collect(Collectors.toList());
+            // Avoid using streams wherever possible
+            for (BlockPos o : positions) {
+                tiles.add(world.getTileEntity(o));
+            }
         } else {
             return getInventory();
         }
