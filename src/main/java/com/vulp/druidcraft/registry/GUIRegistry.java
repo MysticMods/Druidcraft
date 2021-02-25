@@ -1,7 +1,6 @@
 package com.vulp.druidcraft.registry;
 
 import com.vulp.druidcraft.Druidcraft;
-import com.vulp.druidcraft.blocks.Hellkiln;
 import com.vulp.druidcraft.inventory.container.*;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.ContainerType;

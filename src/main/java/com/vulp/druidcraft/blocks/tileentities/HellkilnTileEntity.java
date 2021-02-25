@@ -1,8 +1,8 @@
 package com.vulp.druidcraft.blocks.tileentities;
 
 import com.vulp.druidcraft.Druidcraft;
-import com.vulp.druidcraft.blocks.Hellkiln;
-import com.vulp.druidcraft.blocks.HellkilnIgniter;
+import com.vulp.druidcraft.blocks.HellkilnBlock;
+import com.vulp.druidcraft.blocks.HellkilnIgniterBlock;
 import com.vulp.druidcraft.inventory.container.HellkilnContainer;
 import com.vulp.druidcraft.recipes.HellkilnRecipe;
 import com.vulp.druidcraft.recipes.IModdedRecipeType;
@@ -21,13 +21,13 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.RecipeBookCategory;
 import net.minecraft.item.crafting.RecipeItemHelper;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.*;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -40,8 +40,8 @@ public class HellkilnTileEntity extends LockableTileEntity implements ITickableT
     protected NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
     private int burnTime;
     private int recipesUsed;
-    private int cookTime;
-    private int cookTimeTotal;
+    private int cookTime = 0;
+    private int cookTimeTotal = 0;
     private int igniterCount;
     private int speed;
     private int igniterFuelCountLeft;
@@ -116,9 +116,37 @@ public class HellkilnTileEntity extends LockableTileEntity implements ITickableT
         this.recipeType = recipeTypeIn;
     }
 
+    public void read(BlockState state, CompoundNBT nbt) {
+        super.read(state, nbt);
+        this.items = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        ItemStackHelper.loadAllItems(nbt, this.items);
+        this.igniterCount = nbt.getInt("IgniterCount");
+        this.burnTime = nbt.getInt("BurnTime");
+        this.cookTime = nbt.getInt("CookTime");
+        this.cookTimeTotal = nbt.getInt("CookTimeTotal");
+        int[] fuelArray = nbt.getIntArray("IgniterFuelCounts");
+        this.igniterFuelCountLeft = fuelArray[1];
+        this.igniterFuelCountBack = fuelArray[2];
+        this.igniterFuelCountRight = fuelArray[3];
+    }
+
+    public CompoundNBT write(CompoundNBT compound) {
+        super.write(compound);
+        compound.putInt("IgniterCount", this.igniterCount);
+        compound.putInt("BurnTime", this.burnTime);
+        compound.putInt("CookTime", this.cookTime);
+        compound.putInt("CookTimeTotal", this.cookTimeTotal);
+        compound.putIntArray("IgniterFuelCounts", new int[]{this.igniterFuelCountLeft, this.igniterFuelCountBack, this.igniterFuelCountRight});
+        ItemStackHelper.saveAllItems(compound, this.items);
+        CompoundNBT compoundnbt = new CompoundNBT();
+        this.recipes.forEach((recipeId, craftedAmount) -> {
+            compoundnbt.putInt(recipeId.toString(), craftedAmount);
+        });
+        return compound;
+    }
 
     // Change so that it checks the igniter count variable!
-    public boolean hasFuel() {
+    public boolean hasIgniters() {
         return this.igniterCount > 0;
     }
 
@@ -133,8 +161,9 @@ public class HellkilnTileEntity extends LockableTileEntity implements ITickableT
     public void useFuel(int amount) {
         ArrayList<HellkilnIgniterTileEntity> list = getTilesFromPositions(this.igniterList);
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i) != null) {
-                list.get(i).deductFuel(amount);
+            HellkilnIgniterTileEntity tile = list.get(i);
+            if (tile != null) {
+                tile.deductFuel(amount);
             }
         }
 
@@ -142,24 +171,27 @@ public class HellkilnTileEntity extends LockableTileEntity implements ITickableT
 
     // Checks whether or not the given block is an igniter, and then checks if the igniter is both active and pointed at this block.
     public static boolean isValidIgniter(BlockState state, TileEntity tile, Direction direction) {
-        return state.getBlock() instanceof HellkilnIgniter && tile instanceof HellkilnIgniterTileEntity && state.get(HellkilnIgniter.FACING) == direction && state.get(HellkilnIgniter.LIT);
+        return state.getBlock() instanceof HellkilnIgniterBlock && tile instanceof HellkilnIgniterTileEntity && state.get(HellkilnIgniterBlock.FACING) == direction && state.get(HellkilnIgniterBlock.LIT);
     }
 
     // Creates and refreshes the list of blockstates for ignitors, which can then be manipulated. Already gets called when an igniter is toggled.
     public void refreshIgniterList() {
         World world = this.world;
         BlockPos pos = this.getPos();
-        Direction direction = world.getBlockState(pos).get(Hellkiln.FACING).rotateY();
+        Direction direction = world.getBlockState(pos).get(HellkilnBlock.FACING).rotateY();
         ArrayList<BlockPos> list = new ArrayList<>();
+        int j = 0;
         for (int i = 0; i < 3; i++) {
             if (isValidIgniter(world.getBlockState(pos.offset(direction)), world.getTileEntity(pos.offset(direction)), direction)) {
                 list.add(pos.offset(direction));
+                j++;
             } else {
                 list.add(null);
             }
             direction = direction.rotateY();
         }
         this.igniterList = list;
+        this.igniterCount = j;
     }
 
     public ArrayList<BlockState> getStatesFromPositions(ArrayList<BlockPos> posList) {
@@ -216,14 +248,13 @@ public class HellkilnTileEntity extends LockableTileEntity implements ITickableT
 
         100 ticks each fuel, 100 ticks per 20 fuel.*/
 
-
-
-    // Will probably need reworked soon, understanding of how this class works is coming along well.
     @Override
     public void tick() {
+        // flag regards if the furnace is burning start of tick.
         boolean flag = this.isBurning();
         boolean flag1 = false;
 
+        // Refreshes igniter list or gets the fuel count.
         if (this.igniterList != null) {
             ArrayList<HellkilnIgniterTileEntity> tileList = this.getTilesFromPositions(this.igniterList);
             this.igniterFuelCountLeft = tileList.get(0) != null ? tileList.get(0).getFuel() : -1;
@@ -232,7 +263,7 @@ public class HellkilnTileEntity extends LockableTileEntity implements ITickableT
         } else {
             refreshIgniterList();
         }
-
+        // Checks if furnace is burning and deducts burntime.
         if (this.isBurning()) {
             --this.burnTime;
         }
@@ -240,20 +271,23 @@ public class HellkilnTileEntity extends LockableTileEntity implements ITickableT
 
             ItemStack itemstack1 = this.items.get(0);
             ItemStack itemstack2 = this.items.get(1);
-            if (this.isBurning() || (!itemstack1.isEmpty() && !itemstack2.isEmpty()) && hasFuel()) {
-                IRecipe<?> irecipe = this.world.getRecipeManager().getRecipe((IRecipeType<HellkilnRecipe>)this.recipeType, this, this.world).orElse(null);
+            // Checks if the furnace is meant to be burning this tick.
+            if (this.isBurning() || (!itemstack1.isEmpty() && !itemstack2.isEmpty()) && hasIgniters()) {
+                IRecipe<?> irecipe = this.world.getRecipeManager().getRecipe(this.recipeType, this, this.world).orElse(null);
+                // If the furnace hasn't previously been burning but has a valid recipe.
                 if (!this.isBurning() && this.canSmelt(irecipe)) {
                     this.burnTime = this.getBurnTime();
                     this.speed = checkFuel();
                     this.recipesUsed = this.burnTime;
+                    this.cookTimeTotal = this.getCookTime();
                     if (this.isBurning()) {
                         flag1 = true;
-                        if (hasFuel()) {
+                        if (hasIgniters()) {
                             useFuel(1);
                         }
                     }
                 }
-
+                // If it was already burning and still has valid recipe.
                 if (this.isBurning() && this.canSmelt(irecipe)) {
                     for (int i = 0; i < this.speed; i++) {
                         ++this.cookTime;
@@ -264,19 +298,23 @@ public class HellkilnTileEntity extends LockableTileEntity implements ITickableT
                         this.smelt(irecipe);
                         flag1 = true;
                     }
+                    // If the items in the slots don't match a recipe.
                 } else {
                     this.cookTime = 0;
                 }
+                // If the furnace is not meant to be burning and there's still cooktime left.
             } else if (!this.isBurning() && this.cookTime > 0) {
-                this.cookTime = MathHelper.clamp(this.cookTime - 2, 0, this.cookTimeTotal);
+                this.cookTime -= 3;
             }
-
+            // Checks to see if isBurning() has changed by the end of tick, so that furnace state can change.
             if (flag != this.isBurning()) {
                 flag1 = true;
-                this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(Hellkiln.LIT, this.isBurning()), 3);
+                this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(HellkilnBlock.LIT, this.isBurning()), 3);
+                this.world.setBlockState(this.pos.up(), this.world.getBlockState(this.pos.up()).with(HellkilnBlock.LIT, this.isBurning()), 3);
             }
         }
 
+        // If new recipe is started.
         if (flag1) {
             this.markDirty();
         }
@@ -327,10 +365,10 @@ public class HellkilnTileEntity extends LockableTileEntity implements ITickableT
     }
 
     protected int getBurnTime() {
-        if (!this.hasFuel()) {
+        if (!this.hasIgniters()) {
             return 0;
         } else {
-            return 5;
+            return 9;
         }
     }
 
@@ -339,7 +377,7 @@ public class HellkilnTileEntity extends LockableTileEntity implements ITickableT
     }
 
     public boolean isBurning() {
-        return this.burnTime > 0 && !this.items.get(0).isEmpty() && !this.items.get(1).isEmpty();
+        return this.burnTime > 0;
     }
 
     @Override

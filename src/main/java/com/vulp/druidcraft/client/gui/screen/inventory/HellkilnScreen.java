@@ -54,7 +54,7 @@ public class HellkilnScreen extends ContainerScreen<HellkilnContainer> {
         }
         if (cookTime > 0) {
             int remainingCookTime = (int) Math.round(43 - cookTime);
-            this.blit(matrixStack, i + 31, j + 26 + remainingCookTime, 176, remainingCookTime, 18, (int) Math.round(cookTime));
+            this.blit(matrixStack, i + 30, j + 25 + remainingCookTime, 176, remainingCookTime, 18, (int) Math.round(cookTime));
         }
 
     }

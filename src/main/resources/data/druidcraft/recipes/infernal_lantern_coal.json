@@ -1,0 +1,7 @@
+{
+  "type": "druidcraft:infernal_lantern_fuelling",
+  "fuel": {
+    "item": "minecraft:coal"
+  },
+  "amount": 4
+}
