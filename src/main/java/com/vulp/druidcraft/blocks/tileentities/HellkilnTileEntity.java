@@ -10,6 +10,9 @@ import com.vulp.druidcraft.registry.GUIRegistry;
 import com.vulp.druidcraft.registry.TileEntityRegistry;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.ISound;
+import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IRecipeHelperPopulator;
@@ -125,9 +128,9 @@ public class HellkilnTileEntity extends LockableTileEntity implements ITickableT
         this.cookTime = nbt.getInt("CookTime");
         this.cookTimeTotal = nbt.getInt("CookTimeTotal");
         int[] fuelArray = nbt.getIntArray("IgniterFuelCounts");
-        this.igniterFuelCountLeft = fuelArray[1];
-        this.igniterFuelCountBack = fuelArray[2];
-        this.igniterFuelCountRight = fuelArray[3];
+        this.igniterFuelCountLeft = fuelArray[0];
+        this.igniterFuelCountBack = fuelArray[1];
+        this.igniterFuelCountRight = fuelArray[2];
     }
 
     public CompoundNBT write(CompoundNBT compound) {
