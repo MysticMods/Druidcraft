@@ -238,7 +238,7 @@ public class DruidcraftRegistry {
                         ItemRegistry.woodcutter = new BlockItem(BlockRegistry.woodcutter, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.woodcutter.getRegistryName()),
                         ItemRegistry.hellkiln = new HellkilnItem(BlockRegistry.hellkiln, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.hellkiln.getRegistryName()),
                         ItemRegistry.hellkiln_igniter = new BlockItem(BlockRegistry.hellkiln_igniter, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.hellkiln_igniter.getRegistryName()),
-                        ItemRegistry.infernal_lantern = new InfernalLanternItem(BlockRegistry.infernal_flare, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.infernal_flare.getRegistryName())
+                        ItemRegistry.infernal_lantern = new InfernalLanternItem(BlockRegistry.infernal_flare, new Item.Properties().group(DRUIDCRAFT_WIP).maxStackSize(1)).setRegistryName(location("infernal_lantern"))
 
                 );
 

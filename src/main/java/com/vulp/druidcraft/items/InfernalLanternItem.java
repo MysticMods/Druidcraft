@@ -43,11 +43,11 @@ public class InfernalLanternItem extends BlockItem {
         ItemStack itemstack = player.getHeldItem(hand);
         CompoundNBT nbt = itemstack.getOrCreateTag();
         int fuel = nbt.getInt("fuel");
-        if (fuel > 0) {
+        if (fuel > 0 || player.isCreative()) {
             ActionResultType actionresulttype = this.tryPlace(new BlockItemUseContext(context));
             return !actionresulttype.isSuccessOrConsume() ? this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType() : actionresulttype;
         }
-        player.sendStatusMessage(new TranslationTextComponent("item.druidcraft.infernal_lantern.fail"), true);
+        player.sendStatusMessage(new TranslationTextComponent("item.druidcraft.infernal_lantern.failure"), true);
         return ActionResultType.FAIL;
     }
 
@@ -85,16 +85,16 @@ public class InfernalLanternItem extends BlockItem {
                         CompoundNBT nbt = itemstack.getOrCreateTag();
                         int newFuel = nbt.getInt("fuel") - 1;
                         nbt.putInt("fuel", newFuel);
-                        String formattedFuel = MathUtil.formatInteger(newFuel);
-                        if (!formattedFuel.equals(MathUtil.formatInteger(nbt.getInt("fuel_old")))) {
-                            playerentity.sendStatusMessage(ITextComponent.getTextComponentOrEmpty(new StringBuilder().append(new TranslationTextComponent("item.druidcraft.infernal_lantern.remainder")).append(formattedFuel).toString()), true);
-                            nbt.putInt("fuel_old", newFuel);
-                        }
+                        context.getPlayer().sendStatusMessage(new TranslationTextComponent("item.druidcraft.infernal_lantern.success").append(new TranslationTextComponent(String.valueOf(newFuel))), true);
                     }
                     return ActionResultType.func_233537_a_(world.isRemote);
                 }
             }
         }
+    }
+
+    public String getTranslationKey() {
+        return super.getDefaultTranslationKey();
     }
 
     private BlockState func_219985_a(BlockPos p_219985_1_, World p_219985_2_, ItemStack p_219985_3_, BlockState p_219985_4_) {
@@ -130,11 +130,12 @@ public class InfernalLanternItem extends BlockItem {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (worldIn == null) return;
+        int fuel = stack.getOrCreateTag().getInt("fuel");
         if (!Screen.hasShiftDown()) {
+            tooltip.add(new TranslationTextComponent("item.druidcraft.infernal_lantern.description1").appendString(String.valueOf(fuel)).mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
             tooltip.add(new TranslationTextComponent("item.druidcraft.hold_shift").mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
-            tooltip.add(new TranslationTextComponent("item.druidcraft.infernal_lantern.description2").mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
         } else {
-            tooltip.add(new TranslationTextComponent("item.druidcraft.infernal_lantern.description1").mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
+            tooltip.add(new TranslationTextComponent("item.druidcraft.infernal_lantern.description1").appendString(String.valueOf(fuel)).mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
             tooltip.add(new TranslationTextComponent("item.druidcraft.infernal_lantern.description2").mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
         }
     }

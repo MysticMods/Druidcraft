@@ -10,8 +10,7 @@ import com.vulp.druidcraft.registry.ItemRegistry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipe;
@@ -74,14 +73,13 @@ public class InfernalLanternFuellingRecipe extends SpecialRecipe {
         int fuelItems = 0;
         int lantern = 0;
         int addedFuel = 0;
-        ItemStack infernal_lantern = null;
+        ItemStack infernal_lantern = ItemStack.EMPTY;
         for(int i = 0; i < inv.getSizeInventory(); ++i) {
             ItemStack itemstack = inv.getStackInSlot(i);
             if (!itemstack.isEmpty()) {
-                int fuel = isFuel(itemstack);
-                if (fuel > 0) {
+                if (itemstack.getItem() == Items.COAL) {
                     fuelItems++;
-                    addedFuel += fuel;
+                    addedFuel++;
                 } else if (itemstack.getItem() == ItemRegistry.infernal_lantern) {
                     lantern++;
                     infernal_lantern = itemstack;
@@ -97,13 +95,13 @@ public class InfernalLanternFuellingRecipe extends SpecialRecipe {
     }
 
     public static ItemStack refuelLantern(ItemStack stack, int amount) {
-        if (stack.getItem() instanceof InfernalLanternItem) {
-            CompoundNBT nbt = stack.getOrCreateTag();
+        ItemStack tempStack = stack.copy();
+        if (tempStack.getItem() instanceof InfernalLanternItem) {
+            CompoundNBT nbt = tempStack.getOrCreateTag();
             int fuel = nbt.getInt("fuel");
             nbt.putInt("fuel", fuel + amount);
-            nbt.putInt("old_fuel", fuel + amount);
         }
-        return stack;
+        return tempStack;
     }
 
     /**

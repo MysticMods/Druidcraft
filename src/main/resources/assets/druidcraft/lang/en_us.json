@@ -70,6 +70,11 @@
   "item.druidcraft.tempered_fiery_glass": "Tempered Fiery Glass",
   "item.druidcraft.blazing_steel": "Blazing Steel",
   "item.druidcraft.heart_of_blaze": "Heart of Blaze",
+  "item.druidcraft.infernal_lantern": "Infernal Lantern",
+  "item.druidcraft.infernal_lantern.description1": "Flares: ",
+  "item.druidcraft.infernal_lantern.description2": "A blazing lantern capable of storing many flares to light up an area.",
+  "item.druidcraft.infernal_lantern.failure": "No flares left!",
+  "item.druidcraft.infernal_lantern.success": "Remaining flares: ",
 
   "block.druidcraft.amber_ore": "Amber Ore",
   "block.druidcraft.moonstone_ore": "Moonstone Ore",
@@ -203,6 +208,7 @@
   "block.druidcraft.nether_fiery_glass_ore": "Nether Fiery Glass Ore",
   "block.druidcraft.hellkiln": "Hellkiln",
   "block.druidcraft.hellkiln_igniter": "Hellkiln Igniter",
+  "block.druidcraft.infernal_flare": "Infernal Flare",
 
   "entity.druidcraft.dreadfish": "Dreadfish",
   "entity.druidcraft.beetle": "Beetle",
