@@ -5,6 +5,8 @@ import com.vulp.druidcraft.events.BiomeLoadEventHandler;
 import com.vulp.druidcraft.events.EventHandler;
 import com.vulp.druidcraft.network.PacketHandler;
 import com.vulp.druidcraft.registry.*;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
