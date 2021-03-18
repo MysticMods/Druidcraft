@@ -1,0 +1,33 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "druidcraft:block/brambleroot",
+		"1": "druidcraft:block/brambleroot_thorns",
+		"particle": "druidcraft:block/brambleroot"
+	},
+	"elements": [
+		{
+			"name": "down1",
+			"from": [3, 0, 3],
+			"to": [13, 3, 13],
+			"faces": {
+				"north": {"uv": [3, 13, 13, 16], "texture": "#0"},
+				"east": {"uv": [3, 13, 13, 16], "texture": "#0"},
+				"south": {"uv": [3, 13, 13, 16], "texture": "#0"},
+				"west": {"uv": [3, 13, 13, 16], "texture": "#0"},
+				"down": {"uv": [3, 3, 13, 13], "rotation": 180, "texture": "#0"}
+			}
+		},
+		{
+			"name": "down2",
+			"from": [2, 0, 2],
+			"to": [14, 2, 14],
+			"faces": {
+				"north": {"uv": [2, 14, 14, 16], "texture": "#1"},
+				"east": {"uv": [2, 14, 14, 16], "texture": "#1"},
+				"south": {"uv": [2, 14, 14, 16], "texture": "#1"},
+				"west": {"uv": [2, 14, 14, 16], "texture": "#1"}
+			}
+		}
+	]
+}
