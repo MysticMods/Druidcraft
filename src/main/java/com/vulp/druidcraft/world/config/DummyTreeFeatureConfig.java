@@ -10,13 +10,13 @@ import net.minecraft.world.gen.treedecorator.TreeDecorator;
 
 import java.util.List;
 
-public class ElderTreeFeatureConfig implements IFeatureConfig {
+public class DummyTreeFeatureConfig implements IFeatureConfig {
 
-    public static final Codec<ElderTreeFeatureConfig> CODEC = RecordCodecBuilder.create((p_236683_0_) -> {
+    public static final Codec<DummyTreeFeatureConfig> CODEC = RecordCodecBuilder.create((p_236683_0_) -> {
         return p_236683_0_.group(BlockStateProvider.CODEC.fieldOf("trunk_provider").forGetter((p_236693_0_) -> {
             return p_236693_0_.trunkProvider;
-        }), BlockStateProvider.CODEC.fieldOf("root_provider").forGetter((p_236692_0_) -> {
-            return p_236692_0_.rootProvider;
+        }), BlockStateProvider.CODEC.fieldOf("wood_provider").forGetter((p_236692_0_) -> {
+            return p_236692_0_.woodProvider;
         }), BlockStateProvider.CODEC.fieldOf("leaves_provider").forGetter((p_236692_0_) -> {
             return p_236692_0_.leavesProvider;
         }), BlockStateProvider.CODEC.fieldOf("sapling_provider").forGetter((p_236692_0_) -> {
@@ -25,20 +25,20 @@ public class ElderTreeFeatureConfig implements IFeatureConfig {
             return p_236688_0_.decorators;
         }), Heightmap.Type.CODEC.fieldOf("heightmap").forGetter((p_236684_0_) -> {
             return p_236684_0_.heightmap;
-        })).apply(p_236683_0_, ElderTreeFeatureConfig::new);
+        })).apply(p_236683_0_, DummyTreeFeatureConfig::new);
     });
 
     public final BlockStateProvider trunkProvider;
-    public final BlockStateProvider rootProvider;
+    public final BlockStateProvider woodProvider;
     public final BlockStateProvider leavesProvider;
     public final BlockStateProvider saplingProvider;
     public final List<TreeDecorator> decorators;
     public transient boolean forcePlacement;
     public final Heightmap.Type heightmap;
 
-    protected ElderTreeFeatureConfig(BlockStateProvider trunkProvider, BlockStateProvider rootProvider, BlockStateProvider leavesProvider, BlockStateProvider saplingProvider, List<TreeDecorator> decorators, Heightmap.Type p_i232020_9_) {
+    protected DummyTreeFeatureConfig(BlockStateProvider trunkProvider, BlockStateProvider woodProvider, BlockStateProvider leavesProvider, BlockStateProvider saplingProvider, List<TreeDecorator> decorators, Heightmap.Type p_i232020_9_) {
         this.trunkProvider = trunkProvider;
-        this.rootProvider = rootProvider;
+        this.woodProvider = woodProvider;
         this.leavesProvider = leavesProvider;
         this.saplingProvider = saplingProvider;
         this.decorators = decorators;
@@ -49,38 +49,38 @@ public class ElderTreeFeatureConfig implements IFeatureConfig {
         this.forcePlacement = true;
     }
 
-    public ElderTreeFeatureConfig configureDecorators(List<TreeDecorator> p_236685_1_) {
-        return new ElderTreeFeatureConfig(this.trunkProvider, this.rootProvider, this.leavesProvider, this.saplingProvider, p_236685_1_, this.heightmap);
+    public DummyTreeFeatureConfig configureDecorators(List<TreeDecorator> p_236685_1_) {
+        return new DummyTreeFeatureConfig(this.trunkProvider, this.woodProvider, this.leavesProvider, this.saplingProvider, p_236685_1_, this.heightmap);
     }
 
     public static class Builder {
         public final BlockStateProvider trunkProvider;
-        public final BlockStateProvider rootProvider;
+        public final BlockStateProvider woodProvider;
         public final BlockStateProvider leavesProvider;
         public final BlockStateProvider saplingProvider;
 
         private List<TreeDecorator> decorators = ImmutableList.of();
         private Heightmap.Type heightmap = Heightmap.Type.OCEAN_FLOOR;
 
-        public Builder(BlockStateProvider trunkProvider, BlockStateProvider rootProvider, BlockStateProvider leavesProvider, BlockStateProvider saplingProvider) {
+        public Builder(BlockStateProvider trunkProvider, BlockStateProvider woodProvider, BlockStateProvider leavesProvider, BlockStateProvider saplingProvider) {
             this.trunkProvider = trunkProvider;
-            this.rootProvider = rootProvider;
+            this.woodProvider = woodProvider;
             this.leavesProvider = leavesProvider;
             this.saplingProvider = saplingProvider;
         }
 
-        public ElderTreeFeatureConfig.Builder func_236703_a_(List<TreeDecorator> p_236703_1_) {
+        public DummyTreeFeatureConfig.Builder func_236703_a_(List<TreeDecorator> p_236703_1_) {
             this.decorators = p_236703_1_;
             return this;
         }
 
-        public ElderTreeFeatureConfig.Builder setHeightmap(Heightmap.Type heightmap) {
+        public DummyTreeFeatureConfig.Builder setHeightmap(Heightmap.Type heightmap) {
             this.heightmap = heightmap;
             return this;
         }
 
-        public ElderTreeFeatureConfig build() {
-            return new ElderTreeFeatureConfig(this.trunkProvider, this.rootProvider, this.leavesProvider, this.saplingProvider, this.decorators, this.heightmap);
+        public DummyTreeFeatureConfig build() {
+            return new DummyTreeFeatureConfig(this.trunkProvider, this.woodProvider, this.leavesProvider, this.saplingProvider, this.decorators, this.heightmap);
         }
     }
 }

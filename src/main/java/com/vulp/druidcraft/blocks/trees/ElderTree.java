@@ -1,9 +1,7 @@
 package com.vulp.druidcraft.blocks.trees;
 
 import com.vulp.druidcraft.registry.ConfiguredFeatureRegistry;
-import com.vulp.druidcraft.registry.FeatureRegistry;
-import com.vulp.druidcraft.world.config.ElderTreeFeatureConfig;
-import com.vulp.druidcraft.world.config.FeatureConfigurations;
+import com.vulp.druidcraft.world.config.DummyTreeFeatureConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.trees.Tree;
@@ -18,13 +16,13 @@ import java.util.Random;
 public class ElderTree extends Tree {
 
     @Nullable
-    protected ConfiguredFeature<ElderTreeFeatureConfig, ?> getElderTreeFeature (){
+    protected ConfiguredFeature<DummyTreeFeatureConfig, ?> getElderTreeFeature (){
         return ConfiguredFeatureRegistry.elder_tree;
     }
 
     @Override
     public boolean attemptGrowTree(ServerWorld world, ChunkGenerator chunkGenerator, BlockPos pos, BlockState state, Random rand) {
-        ConfiguredFeature<ElderTreeFeatureConfig, ?> configuredfeature = this.getElderTreeFeature();
+        ConfiguredFeature<DummyTreeFeatureConfig, ?> configuredfeature = this.getElderTreeFeature();
         if (configuredfeature == null) {
             return false;
         } else {
