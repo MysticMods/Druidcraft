@@ -19,7 +19,7 @@ public enum CrateType implements IStringSerializable {
 
     @Override
     public String getString() {
-        return name().toLowerCase(Locale.ROOT);
+        return name.toLowerCase(Locale.ROOT);
     }
 
     CrateType(String name) {
