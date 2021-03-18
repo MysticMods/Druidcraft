@@ -4,34 +4,112 @@ import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.api.BedrollDyeColorIndex;
 import com.vulp.druidcraft.blocks.BedrollBlock;
 import com.vulp.druidcraft.config.DropRateConfig;
+import com.vulp.druidcraft.entities.DuragemProtectionEntity;
 import com.vulp.druidcraft.inventory.TravelPackInventory;
 import com.vulp.druidcraft.items.TravelPackItem;
+import com.vulp.druidcraft.network.PacketHandler;
+import com.vulp.druidcraft.network.message.BlockProtectionVisualMessage;
 import com.vulp.druidcraft.registry.ItemRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.*;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.PistonType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Explosion;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderBlockOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.event.entity.EntityMobGriefingEvent;
+import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.ExplosionEvent;
+import net.minecraftforge.event.world.PistonEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.network.PacketDistributor;
+
+import java.util.List;
+import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid=Druidcraft.MODID, bus= Mod.EventBusSubscriber.Bus.FORGE)
 public class EventHandler {
 
     @SubscribeEvent
-    public static void onGrassBroken(BlockEvent.BreakEvent event) {
+    public static void onBlockDamaged(PlayerInteractEvent.LeftClickBlock event) {
+        World world = event.getWorld();
+        BlockPos pos = event.getPos();
+        // Block Protection
+        List<DuragemProtectionEntity> list = world.getEntitiesWithinAABB(DuragemProtectionEntity.class, new AxisAlignedBB(pos.add(1.0D, 1.0D, 1.0D), pos));
+        if (list.size() > 0) {
+            list.get(0).setVisible(true);
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onExplosionEvent(ExplosionEvent event) {
+        World world = event.getWorld();
+        Explosion explosion = event.getExplosion();
+        // Block Protection
+        for (BlockPos pos : explosion.getAffectedBlockPositions().toArray(new BlockPos[0])) {
+            List<DuragemProtectionEntity> list = world.getEntitiesWithinAABB(DuragemProtectionEntity.class, new AxisAlignedBB(pos.add(1.0D, 1.0D, 1.0D), pos));
+            if (list.size() > 0) {
+                Supplier<Chunk> chunkSupplier = () -> (Chunk) world.getChunk(pos);
+                PacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(chunkSupplier), new BlockProtectionVisualMessage(pos));
+                event.getExplosion().getAffectedBlockPositions().remove(pos);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onMobGrief(LivingDestroyBlockEvent event) {
+        World world = event.getEntity().getEntityWorld();
+        BlockPos pos = event.getPos();
+        // Block Protection
+        List<DuragemProtectionEntity> list = world.getEntitiesWithinAABB(DuragemProtectionEntity.class, new AxisAlignedBB(pos.add(1.0D, 1.0D, 1.0D), pos));
+        if (list.size() > 0) {
+            Supplier<Chunk> chunkSupplier = () -> (Chunk) world.getChunk(pos);
+            PacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(chunkSupplier), new BlockProtectionVisualMessage(pos));
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void beforePistonUsed(PistonEvent.Pre event) {
+        IWorld world = event.getWorld();
+        int modifier = event.getPistonMoveType() == PistonEvent.PistonMoveType.EXTEND ? 1 : 2;
+        BlockPos pos = event.getPos().offset(event.getDirection(), modifier);
+        // Block Protection
+        if (!(modifier == 2 && world.getBlockState(event.getFaceOffsetPos()).get(PistonHeadBlock.TYPE) == PistonType.DEFAULT)) {
+            List<DuragemProtectionEntity> list = world.getEntitiesWithinAABB(DuragemProtectionEntity.class, new AxisAlignedBB(pos.add(1.0D, 1.0D, 1.0D), pos));
+            if (list.size() > 0) {
+                Supplier<Chunk> chunkSupplier = () -> (Chunk) world.getChunk(pos);
+                PacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(chunkSupplier), new BlockProtectionVisualMessage(pos));
+                event.setCanceled(true);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onBlockBroken(BlockEvent.BreakEvent event) {
+        IWorld world = event.getWorld();
+        BlockPos pos = event.getPos();
+        // Block Protection
+        List<DuragemProtectionEntity> list = world.getEntitiesWithinAABB(DuragemProtectionEntity.class, new AxisAlignedBB(pos.add(1.0D, 1.0D, 1.0D), pos));
+        if (list.size() > 0) {
+            list.get(0).setVisible(true);
+            event.setCanceled(true);
+        }
+        // Seed Drops
         if (DropRateConfig.drop_seeds.get()) {
             if (!event.getWorld().isRemote()) {
                 if ((event.getPlayer().getHeldItemMainhand().getItem() != Items.SHEARS) && (!event.getPlayer().isCreative())) {

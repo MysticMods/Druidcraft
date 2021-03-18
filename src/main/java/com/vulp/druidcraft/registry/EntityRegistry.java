@@ -5,6 +5,7 @@ import com.vulp.druidcraft.DruidcraftRegistry;
 import com.vulp.druidcraft.config.EntitySpawnConfig;
 import com.vulp.druidcraft.entities.BeetleEntity;
 import com.vulp.druidcraft.entities.DreadfishEntity;
+import com.vulp.druidcraft.entities.DuragemProtectionEntity;
 import com.vulp.druidcraft.entities.LunarMothEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
@@ -34,6 +35,7 @@ public class EntityRegistry
     public static final EntityType<DreadfishEntity> dreadfish_entity = createEntity(DreadfishEntity::new, EntityClassification.MONSTER, "dreadfish", 0.8f, 0.4f);
     public static final EntityType<BeetleEntity> beetle_entity = createEntity(BeetleEntity::new, EntityClassification.MONSTER, "beetle", 1.5f, 1.5f);
     public static final EntityType<LunarMothEntity> lunar_moth_entity = createEntity(LunarMothEntity::new, EntityClassification.CREATURE, "lunar_moth", 0.5f, 0.5f);
+    public static final EntityType<DuragemProtectionEntity> duragem_protection_entity = createEntity(DuragemProtectionEntity::new, EntityClassification.MISC, "duragem_protection", 1.0F, 1.0F);
 
     private static <T extends Entity> EntityType<T> createEntity(EntityType.IFactory<T> factory, EntityClassification entityClassification, String name, float width, float height) {
         return createEntity(factory, entityClassification, name, width, height, -1, null);

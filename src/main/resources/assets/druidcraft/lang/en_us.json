@@ -75,6 +75,8 @@
   "item.druidcraft.infernal_lantern.description2": "A blazing lantern capable of storing many flares to light up an area.",
   "item.druidcraft.infernal_lantern.failure": "No flares left!",
   "item.druidcraft.infernal_lantern.success": "Remaining flares: ",
+  "item.druidcraft.duragem": "Duragem",
+  "item.druidcraft.crushed_duragem": "Crushed Duragem",
 
   "block.druidcraft.amber_ore": "Amber Ore",
   "block.druidcraft.moonstone_ore": "Moonstone Ore",
@@ -209,6 +211,8 @@
   "block.druidcraft.hellkiln": "Hellkiln",
   "block.druidcraft.hellkiln_igniter": "Hellkiln Igniter",
   "block.druidcraft.infernal_flare": "Infernal Flare",
+  "block.druidcraft.duragem_ore": "Duragem Ore",
+  "block.druidcraft.duragem_block": "Block of Duragem",
 
   "entity.druidcraft.dreadfish": "Dreadfish",
   "entity.druidcraft.beetle": "Beetle",

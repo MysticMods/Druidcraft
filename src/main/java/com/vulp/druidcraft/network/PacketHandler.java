@@ -2,6 +2,7 @@ package com.vulp.druidcraft.network;
 
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.network.message.DeployBedrollMessage;
+import com.vulp.druidcraft.network.message.BlockProtectionVisualMessage;
 import com.vulp.druidcraft.network.message.IMessage;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -22,6 +23,7 @@ public class PacketHandler {
                 .serverAcceptedVersions(PROTOCOL_VERSION::equals)
                 .simpleChannel();
         register(DeployBedrollMessage.class, new DeployBedrollMessage());
+        register(BlockProtectionVisualMessage.class, new BlockProtectionVisualMessage());
     }
 
     private static <T> void register(Class<T> clazz, IMessage<T> message)
