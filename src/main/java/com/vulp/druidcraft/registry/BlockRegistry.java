@@ -171,11 +171,10 @@ public class BlockRegistry {
   public static Block gaseous_growth = register("gaseous_growth", new GaseousGrowthBlock(GaseousGrowthBlock.Properties.create(Material.NETHER_PLANTS).sound(SoundType.NETHER_VINE_LOWER_PITCH).doesNotBlockMovement().hardnessAndResistance(0.5f).setLightLevel(GaseousGrowthBlock.getLightValue(11))));
   public static Block scorching_curtain = register("scorching_curtain", new ScorchingCurtainBlock(ScorchingCurtainBlock.Properties.create(Material.NETHER_PLANTS).sound(SoundType.NETHER_VINE).doesNotBlockMovement().hardnessAndResistance(0.3f).setLightLevel((light) -> (11))));
   public static Block fireblanket_moss = register("fireblanket_moss", new Block(Block.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f)));
-  public static Block brambleroot = register("brambleroot", new Block(Block.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f)));
+  public static Block brambleroot = register("brambleroot", new ThickRootBlock(1.0F, ThickRootBlock.Properties.create(Material.NETHER_WOOD).sound(SoundType.NETHER_VINE_LOWER_PITCH).hardnessAndResistance(1.0f)));
   public static Block overgrown_roots = register("overgrown_roots", new Block(Block.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f)));
   public static Block tall_overgrown_roots = register("tall_overgrown_roots", new Block(Block.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f)));
   public static Block glow_air = register("glow_air", new AirBlock(Block.Properties.create(Material.AIR).doesNotBlockMovement().noDrops().setAir().setLightLevel((light) -> (12))));
-
 
   public static Block duragem_ore = register("duragem_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(4), 2, 6));
   public static Block duragem_block = register("duragem_block", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0f).setRequiresTool().notSolid().harvestTool(ToolType.PICKAXE).harvestLevel(4).sound(SoundType.STONE)));

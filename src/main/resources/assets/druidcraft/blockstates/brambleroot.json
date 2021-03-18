@@ -1,0 +1,24 @@
+{
+    "multipart": [
+		{ "apply": { "model": "druidcraft:block/brambleroot_core" }
+		},
+		{   "when": { "north": "true" },
+            "apply": { "model": "druidcraft:block/brambleroot_north" }
+        },
+        {   "when": { "east": "true" },
+            "apply": { "model": "druidcraft:block/brambleroot_east" }
+        },
+        {   "when": { "south": "true" },
+            "apply": { "model": "druidcraft:block/brambleroot_south" }
+        },
+        {   "when": { "west": "true" },
+            "apply": { "model": "druidcraft:block/brambleroot_west" }
+        },
+		{   "when": { "up": "true" },
+            "apply": { "model": "druidcraft:block/brambleroot_up" }
+        },
+		{   "when": { "down": "true" },
+            "apply": { "model": "druidcraft:block/brambleroot_down" }
+        }
+    ]
+}

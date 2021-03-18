@@ -41,8 +41,8 @@ public class RopeBlock extends Block implements IKnifeable, IBucketPickupHandler
     public static final BooleanProperty DOWN = BooleanProperty.create("down");
     public static final BooleanProperty KNOTTED = BooleanProperty.create("knotted");
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    public static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = Util.make(Maps.newEnumMap(Direction.class), (map) -> {
-        map.put(Direction.NORTH, EAST);
+    public static final Map<Direction, BooleanProperty> DIR_TO_PROPERTY_MAP = Util.make(Maps.newEnumMap(Direction.class), (map) -> {
+        map.put(Direction.NORTH, NORTH);
         map.put(Direction.EAST, EAST);
         map.put(Direction.SOUTH, SOUTH);
         map.put(Direction.WEST, WEST);
@@ -90,7 +90,7 @@ public class RopeBlock extends Block implements IKnifeable, IBucketPickupHandler
     }
 
     private BlockState cycleProperty(BlockState state, Direction sideUsed, ItemUseContext context) {
-        BooleanProperty property = FACING_TO_PROPERTY_MAP.get(sideUsed);
+        BooleanProperty property = DIR_TO_PROPERTY_MAP.get(sideUsed);
         if (!context.getPlayer().isSneaking()) {
             if (state.get(property)) {
                 return calculateKnot(state.with(property, false));
