@@ -224,5 +224,23 @@ public class ItemRegistry
     public static Item hellkiln_igniter;
     public static Item hellkiln;
     public static Item infernal_lantern;
+    public static Item overgrown_nylium;
+    public static Item heartburn_fungus;
+    public static Item heartburn_stem;
+    public static Item heartburn_hyphae;
+    public static Item stripped_heartburn_stem;
+    public static Item stripped_heartburn_hyphae;
+    public static Item heartburn_cap;
+    public static Item gaseous_growth;
+    public static Item scorching_curtain;
+    public static Item fireblanket_moss;
+    public static Item brambleroot;
+    public static Item overgrown_roots;
+    public static Item tall_overgrown_roots;
+
+    public static Item duragem_ore;
+    public static Item duragem;
+    public static Item crushed_duragem;
+    public static Item duragem_block;
 
 }

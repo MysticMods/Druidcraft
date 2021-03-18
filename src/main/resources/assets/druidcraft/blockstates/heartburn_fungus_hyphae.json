@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "axis=y": { "model": "druidcraft:block/heartburn_fungus_hyphae" },
+        "axis=z": { "model": "druidcraft:block/heartburn_fungus_hyphae", "x": 90 },
+        "axis=x": { "model": "druidcraft:block/heartburn_fungus_hyphae", "x": 90, "y": 90 }
+    }
+}

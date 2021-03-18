@@ -1,0 +1,8 @@
+{
+    "variants": {
+		"part=single": { "model": "druidcraft:block/scorching_curtain_single" },
+        "part=bottom": { "model": "druidcraft:block/scorching_curtain_bot" },
+        "part=middle": { "model": "druidcraft:block/scorching_curtain_mid" },
+        "part=top": { "model": "druidcraft:block/scorching_curtain_top" }
+    }
+}

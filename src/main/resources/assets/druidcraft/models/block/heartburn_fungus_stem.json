@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "druidcraft:block/heartburn_stem_top",
+        "side": "druidcraft:block/heartburn_stem"
+    }
+}

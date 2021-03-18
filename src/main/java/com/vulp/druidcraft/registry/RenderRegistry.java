@@ -4,10 +4,7 @@ import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.client.gui.screen.inventory.*;
 import com.vulp.druidcraft.client.models.BedrollTravelPackModel;
 import com.vulp.druidcraft.client.models.TravelPackModel;
-import com.vulp.druidcraft.client.renders.BeetleEntityRender;
-import com.vulp.druidcraft.client.renders.DreadfishEntityRender;
-import com.vulp.druidcraft.client.renders.LunarMothEntityRender;
-import com.vulp.druidcraft.client.renders.SmallBeamTileEntityRenderer;
+import com.vulp.druidcraft.client.renders.*;
 import com.vulp.druidcraft.client.renders.layers.TravelPackLayer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
@@ -39,6 +36,7 @@ public class RenderRegistry
         RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.dreadfish_entity, new DreadfishEntityRender.RenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.beetle_entity, new BeetleEntityRender.RenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.lunar_moth_entity, new LunarMothEntityRender.RenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.duragem_protection_entity, new DuragemProtectionEntityRenderer.RenderFactory());
 
         // BLOCK TILE ENTITIES
         ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.small_beam, SmallBeamTileEntityRenderer::new);
@@ -60,6 +58,12 @@ public class RenderRegistry
             //    RenderTypeLookup.setRenderLayer(BlockRegistry.aloe_vera_crop, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.amber_block, RenderType.getTranslucent());
             RenderTypeLookup.setRenderLayer(BlockRegistry.blueberry_bush, RenderType.getCutout());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.scorching_curtain, RenderType.getCutout());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.gaseous_growth, RenderType.getCutout());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.heartburn_fungus, RenderType.getCutout());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.overgrown_roots, RenderType.getCutout());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.tall_overgrown_roots, RenderType.getCutout());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.brambleroot, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.ceramic_lantern, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.darkwood_door, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.darkwood_leaves, RenderType.getCutout());

@@ -1,0 +1,8 @@
+{
+    "parent": "block/template_single_face",
+    "ambientocclusion": false,
+	"shading": false,
+    "textures": {
+        "texture": "druidcraft:block/heartburn_fungus_block_inside"
+    }
+}

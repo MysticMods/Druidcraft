@@ -3,7 +3,7 @@ package com.vulp.druidcraft.registry;
 import com.google.common.collect.ImmutableList;
 import com.vulp.druidcraft.config.WorldGenConfig;
 import com.vulp.druidcraft.world.config.BlockStateRadiusFeatureConfig;
-import com.vulp.druidcraft.world.config.ElderTreeFeatureConfig;
+import com.vulp.druidcraft.world.config.DummyTreeFeatureConfig;
 import com.vulp.druidcraft.world.config.FeatureConfigurations;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.registry.Registry;
@@ -16,7 +16,8 @@ import net.minecraft.world.gen.placement.*;
 public class ConfiguredFeatureRegistry {
   public static ConfiguredFeature<BaseTreeFeatureConfig, ?> darkwood_tree = register("darkwood_tree", Feature.TREE.withConfiguration(FeatureConfigurations.Trees.darkwood_tree));
   public static ConfiguredFeature<BaseTreeFeatureConfig, ?> mega_darkwood_tree = register("mega_darkwood_tree", Feature.TREE.withConfiguration(FeatureConfigurations.Trees.mega_darkwood_tree));
-  public static ConfiguredFeature<ElderTreeFeatureConfig, ?> elder_tree = register("elder_tree", FeatureRegistry.elder_tree.withConfiguration(FeatureConfigurations.Trees.elder_tree));
+  public static ConfiguredFeature<DummyTreeFeatureConfig, ?> elder_tree = register("elder_tree", FeatureRegistry.elder_tree.withConfiguration(FeatureConfigurations.Trees.elder_tree));
+  public static ConfiguredFeature<DummyTreeFeatureConfig, ?> giant_heartburn_fungus = register("giant_heartburn_fungus", FeatureRegistry.giant_heartburn_fungus.withConfiguration(FeatureConfigurations.Trees.giant_heartburn_fungus));
 
   public static ConfiguredFeature<?, ?> darkwood_bush = register("darkwood_bush", Feature.TREE.withConfiguration(FeatureConfigurations.Trees.darkwood_bush));
   public static ConfiguredFeature<?, ?> blueberry_bush = register("blueberry_bush", Feature.RANDOM_PATCH.withConfiguration(FeatureConfigurations.Bushes.blueberry_bush).withPlacement(Placement.CHANCE.configure(new ChanceConfig(100))));

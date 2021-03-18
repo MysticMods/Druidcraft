@@ -1,0 +1,8 @@
+{
+    "variants": {
+		"part=single": { "model": "druidcraft:block/gaseous_growth_single" },
+        "part=bottom": { "model": "druidcraft:block/gaseous_growth_bot" },
+        "part=middle": { "model": "druidcraft:block/gaseous_growth_mid" },
+        "part=top": { "model": "druidcraft:block/gaseous_growth_top" }
+    }
+}

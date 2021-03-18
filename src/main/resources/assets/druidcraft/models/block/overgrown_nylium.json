@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "druidcraft:block/overgrown_nylium",
+    "bottom": "minecraft:block/netherrack",
+    "side": "druidcraft:block/overgrown_nylium_side"
+  }
+}

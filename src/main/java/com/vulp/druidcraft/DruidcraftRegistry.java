@@ -118,8 +118,9 @@ public class DruidcraftRegistry {
                         ItemRegistry.blueberry_muffin = new Item(new Item.Properties().group(DRUIDCRAFT).food(FoodRegistry.blueberry_muffin)).setRegistryName(location("blueberry_muffin")),
                         ItemRegistry.apple_elderberry_crumble = new Item(new Item.Properties().group(DRUIDCRAFT).food(FoodRegistry.apple_elderberry_crumble)).setRegistryName(location("apple_elderberry_crumble")),
                         ItemRegistry.elderflower_cordial = new DrinkableItem(new DrinkableItem.Properties().group(DRUIDCRAFT).food(FoodRegistry.elderflower_cordial)).setRegistryName(location("elderflower_cordial")),
-
                         ItemRegistry.travel_pack = new TravelPackItem(new TravelPackItem.Properties().group(DRUIDCRAFT).maxStackSize(1)).setRegistryName(location("travel_pack")),
+                        ItemRegistry.duragem = new Item(new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("duragem")),
+                        ItemRegistry.crushed_duragem = new CrushedDuragemItem(new CrushedDuragemItem.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("crushed_duragem")),
 
                         // Item-blocks:
                         ItemRegistry.amber_ore = new BlockItem(BlockRegistry.amber_ore, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.amber_ore.getRegistryName()),
@@ -238,9 +239,26 @@ public class DruidcraftRegistry {
                         ItemRegistry.woodcutter = new BlockItem(BlockRegistry.woodcutter, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.woodcutter.getRegistryName()),
                         ItemRegistry.hellkiln = new HellkilnItem(BlockRegistry.hellkiln, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.hellkiln.getRegistryName()),
                         ItemRegistry.hellkiln_igniter = new BlockItem(BlockRegistry.hellkiln_igniter, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.hellkiln_igniter.getRegistryName()),
-                        ItemRegistry.infernal_lantern = new InfernalLanternItem(BlockRegistry.infernal_flare, new Item.Properties().group(DRUIDCRAFT_WIP).maxStackSize(1)).setRegistryName(location("infernal_lantern"))
+                        ItemRegistry.infernal_lantern = new InfernalLanternItem(BlockRegistry.infernal_flare, new Item.Properties().group(DRUIDCRAFT_WIP).maxStackSize(1)).setRegistryName(location("infernal_lantern")),
+                        ItemRegistry.overgrown_nylium = new BlockItem(BlockRegistry.overgrown_nylium, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.overgrown_nylium.getRegistryName()),
+                        ItemRegistry.heartburn_fungus = new BlockItem(BlockRegistry.heartburn_fungus, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.heartburn_fungus.getRegistryName()),
+                        ItemRegistry.heartburn_stem = new BlockItem(BlockRegistry.heartburn_stem, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.heartburn_stem.getRegistryName()),
+                        ItemRegistry.heartburn_hyphae = new BlockItem(BlockRegistry.heartburn_hyphae, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.heartburn_hyphae.getRegistryName()),
+                        ItemRegistry.stripped_heartburn_stem = new BlockItem(BlockRegistry.stripped_heartburn_stem, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.stripped_heartburn_stem.getRegistryName()),
+                        ItemRegistry.stripped_heartburn_hyphae = new BlockItem(BlockRegistry.stripped_heartburn_hyphae, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.stripped_heartburn_hyphae.getRegistryName()),
+                        ItemRegistry.heartburn_cap = new BlockItem(BlockRegistry.heartburn_cap, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.heartburn_cap.getRegistryName()),
+                        ItemRegistry.gaseous_growth = new BlockItem(BlockRegistry.gaseous_growth, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.gaseous_growth.getRegistryName()),
+                        ItemRegistry.scorching_curtain = new BlockItem(BlockRegistry.scorching_curtain, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.scorching_curtain.getRegistryName()),
+                        ItemRegistry.fireblanket_moss = new BlockItem(BlockRegistry.fireblanket_moss, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.fireblanket_moss.getRegistryName()),
+                        ItemRegistry.brambleroot = new BlockItem(BlockRegistry.brambleroot, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.brambleroot.getRegistryName()),
+                        ItemRegistry.overgrown_roots = new BlockItem(BlockRegistry.overgrown_roots, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.overgrown_roots.getRegistryName()),
+                        ItemRegistry.tall_overgrown_roots = new BlockItem(BlockRegistry.tall_overgrown_roots, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.tall_overgrown_roots.getRegistryName()),
 
-                );
+                        ItemRegistry.duragem_ore = new BlockItem(BlockRegistry.duragem_ore, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.duragem_ore.getRegistryName()),
+                        ItemRegistry.duragem_block = new BlockItem(BlockRegistry.duragem_block, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.duragem_block.getRegistryName())
+
+
+                        );
 
         EntityRegistry.registerEntitySpawnEggs(itemRegistryEvent);
         LOGGER.info("Items registered.");
@@ -281,7 +299,8 @@ public class DruidcraftRegistry {
                 (
                         EntityRegistry.dreadfish_entity,
                         EntityRegistry.beetle_entity,
-                        EntityRegistry.lunar_moth_entity
+                        EntityRegistry.lunar_moth_entity,
+                        EntityRegistry.duragem_protection_entity
                 );
 
         EntityRegistry.registerEntityAttributes();

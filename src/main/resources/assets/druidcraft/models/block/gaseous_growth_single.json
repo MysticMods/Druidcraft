@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "druidcraft:block/gaseous_growth_single"
+    }
+}

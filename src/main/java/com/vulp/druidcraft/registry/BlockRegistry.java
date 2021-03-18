@@ -2,8 +2,10 @@ package com.vulp.druidcraft.registry;
 
 import com.vulp.druidcraft.DruidcraftRegistry;
 import com.vulp.druidcraft.blocks.*;
+import com.vulp.druidcraft.blocks.FungusBlock;
 import com.vulp.druidcraft.blocks.trees.DarkwoodTree;
 import com.vulp.druidcraft.blocks.trees.ElderTree;
+import com.vulp.druidcraft.blocks.trees.GiantHeartburnFungus;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.block.StairsBlock;
@@ -159,6 +161,24 @@ public class BlockRegistry {
   public static Block hellkiln = register("hellkiln", new HellkilnBlock(HellkilnBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).setLightLevel(getLightValueLit(15)).harvestTool(ToolType.PICKAXE).harvestLevel(0)));
   public static Block hellkiln_igniter = register("hellkiln_igniter", new HellkilnIgniterBlock(HellkilnIgniterBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).setLightLevel(getLightValueLit(13)).harvestTool(ToolType.PICKAXE).harvestLevel(0)));
   public static Block infernal_flare = register("infernal_flare", new InfernalFlareBlock(InfernalFlareBlock.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f).doesNotBlockMovement().setLightLevel((light) -> (15))));
+  public static Block overgrown_nylium = register("overgrown_nylium", new NyliumBlock(NyliumBlock.Properties.create(Material.ROCK).sound(SoundType.NYLIUM).setRequiresTool().harvestTool(ToolType.PICKAXE).hardnessAndResistance(0.4f)));
+  public static Block heartburn_fungus = register("heartburn_fungus", new FungusBlock(FungusBlock.Properties.create(Material.PLANTS).sound(SoundType.FUNGUS).hardnessAndResistance(0.0f).doesNotBlockMovement(), () -> ConfiguredFeatureRegistry.giant_heartburn_fungus, Block.makeCuboidShape(4.0F, 0.0F, 4.0F, 12.0F, 9.0F, 12.0F)));
+  public static Block heartburn_stem = register("heartburn_fungus_stem", new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.NETHER_WOOD).sound(SoundType.HYPHAE).hardnessAndResistance(2.0f)));
+  public static Block heartburn_hyphae = register("heartburn_fungus_hyphae", new WoodBlock(() -> ItemRegistry.heartburn_hyphae, RotatedPillarBlock.Properties.create(Material.NETHER_WOOD).sound(SoundType.HYPHAE).hardnessAndResistance(2.0f)));
+  public static Block stripped_heartburn_stem = register("stripped_heartburn_fungus_stem", new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.NETHER_WOOD).sound(SoundType.HYPHAE).hardnessAndResistance(2.0f)));
+  public static Block stripped_heartburn_hyphae = register("stripped_heartburn_fungus_hyphae", new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.NETHER_WOOD).sound(SoundType.HYPHAE).hardnessAndResistance(2.0f)));
+  public static Block heartburn_cap = register("heartburn_fungus_block", new HugeMushroomBlock(HugeMushroomBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.4f)));
+  public static Block gaseous_growth = register("gaseous_growth", new GaseousGrowthBlock(GaseousGrowthBlock.Properties.create(Material.NETHER_PLANTS).sound(SoundType.NETHER_VINE_LOWER_PITCH).doesNotBlockMovement().hardnessAndResistance(0.5f).setLightLevel(GaseousGrowthBlock.getLightValue(11))));
+  public static Block scorching_curtain = register("scorching_curtain", new ScorchingCurtainBlock(ScorchingCurtainBlock.Properties.create(Material.NETHER_PLANTS).sound(SoundType.NETHER_VINE).doesNotBlockMovement().hardnessAndResistance(0.3f).setLightLevel((light) -> (11))));
+  public static Block fireblanket_moss = register("fireblanket_moss", new Block(Block.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f)));
+  public static Block brambleroot = register("brambleroot", new Block(Block.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f)));
+  public static Block overgrown_roots = register("overgrown_roots", new Block(Block.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f)));
+  public static Block tall_overgrown_roots = register("tall_overgrown_roots", new Block(Block.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f)));
+  public static Block glow_air = register("glow_air", new AirBlock(Block.Properties.create(Material.AIR).doesNotBlockMovement().noDrops().setAir().setLightLevel((light) -> (12))));
+
+
+  public static Block duragem_ore = register("duragem_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(4), 2, 6));
+  public static Block duragem_block = register("duragem_block", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0f).setRequiresTool().notSolid().harvestTool(ToolType.PICKAXE).harvestLevel(4).sound(SoundType.STONE)));
 
   public static Block register (String name, Block block) {
     block.setRegistryName(DruidcraftRegistry.location(name));

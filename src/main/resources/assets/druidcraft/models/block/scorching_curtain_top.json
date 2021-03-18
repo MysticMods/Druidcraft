@@ -1,0 +1,6 @@
+{
+  "parent": "druidcraft:block/hash",
+  "textures": {
+    "hash": "druidcraft:block/scorching_curtain_top",
+  }
+}
