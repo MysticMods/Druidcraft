@@ -77,6 +77,7 @@
   "item.druidcraft.infernal_lantern.success": "Remaining flares: ",
   "item.druidcraft.duragem": "Duragem",
   "item.druidcraft.crushed_duragem": "Crushed Duragem",
+  "item.druidcraft.enchanted_soap": "Enchanted Soap",
 
   "block.druidcraft.amber_ore": "Amber Ore",
   "block.druidcraft.moonstone_ore": "Moonstone Ore",
@@ -217,6 +218,8 @@
   "entity.druidcraft.dreadfish": "Dreadfish",
   "entity.druidcraft.beetle": "Beetle",
   "entity.druidcraft.lunar_moth": "Lunar Moth",
+
+  "death.attack.bramble": "%1$s got cuddly with a brambleroot",
 
   "container.druidcraft.crate": "Small Crate",
   "container.druidcraft.crate_double": "Medium Crate",

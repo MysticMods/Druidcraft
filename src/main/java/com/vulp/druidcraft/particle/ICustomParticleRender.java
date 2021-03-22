@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11;
 
 public interface ICustomParticleRender extends IParticleRenderType {
 
-    ICustomParticleRender PARTICLE_SHEET_TRANSLUCENT_GLOW = new ICustomParticleRender() {
+    ICustomParticleRender PARTICLE_SHEET_TRANSLUCENT_ADDITIVE = new ICustomParticleRender() {
         @Override
         public void beginRender(BufferBuilder buffer, TextureManager textureManager) {
             RenderHelper.disableStandardItemLighting();
@@ -20,6 +20,27 @@ public interface ICustomParticleRender extends IParticleRenderType {
             GlStateManager.depthMask(false);
             textureManager.bindTexture(AtlasTexture.LOCATION_PARTICLES_TEXTURE);
             GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE.param, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR.param);
+            GlStateManager.alphaFunc(516, 0.003921569F);
+            GlStateManager.disableCull();
+            buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+        }
+        @Override
+        public void finishRender(Tessellator tess) {
+            tess.draw();
+        }
+        public String toString() {
+            return "PARTICLE_SHEET_TRANSLUCENT_ADDITIVE";
+        }
+    };
+
+    ICustomParticleRender PARTICLE_SHEET_TRANSLUCENT_GLOW = new ICustomParticleRender() {
+        @Override
+        public void beginRender(BufferBuilder buffer, TextureManager textureManager) {
+            RenderHelper.disableStandardItemLighting();
+            GlStateManager.enableBlend();
+            GlStateManager.depthMask(false);
+            textureManager.bindTexture(AtlasTexture.LOCATION_PARTICLES_TEXTURE);
+            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA.param, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.param);
             GlStateManager.alphaFunc(516, 0.003921569F);
             GlStateManager.disableCull();
             buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);

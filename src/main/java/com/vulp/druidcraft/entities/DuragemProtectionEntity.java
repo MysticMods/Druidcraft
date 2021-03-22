@@ -18,7 +18,6 @@ public class DuragemProtectionEntity extends Entity {
 
     public DuragemProtectionEntity(EntityType<? extends Entity> type, World world) {
         super(type, world);
-        setVisible(true);
     }
 
     @Override
@@ -28,7 +27,7 @@ public class DuragemProtectionEntity extends Entity {
 
     @Override
     protected void registerData() {
-
+        setVisible(true);
     }
 
     @Override

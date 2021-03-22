@@ -1,20 +1,9 @@
 package com.vulp.druidcraft.particle;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.Entity;
 import net.minecraft.particles.BasicParticleType;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -39,7 +28,7 @@ public class MagicSmokeParticle extends SpriteTexturedParticle {
 
     @Override
     public IParticleRenderType getRenderType() {
-        return ICustomParticleRender.PARTICLE_SHEET_TRANSLUCENT_GLOW;
+        return ICustomParticleRender.PARTICLE_SHEET_TRANSLUCENT_ADDITIVE;
     }
 
     @Override

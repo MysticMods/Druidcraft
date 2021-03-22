@@ -238,9 +238,22 @@ public class ItemRegistry
     public static Item overgrown_roots;
     public static Item tall_overgrown_roots;
 
+    public static Item gaseous_bomb;
+
     public static Item duragem_ore;
     public static Item duragem;
     public static Item crushed_duragem;
     public static Item duragem_block;
+    public static Item enchanted_soap;
+
+    public static Item snow_bricks;
+    public static Item snow_tiles;
+    public static Item ice_bricks;
+    public static Item worked_ice;
+    public static Item packed_ice_bricks;
+    public static Item worked_packed_ice;
+
+    public static Item flare_torch;
+    public static Item wall_flare_torch;
 
 }

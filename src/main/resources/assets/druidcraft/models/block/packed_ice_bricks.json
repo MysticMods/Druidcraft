@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "druidcraft:block/packed_ice_bricks"
+    }
+}

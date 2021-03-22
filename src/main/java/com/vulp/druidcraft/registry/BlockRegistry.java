@@ -171,13 +171,23 @@ public class BlockRegistry {
   public static Block gaseous_growth = register("gaseous_growth", new GaseousGrowthBlock(GaseousGrowthBlock.Properties.create(Material.NETHER_PLANTS).sound(SoundType.NETHER_VINE_LOWER_PITCH).doesNotBlockMovement().hardnessAndResistance(0.5f).setLightLevel(GaseousGrowthBlock.getLightValue(11))));
   public static Block scorching_curtain = register("scorching_curtain", new ScorchingCurtainBlock(ScorchingCurtainBlock.Properties.create(Material.NETHER_PLANTS).sound(SoundType.NETHER_VINE).doesNotBlockMovement().hardnessAndResistance(0.3f).setLightLevel((light) -> (11))));
   public static Block fireblanket_moss = register("fireblanket_moss", new Block(Block.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f)));
-  public static Block brambleroot = register("brambleroot", new ThickRootBlock(1.0F, ThickRootBlock.Properties.create(Material.NETHER_WOOD).sound(SoundType.NETHER_VINE_LOWER_PITCH).hardnessAndResistance(1.0f)));
+  public static Block brambleroot = register("brambleroot", new BramblerootBlock(1.0F, BramblerootBlock.Properties.create(Material.NETHER_WOOD).sound(SoundType.WOOD).hardnessAndResistance(1.0f).tickRandomly()));
   public static Block overgrown_roots = register("overgrown_roots", new Block(Block.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f)));
   public static Block tall_overgrown_roots = register("tall_overgrown_roots", new Block(Block.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f)));
   public static Block glow_air = register("glow_air", new AirBlock(Block.Properties.create(Material.AIR).doesNotBlockMovement().noDrops().setAir().setLightLevel((light) -> (12))));
 
   public static Block duragem_ore = register("duragem_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(4), 2, 6));
-  public static Block duragem_block = register("duragem_block", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0f).setRequiresTool().notSolid().harvestTool(ToolType.PICKAXE).harvestLevel(4).sound(SoundType.STONE)));
+  public static Block duragem_block = register("duragem_block", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0f).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(4).sound(SoundType.STONE)));
+
+  public static Block snow_bricks = register("snow_bricks", new Block(Block.Properties.create(Material.SNOW).hardnessAndResistance(0.4f).sound(SoundType.SNOW)));
+  public static Block snow_tiles = register("snow_tiles", new Block(Block.Properties.create(Material.SNOW).hardnessAndResistance(0.4f).sound(SoundType.SNOW)));
+  public static Block ice_bricks = register("ice_bricks", new Block(Block.Properties.create(Material.ICE).hardnessAndResistance(0.6f).slipperiness(0.98F).notSolid().sound(SoundType.GLASS)));
+  public static Block worked_ice = register("worked_ice", new Block(Block.Properties.create(Material.ICE).hardnessAndResistance(0.6f).slipperiness(0.98F).notSolid().sound(SoundType.GLASS)));
+  public static Block packed_ice_bricks = register("packed_ice_bricks", new Block(Block.Properties.create(Material.ICE).hardnessAndResistance(0.6f).slipperiness(0.98F).sound(SoundType.GLASS)));
+  public static Block worked_packed_ice = register("worked_packed_ice", new Block(Block.Properties.create(Material.ICE).hardnessAndResistance(0.6f).slipperiness(0.98F).sound(SoundType.GLASS)));
+
+  public static Block flare_torch = register("flare_torch", new FlareTorchBlock(FlareTorchBlock.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).setLightLevel((light) -> (10)).sound(SoundType.WOOD)));
+  public static Block wall_flare_torch = register("wall_flare_torch", new WallFlareTorchBlock(WallFlareTorchBlock.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).setLightLevel((light) -> (10)).sound(SoundType.WOOD).lootFrom(flare_torch)));
 
   public static Block register (String name, Block block) {
     block.setRegistryName(DruidcraftRegistry.location(name));

@@ -3,10 +3,7 @@ package com.vulp.druidcraft.registry;
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.DruidcraftRegistry;
 import com.vulp.druidcraft.config.EntitySpawnConfig;
-import com.vulp.druidcraft.entities.BeetleEntity;
-import com.vulp.druidcraft.entities.DreadfishEntity;
-import com.vulp.druidcraft.entities.DuragemProtectionEntity;
-import com.vulp.druidcraft.entities.LunarMothEntity;
+import com.vulp.druidcraft.entities.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
@@ -36,6 +33,7 @@ public class EntityRegistry
     public static final EntityType<BeetleEntity> beetle_entity = createEntity(BeetleEntity::new, EntityClassification.MONSTER, "beetle", 1.5f, 1.5f);
     public static final EntityType<LunarMothEntity> lunar_moth_entity = createEntity(LunarMothEntity::new, EntityClassification.CREATURE, "lunar_moth", 0.5f, 0.5f);
     public static final EntityType<DuragemProtectionEntity> duragem_protection_entity = createEntity(DuragemProtectionEntity::new, EntityClassification.MISC, "duragem_protection", 1.0F, 1.0F);
+    public static final EntityType<GaseousBombEntity> gaseous_bomb_entity = createEntity(GaseousBombEntity::new, EntityClassification.MISC, "gaseous_bomb", 0.35F, 0.35F);
 
     private static <T extends Entity> EntityType<T> createEntity(EntityType.IFactory<T> factory, EntityClassification entityClassification, String name, float width, float height) {
         return createEntity(factory, entityClassification, name, width, height, -1, null);

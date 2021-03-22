@@ -4,6 +4,7 @@ import com.vulp.druidcraft.blocks.*;
 import com.vulp.druidcraft.blocks.tileentities.*;
 import com.vulp.druidcraft.client.renders.ItemTileEntityRenderer;
 import com.vulp.druidcraft.client.renders.SmallBeamTileEntityRenderer;
+import com.vulp.druidcraft.entities.GaseousBombEntity;
 import com.vulp.druidcraft.entities.LunarMothColors;
 import com.vulp.druidcraft.items.*;
 import com.vulp.druidcraft.recipes.RecipeSerializers;
@@ -121,6 +122,8 @@ public class DruidcraftRegistry {
                         ItemRegistry.travel_pack = new TravelPackItem(new TravelPackItem.Properties().group(DRUIDCRAFT).maxStackSize(1)).setRegistryName(location("travel_pack")),
                         ItemRegistry.duragem = new Item(new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("duragem")),
                         ItemRegistry.crushed_duragem = new CrushedDuragemItem(new CrushedDuragemItem.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("crushed_duragem")),
+                        ItemRegistry.enchanted_soap = new EnchantedSoapItem(new EnchantedSoapItem.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("enchanted_soap")),
+                        ItemRegistry.gaseous_bomb = new GaseousBombItem(new GaseousBombItem.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("gaseous_bomb")),
 
                         // Item-blocks:
                         ItemRegistry.amber_ore = new BlockItem(BlockRegistry.amber_ore, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.amber_ore.getRegistryName()),
@@ -255,8 +258,15 @@ public class DruidcraftRegistry {
                         ItemRegistry.tall_overgrown_roots = new BlockItem(BlockRegistry.tall_overgrown_roots, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.tall_overgrown_roots.getRegistryName()),
 
                         ItemRegistry.duragem_ore = new BlockItem(BlockRegistry.duragem_ore, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.duragem_ore.getRegistryName()),
-                        ItemRegistry.duragem_block = new BlockItem(BlockRegistry.duragem_block, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.duragem_block.getRegistryName())
+                        ItemRegistry.duragem_block = new BlockItem(BlockRegistry.duragem_block, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.duragem_block.getRegistryName()),
 
+                        ItemRegistry.snow_bricks = new BlockItem(BlockRegistry.snow_bricks, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.snow_bricks.getRegistryName()),
+                        ItemRegistry.snow_tiles = new BlockItem(BlockRegistry.snow_tiles, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.snow_tiles.getRegistryName()),
+                        ItemRegistry.ice_bricks = new BlockItem(BlockRegistry.ice_bricks, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.ice_bricks.getRegistryName()),
+                        ItemRegistry.worked_ice = new BlockItem(BlockRegistry.worked_ice, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.worked_ice.getRegistryName()),
+                        ItemRegistry.packed_ice_bricks = new BlockItem(BlockRegistry.packed_ice_bricks, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.packed_ice_bricks.getRegistryName()),
+                        ItemRegistry.worked_packed_ice = new BlockItem(BlockRegistry.worked_packed_ice, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.worked_packed_ice.getRegistryName()),
+                        ItemRegistry.flare_torch = new WallOrFloorItem(BlockRegistry.flare_torch, BlockRegistry.wall_flare_torch, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.flare_torch.getRegistryName())
 
                         );
 
@@ -300,7 +310,8 @@ public class DruidcraftRegistry {
                         EntityRegistry.dreadfish_entity,
                         EntityRegistry.beetle_entity,
                         EntityRegistry.lunar_moth_entity,
-                        EntityRegistry.duragem_protection_entity
+                        EntityRegistry.duragem_protection_entity,
+                        EntityRegistry.gaseous_bomb_entity
                 );
 
         EntityRegistry.registerEntityAttributes();
@@ -318,7 +329,10 @@ public class DruidcraftRegistry {
                         ParticleRegistry.fiery_glow.setRegistryName("fiery_glow"),
                         ParticleRegistry.fiery_spark.setRegistryName("fiery_spark"),
                         ParticleRegistry.magic_mist.setRegistryName("magic_mist"),
-                        ParticleRegistry.magic_glitter.setRegistryName("magic_glitter")
+                        ParticleRegistry.magic_glitter.setRegistryName("magic_glitter"),
+                        ParticleRegistry.enchanted_bubble.setRegistryName("enchanted_bubble"),
+                        ParticleRegistry.flare.setRegistryName("flare"),
+                        ParticleRegistry.flare_sparkle.setRegistryName("flare_sparkle")
                 );
 
         LOGGER.info("Particles registered.");

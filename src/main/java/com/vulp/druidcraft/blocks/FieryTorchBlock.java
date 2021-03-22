@@ -68,7 +68,7 @@ public class FieryTorchBlock extends TorchBlock implements IWaterLoggable {
     public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, FluidState fluidState) {
         if (!state.get(WATERLOGGED) && fluidState.getFluid() == Fluids.WATER) {
             if (!worldIn.isRemote()) {
-                worldIn.setBlockState(pos, state.with(WATERLOGGED, Boolean.valueOf(true)), 3);
+                worldIn.setBlockState(pos, state.with(WATERLOGGED, Boolean.TRUE), 3);
                 worldIn.getPendingFluidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
             }
             return true;
