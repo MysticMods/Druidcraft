@@ -1,6 +1,6 @@
 package com.vulp.druidcraft.blocks;
 
-import com.vulp.druidcraft.registry.ParticleRegistry;
+import com.vulp.druidcraft.blocks.tileentities.SmallBeamTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -32,15 +33,34 @@ import java.util.Random;
 public class FlareTorchBlock extends TorchBlock implements IWaterLoggable {
 
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static final BooleanProperty PARTICLE = BooleanProperty.create("particle");
 
     public FlareTorchBlock(Properties properties) {
         super(properties, null);
-        this.setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, false));
+        this.setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, false).with(PARTICLE, true));
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+        return new SmallBeamTileEntity();
+    }
+
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public boolean eventReceived(BlockState state, World world, BlockPos pos, int i, int j) {
+        super.eventReceived(state, world, pos, i, j);
+        TileEntity tile = world.getTileEntity(pos);
+        return tile != null && tile.receiveClientEvent(i, j);
     }
 
     @Override
     public void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(WATERLOGGED);
+        builder.add(WATERLOGGED, PARTICLE);
     }
 
     @Override
@@ -90,15 +110,7 @@ public class FlareTorchBlock extends TorchBlock implements IWaterLoggable {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        double d0 = (double) pos.getX() + 0.5D;
-        double d1 = (double) pos.getY() + 0.7D;
-        double d2 = (double) pos.getZ() + 0.5D;
-        if (rand.nextInt(3) == 0) {
-            worldIn.addParticle(ParticleRegistry.flare_sparkle, false, d0, d1 - 0.1D, d2, 0F, 0F, 0F);
-        }
-        for (float i = 0.0F; i < 0.5F; i += 0.05F) {
-            worldIn.addParticle(ParticleRegistry.flare, false, d0, d1 + i - 0.2F, d2, 0F, 0.05D, 0F);
-        }
+
     }
 
 }

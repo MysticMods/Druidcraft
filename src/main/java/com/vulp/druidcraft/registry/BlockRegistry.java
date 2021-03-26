@@ -13,6 +13,8 @@ import net.minecraft.block.TrapDoorBlock;
 import net.minecraft.block.WoodButtonBlock;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.fluid.FlowingFluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.DyeColor;
 import net.minecraft.potion.Effects;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -188,6 +190,13 @@ public class BlockRegistry {
 
   public static Block flare_torch = register("flare_torch", new FlareTorchBlock(FlareTorchBlock.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).setLightLevel((light) -> (10)).sound(SoundType.WOOD)));
   public static Block wall_flare_torch = register("wall_flare_torch", new WallFlareTorchBlock(WallFlareTorchBlock.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).setLightLevel((light) -> (10)).sound(SoundType.WOOD).lootFrom(flare_torch)));
+  public static Block liquid_rainbow = register("liquid_rainbow", new FlowingFluidBlock(() -> (FlowingFluid) FluidRegistry.liquid_rainbow, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()));
+  public static Block cloud_block = register("cloud_block", new Block(Block.Properties.create(Material.WOOL).hardnessAndResistance(0.5f).sound(SoundType.SNOW)));
+  public static Block thundercloud_block = register("thundercloud_block", new Block(Block.Properties.create(Material.WOOL).hardnessAndResistance(0.5f).sound(SoundType.SNOW)));
+  public static Block crystalized_thundercloud_block = register("crystalized_thundercloud_block", new Block(Block.Properties.create(Material.WOOL).hardnessAndResistance(0.5f).sound(SoundType.SNOW)));
+  public static Block sulfur_cloud_block = register("sulfur_cloud_block", new Block(Block.Properties.create(Material.WOOL).hardnessAndResistance(0.5f).sound(SoundType.SNOW)));
+  public static Block skyberry_bush = register("skyberry_bush", new Block(Block.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).sound(SoundType.PLANT)));
+  public static Block live_skyberry_bush = register("live_skyberry_bush", new Block(Block.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).sound(SoundType.PLANT)));
 
   public static Block register (String name, Block block) {
     block.setRegistryName(DruidcraftRegistry.location(name));

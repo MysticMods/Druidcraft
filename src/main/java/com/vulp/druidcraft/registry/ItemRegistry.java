@@ -254,6 +254,14 @@ public class ItemRegistry
     public static Item worked_packed_ice;
 
     public static Item flare_torch;
-    public static Item wall_flare_torch;
+    public static Item liquid_rainbow_bucket;
+    public static Item cloud_block;
+    public static Item thundercloud_block;
+    public static Item crystalized_thundercloud_block;
+    public static Item sulfur_cloud_block;
+    public static Item skyberry_bush;
+    public static Item live_skyberry_bush;
+    public static Item skyberries;
+    public static Item live_skyberries;
 
 }

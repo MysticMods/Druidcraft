@@ -1,8 +1,10 @@
 package com.vulp.druidcraft.particle;
 
+import com.vulp.druidcraft.registry.BlockRegistry;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particles.BasicParticleType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -25,6 +27,7 @@ public class FlareSparkleParticle extends SpriteTexturedParticle {
         this.posY += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F;
         this.posZ += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F;
         this.maxAge = (int) (8.0D / (Math.random() * 0.8D + 0.2D)) + 4;
+        this.particleScale *= 5.0F;
         this.rotSpeed = ((float) Math.random() - 0.5F) * 0.05F;
         this.fizzleAge = 0;
         this.fizzleScale = 0;

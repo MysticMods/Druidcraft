@@ -2,6 +2,9 @@ package com.vulp.druidcraft.particle;
 
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.vulp.druidcraft.Druidcraft;
+import com.vulp.druidcraft.blocks.FlareTorchBlock;
+import com.vulp.druidcraft.registry.BlockRegistry;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.world.ClientWorld;
@@ -17,43 +20,48 @@ import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FlareParticle extends SpriteTexturedParticle {
 
-    private final float rotSpeed;
     private float pitch;
     private float yaw;
     private final Quaternion rotation = new Quaternion(0.0F, 0.0F, 0.0F, 1.0F);
+    private final IAnimatedSprite spriteSet;
+    private int ageOverrider;
 
     public FlareParticle(ClientWorld world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, IAnimatedSprite sprite) {
         super(world, posX, posY, posZ);
-        this.maxAge = this.rand.nextInt(50) + 80;
-        this.particleGravity = 3.0E-6F;
+        this.maxAge = 9;
+        this.ageOverrider = 0;
+        this.particleScale = 6.0F;
         this.motionX = motionX;
-        this.motionY = motionY + (double)(this.rand.nextFloat() / 500.0F);
+        this.motionY = motionY;
         this.motionZ = motionZ;
-        this.particleScale *= 1.5F;
-        this.rotSpeed = ((float)Math.random() - 0.5F) * 0.05F;
-        this.selectSpriteRandomly(sprite);
+        this.spriteSet = sprite;
+        this.selectSpriteWithAge(sprite);
     }
 
+    // Make particle render being less affected by fog.
+    // Better torch tex/model.
+    // Stop multiple particles generating at once.
+    // Create particle whenever needed. On world/chunk/instance load whenever possible.
+
     public void tick() {
+        this.ageOverrider += 1;
+        this.age = this.ageOverrider;
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
-        this.prevParticleAngle = this.particleAngle;
-        this.particleAngle += 3.1415927F * this.rotSpeed * 2.0F;
-        if (this.age++ < this.maxAge && (this.particleAlpha > 0.0F || this.particleScale > 0.0F)) {
-            this.motionY -= this.particleGravity;
-            if (this.particleScale > 0.002F) {
-                this.particleScale -= 0.002F;
-            } else {
-                this.setExpired();
-            }
-            this.move(this.motionX, this.motionY, this.motionZ);
-            if (this.age >= this.maxAge - 60 && this.particleAlpha > 0.01F) {
-                this.particleAlpha -= 0.015F;
-            }
-        } else {
+        this.move(this.motionX, this.motionY, this.motionZ);
+        this.selectSpriteWithAge(this.spriteSet);
+        if (this.ageOverrider >= this.maxAge) {
+            this.ageOverrider = 0;
+        }
+        BlockPos pos = new BlockPos(this.posX, this.posY, this.posZ);
+        BlockState state = this.world.getBlockState(pos);
+        if (!(state.getBlock() instanceof FlareTorchBlock)) {
             this.setExpired();
         }
     }
@@ -62,7 +70,7 @@ public class FlareParticle extends SpriteTexturedParticle {
         this.pitch = yawIn;
         this.yaw = pitchIn;
         this.rotation.set(0.0F, 0.0F, 0.0F, 1.0F);
-        this.rotation.multiply(Vector3f.XP.rotationDegrees(yawIn));
+        this.rotation.multiply(Vector3f.YP.rotationDegrees(-pitchIn));
     }
 
     public void renderParticle(IVertexBuilder buffer, ActiveRenderInfo renderInfo, float partialTicks) {
@@ -111,10 +119,10 @@ public class FlareParticle extends SpriteTexturedParticle {
         float f6 = this.getMaxV();
         int j = this.getBrightnessForRender(partialTicks);
 
-        buffer.pos((double)avector3f[0].getX(), this.posY, (double)avector3f[0].getZ()).tex(f8, f6).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j).endVertex();
-        buffer.pos((double)avector3f[1].getX(), this.posY, (double)avector3f[1].getZ()).tex(f8, f5).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j).endVertex();
-        buffer.pos((double)avector3f[2].getX(), this.posY, (double)avector3f[2].getZ()).tex(f7, f5).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j).endVertex();
-        buffer.pos((double)avector3f[3].getX(), this.posY, (double)avector3f[3].getZ()).tex(f7, f6).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j).endVertex();
+        buffer.pos((double)avector3f[0].getX(), (double)avector3f[0].getY(), (double)avector3f[0].getZ()).tex(f8, f6).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j).endVertex();
+        buffer.pos((double)avector3f[1].getX(), (double)avector3f[1].getY(), (double)avector3f[1].getZ()).tex(f8, f5).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j).endVertex();
+        buffer.pos((double)avector3f[2].getX(), (double)avector3f[2].getY(), (double)avector3f[2].getZ()).tex(f7, f5).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j).endVertex();
+        buffer.pos((double)avector3f[3].getX(), (double)avector3f[3].getY(), (double)avector3f[3].getZ()).tex(f7, f6).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j).endVertex();
     }
 
     @Override
@@ -151,4 +159,8 @@ public class FlareParticle extends SpriteTexturedParticle {
         }
     }
 
+    @Override
+    public boolean shouldCull() {
+        return false;
+    }
 }

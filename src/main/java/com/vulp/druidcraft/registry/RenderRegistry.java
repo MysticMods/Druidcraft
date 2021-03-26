@@ -78,6 +78,7 @@ public class RenderRegistry
             RenderTypeLookup.setRenderLayer(BlockRegistry.fiery_torch, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.flare_torch, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.wall_fiery_torch, RenderType.getCutout());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.wall_flare_torch, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.ice_bricks, RenderType.getTranslucent());
             RenderTypeLookup.setRenderLayer(BlockRegistry.worked_ice, RenderType.getTranslucent());
             //    RenderTypeLookup.setRenderLayer(BlockRegistry.fruit_door, RenderType.getCutout());
