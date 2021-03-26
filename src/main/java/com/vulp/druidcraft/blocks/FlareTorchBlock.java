@@ -1,6 +1,8 @@
 package com.vulp.druidcraft.blocks;
 
+import com.vulp.druidcraft.blocks.tileentities.FlareTorchTileEntity;
 import com.vulp.druidcraft.blocks.tileentities.SmallBeamTileEntity;
+import com.vulp.druidcraft.registry.ParticleRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
@@ -43,7 +45,7 @@ public class FlareTorchBlock extends TorchBlock implements IWaterLoggable {
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new SmallBeamTileEntity();
+        return new FlareTorchTileEntity();
     }
 
     @Override
@@ -105,6 +107,13 @@ public class FlareTorchBlock extends TorchBlock implements IWaterLoggable {
         } else {
             tooltip.add(new TranslationTextComponent("block.druidcraft.flare_torch.description1").mergeStyle(TextFormatting.YELLOW, TextFormatting.ITALIC));
         }
+    }
+
+    public static void spawnParticles(World worldIn, BlockPos pos) {
+        double d0 = (double) pos.getX() + 0.5D;
+        double d1 = (double) pos.getY() + 0.7D;
+        double d2 = (double) pos.getZ() + 0.5D;
+        worldIn.addOptionalParticle(ParticleRegistry.flare, true, d0, d1 - 0.1, d2, 0F, 0F, 0F);
     }
 
     @Override

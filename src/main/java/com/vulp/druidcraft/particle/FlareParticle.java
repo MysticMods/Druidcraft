@@ -22,6 +22,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class FlareParticle extends SpriteTexturedParticle {
 
@@ -34,6 +35,8 @@ public class FlareParticle extends SpriteTexturedParticle {
     public FlareParticle(ClientWorld world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, IAnimatedSprite sprite) {
         super(world, posX, posY, posZ);
         this.maxAge = 9;
+        Random rand = new Random();
+        this.age = rand.nextInt(9);
         this.ageOverrider = 0;
         this.particleScale = 6.0F;
         this.motionX = motionX;
@@ -42,11 +45,6 @@ public class FlareParticle extends SpriteTexturedParticle {
         this.spriteSet = sprite;
         this.selectSpriteWithAge(sprite);
     }
-
-    // Make particle render being less affected by fog.
-    // Better torch tex/model.
-    // Stop multiple particles generating at once.
-    // Create particle whenever needed. On world/chunk/instance load whenever possible.
 
     public void tick() {
         this.ageOverrider += 1;
@@ -57,12 +55,12 @@ public class FlareParticle extends SpriteTexturedParticle {
         this.move(this.motionX, this.motionY, this.motionZ);
         this.selectSpriteWithAge(this.spriteSet);
         if (this.ageOverrider >= this.maxAge) {
+            BlockPos pos = new BlockPos(this.posX, this.posY, this.posZ);
+            BlockState state = this.world.getBlockState(pos);
+            if (!(state.getBlock() instanceof FlareTorchBlock)) {
+                this.setExpired();
+            }
             this.ageOverrider = 0;
-        }
-        BlockPos pos = new BlockPos(this.posX, this.posY, this.posZ);
-        BlockState state = this.world.getBlockState(pos);
-        if (!(state.getBlock() instanceof FlareTorchBlock)) {
-            this.setExpired();
         }
     }
 
@@ -87,7 +85,6 @@ public class FlareParticle extends SpriteTexturedParticle {
             quaternion.multiply(Vector3f.ZP.rotation(f3));
         }
 
-
         Entity entity = renderInfo.getRenderViewEntity();
         this.setRotation(entity.getYaw(partialTicks), entity.getPitch(partialTicks));
         if (renderInfo.isThirdPerson()) {
@@ -98,8 +95,6 @@ public class FlareParticle extends SpriteTexturedParticle {
             Direction direction = ((LivingEntity)entity).getBedDirection();
             this.setRotation(direction != null ? direction.getHorizontalAngle() - 180.0F : 0.0F, 0.0F);
         }
-
-
 
         Vector3f vector3f1 = new Vector3f(-1.0F, -1.0F, 0.0F);
         vector3f1.transform(quaternion);

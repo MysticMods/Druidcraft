@@ -1,6 +1,7 @@
 package com.vulp.druidcraft.particle;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.RenderHelper;
@@ -16,12 +17,12 @@ public interface ICustomParticleRender extends IParticleRenderType {
         @Override
         public void beginRender(BufferBuilder buffer, TextureManager textureManager) {
             RenderHelper.disableStandardItemLighting();
-            GlStateManager.enableBlend();
-            GlStateManager.depthMask(false);
+            RenderSystem.enableBlend();
+            RenderSystem.depthMask(false);
             textureManager.bindTexture(AtlasTexture.LOCATION_PARTICLES_TEXTURE);
-            GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE.param, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR.param);
-            GlStateManager.alphaFunc(516, 0.003921569F);
-            GlStateManager.disableCull();
+            RenderSystem.blendFunc(GlStateManager.SourceFactor.ONE.param, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR.param);
+            RenderSystem.alphaFunc(516, 0.003921569F);
+            RenderSystem.disableCull();
             buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
         }
         @Override
@@ -37,13 +38,14 @@ public interface ICustomParticleRender extends IParticleRenderType {
         @Override
         public void beginRender(BufferBuilder buffer, TextureManager textureManager) {
             RenderHelper.disableStandardItemLighting();
-            GlStateManager.enableBlend();
-            GlStateManager.depthMask(false);
+            RenderSystem.enableBlend();
+            RenderSystem.depthMask(false);
             textureManager.bindTexture(AtlasTexture.LOCATION_PARTICLES_TEXTURE);
-            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA.param, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.param);
-            GlStateManager.alphaFunc(516, 0.003921569F);
-            GlStateManager.disableCull();
-            buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA.param, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.param);
+            RenderSystem.alphaFunc(516, 0.003921569F);
+            RenderSystem.disableCull();
+            RenderSystem.disableFog();
+            buffer.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
         }
         @Override
         public void finishRender(Tessellator tess) {
@@ -56,12 +58,12 @@ public interface ICustomParticleRender extends IParticleRenderType {
 
     ICustomParticleRender CUSTOM = new ICustomParticleRender() {
         @Override
-        public void beginRender(BufferBuilder p_217600_1_, TextureManager p_217600_2_) {
+        public void beginRender(BufferBuilder buffer, TextureManager textureManager) {
             RenderHelper.disableStandardItemLighting();
-            GlStateManager.disableBlend();
-            GlStateManager.depthMask(true);
-            p_217600_2_.bindTexture(AtlasTexture.LOCATION_PARTICLES_TEXTURE);
-            p_217600_1_.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+            RenderSystem.disableBlend();
+            RenderSystem.depthMask(true);
+            textureManager.bindTexture(AtlasTexture.LOCATION_PARTICLES_TEXTURE);
+            buffer.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
         }
 
         @Override

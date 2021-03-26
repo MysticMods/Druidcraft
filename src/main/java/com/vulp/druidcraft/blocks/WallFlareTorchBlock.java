@@ -91,21 +91,18 @@ public class WallFlareTorchBlock extends FlareTorchBlock {
         builder.add(HORIZONTAL_FACING, WATERLOGGED, PARTICLE);
     }
 
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        Direction direction = stateIn.get(HORIZONTAL_FACING);
+    public static void spawnParticles(World worldIn, BlockPos pos) {
         double d0 = (double) pos.getX() + 0.5D;
         double d1 = (double) pos.getY() + 0.65D;
         double d2 = (double) pos.getZ() + 0.5D;
         double d3 = 0.22D;
         double d4 = 0.27D;
-        Direction direction1 = direction.getOpposite();
-        if (rand.nextInt(3) == 0) {
-            worldIn.addParticle(ParticleRegistry.flare_sparkle, false, d0 + d4 * (double) direction1.getXOffset(), d1 + d3 - 0.1D, d2 + d4 * (double) direction1.getZOffset(), 0F, 0F, 0F);
-        }
-        for (float i = 0.0F; i < 0.25F; i += 0.05F) {
-            worldIn.addParticle(ParticleRegistry.flare, false, d0 + d4 * (double) direction1.getXOffset(), d1 + d3 + i, d2 + d4 * (double) direction1.getZOffset(), 0F, 0.05D, 0F);
-        }
+        Direction direction = worldIn.getBlockState(pos).get(HORIZONTAL_FACING).getOpposite();
+        worldIn.addOptionalParticle(ParticleRegistry.flare, true, d0 + d4 * (double) direction.getXOffset(), d1 + d3 - 0.1D, d2 + d4 * (double) direction.getZOffset(), 0F, 0F, 0F);
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
     }
 }
