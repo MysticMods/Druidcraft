@@ -50,6 +50,8 @@ public class RenderRegistry
         // BLOCK TILE ENTITIES
         ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.small_beam, SmallBeamTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.custom_sign, SignTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.custom_chest, CustomChestTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.custom_trapped_chest, CustomChestTileEntityRenderer::new);
 
         event.enqueueWork(() -> {
             // ITEM TILE ENTITIES

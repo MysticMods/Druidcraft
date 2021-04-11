@@ -15,6 +15,8 @@ public class TileEntityRegistry {
     public static TileEntityType<InfernalFlareTileEntity> infernal_flare;
     public static TileEntityType<FlareTorchTileEntity> flare_torch;
     public static TileEntityType<CustomSignTileEntity> custom_sign;
+    public static TileEntityType<CustomChestTileEntity> custom_chest;
+    public static TileEntityType<CustomTrappedChestTileEntity> custom_trapped_chest;
 
     public static <T extends TileEntity> TileEntityType<T> register(String id, TileEntityType.Builder<T> builder)
     {

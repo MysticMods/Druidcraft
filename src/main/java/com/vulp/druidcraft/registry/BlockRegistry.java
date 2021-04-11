@@ -31,6 +31,7 @@ import java.util.function.ToIntFunction;
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public class BlockRegistry {
   private static Set<Block> BLOCKS = new HashSet<>();
+  private static Set<Block> CHESTS = new HashSet<>();
 
   public static Block debug_block = register("debug", new DebugBlock(DebugBlock.Properties.create(Material.CLAY)));
   public static Block hemp_crop = register("hemp_crop", new HempBlock(HempBlock.Properties.create(Material.PLANTS).sound(SoundType.CROP).hardnessAndResistance(0.0f).doesNotBlockMovement().tickRandomly()));
@@ -60,6 +61,8 @@ public class BlockRegistry {
   public static Block darkwood_sapling = register("darkwood_sapling", new SaplingBlock(new DarkwoodTree(), SaplingBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).tickRandomly().doesNotBlockMovement().sound(SoundType.PLANT)));
   public static Block darkwood_sign = register("darkwood_sign", new CustomStandingSignBlock(CustomStandingSignBlock.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(1.0F).sound(SoundType.WOOD), WoodTypeRegistry.DARKWOOD));
   public static Block darkwood_wall_sign = register("darkwood_wall_sign", new CustomWallSignBlock(CustomWallSignBlock.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(1.0F).sound(SoundType.WOOD), WoodTypeRegistry.DARKWOOD));
+  public static Block darkwood_chest = registerChest("darkwood_chest", new CustomChestBlock(CustomChestBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.5F).sound(SoundType.WOOD), () -> TileEntityRegistry.custom_chest));
+  public static Block trapped_darkwood_chest = registerChest("trapped_darkwood_chest", new CustomTrappedChestBlock(CustomTrappedChestBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.5F).sound(SoundType.WOOD), () -> TileEntityRegistry.custom_trapped_chest));
 
   public static Block elder_log = register("elder_log", new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)));
   public static Block stripped_elder_log = register("stripped_elder_log", new RotatedPillarBlock(RotatedPillarBlock.Properties.from(elder_log)));
@@ -201,6 +204,11 @@ public class BlockRegistry {
   public static Block skyberry_bush = register("skyberry_bush", new Block(Block.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).sound(SoundType.PLANT)));
   public static Block live_skyberry_bush = register("live_skyberry_bush", new Block(Block.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).sound(SoundType.PLANT)));
 
+  private static Block registerChest(String name, Block block) {
+    CHESTS.add(block);
+    return register(name, block);
+  }
+
   public static Block register (String name, Block block) {
     block.setRegistryName(DruidcraftRegistry.location(name));
     BLOCKS.add(block);
@@ -214,6 +222,10 @@ public class BlockRegistry {
 
   private static ToIntFunction<BlockState> getLightValueLit(int lightValue) {
     return (state) -> state.get(BlockStateProperties.LIT) ? lightValue : 0;
+  }
+
+  public static Set<Block> getChestList() {
+    return CHESTS;
   }
 
 }

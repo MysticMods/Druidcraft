@@ -1,7 +1,9 @@
 package com.vulp.druidcraft;
 
+import com.vulp.druidcraft.api.ChestToString;
 import com.vulp.druidcraft.blocks.*;
 import com.vulp.druidcraft.blocks.tileentities.*;
+import com.vulp.druidcraft.client.renders.CustomChestTileEntityRenderer;
 import com.vulp.druidcraft.client.renders.ItemTileEntityRenderer;
 import com.vulp.druidcraft.client.renders.SmallBeamTileEntityRenderer;
 import com.vulp.druidcraft.entities.CustomBoatEntity;
@@ -162,6 +164,8 @@ public class DruidcraftRegistry {
                         ItemRegistry.darkwood_door = new BlockItem(BlockRegistry.darkwood_door, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_door.getRegistryName()),
                         ItemRegistry.darkwood_boat = new CustomBoatItem(CustomBoatEntity.CustomType.DARKWOOD, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("darkwood_boat")),
                         ItemRegistry.darkwood_sign = new SignItem(new Item.Properties().maxStackSize(16).group(DRUIDCRAFT), BlockRegistry.darkwood_sign, BlockRegistry.darkwood_wall_sign).setRegistryName(BlockRegistry.darkwood_sign.getRegistryName()),
+                        ItemRegistry.darkwood_chest = new BlockItem(BlockRegistry.darkwood_chest, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_chest.getRegistryName()),
+                        ItemRegistry.trapped_darkwood_chest = new BlockItem(BlockRegistry.trapped_darkwood_chest, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.trapped_darkwood_chest.getRegistryName()),
 
                         ItemRegistry.elder_log = new BlockItem(BlockRegistry.elder_log, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.elder_log.getRegistryName()),
                         ItemRegistry.stripped_elder_log = new BlockItem(BlockRegistry.stripped_elder_log, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.stripped_elder_log.getRegistryName()),
@@ -414,7 +418,9 @@ public class DruidcraftRegistry {
                         TileEntityRegistry.hellkiln_igniter = TileEntityRegistry.register("hellkiln_igniter", TileEntityType.Builder.create(HellkilnIgniterTileEntity::new, BlockRegistry.hellkiln_igniter)),
                         TileEntityRegistry.infernal_flare = TileEntityRegistry.register("infernal_flare", TileEntityType.Builder.create(InfernalFlareTileEntity::new, BlockRegistry.infernal_flare)),
                         TileEntityRegistry.flare_torch = TileEntityRegistry.register("flare_torch", TileEntityType.Builder.create(FlareTorchTileEntity::new, BlockRegistry.flare_torch, BlockRegistry.wall_flare_torch)),
-                        TileEntityRegistry.custom_sign = TileEntityRegistry.register("custom_sign", TileEntityType.Builder.create(CustomSignTileEntity::new, BlockRegistry.darkwood_sign, BlockRegistry.darkwood_wall_sign))
+                        TileEntityRegistry.custom_sign = TileEntityRegistry.register("custom_sign", TileEntityType.Builder.create(CustomSignTileEntity::new, BlockRegistry.darkwood_sign, BlockRegistry.darkwood_wall_sign)),
+                        TileEntityRegistry.custom_chest = TileEntityRegistry.register("custom_chest", TileEntityType.Builder.create(CustomChestTileEntity::new, BlockRegistry.darkwood_chest)),
+                        TileEntityRegistry.custom_trapped_chest = TileEntityRegistry.register("custom_trapped_chest", TileEntityType.Builder.create(CustomTrappedChestTileEntity::new, BlockRegistry.trapped_darkwood_chest))
                 );
 
         LOGGER.info("Tile Entities registered.");
@@ -430,6 +436,9 @@ public class DruidcraftRegistry {
             event.addSprite(ItemTileEntityRenderer.chitin_shield_tex);
             event.addSprite(ItemTileEntityRenderer.moonstone_shield_tex);
             event.addSprite(SmallBeamTileEntityRenderer.texture);
+        } else if (event.getMap().getTextureLocation() == Atlases.CHEST_ATLAS) {
+            for (Block block : BlockRegistry.getChestList())
+            CustomChestTileEntityRenderer.stitchChests(event, block);
         }
         LOGGER.info("Textures stitched.");
     }
