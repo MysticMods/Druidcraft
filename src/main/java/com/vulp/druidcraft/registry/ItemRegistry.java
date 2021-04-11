@@ -119,6 +119,10 @@ public class ItemRegistry
     public static Item darkwood_button;
     public static Item darkwood_trapdoor;
     public static Item darkwood_door;
+    public static Item darkwood_boat;
+    public static Item darkwood_sign;
+    public static Item darkwood_ladder;
+    public static Item darkwood_beehive;
 
     public static Item elder_log;
     public static Item stripped_elder_log;
@@ -136,6 +140,8 @@ public class ItemRegistry
     public static Item elder_button;
     public static Item elder_trapdoor;
     public static Item elder_door;
+    public static Item elder_boat;
+    public static Item elder_sign;
     public static Item lavender;
 
     public static Item fruit_log;
@@ -163,6 +169,15 @@ public class ItemRegistry
     public static Item darkwood_beam;
     public static Item elder_beam;
     public static Item fruit_beam;
+    public static Item oak_stripped_beam;
+    public static Item spruce_stripped_beam;
+    public static Item birch_stripped_beam;
+    public static Item jungle_stripped_beam;
+    public static Item acacia_stripped_beam;
+    public static Item dark_oak_stripped_beam;
+    public static Item darkwood_stripped_beam;
+    public static Item elder_stripped_beam;
+    public static Item fruit_stripped_beam;
     public static Item oak_small_beam;
     public static Item spruce_small_beam;
     public static Item birch_small_beam;
@@ -172,6 +187,15 @@ public class ItemRegistry
     public static Item darkwood_small_beam;
     public static Item elder_small_beam;
     public static Item fruit_small_beam;
+    public static Item oak_small_stripped_beam;
+    public static Item spruce_small_stripped_beam;
+    public static Item birch_small_stripped_beam;
+    public static Item jungle_small_stripped_beam;
+    public static Item acacia_small_stripped_beam;
+    public static Item dark_oak_small_stripped_beam;
+    public static Item darkwood_small_stripped_beam;
+    public static Item elder_small_stripped_beam;
+    public static Item fruit_small_stripped_beam;
     public static Item oak_panels;
     public static Item spruce_panels;
     public static Item birch_panels;
@@ -181,6 +205,15 @@ public class ItemRegistry
     public static Item darkwood_panels;
     public static Item elder_panels;
     public static Item fruit_panels;
+    public static Item oak_vertical_planks;
+    public static Item spruce_vertical_planks;
+    public static Item birch_vertical_planks;
+    public static Item jungle_vertical_planks;
+    public static Item acacia_vertical_planks;
+    public static Item dark_oak_vertical_planks;
+    public static Item darkwood_vertical_planks;
+    public static Item elder_vertical_planks;
+    public static Item fruit_vertical_planks;
     public static Item wet_mud_bricks;
     public static Item dry_mud_bricks;
     public static Item dry_mud_brick_slab;

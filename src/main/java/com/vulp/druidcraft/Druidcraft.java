@@ -5,6 +5,7 @@ import com.vulp.druidcraft.events.BiomeLoadEventHandler;
 import com.vulp.druidcraft.events.EventHandler;
 import com.vulp.druidcraft.network.PacketHandler;
 import com.vulp.druidcraft.registry.*;
+import com.vulp.druidcraft.world.biomes.DruidcraftNetherBiomeProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -47,6 +48,7 @@ public class Druidcraft {
         PacketHandler.init();
 
         event.enqueueWork(() -> {
+                // Registry.register(Registry.BIOME_SOURCE_KEY, new ResourceLocation(MODID, "druidcraftnether"), DruidcraftNetherBiomeProvider.DRUIDCRAFT_NETHER_CODEC);
                 BiomeRegistry.registerBiomes();
                 VanillaIntegrationRegistry.setup();
             });

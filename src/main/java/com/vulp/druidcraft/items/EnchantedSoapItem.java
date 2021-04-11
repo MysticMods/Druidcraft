@@ -1,6 +1,8 @@
 package com.vulp.druidcraft.items;
 
+import com.vulp.druidcraft.entities.BlockInhabitingEntity;
 import com.vulp.druidcraft.entities.DuragemProtectionEntity;
+import com.vulp.druidcraft.entities.FieryGlassGlowEntity;
 import com.vulp.druidcraft.registry.EntityRegistry;
 import com.vulp.druidcraft.registry.ParticleRegistry;
 import net.minecraft.entity.Entity;
@@ -29,16 +31,16 @@ public class EnchantedSoapItem extends Item {
     public ActionResultType onItemUse(ItemUseContext context) {
         World world = context.getWorld();
         BlockPos blockpos = context.getPos();
+        List<BlockInhabitingEntity> entityList = world.getEntitiesWithinAABB(BlockInhabitingEntity.class, new AxisAlignedBB(blockpos.add(1.0D, 1.0D, 1.0D), blockpos));
         if (!(world instanceof ServerWorld)) {
-            if (world.getEntitiesWithinAABB(DuragemProtectionEntity.class, new AxisAlignedBB(blockpos.add(1.0D, 1.0D, 1.0D), blockpos)).size() != 0) {
+            if (entityList.size() != 0) {
                 spawnWashParticles(world, blockpos);
                 return ActionResultType.SUCCESS;
             } else return super.onItemUse(context);
         } else {
             ItemStack itemstack = context.getItem();
-            List<DuragemProtectionEntity> duragem = world.getEntitiesWithinAABB(DuragemProtectionEntity.class, new AxisAlignedBB(blockpos.add(1.0D, 1.0D, 1.0D), blockpos));
-            if (duragem.size() > 0) {
-                duragem.forEach(Entity::remove);
+            if (entityList.size() > 0) {
+                entityList.forEach(Entity::remove);
                 itemstack.shrink(1);
                 return ActionResultType.CONSUME;
             }
@@ -46,7 +48,13 @@ public class EnchantedSoapItem extends Item {
         }
     }
 
-
+/*    public void fieryGlassCheck(World world, BlockPos pos, List<BlockInhabitingEntity> entityList) {
+        for (BlockInhabitingEntity entity : entityList) {
+            if (entity instanceof FieryGlassGlowEntity) {
+                ((FieryGlassGlowEntity) entity).toggleBlockLight(world, pos, false);
+            }
+        }
+    }*/
 
     public static void spawnWashParticles(World world, BlockPos pos) {
         Random rand = new Random();

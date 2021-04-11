@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.client.models.BlockInhabitingEntityModel;
 import com.vulp.druidcraft.entities.DuragemProtectionEntity;
+import com.vulp.druidcraft.entities.FieryGlassGlowEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -12,17 +13,17 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
-public class DuragemProtectionEntityRenderer extends EntityRenderer<DuragemProtectionEntity> {
+public class FieryGlassGlowEntityRenderer extends EntityRenderer<FieryGlassGlowEntity> {
 
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Druidcraft.MODID, "textures/entity/blockentity/duragem_protection.png");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Druidcraft.MODID, "textures/entity/blockentity/fiery_glass_glow.png");
     protected final BlockInhabitingEntityModel model = new BlockInhabitingEntityModel();
 
-    protected DuragemProtectionEntityRenderer(EntityRendererManager renderManager) {
+    protected FieryGlassGlowEntityRenderer(EntityRendererManager renderManager) {
         super(renderManager);
     }
 
     @Override
-    public void render(DuragemProtectionEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+    public void render(FieryGlassGlowEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
         float visibility = entityIn.getVisibility();
         if (visibility > 0.0F) {
             matrixStackIn.push();
@@ -36,15 +37,15 @@ public class DuragemProtectionEntityRenderer extends EntityRenderer<DuragemProte
     }
 
     @Override
-    public ResourceLocation getEntityTexture(DuragemProtectionEntity entity) {
+    public ResourceLocation getEntityTexture(FieryGlassGlowEntity entity) {
         return TEXTURE;
     }
 
-    public static class RenderFactory implements IRenderFactory<DuragemProtectionEntity> {
+    public static class RenderFactory implements IRenderFactory<FieryGlassGlowEntity> {
         @Override
-        public EntityRenderer<? super DuragemProtectionEntity> createRenderFor(EntityRendererManager manager)
+        public EntityRenderer<? super FieryGlassGlowEntity> createRenderFor(EntityRendererManager manager)
         {
-            return new DuragemProtectionEntityRenderer(manager);
+            return new FieryGlassGlowEntityRenderer(manager);
         }
     }
 

@@ -14,6 +14,7 @@ public class TileEntityRegistry {
     public static TileEntityType<HellkilnIgniterTileEntity> hellkiln_igniter;
     public static TileEntityType<InfernalFlareTileEntity> infernal_flare;
     public static TileEntityType<FlareTorchTileEntity> flare_torch;
+    public static TileEntityType<CustomSignTileEntity> custom_sign;
 
     public static <T extends TileEntity> TileEntityType<T> register(String id, TileEntityType.Builder<T> builder)
     {
@@ -21,4 +22,12 @@ public class TileEntityRegistry {
         type.setRegistryName(Druidcraft.MODID, id);
         return type;
     }
+
+    public static <T extends TileEntity> BlocklessTileEntityType<T> registerBlockless(String id, BlocklessTileEntityType.Builder<T> builder)
+    {
+        BlocklessTileEntityType<T> type = builder.build(null);
+        type.setRegistryName(Druidcraft.MODID, id);
+        return type;
+    }
+
 }

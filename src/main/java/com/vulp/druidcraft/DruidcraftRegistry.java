@@ -4,13 +4,16 @@ import com.vulp.druidcraft.blocks.*;
 import com.vulp.druidcraft.blocks.tileentities.*;
 import com.vulp.druidcraft.client.renders.ItemTileEntityRenderer;
 import com.vulp.druidcraft.client.renders.SmallBeamTileEntityRenderer;
-import com.vulp.druidcraft.entities.GaseousBombEntity;
+import com.vulp.druidcraft.entities.CustomBoatEntity;
+import com.vulp.druidcraft.entities.DuragemProtectionEntity;
+import com.vulp.druidcraft.entities.FieryGlassGlowEntity;
 import com.vulp.druidcraft.entities.LunarMothColors;
 import com.vulp.druidcraft.fluids.LiquidRainbowFluid;
 import com.vulp.druidcraft.items.*;
 import com.vulp.druidcraft.recipes.RecipeSerializers;
 import com.vulp.druidcraft.registry.*;
 import net.minecraft.block.*;
+import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.Fluid;
@@ -22,6 +25,7 @@ import net.minecraft.particles.ParticleType;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -54,8 +58,8 @@ public class DruidcraftRegistry {
                         ItemRegistry.hemp_seeds = new PlantableItem(new Item.Properties().group(DRUIDCRAFT), PlantType.CROP, (DynamicCropBlock)BlockRegistry.hemp_crop, true).setRegistryName(location("hemp_seeds")),
                         ItemRegistry.amber = new Item(new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("amber")),
                         ItemRegistry.moonstone = new Item(new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("moonstone")),
-                        ItemRegistry.fiery_glass = new SmeltableItem(new Item.Properties().group(DRUIDCRAFT), 2400).setRegistryName(location("fiery_glass")),
-                        ItemRegistry.crushed_fiery_glass = new SmeltableItem(new Item.Properties().group(DRUIDCRAFT_WIP), 2400).setRegistryName(location("crushed_fiery_glass")),
+                        ItemRegistry.fiery_glass = new SmeltableItem((SmeltableItem.Properties) new SmeltableItem.Properties().group(DRUIDCRAFT)).setRegistryName(location("fiery_glass")),
+                        ItemRegistry.crushed_fiery_glass = new BlockEntityPlacer(FieryGlassGlowEntity.class, EntityRegistry.fiery_glass_glow_entity, (SmeltableItem.Properties) new BlockEntityPlacer.Properties().burnTime(2400).group(DRUIDCRAFT_WIP)).setRegistryName(location("crushed_fiery_glass")),
                         ItemRegistry.rockroot = new Item(new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("rockroot")),
                         ItemRegistry.tempered_fiery_glass = new Item(new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("tempered_fiery_glass")),
                         ItemRegistry.brightstone = new Item(new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("brightstone")),
@@ -123,7 +127,7 @@ public class DruidcraftRegistry {
                         ItemRegistry.elderflower_cordial = new DrinkableItem(new DrinkableItem.Properties().group(DRUIDCRAFT).food(FoodRegistry.elderflower_cordial)).setRegistryName(location("elderflower_cordial")),
                         ItemRegistry.travel_pack = new TravelPackItem(new TravelPackItem.Properties().group(DRUIDCRAFT).maxStackSize(1)).setRegistryName(location("travel_pack")),
                         ItemRegistry.duragem = new Item(new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("duragem")),
-                        ItemRegistry.crushed_duragem = new CrushedDuragemItem(new CrushedDuragemItem.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("crushed_duragem")),
+                        ItemRegistry.crushed_duragem = new BlockEntityPlacer(DuragemProtectionEntity.class, EntityRegistry.duragem_protection_entity, (SmeltableItem.Properties) new BlockEntityPlacer.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("crushed_duragem")),
                         ItemRegistry.enchanted_soap = new EnchantedSoapItem(new EnchantedSoapItem.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("enchanted_soap")),
                         ItemRegistry.gaseous_bomb = new GaseousBombItem(new GaseousBombItem.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("gaseous_bomb")),
                         ItemRegistry.liquid_rainbow_bucket = new BucketItem(() -> FluidRegistry.liquid_rainbow, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName("liquid_rainbow_bucket"),
@@ -156,6 +160,8 @@ public class DruidcraftRegistry {
                         ItemRegistry.darkwood_button = new BlockItem(BlockRegistry.darkwood_button, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_button.getRegistryName()),
                         ItemRegistry.darkwood_trapdoor = new BlockItem(BlockRegistry.darkwood_trapdoor, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_trapdoor.getRegistryName()),
                         ItemRegistry.darkwood_door = new BlockItem(BlockRegistry.darkwood_door, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.darkwood_door.getRegistryName()),
+                        ItemRegistry.darkwood_boat = new CustomBoatItem(CustomBoatEntity.CustomType.DARKWOOD, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("darkwood_boat")),
+                        ItemRegistry.darkwood_sign = new SignItem(new Item.Properties().maxStackSize(16).group(DRUIDCRAFT), BlockRegistry.darkwood_sign, BlockRegistry.darkwood_wall_sign).setRegistryName(BlockRegistry.darkwood_sign.getRegistryName()),
 
                         ItemRegistry.elder_log = new BlockItem(BlockRegistry.elder_log, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.elder_log.getRegistryName()),
                         ItemRegistry.stripped_elder_log = new BlockItem(BlockRegistry.stripped_elder_log, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.stripped_elder_log.getRegistryName()),
@@ -243,8 +249,10 @@ public class DruidcraftRegistry {
                         ItemRegistry.green_soulfire = new BlockItem(BlockRegistry.green_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.green_soulfire.getRegistryName()),
                         ItemRegistry.red_soulfire = new BlockItem(BlockRegistry.red_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.red_soulfire.getRegistryName()),
                         ItemRegistry.black_soulfire = new BlockItem(BlockRegistry.black_soulfire, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.black_soulfire.getRegistryName()),
-
                         ItemRegistry.woodcutter = new BlockItem(BlockRegistry.woodcutter, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.woodcutter.getRegistryName()),
+
+                        // TODO: Make sure all the following below is 100% and working before final release.
+
                         ItemRegistry.hellkiln = new HellkilnItem(BlockRegistry.hellkiln, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.hellkiln.getRegistryName()),
                         ItemRegistry.hellkiln_igniter = new BlockItem(BlockRegistry.hellkiln_igniter, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.hellkiln_igniter.getRegistryName()),
                         ItemRegistry.infernal_lantern = new InfernalLanternItem(BlockRegistry.infernal_flare, new Item.Properties().group(DRUIDCRAFT_WIP).maxStackSize(1)).setRegistryName(location("infernal_lantern")),
@@ -261,10 +269,8 @@ public class DruidcraftRegistry {
                         ItemRegistry.brambleroot = new BlockItem(BlockRegistry.brambleroot, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.brambleroot.getRegistryName()),
                         ItemRegistry.overgrown_roots = new BlockItem(BlockRegistry.overgrown_roots, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.overgrown_roots.getRegistryName()),
                         ItemRegistry.tall_overgrown_roots = new BlockItem(BlockRegistry.tall_overgrown_roots, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.tall_overgrown_roots.getRegistryName()),
-
                         ItemRegistry.duragem_ore = new BlockItem(BlockRegistry.duragem_ore, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.duragem_ore.getRegistryName()),
                         ItemRegistry.duragem_block = new BlockItem(BlockRegistry.duragem_block, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.duragem_block.getRegistryName()),
-
                         ItemRegistry.snow_bricks = new BlockItem(BlockRegistry.snow_bricks, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.snow_bricks.getRegistryName()),
                         ItemRegistry.snow_tiles = new BlockItem(BlockRegistry.snow_tiles, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.snow_tiles.getRegistryName()),
                         ItemRegistry.ice_bricks = new BlockItem(BlockRegistry.ice_bricks, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.ice_bricks.getRegistryName()),
@@ -278,7 +284,6 @@ public class DruidcraftRegistry {
                         ItemRegistry.sulfur_cloud_block = new BlockItem(BlockRegistry.sulfur_cloud_block, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.sulfur_cloud_block.getRegistryName()),
                         ItemRegistry.skyberry_bush = new BlockItem(BlockRegistry.skyberry_bush, new Item.Properties()).setRegistryName(BlockRegistry.skyberry_bush.getRegistryName()),
                         ItemRegistry.live_skyberry_bush = new BlockItem(BlockRegistry.live_skyberry_bush, new Item.Properties()).setRegistryName(BlockRegistry.live_skyberry_bush.getRegistryName())
-
                 );
 
         EntityRegistry.registerEntitySpawnEggs(itemRegistryEvent);
@@ -334,7 +339,9 @@ public class DruidcraftRegistry {
                         EntityRegistry.beetle_entity,
                         EntityRegistry.lunar_moth_entity,
                         EntityRegistry.duragem_protection_entity,
-                        EntityRegistry.gaseous_bomb_entity
+                        EntityRegistry.fiery_glass_glow_entity,
+                        EntityRegistry.gaseous_bomb_entity,
+                        EntityRegistry.boat_entity
                 );
 
         EntityRegistry.registerEntityAttributes();
@@ -406,7 +413,8 @@ public class DruidcraftRegistry {
                         TileEntityRegistry.hellkiln = TileEntityRegistry.register("hellkiln", TileEntityType.Builder.create(HellkilnTileEntity::new, BlockRegistry.hellkiln)),
                         TileEntityRegistry.hellkiln_igniter = TileEntityRegistry.register("hellkiln_igniter", TileEntityType.Builder.create(HellkilnIgniterTileEntity::new, BlockRegistry.hellkiln_igniter)),
                         TileEntityRegistry.infernal_flare = TileEntityRegistry.register("infernal_flare", TileEntityType.Builder.create(InfernalFlareTileEntity::new, BlockRegistry.infernal_flare)),
-                        TileEntityRegistry.flare_torch = TileEntityRegistry.register("flare_torch", TileEntityType.Builder.create(FlareTorchTileEntity::new, BlockRegistry.flare_torch, BlockRegistry.wall_flare_torch))
+                        TileEntityRegistry.flare_torch = TileEntityRegistry.register("flare_torch", TileEntityType.Builder.create(FlareTorchTileEntity::new, BlockRegistry.flare_torch, BlockRegistry.wall_flare_torch)),
+                        TileEntityRegistry.custom_sign = TileEntityRegistry.register("custom_sign", TileEntityType.Builder.create(CustomSignTileEntity::new, BlockRegistry.darkwood_sign, BlockRegistry.darkwood_wall_sign))
                 );
 
         LOGGER.info("Tile Entities registered.");
@@ -422,8 +430,8 @@ public class DruidcraftRegistry {
             event.addSprite(ItemTileEntityRenderer.chitin_shield_tex);
             event.addSprite(ItemTileEntityRenderer.moonstone_shield_tex);
             event.addSprite(SmallBeamTileEntityRenderer.texture);
-            LOGGER.info("Textures stitched.");
         }
+        LOGGER.info("Textures stitched.");
     }
 
     public static ResourceLocation location(String name)

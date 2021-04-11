@@ -1,7 +1,6 @@
 package com.vulp.druidcraft.client.renders;
 
 import com.vulp.druidcraft.Druidcraft;
-import com.vulp.druidcraft.DruidcraftRegistry;
 import com.vulp.druidcraft.client.models.BeetleEntityModel;
 import com.vulp.druidcraft.entities.BeetleEntity;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -13,11 +12,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 @OnlyIn(Dist.CLIENT)
-public class BeetleEntityRender extends MobRenderer<BeetleEntity, BeetleEntityModel<BeetleEntity>>
+public class BeetleEntityRenderer extends MobRenderer<BeetleEntity, BeetleEntityModel<BeetleEntity>>
 {
     private static final ResourceLocation BEETLE = new ResourceLocation(Druidcraft.MODID, "textures/entity/beetle/beetle.png");
 
-    public BeetleEntityRender(EntityRendererManager manager)
+    public BeetleEntityRenderer(EntityRendererManager manager)
     {
         super(manager, new BeetleEntityModel<>(), 1.2f);
     }
@@ -32,7 +31,7 @@ public class BeetleEntityRender extends MobRenderer<BeetleEntity, BeetleEntityMo
         @Override
         public EntityRenderer<? super BeetleEntity> createRenderFor(EntityRendererManager manager)
         {
-            return new BeetleEntityRender(manager);
+            return new BeetleEntityRenderer(manager);
         }
     }
 }

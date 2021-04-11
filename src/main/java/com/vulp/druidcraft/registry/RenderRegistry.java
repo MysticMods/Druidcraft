@@ -13,8 +13,10 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.client.renderer.entity.PlayerRenderer;
+import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
+import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
@@ -32,14 +34,22 @@ import java.util.Map;
 public class RenderRegistry
 {
     public static void registryRenders(FMLClientSetupEvent event) {
+
+        final Minecraft minecraft = Minecraft.getInstance();
+
         // ENTITIES
-        RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.dreadfish_entity, new DreadfishEntityRender.RenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.beetle_entity, new BeetleEntityRender.RenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.lunar_moth_entity, new LunarMothEntityRender.RenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.dreadfish_entity, new DreadfishEntityRenderer.RenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.beetle_entity, new BeetleEntityRenderer.RenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.lunar_moth_entity, new LunarMothEntityRenderer.RenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.duragem_protection_entity, new DuragemProtectionEntityRenderer.RenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.fiery_glass_glow_entity, new FieryGlassGlowEntityRenderer.RenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.gaseous_bomb_entity, manager -> new SpriteRenderer<>(minecraft.getRenderManager(), minecraft.getItemRenderer()));
+        RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.boat_entity, new CustomBoatEntityRenderer.RenderFactory());
+
 
         // BLOCK TILE ENTITIES
         ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.small_beam, SmallBeamTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.custom_sign, SignTileEntityRenderer::new);
 
         event.enqueueWork(() -> {
             // ITEM TILE ENTITIES

@@ -128,9 +128,9 @@ public class HellkilnTileEntity extends LockableTileEntity implements ITickableT
         this.cookTime = nbt.getInt("CookTime");
         this.cookTimeTotal = nbt.getInt("CookTimeTotal");
         int[] fuelArray = nbt.getIntArray("IgniterFuelCounts");
-        this.igniterFuelCountLeft = fuelArray[0];
-        this.igniterFuelCountBack = fuelArray[1];
-        this.igniterFuelCountRight = fuelArray[2];
+        this.igniterFuelCountLeft = fuelArray[1];
+        this.igniterFuelCountBack = fuelArray[2];
+        this.igniterFuelCountRight = fuelArray[3];
     }
 
     public CompoundNBT write(CompoundNBT compound) {

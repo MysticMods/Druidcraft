@@ -7,11 +7,11 @@ import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class DuragemProtectionEntityModel extends EntityModel<DuragemProtectionEntity> {
+public class BlockInhabitingEntityModel extends EntityModel<DuragemProtectionEntity> {
 
     private final ModelRenderer main;
 
-    public DuragemProtectionEntityModel() {
+    public BlockInhabitingEntityModel() {
         textureWidth = 64;
         textureHeight = 32;
 

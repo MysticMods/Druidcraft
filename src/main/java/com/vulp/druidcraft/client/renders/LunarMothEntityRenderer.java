@@ -3,13 +3,10 @@ package com.vulp.druidcraft.client.renders;
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.client.models.LunarMothEntityModel;
 import com.vulp.druidcraft.entities.LunarMothEntity;
-import net.minecraft.block.HopperBlock;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.inventory.container.HopperContainer;
-import net.minecraft.tileentity.HopperTileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -18,7 +15,7 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 import javax.annotation.Nullable;
 
 @OnlyIn(Dist.CLIENT)
-public class LunarMothEntityRender extends MobRenderer<LunarMothEntity, LunarMothEntityModel<LunarMothEntity>> {
+public class LunarMothEntityRenderer extends MobRenderer<LunarMothEntity, LunarMothEntityModel<LunarMothEntity>> {
 
     public static final ResourceLocation MOTH_TURQUOISE = new ResourceLocation(Druidcraft.MODID, "textures/entity/lunar_moth/lunar_moth_turquoise.png");
     public static final ResourceLocation MOTH_WHITE = new ResourceLocation(Druidcraft.MODID, "textures/entity/lunar_moth/lunar_moth_white.png");
@@ -34,7 +31,7 @@ public class LunarMothEntityRender extends MobRenderer<LunarMothEntity, LunarMot
     private static final RenderType RENDER_TYPE_PINK = RenderTypeDictionary.getEntityGlow(MOTH_PINK);
     private static final RenderType RENDER_TYPE_YELLOW = RenderTypeDictionary.getEntityGlow(MOTH_YELLOW);
 
-    public LunarMothEntityRender(EntityRendererManager manager) {
+    public LunarMothEntityRenderer(EntityRendererManager manager) {
         super(manager, new LunarMothEntityModel<>(), 0.2f);
     }
 
@@ -87,7 +84,7 @@ public class LunarMothEntityRender extends MobRenderer<LunarMothEntity, LunarMot
         @Override
         public EntityRenderer<? super LunarMothEntity> createRenderFor(EntityRendererManager manager)
         {
-            return new LunarMothEntityRender(manager);
+            return new LunarMothEntityRenderer(manager);
         }
     }
 }

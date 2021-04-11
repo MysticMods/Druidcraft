@@ -33,7 +33,9 @@ public class EntityRegistry
     public static final EntityType<BeetleEntity> beetle_entity = createEntity(BeetleEntity::new, EntityClassification.MONSTER, "beetle", 1.5f, 1.5f);
     public static final EntityType<LunarMothEntity> lunar_moth_entity = createEntity(LunarMothEntity::new, EntityClassification.CREATURE, "lunar_moth", 0.5f, 0.5f);
     public static final EntityType<DuragemProtectionEntity> duragem_protection_entity = createEntity(DuragemProtectionEntity::new, EntityClassification.MISC, "duragem_protection", 1.0F, 1.0F);
+    public static final EntityType<FieryGlassGlowEntity> fiery_glass_glow_entity = createEntity(FieryGlassGlowEntity::new, EntityClassification.MISC, "fiery_glass_glow", 1.0F, 1.0F);
     public static final EntityType<GaseousBombEntity> gaseous_bomb_entity = createEntity(GaseousBombEntity::new, EntityClassification.MISC, "gaseous_bomb", 0.35F, 0.35F);
+    public static final EntityType<CustomBoatEntity> boat_entity = createEntity(CustomBoatEntity::new, EntityClassification.MISC, "custom_boat", 1.375F, 0.5625F);
 
     private static <T extends Entity> EntityType<T> createEntity(EntityType.IFactory<T> factory, EntityClassification entityClassification, String name, float width, float height) {
         return createEntity(factory, entityClassification, name, width, height, -1, null);
