@@ -16,9 +16,9 @@
   "item.druidcraft.gold_sickle": "Faucille en or",
   "item.druidcraft.diamond_sickle": "Faucille en diamant",
   "item.druidcraft.dreadfish_spawn_egg": "Oeuf de Dreadfish",
-  "item.druidcraft.beetle_spawn_egg": "Oeuf de scarab\u00C9e",
+  "item.druidcraft.beetle_spawn_egg": "Oeuf de scarab\u00E9e",
   "item.druidcraft.lunar_moth_spawn_egg": "Oeuf de papillon lunaire",
-  "item.druidcraft.bone_sword": "\u00C9p\u00E9e en os",
+  "item.druidcraft.bone_sword": "\u00E9p\u00E9e en os",
   "item.druidcraft.bone_shovel": "Pelle en os",
   "item.druidcraft.bone_pickaxe": "Pioche en os",
   "item.druidcraft.bone_axe": "Hache en os",
@@ -30,7 +30,7 @@
   "item.druidcraft.bone_boots": "Bottes en os",
   "item.druidcraft.bone_shield": "Bouclier en os",
   "item.druidcraft.knife": "Couteau",
-  "item.druidcraft.knife.description1": "Utilis\u00C9 pour configurer les cordes. (WIP)", 
+  "item.druidcraft.knife.description1": "Utilis\u00E9 pour configurer les cordes. (WIP)",
   "item.druidcraft.turquoise_lunar_moth_egg": "Oeuf de papillon lunaire turquoise",
   "item.druidcraft.white_lunar_moth_egg": "Oeuf de papillon lunaire blanc",
   "item.druidcraft.lime_lunar_moth_egg": "Oeuf de papillon lunaire vert",
@@ -44,7 +44,7 @@
   "item.druidcraft.apple_elderberry_crumble": "Crumble aux pommes et au sureau",
   "item.druidcraft.elderflower_cordial": "Cordial de sureau", 
 
-  "item.druidcraft.moonstone_sword": "\u00C9p\u00E9e en pierre de lune",
+  "item.druidcraft.moonstone_sword": "\u00E9p\u00E9e en pierre de lune",
   "item.druidcraft.moonstone_shovel": "Pelle en pierre de lune",
   "item.druidcraft.moonstone_pickaxe": "Pioche en pierre de lune",
   "item.druidcraft.moonstone_axe": "Hache en pierre de lune",
@@ -63,15 +63,15 @@
   "item.druidcraft.chitin_shield": "Bouclier en chitine",
 
   "item.druidcraft.travel_pack": "Sac du voyageur",
-  "item.druidcraft.travel_pack.description1": "Un petit sac \u00E0 dos avec des slots assez utile.", //ACC
-  "item.druidcraft.travel_pack.button1": "D\u00C9rouler le sac de couchage",
+  "item.druidcraft.travel_pack.description1": "Un petit sac \u00E0 dos avec des slots assez utile.",
+  "item.druidcraft.travel_pack.button1": "D\u00E9rouler le sac de couchage",
   "item.druidcraft.travel_pack.button2": "(NYI)",
   "item.druidcraft.travel_pack.button3": "(NYI)",
   "item.druidcraft.travel_pack.button4": "(NYI)",
   "item.druidcraft.crushed_fiery_glass": "Poudre de verre ardent",
   "item.druidcraft.brightstone": "Pierre brillante",
-  "item.druidcraft.tempered_fiery_glass": "Verre ardent temp\u00C9r\u00C9",
-  "item.druidcraft.blazing_steel": "M\u00C9tal ardent", 
+  "item.druidcraft.tempered_fiery_glass": "Verre ardent temp\u00E9r\u00E9",
+  "item.druidcraft.blazing_steel": "M\u00E9tal ardent",
   "item.druidcraft.heart_of_blaze": "Coeur de blaze",
 
   "block.druidcraft.amber_ore": "Minerai d'ambre",
@@ -145,14 +145,14 @@
 
 
   "block.druidcraft.wet_mud_bricks": "Brique de boue humide",
-  "block.druidcraft.wet_mud_bricks.description1": "§9Ne peut \u00EAtre uniquement fabriqu\u00E9 en \u00E9tant dans  §b§ll'eau§r§9.",
+  "block.druidcraft.wet_mud_bricks.description1": "ï¿½9Ne peut \u00EAtre uniquement fabriqu\u00E9 en \u00E9tant dans  ï¿½bï¿½ll'eauï¿½rï¿½9.",
   "block.druidcraft.dry_mud_bricks": "Brique de boue s\u00E9ch\u00E9e",
 
   "block.druidcraft.dry_mud_brick_slab": "Dalle de brique de boue s\u00E9ch\u00E9e",
   "block.druidcraft.dry_mud_brick_stairs": "Escalier de brique de boue s\u00E9ch\u00E9e",
   "block.druidcraft.dry_mud_brick_wall": "Mur de brique de boue s\u00E9ch\u00E9e",
   "block.druidcraft.fiery_torch": "Torche ardente",
-  "block.druidcraft.fiery_torch.description1": "§6L\u00E9g\u00E8rement plus brillant qu'une torche normale. R\u00E9siste \u00E9galement \u00E0 l'eau!",
+  "block.druidcraft.fiery_torch.description1": "ï¿½6L\u00E9g\u00E8rement plus brillant qu'une torche normale. R\u00E9siste \u00E9galement \u00E0 l'eau!",
   "block.druidcraft.rope": "Corde",
 
   "block.druidcraft.elder_log": "B\u00FBche de sureau", 
@@ -173,9 +173,9 @@
 
   "block.druidcraft.crate": "Caisse",
   "block.druidcraft.crate.description1": "Une caisse multi-bloc! Pour faciliter le placement, il est impossible d'ouvrir une caisse avec cet objet en main'.",
-  "block.druidcraft.ceramic_lantern": "Lanterne en c\u00C9ramique",
+  "block.druidcraft.ceramic_lantern": "Lanterne en c\u00E9ramique",
   "block.druidcraft.growth_lamp": "Lanterne de croissance",
-  "block.druidcraft.growth_lamp.description1": "Acc\u00C9lère la croissance des plantes et des b\u00C9b\u00C9s animaux dans un rayon de 5x5 blocs!", //ACC
+  "block.druidcraft.growth_lamp.description1": "Acc\u00E9l\u00E8re la croissance des plantes et des b\u00E9b\u00E9s animaux dans un rayon de 5x5 blocs!",
   "block.druidcraft.lavender": "Lavande",
   "block.druidcraft.potted_lavender": "Potted Lavender",
   "block.druidcraft.potted_darkwood_sapling": "Potted Darkwood Sapling",
@@ -196,15 +196,15 @@
   "block.druidcraft.magenta_bedroll": "Sac de couchage magenta",
   "block.druidcraft.orange_bedroll": "Sac de couchage orange",
   "block.druidcraft.white_bedroll": "Sac de couchage blanc",
-  "block.druidcraft.bedroll.description1": "Une mani\u00E8re de dormir sans d\u00C9finir son point de r\u00C9apparition!",
-  "block.druidcraft.bedroll.fail.monsters": "Vous ne devriez pas dormir maintenant, il y a des monstres tout près d'ici'.",
+  "block.druidcraft.bedroll.description1": "Une mani\u00E8re de dormir sans d\u00E9finir son point de r\u00E9apparition!",
+  "block.druidcraft.bedroll.fail.monsters": "Vous ne devriez pas dormir maintenant, il y a des monstres tout prï¿½s d'ici'.",
   "block.druidcraft.bedroll.fail.dimension": "Vous ne pouvez pas dormir dans cette dimension.",
   "block.druidcraft.bedroll.fail.time": "Vous pouvez seulement dormir la nuit ou pendant un orage.",
   "block.druidcraft.bedroll.fail.placement": "Impossible de placer le sac de couchage.",
   "block.druidcraft.woodcutter": "Tailleur de bois",
-  "block.druidcraft.debug_block": "Bloc de d\u00C9bogage",
-  "block.druidcraft.debug_block.description1": "Bloc de d\u00C9veloppeur, peut causer quelques probl\u00E8mes sur votre jeu.", 
-  "block.druidcraft.elder_leaf_layer": "Fruit de sureau en décomposition",
+  "block.druidcraft.debug_block": "Bloc de d\u00E9bogage",
+  "block.druidcraft.debug_block.description1": "Bloc de d\u00E9veloppeur, peut causer quelques probl\u00E8mes sur votre jeu.",
+  "block.druidcraft.elder_leaf_layer": "Fruit de sureau en d\u00E9composition",
 
 
   "block.druidcraft.turquoise_lunar_moth_lantern": "Lanterne de papillon lunaire turquoise",
@@ -214,30 +214,30 @@
   "block.druidcraft.white_lunar_moth_lantern": "Lanterne de papillon lunaire blanc",
   "block.druidcraft.pink_lunar_moth_lantern": "Lanterne de papillon lunaire rose",
 
-  "block.druidcraft.lunar_moth_lantern.description1": "Crouch while placing to put down the lantern.",
+  "block.druidcraft.lunar_moth_lantern.description1": "Accroupissez-vous pour placer une lanterne.",
   "block.druidcraft.brightstone_ore": "Minerai de pierre brilliante", 
   "block.druidcraft.nether_fiery_glass_ore": "Minerai de verre ardent du Nether",
-  "block.druidcraft.hellkiln": "Forge de l'enfer'",
-  "block.druidcraft.hellkiln_igniter": "Hellkiln Igniter",
+  "block.druidcraft.hellkiln": "Forge infernale",
+  "block.druidcraft.hellkiln_igniter": "Allumeur de forge infernal",
 
   "entity.druidcraft.dreadfish": "Dreadfish",
-  "entity.druidcraft.beetle": "Scarab\u00C9e",
+  "entity.druidcraft.beetle": "Scarab\u00E9e",
   "entity.druidcraft.lunar_moth": "Papillon lunaire",
 
   "container.druidcraft.crate": "Petite caisse",
   "container.druidcraft.crate_double": "Caisse moyenne",
   "container.druidcraft.crate_quad": "Grande caisse",
-  "container.druidcraft.crate_octo": "\u00C9norme caisse", 
-  "container.druidcraft.woodcutter": "Woodcutter",
-  "container.druidcraft.hellkiln": "Hellkiln",
-  "container.druidcraft.hellkiln_igniter": "Hellkiln Igniter",
+  "container.druidcraft.crate_octo": "\u00E9norme caisse",
+  "container.druidcraft.woodcutter": "Tailleur de bois",
+  "container.druidcraft.hellkiln": "Forge infernale",
+  "container.druidcraft.hellkiln_igniter": "Allumeur de forge infernal",
 
   "biome.druidcraft.darkwood_forest": "For\u00EAt de bois sombre",
 
   "subtitles.druidcraft.item.bottle.fill": "Bouteille remplie",
   "subtitles.druidcraft.block.crate.open": "Caisse ouverte",
-  "subtitles.druidcraft.block.crate.close": "Caisse ferm\u00C9e", 
-  "subtitles.druidcraft.ui.woodcutter.take_result": "Tailleur de bois utilis\u00C9", 
+  "subtitles.druidcraft.block.crate.close": "Caisse ferm\u00E9e",
+  "subtitles.druidcraft.ui.woodcutter.take_result": "Tailleur de bois utilis\u00E9",
 
   "itemGroup.druidcraft": "Druidcraft",
   "itemGroup.druidcraft_wip": "Druidcraft WIP - Pas touche!",
@@ -246,12 +246,12 @@
   "advancements.druidcraft.root.description": "Ramasse des hautes herbes pour r\u00E9colter des graines de chanvre",
   "advancements.druidcraft.grow_hemp.title": "C'est industriel, je vous le promets!",
   "advancements.druidcraft.grow_hemp.description": "Plante un peu de chanvre et r\u00E9colte-le",
-  "advancements.druidcraft.bone_armor.title": "Crâne \u00E9pais",
+  "advancements.druidcraft.bone_armor.title": "Crï¿½ne \u00E9pais",
   "advancements.druidcraft.bone_armor.description": "\u00E9quipe-toi d'un casque en os",
   "advancements.druidcraft.make_mud_bricks.title": "Plonge dans la boue",
   "advancements.druidcraft.make_mud_bricks.description": "Exp\u00E9rimente la fabrication de briques de boue",
-  "advancements.druidcraft.fiery_torch.title": "Torches am\u00C9lior\u00C9es!",
-  "advancements.druidcraft.fiery_torch.description": "Obtiens des torches am\u00C9lior\u00C9es", 
+  "advancements.druidcraft.fiery_torch.title": "Torches am\u00E9lior\u00E9es!",
+  "advancements.druidcraft.fiery_torch.description": "Obtiens des torches am\u00E9lior\u00E9es",
   "advancements.druidcraft.darkwood_forest.title": "Temps sombres",
   "advancements.druidcraft.darkwood_forest.description": "Aventure-toi dans une for\u00EAt sombre",
   "advancements.druidcraft.place_rope.title": "Dans les cordes",
@@ -259,5 +259,5 @@
   "advancements.druidcraft.collector.title": "Collecteur",
   "advancements.druidcraft.collector.description": "Obtiens assez de minerais pour en faire un bloc.",
 
-  "block.druidcraft.old_crate.update": "Ce bloc a \u00C9t\u00C9 mis \u00E0 jour. Casse-le pour r\u00C9cup\u00C9rer la version \u00E0 jour." 
+  "block.druidcraft.old_crate.update": "Ce bloc a \u00E9t\u00E9 mis \u00E0 jour. Casse-le pour r\u00E9cup\u00E9rer la version \u00E0 jour."
 }
