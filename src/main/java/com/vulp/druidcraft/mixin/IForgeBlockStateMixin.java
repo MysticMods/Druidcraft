@@ -1,9 +1,12 @@
+/*
 package com.vulp.druidcraft.mixin;
 
+import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.entities.FieryGlassGlowEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.chunk.ChunkRenderCache;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -27,20 +30,32 @@ import java.util.Optional;
 @Mixin(IForgeBlockState.class)
 public interface IForgeBlockStateMixin {
     // @Inject(method = "getLightValue", at = @At("RETURN"), cancellable = true, remap = false)
-    /**
+    */
+/**
      * @author VulpTheHorseDog
-     */
+     *//*
+
     @Overwrite(remap = false)
     default int getLightValue(IBlockReader reader, BlockPos pos) {
-        if (reader instanceof ChunkRenderCache) {
-            if (((ChunkRenderCache) reader).world.getEntitiesWithinAABB(FieryGlassGlowEntity.class, new AxisAlignedBB(pos.add(1.0D, 1.0D, 1.0D), pos)).size() > 0) {
+        if (!(reader instanceof ChunkRenderCache)) {
+            final World[] properWorld = new World[1];
+            ClientPlayerEntity player = Minecraft.getInstance().player;
+            if (player != null && player.getServer() != null) {
+                Iterable<ServerWorld> worlds = player.getServer().getWorlds();
+                worlds.forEach((world) -> {
+                    if (world.getChunk(pos) == reader) {
+                        properWorld[0] = world;
+                        Druidcraft.LOGGER.debug("YES!");
+                    }
+                });
+            }
+            if (properWorld[0].getEntitiesWithinAABB(FieryGlassGlowEntity.class, new AxisAlignedBB(pos.add(1.0D, 1.0D, 1.0D), pos)).size() > 0) {
                 return 15;
             }
-        } else if (reader.getBlockState(pos).getBlock() == Blocks.BONE_BLOCK) {
-            return 15;
         }
         return getBlockState().getBlock().getLightValue(getBlockState(), reader, pos);
-        /*} else if (reader instanceof ChunkPrimer) {
+        */
+/*} else if (reader instanceof ChunkPrimer) {
             List<CompoundNBT> entities = ((ChunkPrimer) reader).getEntities();
             for (CompoundNBT nbt : entities) {
                 World world = (World) ((ChunkPrimer) reader).getWorldForge();
@@ -67,7 +82,8 @@ public interface IForgeBlockStateMixin {
                 }
             }
         }
-        reader.getMaxLightLevel();*/
+        reader.getMaxLightLevel();*//*
+
     }
 
 
@@ -76,3 +92,4 @@ public interface IForgeBlockStateMixin {
     BlockState getBlockState();
 
 }
+*/

@@ -64,7 +64,7 @@ public class BlockRegistry {
   public static Block darkwood_chest = registerChest("darkwood_chest", new CustomChestBlock(CustomChestBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.5F).sound(SoundType.WOOD), () -> TileEntityRegistry.custom_chest));
   public static Block trapped_darkwood_chest = registerChest("trapped_darkwood_chest", new CustomTrappedChestBlock(CustomTrappedChestBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.5F).sound(SoundType.WOOD), () -> TileEntityRegistry.custom_trapped_chest));
   public static Block darkwood_bookshelf = register("darkwood_bookshelf", new BookshelfBlock(1, Block.Properties.create(Material.WOOD).hardnessAndResistance(1.5F).harvestTool(ToolType.AXE).sound(SoundType.WOOD)));
-  public static Block darkwood_ladder = register("darkwood_ladder", new LadderBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.4F).notSolid().harvestTool(ToolType.AXE).sound(SoundType.LADDER)));
+  public static Block darkwood_ladder = register("darkwood_ladder", new CustomLadderBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.4F).notSolid().harvestTool(ToolType.AXE).sound(SoundType.LADDER)));
   public static Block darkwood_beehive = register("darkwood_beehive", new BeehiveBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(0.6F).harvestTool(ToolType.AXE).sound(SoundType.WOOD)));
 
   public static Block elder_log = register("elder_log", new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)));
@@ -187,6 +187,7 @@ public class BlockRegistry {
   public static Block brambleroot = register("brambleroot", new BramblerootBlock(1.0F, BramblerootBlock.Properties.create(Material.NETHER_WOOD).sound(SoundType.WOOD).hardnessAndResistance(1.0f).tickRandomly()));
   public static Block overgrown_roots = register("overgrown_roots", new Block(Block.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f)));
   public static Block tall_overgrown_roots = register("tall_overgrown_roots", new Block(Block.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f)));
+  // TODO: Custom block that checks for blocks tagged with glow-air-friendly or deletes. Or something like that.
   public static Block glow_air = register("glow_air", new AirBlock(Block.Properties.create(Material.AIR).doesNotBlockMovement().noDrops().setAir().setLightLevel((light) -> (12))));
 
   public static Block duragem_ore = register("duragem_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(4), 2, 6));
