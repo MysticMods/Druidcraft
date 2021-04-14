@@ -1,5 +1,6 @@
 {
-	"variants": {
-		"": { "model": "druidcraft:block/darkwood_panels" }	
-	}
+    "variants": {
+        "var=false": { "model": "druidcraft:block/darkwood_panels_1" },
+        "var=true": { "model": "druidcraft:block/darkwood_panels_2" }
+    }
 }

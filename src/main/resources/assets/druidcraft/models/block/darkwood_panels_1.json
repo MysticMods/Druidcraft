@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:block/cube_all",
+    "textures": {
+        "all": "druidcraft:block/darkwood_panels_1"
+    }
+}

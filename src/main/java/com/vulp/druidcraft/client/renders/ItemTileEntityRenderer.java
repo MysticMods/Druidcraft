@@ -7,11 +7,15 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.mojang.datafixers.util.Pair;
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.DruidcraftRegistry;
+import com.vulp.druidcraft.blocks.CustomChestBlock;
+import com.vulp.druidcraft.blocks.tileentities.CustomChestTileEntity;
 import com.vulp.druidcraft.client.models.BoneShieldModel;
 import com.vulp.druidcraft.client.models.ChitinShieldModel;
 import com.vulp.druidcraft.client.models.MoonstoneShieldModel;
 import com.vulp.druidcraft.items.BasicShieldItem;
 import com.vulp.druidcraft.registry.ItemRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
@@ -27,9 +31,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.tileentity.BannerPattern;
-import net.minecraft.tileentity.BannerTileEntity;
-import net.minecraft.tileentity.SkullTileEntity;
+import net.minecraft.tileentity.*;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -49,6 +51,8 @@ public class ItemTileEntityRenderer extends ItemStackTileEntityRenderer {
     private final ChitinShieldModel chitin_shield = new ChitinShieldModel();
     private final MoonstoneShieldModel moonstone_shield = new MoonstoneShieldModel();
 
+    private final CustomChestTileEntity chestTile = new CustomChestTileEntity();
+
     public static final ResourceLocation bone_shield_tex = DruidcraftRegistry.location("entity/shields/bone");
     public static final ResourceLocation chitin_shield_tex = DruidcraftRegistry.location("entity/shields/chitin");
     public static final ResourceLocation moonstone_shield_tex = DruidcraftRegistry.location("entity/shields/moonstone");
@@ -56,6 +60,16 @@ public class ItemTileEntityRenderer extends ItemStackTileEntityRenderer {
     @Override
     public void func_239207_a_(ItemStack stack, ItemCameraTransforms.TransformType p_239207_2_, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
         Item item = stack.getItem();
+        if (item instanceof BlockItem) {
+            Block block = ((BlockItem) item).getBlock();
+            TileEntity tileentity;
+            if (block == Blocks.CHEST) {
+                tileentity = this.chestTile;
+            } else {
+                return;
+            }
+            TileEntityRendererDispatcher.instance.renderItem(tileentity, matrixStack, buffer, combinedLight, combinedOverlay);
+        }
         if (item instanceof BasicShieldItem) {
             matrixStack.push();
             matrixStack.scale(1.0F, -1.0F, -1.0F);
@@ -74,6 +88,7 @@ public class ItemTileEntityRenderer extends ItemStackTileEntityRenderer {
             }
             matrixStack.pop();
         }
+
     }
 
 }

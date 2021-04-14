@@ -1,5 +1,7 @@
 package com.vulp.druidcraft;
 
+import com.google.common.collect.ImmutableList;
+import com.mojang.datafixers.util.Pair;
 import com.vulp.druidcraft.config.Configuration;
 import com.vulp.druidcraft.events.BiomeLoadEventHandler;
 import com.vulp.druidcraft.events.EventHandler;
@@ -8,6 +10,9 @@ import com.vulp.druidcraft.registry.*;
 import com.vulp.druidcraft.world.biomes.DruidcraftNetherBiomeProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biomes;
+import net.minecraft.world.biome.provider.NetherBiomeProvider;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -22,6 +27,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.Optional;
 
 @Mod("druidcraft")
 public class Druidcraft {
@@ -48,10 +55,25 @@ public class Druidcraft {
         PacketHandler.init();
 
         event.enqueueWork(() -> {
-                // Registry.register(Registry.BIOME_SOURCE_KEY, new ResourceLocation(MODID, "druidcraftnether"), DruidcraftNetherBiomeProvider.DRUIDCRAFT_NETHER_CODEC);
-                BiomeRegistry.registerBiomes();
-                VanillaIntegrationRegistry.setup();
+            // Registry.register(Registry.BIOME_PROVIDER_CODEC, new ResourceLocation(MODID, "druidcraft"), DruidcraftNetherBiomeProvider.CODEC);
+            NetherBiomeProvider.Preset.DEFAULT_NETHER_PROVIDER_PRESET = new NetherBiomeProvider.Preset(new ResourceLocation("nether"), (preset, lookupRegistry, seed) -> {
+                return new NetherBiomeProvider(seed, ImmutableList.of(Pair.of(new Biome.Attributes(0.0F, 0.0F, 0.0F, 0.0F, 0.0F), () -> {
+                    return lookupRegistry.getOrThrow(Biomes.NETHER_WASTES);
+                }), Pair.of(new Biome.Attributes(0.0F, -0.5F, 0.0F, 0.0F, 0.0F), () -> {
+                    return lookupRegistry.getOrThrow(Biomes.SOUL_SAND_VALLEY);
+                }), Pair.of(new Biome.Attributes(0.4F, 0.0F, 0.0F, 0.0F, 0.0F), () -> {
+                    return lookupRegistry.getOrThrow(Biomes.CRIMSON_FOREST);
+                }), Pair.of(new Biome.Attributes(0.0F, 0.5F, 0.0F, 0.0F, 0.375F), () -> {
+                    return lookupRegistry.getOrThrow(Biomes.WARPED_FOREST);
+                }), Pair.of(new Biome.Attributes(-0.5F, 0.0F, 0.0F, 0.0F, 0.175F), () -> {
+                    return lookupRegistry.getOrThrow(Biomes.BASALT_DELTAS);
+                }), Pair.of(new Biome.Attributes(0.4F, 0.5F, 0.0F, 0.0F, 0.0F), () -> {
+                    return lookupRegistry.getOrThrow(BiomeRegistry.BiomeKeys.fervid_jungle);
+                })), Optional.of(Pair.of(lookupRegistry, preset)));
             });
+            BiomeRegistry.registerBiomes();
+            VanillaIntegrationRegistry.setup();
+        });
 
         // Deferred to static methods
         /*MinecraftForge.EVENT_BUS.register(new EventHandler());

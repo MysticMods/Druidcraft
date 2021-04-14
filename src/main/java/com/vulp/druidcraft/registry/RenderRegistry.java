@@ -81,6 +81,7 @@ public class RenderRegistry
             RenderTypeLookup.setRenderLayer(BlockRegistry.darkwood_leaves, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.darkwood_sapling, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.darkwood_trapdoor, RenderType.getCutout());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.darkwood_ladder, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.elder_door, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.elder_leaves, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.elder_sapling, RenderType.getCutout());

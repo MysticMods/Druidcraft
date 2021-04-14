@@ -36,11 +36,8 @@ public interface IForgeBlockStateMixin {
             if (((ChunkRenderCache) reader).world.getEntitiesWithinAABB(FieryGlassGlowEntity.class, new AxisAlignedBB(pos.add(1.0D, 1.0D, 1.0D), pos)).size() > 0) {
                 return 15;
             }
-        }
-        else if (reader instanceof ChunkPrimer) {
-            if (reader.getBlockState(pos).getBlock() == Blocks.BONE_BLOCK) {
-                return 15;
-            }
+        } else if (reader.getBlockState(pos).getBlock() == Blocks.BONE_BLOCK) {
+            return 15;
         }
         return getBlockState().getBlock().getLightValue(getBlockState(), reader, pos);
         /*} else if (reader instanceof ChunkPrimer) {

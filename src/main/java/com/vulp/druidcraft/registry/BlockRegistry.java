@@ -63,6 +63,9 @@ public class BlockRegistry {
   public static Block darkwood_wall_sign = register("darkwood_wall_sign", new CustomWallSignBlock(CustomWallSignBlock.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(1.0F).sound(SoundType.WOOD), WoodTypeRegistry.DARKWOOD));
   public static Block darkwood_chest = registerChest("darkwood_chest", new CustomChestBlock(CustomChestBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.5F).sound(SoundType.WOOD), () -> TileEntityRegistry.custom_chest));
   public static Block trapped_darkwood_chest = registerChest("trapped_darkwood_chest", new CustomTrappedChestBlock(CustomTrappedChestBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.5F).sound(SoundType.WOOD), () -> TileEntityRegistry.custom_trapped_chest));
+  public static Block darkwood_bookshelf = register("darkwood_bookshelf", new BookshelfBlock(1, Block.Properties.create(Material.WOOD).hardnessAndResistance(1.5F).harvestTool(ToolType.AXE).sound(SoundType.WOOD)));
+  public static Block darkwood_ladder = register("darkwood_ladder", new LadderBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.4F).notSolid().harvestTool(ToolType.AXE).sound(SoundType.LADDER)));
+  public static Block darkwood_beehive = register("darkwood_beehive", new BeehiveBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(0.6F).harvestTool(ToolType.AXE).sound(SoundType.WOOD)));
 
   public static Block elder_log = register("elder_log", new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)));
   public static Block stripped_elder_log = register("stripped_elder_log", new RotatedPillarBlock(RotatedPillarBlock.Properties.from(elder_log)));
@@ -92,6 +95,7 @@ public class BlockRegistry {
   public static Block acacia_beam = register("acacia_beam", new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)));
   public static Block dark_oak_beam = register("dark_oak_beam", new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)));
   public static Block darkwood_beam = register("darkwood_beam", new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)));
+  public static Block stripped_darkwood_beam = register("stripped_darkwood_beam", new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)));
   public static Block elder_beam = register("elder_beam", new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)));
   public static Block oak_small_beam = register("oak_small_beam", new SmallBeamBlock(SmallBeamBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)));
   public static Block spruce_small_beam = register("spruce_small_beam", new SmallBeamBlock(SmallBeamBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)));
@@ -100,6 +104,7 @@ public class BlockRegistry {
   public static Block acacia_small_beam = register("acacia_small_beam", new SmallBeamBlock(SmallBeamBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)));
   public static Block dark_oak_small_beam = register("dark_oak_small_beam", new SmallBeamBlock(SmallBeamBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)));
   public static Block darkwood_small_beam = register("darkwood_small_beam", new SmallBeamBlock(SmallBeamBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)));
+  public static Block stripped_darkwood_small_beam = register("stripped_darkwood_small_beam", new SmallBeamBlock(SmallBeamBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)));
   public static Block elder_small_beam = register("elder_small_beam", new SmallBeamBlock(SmallBeamBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE)));
   public static Block oak_panels = register("oak_panels", new Block(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f, 3.0f).harvestTool(ToolType.AXE)));
   public static Block spruce_panels = register("spruce_panels", new Block(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f, 3.0f).harvestTool(ToolType.AXE)));
@@ -107,7 +112,7 @@ public class BlockRegistry {
   public static Block jungle_panels = register("jungle_panels", new Block(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f, 3.0f).harvestTool(ToolType.AXE)));
   public static Block acacia_panels = register("acacia_panels", new Block(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f, 3.0f).harvestTool(ToolType.AXE)));
   public static Block dark_oak_panels = register("dark_oak_panels", new Block(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f, 3.0f).harvestTool(ToolType.AXE)));
-  public static Block darkwood_panels = register("darkwood_panels", new Block(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f, 3.0f).harvestTool(ToolType.AXE)));
+  public static Block darkwood_panels = register("darkwood_panels", new PanelBlock(PanelBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f, 3.0f).harvestTool(ToolType.AXE)));
   public static Block elder_panels = register("elder_panels", new Block(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.0f, 3.0f).harvestTool(ToolType.AXE)));
   public static Block dry_mud_bricks = register("dry_mud_bricks", new Block(Block.Properties.create(Material.ROCK).setRequiresTool().sound(SoundType.STONE).hardnessAndResistance(2.0F, 4.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0)));
   public static Block dry_mud_brick_slab = register("dry_mud_brick_slab", new SlabBlock(SlabBlock.Properties.create(Material.ROCK).setRequiresTool().sound(SoundType.STONE).hardnessAndResistance(2.0F, 4.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0)));
