@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "druidcraft:block/tall_overgrown_roots_bottom"
+    },
+    "half=upper": {
+      "model": "druidcraft:block/tall_overgrown_roots_top"
+    }
+  }
+}

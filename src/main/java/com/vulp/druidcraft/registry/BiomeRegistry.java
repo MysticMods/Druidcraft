@@ -21,7 +21,7 @@ public class BiomeRegistry {
     public static class BiomeKeys {
 
         public static final RegistryKey<Biome> darkwood_forest = RegistryKey.getOrCreateKey(Registry.BIOME_KEY, DruidcraftRegistry.location("darkwood_forest"));
-        public static final RegistryKey<Biome> fervid_jungle = RegistryKey.getOrCreateKey(Registry.BIOME_KEY, DruidcraftRegistry.location("fervid_jungle"));
+        public static final RegistryKey<Biome> torrid_jungle = RegistryKey.getOrCreateKey(Registry.BIOME_KEY, DruidcraftRegistry.location("torrid_jungle"));
 
     }
 
@@ -31,11 +31,16 @@ public class BiomeRegistry {
         return biome;
     }
 
+    public static Biome silentRegister(String name, Biome biome) {
+        biome.setRegistryName(DruidcraftRegistry.location(name));
+        return biome;
+    }
+
     @SubscribeEvent
     public static void register (RegistryEvent.Register<Biome> event) {
 
         register("darkwood_forest", BiomeCreation.makeDarkwoodForest());
-        register("fervid_jungle", BiomeCreation.makeFervidJungleBiome());
+        register("torrid_jungle", BiomeCreation.makeTorridJungleBiome());
 
         event.getRegistry().registerAll(BIOMES.toArray(new Biome[0]));
         registerBiomes();
@@ -46,7 +51,7 @@ public class BiomeRegistry {
         BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(BiomeKeys.darkwood_forest, 1));
         BiomeDictionary.addTypes(BiomeKeys.darkwood_forest, BiomeDictionary.Type.CONIFEROUS, BiomeDictionary.Type.OVERWORLD, BiomeDictionary.Type.DENSE, BiomeDictionary.Type.MAGICAL);
 
-        BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(BiomeKeys.fervid_jungle, 10));
-        BiomeDictionary.addTypes(BiomeKeys.fervid_jungle, BiomeDictionary.Type.HOT, BiomeDictionary.Type.JUNGLE, BiomeDictionary.Type.DRY, BiomeDictionary.Type.NETHER);
+        BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(BiomeKeys.torrid_jungle, 10));
+        BiomeDictionary.addTypes(BiomeKeys.torrid_jungle, BiomeDictionary.Type.HOT, BiomeDictionary.Type.JUNGLE, BiomeDictionary.Type.DRY, BiomeDictionary.Type.NETHER);
     }
 }

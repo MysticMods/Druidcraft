@@ -4,6 +4,7 @@ import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.world.config.BlockStateRadiusFeatureConfig;
 import com.vulp.druidcraft.world.config.DummyTreeFeatureConfig;
 import com.vulp.druidcraft.world.features.ElderTreeFeature;
+import com.vulp.druidcraft.world.features.GaseousGrowthFeature;
 import com.vulp.druidcraft.world.features.GiantHeartburnFungusFeature;
 import com.vulp.druidcraft.world.features.RadiusBlockBlobFeature;
 import net.minecraft.util.ResourceLocation;
@@ -22,6 +23,7 @@ public class FeatureRegistry {
     public static Feature<DummyTreeFeatureConfig> elder_tree = register("elder_tree", new ElderTreeFeature(DummyTreeFeatureConfig.CODEC));
     public static Feature<DummyTreeFeatureConfig> giant_heartburn_fungus = register("giant_heartburn_fungus", new GiantHeartburnFungusFeature(DummyTreeFeatureConfig.CODEC));
     public static Feature<BlockStateRadiusFeatureConfig> taiga_rock = register("taiga_rock", new RadiusBlockBlobFeature(BlockStateRadiusFeatureConfig.CODEC));
+    public static Feature<NoFeatureConfig> gaseous_growth = register("gaseous_growth", new GaseousGrowthFeature(NoFeatureConfig.field_236558_a_));
 
     public static <V extends IFeatureConfig> Feature<V> register(String name, Feature<V> feature) {
         ResourceLocation id = new ResourceLocation(Druidcraft.MODID, name);

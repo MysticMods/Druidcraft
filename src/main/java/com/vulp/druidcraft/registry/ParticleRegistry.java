@@ -16,6 +16,7 @@ public class ParticleRegistry {
     public static final BasicParticleType enchanted_bubble = new BasicParticleType(false);
     public static final BasicParticleType flare = new BasicParticleType(false);
     public static final BasicParticleType flare_sparkle = new BasicParticleType(false);
+    public static final BasicParticleType heartburn_spore = new BasicParticleType(false);
 
     @OnlyIn(Dist.CLIENT)
     public static void registerFactories() {

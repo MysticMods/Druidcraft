@@ -6,6 +6,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.NetherrackBlock;
 import net.minecraft.block.NyliumBlock;
 import net.minecraft.pathfinding.PathType;
+import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -21,6 +23,8 @@ public class GaseousGrowthBlock extends HangingBlock {
     public static final VoxelShape SINGLE = Block.makeCuboidShape(5.0F, 0.0F, 5.0F, 11.0F, 16.0F, 11.0F);
     public static final VoxelShape BULB = Block.makeCuboidShape(4.0F, 4.0F, 4.0F, 12.0F, 12.0F, 12.0F);
     public static final VoxelShape BOTTOM = VoxelShapes.or(BULB, Block.makeCuboidShape(5.0F, 12.0F, 5.0F, 11.0F, 16.0F, 11.0F));
+
+    public static final IntegerProperty AGE = BlockStateProperties.AGE_0_25;
 
     public GaseousGrowthBlock(Properties properties) {
         super(properties);

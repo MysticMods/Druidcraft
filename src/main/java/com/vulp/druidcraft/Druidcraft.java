@@ -3,34 +3,24 @@ package com.vulp.druidcraft;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import com.vulp.druidcraft.config.Configuration;
-import com.vulp.druidcraft.events.BiomeLoadEventHandler;
-import com.vulp.druidcraft.events.EventHandler;
 import com.vulp.druidcraft.network.PacketHandler;
 import com.vulp.druidcraft.registry.*;
-import com.vulp.druidcraft.world.biomes.DruidcraftNetherBiomeProvider;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.biome.provider.NetherBiomeProvider;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.annotation.Nullable;
 import java.util.Optional;
 
 @Mod("druidcraft")
@@ -59,7 +49,8 @@ public class Druidcraft {
 
         event.enqueueWork(() -> {
             // Registry.register(Registry.BIOME_PROVIDER_CODEC, new ResourceLocation(MODID, "druidcraft"), DruidcraftNetherBiomeProvider.CODEC);
-            NetherBiomeProvider.Preset.DEFAULT_NETHER_PROVIDER_PRESET = new NetherBiomeProvider.Preset(new ResourceLocation("nether"), (preset, lookupRegistry, seed) -> {
+            // TODO: Pull the list from NetherBiomeProvider somehow and then overwrite with the same list with custom biomes tacked onto the end.
+/*            NetherBiomeProvider.Preset.DEFAULT_NETHER_PROVIDER_PRESET = new NetherBiomeProvider.Preset(new ResourceLocation("nether"), (preset, lookupRegistry, seed) -> {
                 return new NetherBiomeProvider(seed, ImmutableList.of(Pair.of(new Biome.Attributes(0.0F, 0.0F, 0.0F, 0.0F, 0.0F), () -> {
                     return lookupRegistry.getOrThrow(Biomes.NETHER_WASTES);
                 }), Pair.of(new Biome.Attributes(0.0F, -0.5F, 0.0F, 0.0F, 0.0F), () -> {
@@ -71,9 +62,9 @@ public class Druidcraft {
                 }), Pair.of(new Biome.Attributes(-0.5F, 0.0F, 0.0F, 0.0F, 0.175F), () -> {
                     return lookupRegistry.getOrThrow(Biomes.BASALT_DELTAS);
                 }), Pair.of(new Biome.Attributes(0.4F, 0.5F, 0.0F, 0.0F, 0.0F), () -> {
-                    return lookupRegistry.getOrThrow(BiomeRegistry.BiomeKeys.fervid_jungle);
+                    return lookupRegistry.getOrThrow(BiomeRegistry.BiomeKeys.torrid_jungle);
                 })), Optional.of(Pair.of(lookupRegistry, preset)));
-            });
+            });*/
             BiomeRegistry.registerBiomes();
             VanillaIntegrationRegistry.setup();
         });

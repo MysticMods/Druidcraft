@@ -2,10 +2,11 @@ package com.vulp.druidcraft.world.biomes;
 
 import com.vulp.druidcraft.registry.ConfiguredFeatureRegistry;
 import com.vulp.druidcraft.registry.ConfiguredSurfaceRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.client.audio.BackgroundMusicTracks;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.biome.*;
@@ -70,7 +71,16 @@ public class BiomeCreation {
         return builder.build();
     }
 
-    public static Biome makeFervidJungleBiome() {
+    public static Biome makeWarpedForestBiome() {
+        MobSpawnInfo mobspawninfo = (new MobSpawnInfo.Builder()).withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityType.ENDERMAN, 1, 4, 4)).withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityType.STRIDER, 60, 1, 2)).withSpawnCost(EntityType.ENDERMAN, 1.0D, 0.12D).copy();
+        BiomeGenerationSettings.Builder biomegenerationsettings$builder = (new BiomeGenerationSettings.Builder()).withSurfaceBuilder(ConfiguredSurfaceBuilders.field_244190_v).withStructure(StructureFeatures.FORTRESS).withStructure(StructureFeatures.BASTION_REMNANT).withStructure(StructureFeatures.RUINED_PORTAL_NETHER).withCarver(GenerationStage.Carving.AIR, ConfiguredCarvers.field_243772_f).withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Features.SPRING_LAVA);
+        DefaultBiomeFeatures.withNormalMushroomGeneration(biomegenerationsettings$builder);
+        biomegenerationsettings$builder.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Features.SPRING_OPEN).withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Features.PATCH_FIRE).withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Features.PATCH_SOUL_FIRE).withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Features.GLOWSTONE_EXTRA).withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Features.GLOWSTONE).withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Features.ORE_MAGMA).withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Features.SPRING_CLOSED).withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Features.WARPED_FUNGI).withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Features.WARPED_FOREST_VEGETATION).withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Features.NETHER_SPROUTS).withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Features.TWISTING_VINES);
+        DefaultBiomeFeatures.withCommonNetherBlocks(biomegenerationsettings$builder);
+        return (new Biome.Builder()).precipitation(Biome.RainType.NONE).category(Biome.Category.NETHER).depth(0.1F).scale(0.2F).temperature(2.0F).downfall(0.0F).setEffects((new BiomeAmbience.Builder()).setWaterColor(4159204).setWaterFogColor(329011).setFogColor(1705242).withSkyColor(getSkyColorFromTemp(2.0F)).setParticle(new ParticleEffectAmbience(ParticleTypes.WARPED_SPORE, 0.01428F)).setAmbientSound(SoundEvents.AMBIENT_WARPED_FOREST_LOOP).setMoodSound(new MoodSoundAmbience(SoundEvents.AMBIENT_WARPED_FOREST_MOOD, 6000, 8, 2.0D)).setAdditionsSound(new SoundAdditionsAmbience(SoundEvents.AMBIENT_WARPED_FOREST_ADDITIONS, 0.0111D)).setMusic(BackgroundMusicTracks.getDefaultBackgroundMusicSelector(SoundEvents.MUSIC_NETHER_WARPED_FOREST)).build()).withMobSpawnSettings(mobspawninfo).withGenerationSettings(biomegenerationsettings$builder.build()).build();
+    }
+
+    public static Biome makeTorridJungleBiome() {
         MobSpawnInfo.Builder spawn = new MobSpawnInfo.Builder()
                 .withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityType.GHAST, 50, 4, 4))
                 .withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityType.ZOMBIFIED_PIGLIN, 100, 4, 4))
@@ -82,7 +92,8 @@ public class BiomeCreation {
         BiomeAmbience.Builder ambience = new BiomeAmbience.Builder()
                 .setWaterColor(4159204)
                 .setWaterFogColor(329011)
-                .setFogColor(3344392)
+                .setFogColor(4005888)
+                .setParticle(new ParticleEffectAmbience(ParticleTypes.CRIMSON_SPORE, 0.01428F))
                 .withSkyColor(getSkyColorFromTemp(2.0F));
 
         BiomeGenerationSettings.Builder settings = new BiomeGenerationSettings.Builder()
@@ -100,7 +111,12 @@ public class BiomeCreation {
                 .withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Features.BROWN_MUSHROOM_NETHER)
                 .withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Features.RED_MUSHROOM_NETHER)
                 .withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Features.ORE_MAGMA)
-                .withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Features.SPRING_CLOSED);
+                .withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Features.SPRING_CLOSED)
+                .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ConfiguredFeatureRegistry.huge_heartburn_fungi)
+                .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ConfiguredFeatureRegistry.torrid_jungle_vegetation)
+                .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ConfiguredFeatureRegistry.patch_tall_overgrown_roots)
+                .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Features.NETHER_SPROUTS)
+                .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ConfiguredFeatureRegistry.gaseous_growth_feature);
         DefaultBiomeFeatures.withNormalMushroomGeneration(settings);
         DefaultBiomeFeatures.withCommonNetherBlocks(settings);
 

@@ -185,8 +185,8 @@ public class BlockRegistry {
   public static Block scorching_curtain = register("scorching_curtain", new ScorchingCurtainBlock(ScorchingCurtainBlock.Properties.create(Material.NETHER_PLANTS).sound(SoundType.NETHER_VINE).doesNotBlockMovement().hardnessAndResistance(0.3f).setLightLevel((light) -> (11))));
   public static Block fireblanket_moss = register("fireblanket_moss", new Block(Block.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f)));
   public static Block brambleroot = register("brambleroot", new BramblerootBlock(1.0F, BramblerootBlock.Properties.create(Material.NETHER_WOOD).sound(SoundType.WOOD).hardnessAndResistance(1.0f).tickRandomly()));
-  public static Block overgrown_roots = register("overgrown_roots", new Block(Block.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f)));
-  public static Block tall_overgrown_roots = register("tall_overgrown_roots", new Block(Block.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f)));
+  public static Block overgrown_roots = register("overgrown_roots", new NetherRootsBlock(Block.Properties.create(Material.NETHER_PLANTS).sound(SoundType.NETHER_SPROUT).doesNotBlockMovement().zeroHardnessAndResistance()));
+  public static Block tall_overgrown_roots = register("tall_overgrown_roots", new NetherDoublePlantBlock(Block.Properties.create(Material.NETHER_PLANTS).sound(SoundType.NETHER_SPROUT).doesNotBlockMovement().zeroHardnessAndResistance()));
   // TODO: Custom block that checks for blocks tagged with glow-air-friendly or deletes. Or something like that.
   public static Block glow_air = register("glow_air", new AirBlock(Block.Properties.create(Material.AIR).doesNotBlockMovement().noDrops().setAir().setLightLevel((light) -> (12))));
 
@@ -222,7 +222,7 @@ public class BlockRegistry {
   }
 
   @SubscribeEvent
-  public static void register (RegistryEvent.Register<Block> event) {
+  public static void registerAll (RegistryEvent.Register<Block> event) {
     event.getRegistry().registerAll(BLOCKS.toArray(new Block[0]));
   }
 
