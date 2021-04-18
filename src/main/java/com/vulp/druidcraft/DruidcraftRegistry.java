@@ -321,7 +321,7 @@ public class DruidcraftRegistry {
                         FluidRegistry.flowing_liquid_rainbow = new LiquidRainbowFluid.Flowing().setRegistryName("flowing_liquid_rainbow"),
                         FluidRegistry.liquid_rainbow = new LiquidRainbowFluid.Source().setRegistryName("liquid_rainbow")
                 );
-        LOGGER.info("Blocks registered.");
+        LOGGER.info("Fluids registered.");
     }
 
     // SOUND REGISTRATION
