@@ -28,6 +28,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -311,6 +312,16 @@ public class DruidcraftRegistry {
 
         LOGGER.info("Blocks registered.");
     }
+
+    // BLOCK REGISTRATION
+    @SubscribeEvent
+    public static void onBiomeRegistry(final RegistryEvent.Register<Biome> BiomeRegistryEvent)
+    {
+        BiomeRegistry.register(BiomeRegistryEvent);
+
+        LOGGER.info("Blocks registered.");
+    }
+
 
     // FLUID REGISTRATION
     @SubscribeEvent

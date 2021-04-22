@@ -14,7 +14,6 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.HashSet;
 import java.util.Set;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BiomeRegistry {
     private static final Set<Biome> BIOMES = new HashSet<>();
 
@@ -36,7 +35,6 @@ public class BiomeRegistry {
         return biome;
     }
 
-    @SubscribeEvent
     public static void register (RegistryEvent.Register<Biome> event) {
 
         register("darkwood_forest", BiomeCreation.makeDarkwoodForest());

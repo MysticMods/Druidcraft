@@ -1,12 +1,14 @@
 package com.vulp.druidcraft.registry;
 
 import com.google.common.collect.ImmutableList;
+import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.config.WorldGenConfig;
 import com.vulp.druidcraft.world.config.BlockStateRadiusFeatureConfig;
 import com.vulp.druidcraft.world.config.DummyTreeFeatureConfig;
 import com.vulp.druidcraft.world.config.FeatureConfigurations;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.biome.BiomeGenerationSettings;
@@ -34,8 +36,8 @@ public class ConfiguredFeatureRegistry {
   public static ConfiguredFeature<BaseTreeFeatureConfig, ?> mega_darkwood_tree = register("mega_darkwood_tree", Feature.TREE.withConfiguration(FeatureConfigurations.Trees.mega_darkwood_tree));
   public static ConfiguredFeature<DummyTreeFeatureConfig, ?> elder_tree = register("elder_tree", FeatureRegistry.elder_tree.withConfiguration(FeatureConfigurations.Trees.elder_tree));
   public static ConfiguredFeature<DummyTreeFeatureConfig, ?> giant_heartburn_fungus = register("huge_heartburn_fungus", FeatureRegistry.giant_heartburn_fungus.withConfiguration(FeatureConfigurations.Trees.giant_heartburn_fungus));
+  public static ConfiguredFeature<BaseTreeFeatureConfig, ?> darkwood_bush = register("darkwood_bush", Feature.TREE.withConfiguration(FeatureConfigurations.Trees.darkwood_bush));
 
-  public static ConfiguredFeature<?, ?> darkwood_bush = register("darkwood_bush", Feature.TREE.withConfiguration(FeatureConfigurations.Trees.darkwood_bush));
   public static ConfiguredFeature<?, ?> blueberry_bush = register("blueberry_bush", Feature.RANDOM_PATCH.withConfiguration(FeatureConfigurations.Bushes.blueberry_bush).withPlacement(Placement.CHANCE.configure(new ChanceConfig(100))));
   public static ConfiguredFeature<?, ?> lavender = register("lavender", Feature.FLOWER.withConfiguration(FeatureConfigurations.Bushes.lavender).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242731_b(2).chance(10));
   public static ConfiguredFeature<?, ?> darkwood_trees_feature = register("darkwood_trees", Feature.RANDOM_SELECTOR.withConfiguration(new MultipleRandomFeatureConfig(ImmutableList.of(mega_darkwood_tree.withChance(0.5F), ConfiguredFeatureRegistry.darkwood_tree.withChance(0.5F)), darkwood_tree)).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(12, 0.3F, 3))));
@@ -64,8 +66,8 @@ public class ConfiguredFeatureRegistry {
     settings.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, darkwood_bushes_feature);
   }
 
-  public static <FC extends IFeatureConfig> ConfiguredFeature<FC, ?> register(String p_243968_0_, ConfiguredFeature<FC, ?> p_243968_1_) {
-    return Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, p_243968_0_, p_243968_1_);
+  public static <FC extends IFeatureConfig> ConfiguredFeature<FC, ?> register(String name, ConfiguredFeature<FC, ?> configuredFeature) {
+    return Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(Druidcraft.MODID, name), configuredFeature);
   }
 
 }

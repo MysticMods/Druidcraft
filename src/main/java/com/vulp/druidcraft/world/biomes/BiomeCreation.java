@@ -18,8 +18,6 @@ import net.minecraft.world.gen.surfacebuilders.*;
 
 public class BiomeCreation {
 
-
-
     public static Biome makeDarkwoodForest() {
         MobSpawnInfo.Builder spawn = new MobSpawnInfo.Builder()
             .isValidSpawnBiomeForPlayer()

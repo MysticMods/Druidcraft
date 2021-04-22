@@ -36,6 +36,7 @@ public class Druidcraft {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Configuration.client_config);
 
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+
         bus.addListener(this::setup);
         bus.addListener(this::doClientStuff);
         bus.addListener(this::doParticleStuff);
@@ -65,7 +66,6 @@ public class Druidcraft {
                     return lookupRegistry.getOrThrow(BiomeRegistry.BiomeKeys.torrid_jungle);
                 })), Optional.of(Pair.of(lookupRegistry, preset)));
             });*/
-            BiomeRegistry.registerBiomes();
             VanillaIntegrationRegistry.setup();
         });
 
