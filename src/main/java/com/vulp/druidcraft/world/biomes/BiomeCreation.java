@@ -90,7 +90,7 @@ public class BiomeCreation {
         BiomeAmbience.Builder ambience = new BiomeAmbience.Builder()
                 .setWaterColor(4159204)
                 .setWaterFogColor(329011)
-                .setFogColor(4005888)
+                .setFogColor(5777408)
                 .setParticle(new ParticleEffectAmbience(ParticleTypes.CRIMSON_SPORE, 0.01428F))
                 .withSkyColor(getSkyColorFromTemp(2.0F));
 
@@ -113,8 +113,8 @@ public class BiomeCreation {
                 .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ConfiguredFeatureRegistry.huge_heartburn_fungi)
                 .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ConfiguredFeatureRegistry.torrid_jungle_vegetation)
                 .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ConfiguredFeatureRegistry.patch_tall_overgrown_roots)
-                .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Features.NETHER_SPROUTS)
-                .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ConfiguredFeatureRegistry.gaseous_growth_feature);
+                .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Features.NETHER_SPROUTS);
+                // .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ConfiguredFeatureRegistry.gaseous_growth_feature);
         DefaultBiomeFeatures.withNormalMushroomGeneration(settings);
         DefaultBiomeFeatures.withCommonNetherBlocks(settings);
 

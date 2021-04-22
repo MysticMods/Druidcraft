@@ -24,13 +24,13 @@ public class ConfiguredFeatureRegistry {
 
   public static final BlockState overgrown_roots_state = BlockRegistry.overgrown_roots.getDefaultState();
   public static final BlockState tall_overgrown_roots_state = BlockRegistry.tall_overgrown_roots.getDefaultState();
-  public static final BlockState heartburn_fungus_state = Blocks.CRIMSON_ROOTS.getDefaultState();
+  public static final BlockState heartburn_fungus_state = BlockRegistry.heartburn_fungus.getDefaultState();
   public static final BlockState crimson_roots_state = Blocks.CRIMSON_ROOTS.getDefaultState();
-  public static final BlockState warped_fungus_state = Blocks.CRIMSON_ROOTS.getDefaultState();
-  public static final BlockState crimson_fungus_state = Blocks.CRIMSON_ROOTS.getDefaultState();
+  public static final BlockState warped_fungus_state = Blocks.WARPED_FUNGUS.getDefaultState();
+  public static final BlockState crimson_fungus_state = Blocks.CRIMSON_FUNGUS.getDefaultState();
 
   public static final BlockStateProvidingFeatureConfig torrid_jungle_vegetation_config = new BlockStateProvidingFeatureConfig((new WeightedBlockStateProvider()).addWeightedBlockstate(overgrown_roots_state, 85).addWeightedBlockstate(crimson_roots_state, 1).addWeightedBlockstate(heartburn_fungus_state, 13).addWeightedBlockstate(crimson_fungus_state, 1).addWeightedBlockstate(warped_fungus_state, 1));
-  public static final BlockClusterFeatureConfig tall_overgrown_roots_config = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(tall_overgrown_roots_state), new DoublePlantBlockPlacer())).tries(48).func_227317_b_().build();
+  public static final BlockClusterFeatureConfig tall_overgrown_roots_config = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(tall_overgrown_roots_state), new DoublePlantBlockPlacer())).tries(96).func_227317_b_().build();
 
   public static ConfiguredFeature<BaseTreeFeatureConfig, ?> darkwood_tree = register("darkwood_tree", Feature.TREE.withConfiguration(FeatureConfigurations.Trees.darkwood_tree));
   public static ConfiguredFeature<BaseTreeFeatureConfig, ?> mega_darkwood_tree = register("mega_darkwood_tree", Feature.TREE.withConfiguration(FeatureConfigurations.Trees.mega_darkwood_tree));

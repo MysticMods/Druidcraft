@@ -1,6 +1,8 @@
 package com.vulp.druidcraft.world.features;
 
 import com.mojang.serialization.Codec;
+import com.vulp.druidcraft.api.StackPart;
+import com.vulp.druidcraft.blocks.ScorchingCurtainBlock;
 import com.vulp.druidcraft.registry.BlockRegistry;
 import com.vulp.druidcraft.world.config.DummyTreeFeatureConfig;
 import net.minecraft.block.*;
@@ -114,8 +116,17 @@ public class GiantHeartburnFungusFeature extends DumbTreeFeature {
                             if (y != capHeight) {
                                 placeHeartburnBlockAt(reader, pos.add(x, -y, z), config, x, z);
                             } else {
-                                for (int j = 0; j < rand.nextInt(6); j++) {
-                                    placeScorchingCurtainAt(reader, pos.add(x, (-y) - j, z), config);
+                                int j = rand.nextInt(6);
+                                for (int k = 0; k < j; k++) {
+                                    if (j == 1) {
+                                        placeScorchingCurtainAt(reader, StackPart.SINGLE, pos.add(x, (-y) - k, z), config);
+                                    } else if (k == 0) {
+                                        placeScorchingCurtainAt(reader, StackPart.TOP, pos.add(x, (-y) - k, z), config);
+                                    } else if (k == j - 1) {
+                                        placeScorchingCurtainAt(reader, StackPart.BOTTOM, pos.add(x, (-y) - k, z), config);
+                                    } else {
+                                        placeScorchingCurtainAt(reader, StackPart.MIDDLE, pos.add(x, (-y) - k, z), config);
+                                    }
                                 }
                             }
                         }
@@ -156,9 +167,9 @@ public class GiantHeartburnFungusFeature extends DumbTreeFeature {
         }
     }
 
-    public void placeScorchingCurtainAt(IWorldGenerationReader reader, BlockPos pos, DummyTreeFeatureConfig config) {
+    public void placeScorchingCurtainAt(IWorldGenerationReader reader, StackPart part, BlockPos pos, DummyTreeFeatureConfig config) {
         if (isAirOrLeavesAt(reader, pos)) {
-            this.setBlockState(reader, pos, BlockRegistry.scorching_curtain.getDefaultState());
+            this.setBlockState(reader, pos, BlockRegistry.scorching_curtain.getDefaultState().with(ScorchingCurtainBlock.PART, part));
         }
     }
 

@@ -51,7 +51,7 @@ public class Druidcraft {
         event.enqueueWork(() -> {
             // Registry.register(Registry.BIOME_PROVIDER_CODEC, new ResourceLocation(MODID, "druidcraft"), DruidcraftNetherBiomeProvider.CODEC);
             // TODO: Pull the list from NetherBiomeProvider somehow and then overwrite with the same list with custom biomes tacked onto the end.
-/*            NetherBiomeProvider.Preset.DEFAULT_NETHER_PROVIDER_PRESET = new NetherBiomeProvider.Preset(new ResourceLocation("nether"), (preset, lookupRegistry, seed) -> {
+            NetherBiomeProvider.Preset.DEFAULT_NETHER_PROVIDER_PRESET = new NetherBiomeProvider.Preset(new ResourceLocation("nether"), (preset, lookupRegistry, seed) -> {
                 return new NetherBiomeProvider(seed, ImmutableList.of(Pair.of(new Biome.Attributes(0.0F, 0.0F, 0.0F, 0.0F, 0.0F), () -> {
                     return lookupRegistry.getOrThrow(Biomes.NETHER_WASTES);
                 }), Pair.of(new Biome.Attributes(0.0F, -0.5F, 0.0F, 0.0F, 0.0F), () -> {
@@ -65,7 +65,7 @@ public class Druidcraft {
                 }), Pair.of(new Biome.Attributes(0.4F, 0.5F, 0.0F, 0.0F, 0.0F), () -> {
                     return lookupRegistry.getOrThrow(BiomeRegistry.BiomeKeys.torrid_jungle);
                 })), Optional.of(Pair.of(lookupRegistry, preset)));
-            });*/
+            });
             VanillaIntegrationRegistry.setup();
         });
 
