@@ -8,14 +8,14 @@ import net.minecraft.item.crafting.Ingredient;
 public enum ToolMaterialRegistry implements IItemTier
 {
     bone(1.0f, 5.0f, 250, 1, 18, Items.BONE),
-    moonstone(4.0f, 9.0f, 1921, 4, 15, ItemRegistry.moonstone);
+    moonstone(4.0f, 9.0f, 1921, 4, 15, ItemRegistry.moonstone),
+    fiery(3.0f, 8.0f, 1731, 4, 20, ItemRegistry.tempered_fiery_glass);
 
     private float attackDamage, efficiency;
     private int durability, harvestLevel, enchantability;
     private Item repairMaterial;
 
-    ToolMaterialRegistry(float attackDamage, float efficiency, int durability, int harvestLevel, int enchantability, Item repairMaterial)
-    {
+    ToolMaterialRegistry(float attackDamage, float efficiency, int durability, int harvestLevel, int enchantability, Item repairMaterial) {
         this.attackDamage = attackDamage;
         this.efficiency = efficiency;
         this.durability = durability;

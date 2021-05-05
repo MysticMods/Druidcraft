@@ -1,7 +1,9 @@
 package com.vulp.druidcraft.world.biomes;
 
+import com.vulp.druidcraft.registry.ConfiguredCarverRegistry;
 import com.vulp.druidcraft.registry.ConfiguredFeatureRegistry;
 import com.vulp.druidcraft.registry.ConfiguredSurfaceRegistry;
+import com.vulp.druidcraft.registry.ParticleRegistry;
 import net.minecraft.client.audio.BackgroundMusicTracks;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -16,7 +18,7 @@ import net.minecraft.world.gen.feature.Features;
 import net.minecraft.world.gen.feature.structure.StructureFeatures;
 import net.minecraft.world.gen.surfacebuilders.*;
 
-public class BiomeCreation {
+public class BiomeBuilder {
 
     public static Biome makeDarkwoodForest() {
         MobSpawnInfo.Builder spawn = new MobSpawnInfo.Builder()
@@ -78,7 +80,7 @@ public class BiomeCreation {
         return (new Biome.Builder()).precipitation(Biome.RainType.NONE).category(Biome.Category.NETHER).depth(0.1F).scale(0.2F).temperature(2.0F).downfall(0.0F).setEffects((new BiomeAmbience.Builder()).setWaterColor(4159204).setWaterFogColor(329011).setFogColor(1705242).withSkyColor(getSkyColorFromTemp(2.0F)).setParticle(new ParticleEffectAmbience(ParticleTypes.WARPED_SPORE, 0.01428F)).setAmbientSound(SoundEvents.AMBIENT_WARPED_FOREST_LOOP).setMoodSound(new MoodSoundAmbience(SoundEvents.AMBIENT_WARPED_FOREST_MOOD, 6000, 8, 2.0D)).setAdditionsSound(new SoundAdditionsAmbience(SoundEvents.AMBIENT_WARPED_FOREST_ADDITIONS, 0.0111D)).setMusic(BackgroundMusicTracks.getDefaultBackgroundMusicSelector(SoundEvents.MUSIC_NETHER_WARPED_FOREST)).build()).withMobSpawnSettings(mobspawninfo).withGenerationSettings(biomegenerationsettings$builder.build()).build();
     }
 
-    public static Biome makeTorridJungleBiome() {
+    public static Biome makeGlowingJungle() {
         MobSpawnInfo.Builder spawn = new MobSpawnInfo.Builder()
                 .withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityType.GHAST, 50, 4, 4))
                 .withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityType.ZOMBIFIED_PIGLIN, 100, 4, 4))
@@ -90,16 +92,16 @@ public class BiomeCreation {
         BiomeAmbience.Builder ambience = new BiomeAmbience.Builder()
                 .setWaterColor(4159204)
                 .setWaterFogColor(329011)
-                .setFogColor(5777408)
-                .setParticle(new ParticleEffectAmbience(ParticleTypes.CRIMSON_SPORE, 0.01428F))
+                .setFogColor(3807488)
+                .setParticle(new ParticleEffectAmbience(ParticleRegistry.heartburn_spore, 0.01428F))
                 .withSkyColor(getSkyColorFromTemp(2.0F));
 
         BiomeGenerationSettings.Builder settings = new BiomeGenerationSettings.Builder()
-                .withSurfaceBuilder(ConfiguredSurfaceRegistry.FERVID_JUNGLE)
+                .withSurfaceBuilder(ConfiguredSurfaceRegistry.GLOWING_JUNGLE)
                 .withStructure(StructureFeatures.RUINED_PORTAL_NETHER)
                 .withStructure(StructureFeatures.FORTRESS)
                 .withStructure(StructureFeatures.BASTION_REMNANT)
-                .withCarver(GenerationStage.Carving.AIR, ConfiguredCarvers.field_243772_f)
+                .withCarver(GenerationStage.Carving.AIR, ConfiguredCarverRegistry.CUSTOM_NETHER_CAVE)
                 .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Features.SPRING_LAVA)
                 .withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Features.SPRING_OPEN)
                 .withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Features.PATCH_FIRE)
@@ -111,10 +113,12 @@ public class BiomeCreation {
                 .withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Features.ORE_MAGMA)
                 .withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Features.SPRING_CLOSED)
                 .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ConfiguredFeatureRegistry.huge_heartburn_fungi)
-                .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ConfiguredFeatureRegistry.torrid_jungle_vegetation)
+                .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ConfiguredFeatureRegistry.glowing_jungle_vegetation)
                 .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ConfiguredFeatureRegistry.patch_tall_overgrown_roots)
-                .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Features.NETHER_SPROUTS);
-                // .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ConfiguredFeatureRegistry.gaseous_growth_feature);
+                .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ConfiguredFeatureRegistry.patch_overgrown_roots)
+                .withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ConfiguredFeatureRegistry.gaseous_growth_feature);
+        // TODO: GASEOUS GROWTH, FIREBLANKET MOSS, BRAMBLEROOTS BOTH LARGE AND SMALL, etc.
+
         DefaultBiomeFeatures.withNormalMushroomGeneration(settings);
         DefaultBiomeFeatures.withCommonNetherBlocks(settings);
 

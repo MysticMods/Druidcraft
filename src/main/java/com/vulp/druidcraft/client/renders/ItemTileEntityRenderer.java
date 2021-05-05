@@ -11,6 +11,7 @@ import com.vulp.druidcraft.blocks.CustomChestBlock;
 import com.vulp.druidcraft.blocks.tileentities.CustomChestTileEntity;
 import com.vulp.druidcraft.client.models.BoneShieldModel;
 import com.vulp.druidcraft.client.models.ChitinShieldModel;
+import com.vulp.druidcraft.client.models.FieryShieldModel;
 import com.vulp.druidcraft.client.models.MoonstoneShieldModel;
 import com.vulp.druidcraft.items.BasicShieldItem;
 import com.vulp.druidcraft.registry.ItemRegistry;
@@ -50,12 +51,14 @@ public class ItemTileEntityRenderer extends ItemStackTileEntityRenderer {
     private final BoneShieldModel bone_shield = new BoneShieldModel();
     private final ChitinShieldModel chitin_shield = new ChitinShieldModel();
     private final MoonstoneShieldModel moonstone_shield = new MoonstoneShieldModel();
+    private final FieryShieldModel fiery_shield = new FieryShieldModel();
 
     private final CustomChestTileEntity chestTile = new CustomChestTileEntity();
 
     public static final ResourceLocation bone_shield_tex = DruidcraftRegistry.location("entity/shields/bone");
     public static final ResourceLocation chitin_shield_tex = DruidcraftRegistry.location("entity/shields/chitin");
     public static final ResourceLocation moonstone_shield_tex = DruidcraftRegistry.location("entity/shields/moonstone");
+    public static final ResourceLocation fiery_shield_tex = DruidcraftRegistry.location("entity/shields/fiery");
 
     @Override
     public void func_239207_a_(ItemStack stack, ItemCameraTransforms.TransformType p_239207_2_, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
@@ -81,6 +84,10 @@ public class ItemTileEntityRenderer extends ItemStackTileEntityRenderer {
                 RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, chitin_shield_tex);
                 IVertexBuilder vertexBuilder = material.getSprite().wrapBuffer(ItemRenderer.getBuffer(buffer, this.chitin_shield.getRenderType(material.getAtlasLocation()), false, stack.hasEffect()));
                 this.chitin_shield.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+            } else if (item == ItemRegistry.fiery_shield) {
+                RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, fiery_shield_tex);
+                IVertexBuilder vertexBuilder = material.getSprite().wrapBuffer(ItemRenderer.getBuffer(buffer, this.fiery_shield.getRenderType(material.getAtlasLocation()), false, stack.hasEffect()));
+                this.fiery_shield.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
             } else { // item == ItemRegistry.moonstone_shield
                 RenderMaterial material = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, moonstone_shield_tex);
                 IVertexBuilder vertexBuilder = material.getSprite().wrapBuffer(ItemRenderer.getBuffer(buffer, this.moonstone_shield.getRenderType(material.getAtlasLocation()), false, stack.hasEffect()));

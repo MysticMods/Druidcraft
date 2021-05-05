@@ -3,8 +3,10 @@ package com.vulp.druidcraft.registry;
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.client.gui.screen.inventory.*;
 import com.vulp.druidcraft.client.models.BedrollTravelPackModel;
+import com.vulp.druidcraft.client.models.FieryArmorModel;
 import com.vulp.druidcraft.client.models.TravelPackModel;
 import com.vulp.druidcraft.client.renders.*;
+import com.vulp.druidcraft.client.renders.layers.FieryArmorLayer;
 import com.vulp.druidcraft.client.renders.layers.TravelPackLayer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
@@ -143,6 +145,9 @@ public class RenderRegistry
 
             defaultSkinMap.add(new TravelPackLayer<>(playerSkinMap.get("default"), new TravelPackModel<>(), new BedrollTravelPackModel<>()));
             slimSkinMap.add(new TravelPackLayer<>(playerSkinMap.get("default"), new TravelPackModel<>(), new BedrollTravelPackModel<>()));
+
+            defaultSkinMap.add(new FieryArmorLayer<>(playerSkinMap.get("default"), new FieryArmorModel<>()));
+            slimSkinMap.add(new FieryArmorLayer<>(playerSkinMap.get("default"), new FieryArmorModel<>()));
         });
     }
 }

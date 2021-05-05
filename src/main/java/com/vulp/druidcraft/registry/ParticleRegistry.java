@@ -30,5 +30,6 @@ public class ParticleRegistry {
         particles.registerFactory(enchanted_bubble, EnchantedBubbleParticle.Factory::new);
         particles.registerFactory(flare, FlareParticle.Factory::new);
         particles.registerFactory(flare_sparkle, FlareSparkleParticle.Factory::new);
+        particles.registerFactory(heartburn_spore, MiscParticleFactory.OvergrownSporeFactory::new);
     }
 }

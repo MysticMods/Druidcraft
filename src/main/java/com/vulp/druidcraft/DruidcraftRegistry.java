@@ -102,6 +102,18 @@ public class DruidcraftRegistry {
                         ItemRegistry.moonstone_boots = new ArmorItem(ArmorMaterialRegistry.moonstone, EquipmentSlotType.FEET, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(location("moonstone_boots")),
                         ItemRegistry.moonstone_shield = new BasicShieldItem(new Item.Properties().group(DRUIDCRAFT).maxDamage(1450).setISTER(() -> ItemTileEntityRenderer::new), ItemRegistry.moonstone).setRegistryName(location("moonstone_shield")),
 
+                        ItemRegistry.fiery_sword = new SwordItem(ToolMaterialRegistry.fiery, 3, -2.4f, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("fiery_sword")),
+                        ItemRegistry.fiery_shovel = new ShovelItem(ToolMaterialRegistry.fiery, 1.5f, -3.0f, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("fiery_shovel")),
+                        ItemRegistry.fiery_pickaxe = new PickaxeItem(ToolMaterialRegistry.fiery, 1, -2.8f, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("fiery_pickaxe")),
+                        ItemRegistry.fiery_axe = new AxeItem(ToolMaterialRegistry.fiery, 7.0f, -3.2f, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("fiery_axe")),
+                        ItemRegistry.fiery_hoe = new HoeItem(ToolMaterialRegistry.fiery, 0, -2.0f, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("fiery_hoe")),
+                        ItemRegistry.fiery_sickle = new SickleItem(new ItemProperties().attackDamage(0).attackSpeed(-1.5f).tier(ToolMaterialRegistry.fiery).radius(4).setGroup(DRUIDCRAFT_WIP)).setRegistryName(location("fiery_sickle")),
+                        ItemRegistry.fiery_helmet = new FieryArmorItem(ArmorMaterialRegistry.fiery, EquipmentSlotType.HEAD, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("fiery_helmet")),
+                        ItemRegistry.fiery_chestplate = new FieryArmorItem(ArmorMaterialRegistry.fiery, EquipmentSlotType.CHEST, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("fiery_chestplate")),
+                        ItemRegistry.fiery_leggings = new FieryArmorItem(ArmorMaterialRegistry.fiery, EquipmentSlotType.LEGS, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("fiery_leggings")),
+                        ItemRegistry.fiery_boots = new FieryArmorItem(ArmorMaterialRegistry.fiery, EquipmentSlotType.FEET, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("fiery_boots")),
+                        ItemRegistry.fiery_shield = new BasicShieldItem(new Item.Properties().group(DRUIDCRAFT_WIP).maxDamage(1450).setISTER(() -> ItemTileEntityRenderer::new), ItemRegistry.fiery_shield).setRegistryName(location("fiery_shield")),
+                        
                         ItemRegistry.wooden_sickle = new SickleItem(new ItemProperties().attackDamage(0).attackSpeed(-1.5f).tier(ItemTier.WOOD).radius(1).setGroup(ItemGroup.TOOLS)).setRegistryName(location("wooden_sickle")),
                         ItemRegistry.stone_sickle = new SickleItem(new ItemProperties().attackDamage(0).attackSpeed(-1.5f).tier(ItemTier.STONE).radius(2).setGroup(ItemGroup.TOOLS)).setRegistryName(location("stone_sickle")),
                         ItemRegistry.iron_sickle = new SickleItem(new ItemProperties().attackDamage(0).attackSpeed(-1.5f).tier(ItemTier.IRON).radius(3).setGroup(ItemGroup.TOOLS)).setRegistryName(location("iron_sickle")),
@@ -268,6 +280,7 @@ public class DruidcraftRegistry {
                         ItemRegistry.hellkiln_igniter = new BlockItem(BlockRegistry.hellkiln_igniter, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.hellkiln_igniter.getRegistryName()),
                         ItemRegistry.infernal_lantern = new InfernalLanternItem(BlockRegistry.infernal_flare, new Item.Properties().group(DRUIDCRAFT_WIP).maxStackSize(1)).setRegistryName(location("infernal_lantern")),
                         ItemRegistry.overgrown_nylium = new BlockItem(BlockRegistry.overgrown_nylium, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.overgrown_nylium.getRegistryName()),
+                        ItemRegistry.heavily_overgrown_nylium = new BlockItem(BlockRegistry.heavily_overgrown_nylium, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.heavily_overgrown_nylium.getRegistryName()),
                         ItemRegistry.heartburn_fungus = new BlockItem(BlockRegistry.heartburn_fungus, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.heartburn_fungus.getRegistryName()),
                         ItemRegistry.heartburn_stem = new BlockItem(BlockRegistry.heartburn_stem, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.heartburn_stem.getRegistryName()),
                         ItemRegistry.heartburn_hyphae = new BlockItem(BlockRegistry.heartburn_hyphae, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.heartburn_hyphae.getRegistryName()),
@@ -383,7 +396,8 @@ public class DruidcraftRegistry {
                         ParticleRegistry.magic_glitter.setRegistryName("magic_glitter"),
                         ParticleRegistry.enchanted_bubble.setRegistryName("enchanted_bubble"),
                         ParticleRegistry.flare.setRegistryName("flare"),
-                        ParticleRegistry.flare_sparkle.setRegistryName("flare_sparkle")
+                        ParticleRegistry.flare_sparkle.setRegistryName("flare_sparkle"),
+                        ParticleRegistry.heartburn_spore.setRegistryName("heartburn_spore")
                 );
 
         LOGGER.info("Particles registered.");

@@ -1,6 +1,7 @@
 package com.vulp.druidcraft.world.features;
 
 import com.mojang.serialization.Codec;
+import com.vulp.druidcraft.api.StackPart;
 import com.vulp.druidcraft.blocks.GaseousGrowthBlock;
 import com.vulp.druidcraft.registry.BlockRegistry;
 import net.minecraft.block.BlockState;
@@ -40,7 +41,7 @@ public class GaseousGrowthFeature extends Feature<NoFeatureConfig> {
     private void calculateAndBuild(IWorld world, Random rand, BlockPos pos) {
         BlockPos.Mutable mutablePos = new BlockPos.Mutable();
 
-        for(int i = 0; i < 100; ++i) {
+        for(int i = 0; i < 25; ++i) {
             mutablePos.setAndOffset(pos, rand.nextInt(8) - rand.nextInt(8), rand.nextInt(2) - rand.nextInt(7), rand.nextInt(8) - rand.nextInt(8));
             if (world.isAirBlock(mutablePos)) {
                 BlockState aboveState = world.getBlockState(mutablePos.up());
@@ -65,15 +66,27 @@ public class GaseousGrowthFeature extends Feature<NoFeatureConfig> {
         for(int i = 0; i <= multiplier; ++i) {
             if (world.isAirBlock(pos)) {
                 if (i == multiplier || !world.isAirBlock(pos.down())) {
-                    world.setBlockState(pos, BlockRegistry.gaseous_growth.getDefaultState().with(GaseousGrowthBlock.AGE, MathHelper.nextInt(rand, min, max)), 2);
+                    // world.setBlockState(pos, getVineStateForPlacement(i, multiplier).with(GaseousGrowthBlock.AGE, MathHelper.nextInt(rand, min, max)), 2);
+                    world.setBlockState(pos, getVineStateForPlacement(i, multiplier), 2);
                     break;
                 }
 
-                world.setBlockState(pos, BlockRegistry.gaseous_growth.getDefaultState(), 2);
+                world.setBlockState(pos, getVineStateForPlacement(i, multiplier), 2);
             }
 
             pos.move(Direction.DOWN);
         }
 
     }
+
+    private static BlockState getVineStateForPlacement(int loop, int multiplier) {
+        StackPart part = StackPart.MIDDLE;
+        if (multiplier == loop) {
+            part = StackPart.BOTTOM;
+        } else if (loop == 0 && multiplier > 1) {
+            part = StackPart.TOP;
+        }
+        return BlockRegistry.gaseous_growth.getDefaultState().with(GaseousGrowthBlock.PART, part);
+    }
+
 }

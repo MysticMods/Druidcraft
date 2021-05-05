@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.registry;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -14,9 +15,12 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.gen.carver.NetherCaveCarver;
+import net.minecraft.world.gen.carver.WorldCarver;
 import net.minecraftforge.common.data.ForgeBlockTagsProvider;
 
 import java.util.Arrays;
+import java.util.Set;
 
 public class VanillaIntegrationRegistry {
 

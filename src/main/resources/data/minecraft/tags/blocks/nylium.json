@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "druidcraft:overgrown_nylium"
+    "druidcraft:overgrown_nylium",
+	"druidcraft:heavily_overgrown_nylium"
   ]
 }

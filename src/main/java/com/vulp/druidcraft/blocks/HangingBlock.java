@@ -30,7 +30,7 @@ public class HangingBlock extends Block {
 
     @Override
     public BlockState updatePostPlacement(BlockState state, Direction direction, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
-        return this.isValidPosition(state, world, currentPos) ? updatePart(super.updatePostPlacement(state, direction, facingState, world, currentPos, facingPos), (World) world, currentPos) : Blocks.AIR.getDefaultState();
+        return this.isValidPosition(state, world, currentPos) ? updatePart(super.updatePostPlacement(state, direction, facingState, world, currentPos, facingPos), world, currentPos) : Blocks.AIR.getDefaultState();
     }
 
     @Nullable
@@ -41,7 +41,7 @@ public class HangingBlock extends Block {
         return updatePart(this.getDefaultState(), world, pos);
     }
 
-    public BlockState updatePart(BlockState state, World world, BlockPos pos) {
+    public BlockState updatePart(BlockState state, IWorld world, BlockPos pos) {
         BlockState above = world.getBlockState(pos.up());
         BlockState below = world.getBlockState(pos.down());
         if (above.getBlock() == this) {

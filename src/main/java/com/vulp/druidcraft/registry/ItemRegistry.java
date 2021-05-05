@@ -66,6 +66,18 @@ public class ItemRegistry
     public static Item moonstone_boots;
     public static Item moonstone_shield;
 
+    public static Item fiery_sword;
+    public static Item fiery_pickaxe;
+    public static Item fiery_axe;
+    public static Item fiery_shovel;
+    public static Item fiery_hoe;
+    public static Item fiery_sickle;
+    public static Item fiery_helmet;
+    public static Item fiery_chestplate;
+    public static Item fiery_leggings;
+    public static Item fiery_boots;
+    public static Item fiery_shield;
+
     public static Item knife;
 
     public static Item blueberries;
@@ -245,6 +257,7 @@ public class ItemRegistry
     public static Item hellkiln;
     public static Item infernal_lantern;
     public static Item overgrown_nylium;
+    public static Item heavily_overgrown_nylium;
     public static Item heartburn_fungus;
     public static Item heartburn_stem;
     public static Item heartburn_hyphae;

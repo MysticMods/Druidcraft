@@ -57,6 +57,14 @@ public class ThickRootBlock extends Block implements IBucketPickupHandler, ILiqu
                 .with(WATERLOGGED, false));
     }
 
+    public static BlockState getStateForFeature(BlockState state, Direction dir1, Direction dir2) {
+        return state.with(DIR_TO_PROPERTY_MAP.get(dir1), true).with(DIR_TO_PROPERTY_MAP.get(dir2), true);
+    }
+
+    public static BlockState getStateForFeature(BlockState state, Direction dir1, Direction dir2, Direction dir3) {
+        return state.with(DIR_TO_PROPERTY_MAP.get(dir1), true).with(DIR_TO_PROPERTY_MAP.get(dir2), true).with(DIR_TO_PROPERTY_MAP.get(dir3), true);
+    }
+
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         float j = 3.0F - this.thicknessMod;
