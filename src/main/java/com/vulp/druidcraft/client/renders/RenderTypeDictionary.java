@@ -9,8 +9,10 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nullable;
+import java.util.OptionalDouble;
 
 @OnlyIn(Dist.CLIENT)
 public class RenderTypeDictionary extends RenderState{
@@ -28,5 +30,13 @@ public class RenderTypeDictionary extends RenderState{
         RenderState.TextureState textureState = new RenderState.TextureState(resourceLocation, false, false);
         return RenderType.makeType("transparent_glow", DefaultVertexFormats.ENTITY, 7, 256, false, true, RenderType.State.getBuilder().texture(textureState).transparency(TRANSLUCENT_TRANSPARENCY).diffuseLighting(DIFFUSE_LIGHTING_DISABLED).alpha(DEFAULT_ALPHA).cull(CULL_DISABLED).lightmap(LIGHTMAP_DISABLED).build(false));
     }
+
+    public static final RenderType KNIFE_LINES = RenderType.makeType("knife_lines", DefaultVertexFormats.POSITION_COLOR, GL11.GL_LINES, 256, RenderType.State.getBuilder()
+            .line(new RenderState.LineState(OptionalDouble.of(3.0D)))
+            .layer(NO_LAYERING)
+            .transparency(TRANSLUCENT_TRANSPARENCY)
+            .writeMask(COLOR_WRITE)
+            .cull(CULL_ENABLED)
+            .build(false));
 
 }

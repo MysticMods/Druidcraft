@@ -3,10 +3,8 @@ package com.vulp.druidcraft.registry;
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.client.gui.screen.inventory.*;
 import com.vulp.druidcraft.client.models.BedrollTravelPackModel;
-import com.vulp.druidcraft.client.models.FieryArmorModel;
 import com.vulp.druidcraft.client.models.TravelPackModel;
 import com.vulp.druidcraft.client.renders.*;
-import com.vulp.druidcraft.client.renders.layers.FieryArmorLayer;
 import com.vulp.druidcraft.client.renders.layers.TravelPackLayer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
@@ -48,25 +46,27 @@ public class RenderRegistry
         RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.gaseous_bomb_entity, manager -> new SpriteRenderer<>(minecraft.getRenderManager(), minecraft.getItemRenderer()));
         RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.boat_entity, new CustomBoatEntityRenderer.RenderFactory());
 
-
         // BLOCK TILE ENTITIES
         ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.small_beam, SmallBeamTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.custom_sign, SignTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.custom_chest, CustomChestTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.custom_trapped_chest, CustomChestTileEntityRenderer::new);
 
-        event.enqueueWork(() -> {
-            // ITEM TILE ENTITIES
-            ItemModelsProperties.registerProperty(ItemRegistry.chitin_shield, new ResourceLocation("blocking"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
-            ItemModelsProperties.registerProperty(ItemRegistry.bone_shield, new ResourceLocation("blocking"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
-            ItemModelsProperties.registerProperty(ItemRegistry.moonstone_shield, new ResourceLocation("blocking"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
+        // ITEM TILE ENTITIES
+        ItemModelsProperties.registerProperty(ItemRegistry.chitin_shield, new ResourceLocation("blocking"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
+        ItemModelsProperties.registerProperty(ItemRegistry.bone_shield, new ResourceLocation("blocking"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
+        ItemModelsProperties.registerProperty(ItemRegistry.moonstone_shield, new ResourceLocation("blocking"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
+        ItemModelsProperties.registerProperty(ItemRegistry.fiery_shield, new ResourceLocation("blocking"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
 
-            ItemModelsProperties.registerProperty(ItemRegistry.travel_pack, new ResourceLocation(Druidcraft.MODID, "color"), (itemStack, world, livingEntity) -> {
-                CompoundNBT nbt = itemStack.getOrCreateTag();
-                if (nbt.contains("Color")) {
-                    return nbt.getInt("Color");
-                } else return -1;
-            });
+
+        ItemModelsProperties.registerProperty(ItemRegistry.travel_pack, new ResourceLocation(Druidcraft.MODID, "color"), (itemStack, world, livingEntity) -> {
+            CompoundNBT nbt = itemStack.getOrCreateTag();
+            if (nbt.contains("Color")) {
+                return nbt.getInt("Color");
+            } else return -1;
+        });
+
+        event.enqueueWork(() -> {
 
             // BLOCKS
             //    RenderTypeLookup.setRenderLayer(BlockRegistry.aloe_vera_crop, RenderType.getCutout());
@@ -136,6 +136,8 @@ public class RenderRegistry
             ScreenManager.registerFactory(GUIRegistry.travel_pack, TravelPackScreen::new);
             ScreenManager.registerFactory(GUIRegistry.hellkiln, HellkilnScreen::new);
             ScreenManager.registerFactory(GUIRegistry.hellkiln_igniter, HellkilnIgniterScreen::new);
+            ScreenManager.registerFactory(GUIRegistry.smithing_workbench, SmithingWorkbenchScreen::new);
+
 
             // PLAYER MODEL HOOK
             Map<String, PlayerRenderer> playerSkinMap = Minecraft.getInstance().getRenderManager().getSkinMap();
@@ -145,9 +147,6 @@ public class RenderRegistry
 
             defaultSkinMap.add(new TravelPackLayer<>(playerSkinMap.get("default"), new TravelPackModel<>(), new BedrollTravelPackModel<>()));
             slimSkinMap.add(new TravelPackLayer<>(playerSkinMap.get("default"), new TravelPackModel<>(), new BedrollTravelPackModel<>()));
-
-            defaultSkinMap.add(new FieryArmorLayer<>(playerSkinMap.get("default"), new FieryArmorModel<>()));
-            slimSkinMap.add(new FieryArmorLayer<>(playerSkinMap.get("default"), new FieryArmorModel<>()));
         });
     }
 }

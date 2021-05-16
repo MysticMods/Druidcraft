@@ -34,9 +34,4 @@ public class WoodcuttingRecipe extends SingleItemRecipe {
         return this.ingredient.test(inv.getStackInSlot(0));
     }
 
-    @Override
-    public ItemStack getIcon() {
-        return new ItemStack(BlockRegistry.woodcutter);
-    }
-
 }

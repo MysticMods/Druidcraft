@@ -297,4 +297,6 @@ public class ItemRegistry
     public static Item skyberries;
     public static Item live_skyberries;
 
+    public static Item smithing_workbench;
+
 }

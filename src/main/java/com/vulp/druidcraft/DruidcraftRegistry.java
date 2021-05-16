@@ -112,7 +112,7 @@ public class DruidcraftRegistry {
                         ItemRegistry.fiery_chestplate = new FieryArmorItem(ArmorMaterialRegistry.fiery, EquipmentSlotType.CHEST, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("fiery_chestplate")),
                         ItemRegistry.fiery_leggings = new FieryArmorItem(ArmorMaterialRegistry.fiery, EquipmentSlotType.LEGS, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("fiery_leggings")),
                         ItemRegistry.fiery_boots = new FieryArmorItem(ArmorMaterialRegistry.fiery, EquipmentSlotType.FEET, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("fiery_boots")),
-                        ItemRegistry.fiery_shield = new BasicShieldItem(new Item.Properties().group(DRUIDCRAFT_WIP).maxDamage(1450).setISTER(() -> ItemTileEntityRenderer::new), ItemRegistry.fiery_shield).setRegistryName(location("fiery_shield")),
+                        ItemRegistry.fiery_shield = new BasicShieldItem(new Item.Properties().group(DRUIDCRAFT_WIP).maxDamage(1450).setISTER(() -> ItemTileEntityRenderer::new), ItemRegistry.tempered_fiery_glass).setRegistryName(location("fiery_shield")),
                         
                         ItemRegistry.wooden_sickle = new SickleItem(new ItemProperties().attackDamage(0).attackSpeed(-1.5f).tier(ItemTier.WOOD).radius(1).setGroup(ItemGroup.TOOLS)).setRegistryName(location("wooden_sickle")),
                         ItemRegistry.stone_sickle = new SickleItem(new ItemProperties().attackDamage(0).attackSpeed(-1.5f).tier(ItemTier.STONE).radius(2).setGroup(ItemGroup.TOOLS)).setRegistryName(location("stone_sickle")),
@@ -306,8 +306,10 @@ public class DruidcraftRegistry {
                         ItemRegistry.thundercloud_block = new BlockItem(BlockRegistry.thundercloud_block, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.thundercloud_block.getRegistryName()),
                         ItemRegistry.crystalized_thundercloud_block = new BlockItem(BlockRegistry.crystalized_thundercloud_block, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.crystalized_thundercloud_block.getRegistryName()),
                         ItemRegistry.sulfur_cloud_block = new BlockItem(BlockRegistry.sulfur_cloud_block, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.sulfur_cloud_block.getRegistryName()),
-                        ItemRegistry.skyberry_bush = new BlockItem(BlockRegistry.skyberry_bush, new Item.Properties()).setRegistryName(BlockRegistry.skyberry_bush.getRegistryName()),
-                        ItemRegistry.live_skyberry_bush = new BlockItem(BlockRegistry.live_skyberry_bush, new Item.Properties()).setRegistryName(BlockRegistry.live_skyberry_bush.getRegistryName())
+                        ItemRegistry.skyberry_bush = new BlockItem(BlockRegistry.skyberry_bush, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.skyberry_bush.getRegistryName()),
+                        ItemRegistry.live_skyberry_bush = new BlockItem(BlockRegistry.live_skyberry_bush, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.live_skyberry_bush.getRegistryName()),
+                        ItemRegistry.smithing_workbench = new BlockItem(BlockRegistry.smithing_workbench, new Item.Properties()).setRegistryName(BlockRegistry.smithing_workbench.getRegistryName())
+
                 );
 
         EntityRegistry.registerEntitySpawnEggs(itemRegistryEvent);
@@ -412,6 +414,7 @@ public class DruidcraftRegistry {
         RecipeRegistryEvent.getRegistry().register(RecipeSerializers.woodcutting.setRegistryName(location("woodcutting")));
         RecipeRegistryEvent.getRegistry().register(RecipeSerializers.hellkiln_smelting.setRegistryName(location("hellkiln_smelting")));
         RecipeRegistryEvent.getRegistry().register(RecipeSerializers.infernal_lantern_fuelling.setRegistryName(location("infernal_lantern_fuelling")));
+        RecipeRegistryEvent.getRegistry().register(RecipeSerializers.advanced_smithing.setRegistryName(location("advanced_smithing")));
 
         LOGGER.info("Recipes registered.");
     }
@@ -430,7 +433,8 @@ public class DruidcraftRegistry {
                         GUIRegistry.woodcutter,
                         GUIRegistry.travel_pack,
                         GUIRegistry.hellkiln,
-                        GUIRegistry.hellkiln_igniter
+                        GUIRegistry.hellkiln_igniter,
+                        GUIRegistry.smithing_workbench
                 );
 
         LOGGER.info("GUI registered.");
@@ -466,6 +470,7 @@ public class DruidcraftRegistry {
             event.addSprite(ItemTileEntityRenderer.bone_shield_tex);
             event.addSprite(ItemTileEntityRenderer.chitin_shield_tex);
             event.addSprite(ItemTileEntityRenderer.moonstone_shield_tex);
+            event.addSprite(ItemTileEntityRenderer.fiery_shield_tex);
             event.addSprite(SmallBeamTileEntityRenderer.texture);
         } else if (event.getMap().getTextureLocation() == Atlases.CHEST_ATLAS) {
             for (Block block : BlockRegistry.getChestList())

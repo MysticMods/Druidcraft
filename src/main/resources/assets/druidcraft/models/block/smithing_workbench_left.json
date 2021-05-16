@@ -1,0 +1,25 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"6": "druidcraft:block/smithing_workbench_back_metal",
+		"9": "druidcraft:block/smithing_workbench_front_metal",
+		"10": "druidcraft:block/smithing_workbench_bottom",
+		"12": "druidcraft:block/smithing_workbench_side_metal",
+		"14": "druidcraft:block/smithing_workbench_top_metal",
+		"particle": "druidcraft:block/smithing_workbench_side_metal"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#9", "cullface": "north"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#12", "cullface": "east"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#6", "cullface": "south"},
+				"up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#14", "cullface": "up"},
+				"down": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#10", "cullface": "down"}
+			}
+		}
+	]
+}

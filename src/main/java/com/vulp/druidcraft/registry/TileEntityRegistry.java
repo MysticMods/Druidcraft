@@ -25,11 +25,4 @@ public class TileEntityRegistry {
         return type;
     }
 
-    public static <T extends TileEntity> BlocklessTileEntityType<T> registerBlockless(String id, BlocklessTileEntityType.Builder<T> builder)
-    {
-        BlocklessTileEntityType<T> type = builder.build(null);
-        type.setRegistryName(Druidcraft.MODID, id);
-        return type;
-    }
-
 }

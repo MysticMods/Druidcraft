@@ -1,6 +1,5 @@
 package com.vulp.druidcraft.items;
 
-import com.vulp.druidcraft.blocks.tileentities.BlocklessTileEntityType;
 import com.vulp.druidcraft.entities.BlockInhabitingEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;

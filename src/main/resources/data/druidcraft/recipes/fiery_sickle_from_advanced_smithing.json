@@ -1,0 +1,17 @@
+{
+  "type": "druidcraft:advanced_smithing",
+  "base": {
+    "item": "druidcraft:diamond_sickle"
+  },
+  "additions": [
+    {
+      "item": "druidcraft:blazing_steel"
+    },
+    {
+      "item": "druidcraft:tempered_fiery_glass"
+    }
+  ],
+  "result": {
+    "item": "druidcraft:fiery_sickle"
+  }
+}

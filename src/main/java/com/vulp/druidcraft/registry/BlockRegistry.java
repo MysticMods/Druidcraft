@@ -210,6 +210,7 @@ public class BlockRegistry {
   public static Block sulfur_cloud_block = register("sulfur_cloud_block", new Block(Block.Properties.create(Material.WOOL).hardnessAndResistance(0.5f).sound(SoundType.SNOW)));
   public static Block skyberry_bush = register("skyberry_bush", new Block(Block.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).sound(SoundType.PLANT)));
   public static Block live_skyberry_bush = register("live_skyberry_bush", new Block(Block.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).sound(SoundType.PLANT)));
+  public static Block smithing_workbench = register("smithing_workbench", new SmithingWorkbenchBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(1.75f)));
 
   private static Block registerChest(String name, Block block) {
     CHESTS.add(block);

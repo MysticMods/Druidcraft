@@ -24,4 +24,6 @@ public class GUIRegistry {
     public static ContainerType<HellkilnContainer> hellkiln = (ContainerType<HellkilnContainer>) new ContainerType<>(HellkilnContainer::new).setRegistryName(Druidcraft.MODID, "hellkiln");
     public static ContainerType<HellkilnIgniterContainer> hellkiln_igniter = (ContainerType<HellkilnIgniterContainer>) new ContainerType<>(HellkilnIgniterContainer::new).setRegistryName(Druidcraft.MODID, "hellkiln_igniter");
     public static ContainerType<TravelPackContainer> travel_pack = (ContainerType<TravelPackContainer>) new ContainerType<>(TravelPackContainer::createClientContainer).setRegistryName(Druidcraft.MODID, "travel_pack");
+    public static ContainerType<SmithingWorkbenchContainer> smithing_workbench = (ContainerType<SmithingWorkbenchContainer>) new ContainerType<>(SmithingWorkbenchContainer::new).setRegistryName(Druidcraft.MODID, "smithing_workbench");
+
 }

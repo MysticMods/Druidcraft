@@ -5,6 +5,7 @@ import com.vulp.druidcraft.entities.DuragemProtectionEntity;
 import com.vulp.druidcraft.entities.FieryGlassGlowEntity;
 import com.vulp.druidcraft.registry.EntityRegistry;
 import com.vulp.druidcraft.registry.ParticleRegistry;
+import com.vulp.druidcraft.util.ParticleUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.item.Item;
@@ -58,7 +59,10 @@ public class EnchantedSoapItem extends Item {
 
     public static void spawnWashParticles(World world, BlockPos pos) {
         Random rand = new Random();
-/*        VoxelShape shape = world.getBlockState(pos).getShape(world, pos);
+        ParticleUtil.makeBlockParticles(ParticleRegistry.enchanted_bubble, world, pos, rand.nextGaussian() * 0.005D, rand.nextGaussian() * 0.005D, rand.nextGaussian() * 0.005D);
+/*
+        Random rand = new Random();
+        VoxelShape shape = world.getBlockState(pos).getShape(world, pos);
         float xStart = (float) (shape.getStart(Direction.Axis.X) / 16.0F);
         float yStart = (float) (shape.getStart(Direction.Axis.Y) / 16.0F);
         float zStart = (float) (shape.getStart(Direction.Axis.Z) / 16.0F);
@@ -78,11 +82,11 @@ public class EnchantedSoapItem extends Item {
                 z = pos.getZ() - 0.5F + zEnd + rand.nextFloat() * 0.125F;
             }
             world.addParticle(ParticleTypes.END_ROD, x, y, z, rand.nextGaussian() * 0.005D, rand.nextGaussian() * 0.005D, rand.nextGaussian() * 0.005D);
-        }*/
+        }
         int j = world.getBlockState(pos).isSolidSide(world, pos, Direction.UP) ? 2 : 1;
         for (int i = 0; i < rand.nextInt(10) + 10 * j; i++) {
             world.addParticle(ParticleRegistry.enchanted_bubble, pos.getX() - 0.2D + (rand.nextDouble() * 1.4D), pos.getY() - 0.2D + (rand.nextDouble() * 1.4D), pos.getZ() - 0.2D + (rand.nextDouble() * 1.4D), rand.nextGaussian() * 0.005D, rand.nextGaussian() * 0.005D, rand.nextGaussian() * 0.005D);
-        }
+        }*/
     }
 
 }

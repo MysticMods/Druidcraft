@@ -6,6 +6,7 @@ import com.vulp.druidcraft.blocks.BedrollBlock;
 import com.vulp.druidcraft.config.DropRateConfig;
 import com.vulp.druidcraft.entities.DuragemProtectionEntity;
 import com.vulp.druidcraft.inventory.TravelPackInventory;
+import com.vulp.druidcraft.items.KnifeItem;
 import com.vulp.druidcraft.items.TravelPackItem;
 import com.vulp.druidcraft.network.PacketHandler;
 import com.vulp.druidcraft.network.message.BlockProtectionVisualMessage;

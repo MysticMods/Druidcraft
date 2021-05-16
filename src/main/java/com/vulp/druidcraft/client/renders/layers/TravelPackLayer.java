@@ -38,6 +38,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+// TODO: Make this render other player's backpacks too!
 @OnlyIn(Dist.CLIENT)
 public class TravelPackLayer<T extends PlayerEntity, M extends BipedModel<T>, A extends BipedModel<T>> extends LayerRenderer<T, M> {
     protected final A normal_pack;

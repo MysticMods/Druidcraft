@@ -1,0 +1,34 @@
+{
+    "variants": {
+        "facing=north,side=left": {
+			"model": "druidcraft:block/smithing_workbench_left"
+		},
+		"facing=north,side=right": {
+			"model": "druidcraft:block/smithing_workbench_right"
+		},
+		"facing=east,side=left": {
+			"model": "druidcraft:block/smithing_workbench_left",
+            "y": 90
+		},
+		"facing=east,side=right": {
+			"model": "druidcraft:block/smithing_workbench_right",
+            "y": 90
+		},
+		"facing=south,side=left": {
+			"model": "druidcraft:block/smithing_workbench_left",
+            "y": 180
+		},
+		"facing=south,side=right": {
+			"model": "druidcraft:block/smithing_workbench_right",
+            "y": 180
+		},
+		"facing=west,side=left": {
+			"model": "druidcraft:block/smithing_workbench_left",
+            "y": 270
+		},
+		"facing=west,side=right": {
+			"model": "druidcraft:block/smithing_workbench_right",
+            "y": 270
+		}
+    }
+}
