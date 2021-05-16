@@ -1,0 +1,23 @@
+{
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    {
+      "item": "druidcraft:elder_door"
+    }
+  ],
+  "tool": {
+    "type": "farmersdelight:tool",
+    "tool": "axe"
+  },
+  "result": [
+    {
+      "item": "druidcraft:elder_planks"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "druidcraft"
+    }
+  ]
+}
