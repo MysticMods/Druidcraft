@@ -12,7 +12,6 @@ buildscript {
 }
 
 apply plugin: 'net.minecraftforge.gradle'
-// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
@@ -20,22 +19,13 @@ apply plugin: 'org.spongepowered.mixin'
 archivesBaseName = project.archives_base_name
 group = project.maven_group
 
-if (System.env.CI == "true") {
-    def branch
-    branch = System.env.GITHUB_REF
-    branch = branch.substring(branch.lastIndexOf("/") + 1)
-
-    version = "${project.mod_version}+a${System.env.GITHUB_RUN_NUMBER}.${branch}-forge"
-} else {
-    version = "${project.mod_version}+${project.minecraft_version}-forge"
-}
+version = "${project.minecraft_version}-${mod_version}"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 mixin {
     add sourceSets.main, "druidcraft.refmap.json"
 }
-
 
 repositories {
     maven {
@@ -49,6 +39,11 @@ repositories {
         name = "ModMaven"
         url = "https://modmaven.k-4u.nl"
     }
+    maven { url = 'https://repo.spongepowered.org/maven/' }
+
+    maven { url = 'https://dist.creeper.host/Sponge/maven' }
+    jcenter()
+    mavenCentral()
 }
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
@@ -122,9 +117,11 @@ dependencies {
     minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
     compileOnly fg.deobf("mezz.jei:jei-${project.jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${project.jei_version}")
+
+    compile 'org.spongepowered:mixin:0.8.2'
+    annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
 }
 
-// Example for how to get properties into the manifest for reading by the runtime..
 jar {
     manifest {
         attributes([
@@ -140,11 +137,7 @@ jar {
     }
 }
 
-// Example configuration to allow publishing using the maven-publish task
-// This is the preferred method to reobfuscate your jar file
 jar.finalizedBy('reobfJar')
-// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
-//publish.dependsOn('reobfJar')
 
 publishing {
     publications {
@@ -154,10 +147,6 @@ publishing {
     }
 }
 
-////////////////
-// IntelliJ Project Import
-// The Mixin annotation process does not have an obfuscation source when running through the IntelliJ compiler,
-// thus we have to prevent it from being activated as part of importing this Gradle project into IntelliJ.
 if (System.getProperty("idea.sync.active") == "true") {
     afterEvaluate {
         tasks.withType(JavaCompile).all {
