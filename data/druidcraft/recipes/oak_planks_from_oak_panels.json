@@ -1,1 +1,1 @@
-{"type":"minecraft:crafting_shapeless","ingredients":[{"item":"druidcraft:oak_small_beam"}],"result":{"item":"minecraft:oak_planks","count":1}, "group":"plank_recycle"}
+{"type":"minecraft:crafting_shapeless","ingredients":[{"item":"druidcraft:oak_panels"}],"result":{"item":"minecraft:oak_planks","count":1}, "group":"plank_recycle"}
