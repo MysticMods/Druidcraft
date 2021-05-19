@@ -1,1 +1,1 @@
-{"type":"minecraft:crafting_shapeless","ingredients":[{"item":"druidcraft:birch_small_beam"}],"result":{"item":"minecraft:birch_planks","count":1}, "group":"plank_recycle"}
+{"type":"minecraft:crafting_shapeless","ingredients":[{"item":"druidcraft:dark_oak_panels"}],"result":{"item":"minecraft:dark_oak_planks","count":1}, "group":"plank_recycle"}
