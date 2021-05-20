@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "druidcraft:wooden_sickle",
+    "druidcraft:stone_sickle",
+    "druidcraft:iron_sickle",
+    "druidcraft:gold_sickle",
+    "druidcraft:diamond_sickle",
+    "druidcraft:bone_sickle",
+    "druidcraft:moonstone_sickle"
+  ]
+}
