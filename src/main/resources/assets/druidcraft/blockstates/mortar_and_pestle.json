@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "druidcraft:block/mortar_and_pestle",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "druidcraft:block/mortar_and_pestle"
+    },
+    "facing=south": {
+      "model": "druidcraft:block/mortar_and_pestle",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "druidcraft:block/mortar_and_pestle",
+      "y": 270
+    }
+  }
+}

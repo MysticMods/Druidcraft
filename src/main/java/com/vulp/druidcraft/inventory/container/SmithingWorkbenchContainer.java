@@ -1,7 +1,5 @@
 package com.vulp.druidcraft.inventory.container;
 
-import com.mojang.datafixers.util.Pair;
-import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.recipes.AdvancedSmithingRecipe;
 import com.vulp.druidcraft.recipes.IModdedRecipeType;
 import com.vulp.druidcraft.registry.BlockRegistry;
@@ -16,7 +14,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.SmithingRecipe;
@@ -24,7 +21,6 @@ import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class SmithingWorkbenchContainer extends Container {

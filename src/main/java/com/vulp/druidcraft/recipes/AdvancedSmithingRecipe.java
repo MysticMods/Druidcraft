@@ -3,7 +3,7 @@ package com.vulp.druidcraft.recipes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import net.minecraft.block.Blocks;
+import com.vulp.druidcraft.registry.BlockRegistry;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
@@ -14,12 +14,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AdvancedSmithingRecipe implements IRecipe<IInventory> {
 
-    public static final List<AdvancedSmithingRecipe> SMITHING_LIST = new ArrayList<>();
     public final Ingredient base;
     public final NonNullList<Ingredient> additions;
     private final ItemStack result;
@@ -30,7 +26,6 @@ public class AdvancedSmithingRecipe implements IRecipe<IInventory> {
         this.base = base;
         this.additions = additions;
         this.result = result;
-        SMITHING_LIST.add(this);
     }
 
     public boolean matches(IInventory inv, World worldIn) {
@@ -72,7 +67,7 @@ public class AdvancedSmithingRecipe implements IRecipe<IInventory> {
     }
 
     public boolean canFit(int width, int height) {
-        return width * height >= 7;
+        return width * height <= 7;
     }
 
     public ItemStack getRecipeOutput() {
@@ -89,7 +84,7 @@ public class AdvancedSmithingRecipe implements IRecipe<IInventory> {
     }
 
     public ItemStack getIcon() {
-        return new ItemStack(Blocks.SMITHING_TABLE);
+        return new ItemStack(BlockRegistry.smithing_workbench);
     }
 
     public ResourceLocation getId() {

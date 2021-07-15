@@ -17,6 +17,8 @@ public class TileEntityRegistry {
     public static TileEntityType<CustomSignTileEntity> custom_sign;
     public static TileEntityType<CustomChestTileEntity> custom_chest;
     public static TileEntityType<CustomTrappedChestTileEntity> custom_trapped_chest;
+    public static TileEntityType<MortarAndPestleTileEntity> mortar_and_pestle;
+    public static TileEntityType<FluidCraftingTableTileEntity> fluid_crafting_table;
 
     public static <T extends TileEntity> TileEntityType<T> register(String id, TileEntityType.Builder<T> builder)
     {

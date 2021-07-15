@@ -47,11 +47,7 @@ public class SmithingWorkbenchScreen extends ContainerScreen<SmithingWorkbenchCo
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         RenderSystem.disableBlend();
-        this.renderNameField(matrixStack, mouseX, mouseY, partialTicks);
         this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
-    }
-
-    protected void renderNameField(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
     }
 
     protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {

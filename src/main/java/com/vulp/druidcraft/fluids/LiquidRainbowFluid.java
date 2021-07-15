@@ -52,8 +52,8 @@ public abstract class LiquidRainbowFluid extends FlowingFluid {
     @Override
     public FluidAttributes createAttributes() {
         return net.minecraftforge.fluids.FluidAttributes.builder(
-                DruidcraftRegistry.location("block/liquid_rainbow"),
-                DruidcraftRegistry.location("block/liquid_rainbow"))
+                DruidcraftRegistry.location("block/liquid_rainbow_still"),
+                DruidcraftRegistry.location("block/liquid_rainbow_flowing"))
                 .overlay(new net.minecraft.util.ResourceLocation("block/water_overlay"))
                 .translationKey(DruidcraftRegistry.location("liquid_rainbow").toString())
                 .build(this);
@@ -68,7 +68,6 @@ public abstract class LiquidRainbowFluid extends FlowingFluid {
         } else if (random.nextInt(10) == 0) {
             worldIn.addParticle(ParticleTypes.UNDERWATER, (double)pos.getX() + random.nextDouble(), (double)pos.getY() + random.nextDouble(), (double)pos.getZ() + random.nextDouble(), 0.0D, 0.0D, 0.0D);
         }
-
     }
 
     @Nullable

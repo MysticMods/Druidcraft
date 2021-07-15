@@ -1,4 +1,6 @@
 {
+  "druidcraft.gui.question_mark": "?",
+
   "block.druidcraft.hold_shift": "Hold [SHIFT] for more info.",
   "item.druidcraft.hold_shift": "Hold [SHIFT] for more info.",
 
@@ -78,6 +80,8 @@
   "item.druidcraft.duragem": "Duragem",
   "item.druidcraft.crushed_duragem": "Crushed Duragem",
   "item.druidcraft.enchanted_soap": "Enchanted Soap",
+  "item.druidcraft.flour": "Flour",
+  "item.druidcraft.dough": "Dough",
 
   "block.druidcraft.amber_ore": "Amber Ore",
   "block.druidcraft.moonstone_ore": "Moonstone Ore",
@@ -214,7 +218,10 @@
   "block.druidcraft.infernal_flare": "Infernal Flare",
   "block.druidcraft.duragem_ore": "Duragem Ore",
   "block.druidcraft.duragem_block": "Block of Duragem",
-
+  "block.druidcraft.mortar_and_pestle": "Mortar & Pestle",
+  "block.druidcraft.mortar_and_pestle.button_enabled": "Hold to grind item",
+  "block.druidcraft.mortar_and_pestle.button_pressed": "Grinding...",
+  "block.druidcraft.mortar_and_pestle.button_disabled": "Unable to grind",
   "entity.druidcraft.dreadfish": "Dreadfish",
   "entity.druidcraft.beetle": "Beetle",
   "entity.druidcraft.lunar_moth": "Lunar Moth",
@@ -228,6 +235,12 @@
   "container.druidcraft.woodcutter": "Woodcutter",
   "container.druidcraft.hellkiln": "Hellkiln",
   "container.druidcraft.hellkiln_igniter": "Hellkiln Igniter",
+  "container.druidcraft.smithing_workbench": "Upgrade Gear",
+  "container.druidcraft.advanced_smithing": "Smithing Workbench",
+  "container.druidcraft.mortar_and_pestle": "Mortar & Pestle",
+  "container.druidcraft.fluid_crafting": "Fluid Crafting",
+  "container.druidcraft.fluid_crafting.description": "Recipes can be crafted by standing in the fluid or by using a Fluid Basin.",
+  "container.druidcraft.fluid_crafting_table": "Crafting Basin",
 
   "biome.druidcraft.darkwood_forest": "Darkwood Forest",
 

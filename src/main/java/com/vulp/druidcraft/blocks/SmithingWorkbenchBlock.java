@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.blocks;
 
+import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.api.SideType;
 import com.vulp.druidcraft.api.StackPart;
 import com.vulp.druidcraft.inventory.container.SmithingWorkbenchContainer;
@@ -29,7 +30,7 @@ import net.minecraft.world.World;
 
 public class SmithingWorkbenchBlock extends Block {
 
-    private static final ITextComponent CONTAINER_NAME = new TranslationTextComponent("container.upgrade");
+    private static final ITextComponent CONTAINER_NAME = new TranslationTextComponent("container." + Druidcraft.MODID + ".smithing_workbench");
 
     public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
     public static final EnumProperty<SideType> TYPE = EnumProperty.create("side", SideType.class);

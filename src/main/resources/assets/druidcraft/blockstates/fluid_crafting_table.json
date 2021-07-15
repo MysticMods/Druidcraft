@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "empty=true": { "model": "druidcraft:block/fluid_crafting_table_empty" },
+        "empty=false": { "model": "druidcraft:block/fluid_crafting_table_full" }
+    }
+}

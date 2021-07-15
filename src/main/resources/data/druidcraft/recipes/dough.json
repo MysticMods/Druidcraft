@@ -1,0 +1,13 @@
+{
+    "type": "druidcraft:fluid_crafting",
+	"fluid_ingredient": { "fluid": "minecraft:water" },
+	"pattern": [
+        "##"
+    ],
+    "key": {
+        "#": {
+            "item": "druidcraft:flour"
+        }
+    },
+    "result": { "item": "druidcraft:dough", "count": 1 }
+}

@@ -9,6 +9,7 @@ import com.vulp.druidcraft.client.renders.layers.TravelPackLayer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.gui.screen.inventory.CraftingScreen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.entity.LivingRenderer;
@@ -51,6 +52,7 @@ public class RenderRegistry
         ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.custom_sign, SignTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.custom_chest, CustomChestTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.custom_trapped_chest, CustomChestTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.fluid_crafting_table, FluidCraftingTableTileEntityRenderer::new);
 
         // ITEM TILE ENTITIES
         ItemModelsProperties.registerProperty(ItemRegistry.chitin_shield, new ResourceLocation("blocking"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
@@ -96,6 +98,7 @@ public class RenderRegistry
             RenderTypeLookup.setRenderLayer(BlockRegistry.wall_flare_torch, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.ice_bricks, RenderType.getTranslucent());
             RenderTypeLookup.setRenderLayer(BlockRegistry.worked_ice, RenderType.getTranslucent());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.fluid_crafting_table, RenderType.getTranslucent());
             //    RenderTypeLookup.setRenderLayer(BlockRegistry.fruit_door, RenderType.getCutout());
             //    RenderTypeLookup.setRenderLayer(BlockRegistry.fruit_leaves, RenderType.getCutout());
             //    RenderTypeLookup.setRenderLayer(BlockRegistry.fruit_sapling, RenderType.getCutout());
@@ -137,7 +140,8 @@ public class RenderRegistry
             ScreenManager.registerFactory(GUIRegistry.hellkiln, HellkilnScreen::new);
             ScreenManager.registerFactory(GUIRegistry.hellkiln_igniter, HellkilnIgniterScreen::new);
             ScreenManager.registerFactory(GUIRegistry.smithing_workbench, SmithingWorkbenchScreen::new);
-
+            ScreenManager.registerFactory(GUIRegistry.mortar_and_pestle, MortarAndPestleScreen::new);
+            ScreenManager.registerFactory(GUIRegistry.fluid_crafting_table, FluidCraftingTableScreen::new);
 
             // PLAYER MODEL HOOK
             Map<String, PlayerRenderer> playerSkinMap = Minecraft.getInstance().getRenderManager().getSkinMap();

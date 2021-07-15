@@ -1,5 +1,6 @@
 {
-    "type": "druidcraft:water_crafting",
+    "type": "druidcraft:fluid_crafting",
+	"fluid_ingredient": { "fluid": "minecraft:water" },
 	"pattern": [
         "##",
 		"##"

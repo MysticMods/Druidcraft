@@ -298,5 +298,7 @@ public class ItemRegistry
     public static Item live_skyberries;
 
     public static Item smithing_workbench;
-
+    public static Item mortar_and_pestle;
+    public static Item flour;
+    public static Item dough;
 }

@@ -1,0 +1,72 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "druidcraft:block/fluid_crafting_table_basin",
+		"1": "druidcraft:block/fluid_crafting_table_bottom",
+		"3": "druidcraft:block/fluid_crafting_table_side",
+		"4": "druidcraft:block/fluid_crafting_table_top",
+		"5": "druidcraft:block/fluid_crafting_table_grid",
+		"particle": "druidcraft:block/fluid_crafting_table_basin"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 11, 16],
+			"faces": {
+				"north": {"uv": [0, 5, 16, 16], "texture": "#3"},
+				"east": {"uv": [0, 5, 16, 16], "texture": "#3"},
+				"south": {"uv": [0, 5, 16, 16], "texture": "#3"},
+				"west": {"uv": [0, 5, 16, 16], "texture": "#3"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#1"}
+			}
+		},
+		{
+			"from": [3, 15.5, 3],
+			"to": [13, 15.5, 13],
+			"faces": {
+				"up": {"uv": [3, 3, 13, 13], "texture": "#5"}
+			}
+		},
+		{
+			"from": [0, 11, 0],
+			"to": [14, 16, 2],
+			"faces": {
+				"north": {"uv": [2, 0, 16, 5], "texture": "#3"},
+				"south": {"uv": [0, 2, 14, 7], "texture": "#4"},
+				"west": {"uv": [0, 0, 2, 5], "texture": "#3"},
+				"up": {"uv": [2, 14, 16, 16], "rotation": 180, "texture": "#4"}
+			}
+		},
+		{
+			"from": [2, 11, 14],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 2, 14, 7], "texture": "#4"},
+				"east": {"uv": [0, 0, 2, 5], "texture": "#3"},
+				"south": {"uv": [2, 0, 16, 5], "texture": "#3"},
+				"up": {"uv": [0, 0, 14, 2], "rotation": 180, "texture": "#4"}
+			}
+		},
+		{
+			"from": [0, 11, 2],
+			"to": [2, 16, 16],
+			"faces": {
+				"east": {"uv": [0, 2, 14, 7], "texture": "#4"},
+				"south": {"uv": [0, 0, 2, 5], "texture": "#3"},
+				"west": {"uv": [2, 0, 16, 5], "texture": "#3"},
+				"up": {"uv": [14, 0, 16, 14], "rotation": 180, "texture": "#4"}
+			}
+		},
+		{
+			"from": [14, 11, 0],
+			"to": [16, 16, 14],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 5], "texture": "#3"},
+				"east": {"uv": [2, 0, 16, 5], "texture": "#3"},
+				"west": {"uv": [0, 2, 14, 7], "texture": "#4"},
+				"up": {"uv": [0, 2, 2, 16], "rotation": 180, "texture": "#4"}
+			}
+		}
+	]
+}

@@ -1,10 +1,7 @@
 package com.vulp.druidcraft.network;
 
 import com.vulp.druidcraft.Druidcraft;
-import com.vulp.druidcraft.network.message.DeployBedrollMessage;
-import com.vulp.druidcraft.network.message.BlockProtectionVisualMessage;
-import com.vulp.druidcraft.network.message.IMessage;
-import com.vulp.druidcraft.network.message.FlareTorchParticleMessage;
+import com.vulp.druidcraft.network.message.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
@@ -26,6 +23,8 @@ public class PacketHandler {
         register(DeployBedrollMessage.class, new DeployBedrollMessage());
         register(BlockProtectionVisualMessage.class, new BlockProtectionVisualMessage());
         register(FlareTorchParticleMessage.class, new FlareTorchParticleMessage());
+        register(MortarGrindMessage.class, new MortarGrindMessage());
+        register(FluidCraftingIDMessage.class, new FluidCraftingIDMessage());
     }
 
     private static <T> void register(Class<T> clazz, IMessage<T> message)

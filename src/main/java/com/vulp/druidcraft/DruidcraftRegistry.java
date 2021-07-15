@@ -1,6 +1,5 @@
 package com.vulp.druidcraft;
 
-import com.vulp.druidcraft.api.ChestToString;
 import com.vulp.druidcraft.blocks.*;
 import com.vulp.druidcraft.blocks.tileentities.*;
 import com.vulp.druidcraft.client.renders.CustomChestTileEntityRenderer;
@@ -8,7 +7,6 @@ import com.vulp.druidcraft.client.renders.ItemTileEntityRenderer;
 import com.vulp.druidcraft.client.renders.SmallBeamTileEntityRenderer;
 import com.vulp.druidcraft.entities.CustomBoatEntity;
 import com.vulp.druidcraft.entities.DuragemProtectionEntity;
-import com.vulp.druidcraft.entities.FieryGlassGlowEntity;
 import com.vulp.druidcraft.entities.LunarMothColors;
 import com.vulp.druidcraft.fluids.LiquidRainbowFluid;
 import com.vulp.druidcraft.items.*;
@@ -28,7 +26,6 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -148,6 +145,8 @@ public class DruidcraftRegistry {
                         ItemRegistry.liquid_rainbow_bucket = new BucketItem(() -> FluidRegistry.liquid_rainbow, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName("liquid_rainbow_bucket"),
                         ItemRegistry.skyberries = new Item(new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("skyberries")),
                         ItemRegistry.live_skyberries = new Item(new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("live_skyberries")),
+                        ItemRegistry.flour = new Item(new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("flour")),
+                        ItemRegistry.dough = new Item(new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(location("dough")),
 
                         // Item-blocks:
                         ItemRegistry.amber_ore = new BlockItem(BlockRegistry.amber_ore, new Item.Properties().group(DRUIDCRAFT)).setRegistryName(BlockRegistry.amber_ore.getRegistryName()),
@@ -308,7 +307,8 @@ public class DruidcraftRegistry {
                         ItemRegistry.sulfur_cloud_block = new BlockItem(BlockRegistry.sulfur_cloud_block, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.sulfur_cloud_block.getRegistryName()),
                         ItemRegistry.skyberry_bush = new BlockItem(BlockRegistry.skyberry_bush, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.skyberry_bush.getRegistryName()),
                         ItemRegistry.live_skyberry_bush = new BlockItem(BlockRegistry.live_skyberry_bush, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.live_skyberry_bush.getRegistryName()),
-                        ItemRegistry.smithing_workbench = new BlockItem(BlockRegistry.smithing_workbench, new Item.Properties()).setRegistryName(BlockRegistry.smithing_workbench.getRegistryName())
+                        ItemRegistry.smithing_workbench = new BlockItem(BlockRegistry.smithing_workbench, new Item.Properties()).setRegistryName(BlockRegistry.smithing_workbench.getRegistryName()),
+                        ItemRegistry.mortar_and_pestle = new BlockItem(BlockRegistry.mortar_and_pestle, new Item.Properties().group(DRUIDCRAFT_WIP)).setRegistryName(BlockRegistry.mortar_and_pestle.getRegistryName())
 
                 );
 
@@ -409,12 +409,12 @@ public class DruidcraftRegistry {
     @SubscribeEvent
     public static void onRecipeRegistry(final RegistryEvent.Register<IRecipeSerializer<?>> RecipeRegistryEvent)
     {
-
-        RecipeRegistry.register(RecipeRegistryEvent);
         RecipeRegistryEvent.getRegistry().register(RecipeSerializers.woodcutting.setRegistryName(location("woodcutting")));
+        RecipeRegistryEvent.getRegistry().register(RecipeSerializers.fluid_crafting.setRegistryName(location("fluid_crafting")));
         RecipeRegistryEvent.getRegistry().register(RecipeSerializers.hellkiln_smelting.setRegistryName(location("hellkiln_smelting")));
         RecipeRegistryEvent.getRegistry().register(RecipeSerializers.infernal_lantern_fuelling.setRegistryName(location("infernal_lantern_fuelling")));
         RecipeRegistryEvent.getRegistry().register(RecipeSerializers.advanced_smithing.setRegistryName(location("advanced_smithing")));
+        RecipeRegistryEvent.getRegistry().register(RecipeSerializers.mortar_and_pestle.setRegistryName(location("mortar_and_pestle")));
 
         LOGGER.info("Recipes registered.");
     }
@@ -434,7 +434,9 @@ public class DruidcraftRegistry {
                         GUIRegistry.travel_pack,
                         GUIRegistry.hellkiln,
                         GUIRegistry.hellkiln_igniter,
-                        GUIRegistry.smithing_workbench
+                        GUIRegistry.smithing_workbench,
+                        GUIRegistry.mortar_and_pestle,
+                        GUIRegistry.fluid_crafting_table
                 );
 
         LOGGER.info("GUI registered.");
@@ -455,7 +457,10 @@ public class DruidcraftRegistry {
                         TileEntityRegistry.flare_torch = TileEntityRegistry.register("flare_torch", TileEntityType.Builder.create(FlareTorchTileEntity::new, BlockRegistry.flare_torch, BlockRegistry.wall_flare_torch)),
                         TileEntityRegistry.custom_sign = TileEntityRegistry.register("custom_sign", TileEntityType.Builder.create(CustomSignTileEntity::new, BlockRegistry.darkwood_sign, BlockRegistry.darkwood_wall_sign)),
                         TileEntityRegistry.custom_chest = TileEntityRegistry.register("custom_chest", TileEntityType.Builder.create(CustomChestTileEntity::new, BlockRegistry.darkwood_chest)),
-                        TileEntityRegistry.custom_trapped_chest = TileEntityRegistry.register("custom_trapped_chest", TileEntityType.Builder.create(CustomTrappedChestTileEntity::new, BlockRegistry.trapped_darkwood_chest))
+                        TileEntityRegistry.custom_trapped_chest = TileEntityRegistry.register("custom_trapped_chest", TileEntityType.Builder.create(CustomTrappedChestTileEntity::new, BlockRegistry.trapped_darkwood_chest)),
+                        TileEntityRegistry.mortar_and_pestle = TileEntityRegistry.register("mortar_and_pestle", TileEntityType.Builder.create(MortarAndPestleTileEntity::new, BlockRegistry.mortar_and_pestle)),
+                        TileEntityRegistry.fluid_crafting_table = TileEntityRegistry.register("fluid_crafting_table", TileEntityType.Builder.create(FluidCraftingTableTileEntity::new, BlockRegistry.fluid_crafting_table))
+
                 );
 
         LOGGER.info("Tile Entities registered.");

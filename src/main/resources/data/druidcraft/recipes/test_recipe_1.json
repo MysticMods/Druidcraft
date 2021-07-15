@@ -1,0 +1,21 @@
+{
+    "type": "druidcraft:fluid_crafting",
+	"fluid_ingredient": { "fluid": "druidcraft:liquid_rainbow" },
+	"pattern": [
+        "#*#",
+		"*@*",
+		"#*#"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:coal_block"
+        },
+		"*": {
+            "item": "minecraft:gold_ingot"
+        },
+		"@": {
+            "item": "minecraft:magma_cream"
+        }
+    },
+    "result": { "item": "minecraft:diamond", "count": 4 }
+}

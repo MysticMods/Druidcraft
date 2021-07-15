@@ -1,0 +1,9 @@
+{
+  "type": "druidcraft:mortar_and_pestle",
+  "ingredient": {
+    "item": "minecraft:wheat"
+  },
+  "result": {
+    "item": "druidcraft:flour"
+  }
+}

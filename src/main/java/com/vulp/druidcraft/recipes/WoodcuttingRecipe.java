@@ -22,11 +22,9 @@ import java.util.List;
 import java.util.Map;
 
 public class WoodcuttingRecipe extends SingleItemRecipe {
-    public static final List<WoodcuttingRecipe> WOODCUTTER_LIST = new ArrayList<>();
 
     public WoodcuttingRecipe(ResourceLocation p_i50021_1_, String p_i50021_2_, Ingredient p_i50021_3_, ItemStack p_i50021_4_) {
         super(IModdedRecipeType.woodcutting, RecipeSerializers.woodcutting, p_i50021_1_, p_i50021_2_, p_i50021_3_, p_i50021_4_);
-        WOODCUTTER_LIST.add(this);
     }
 
     @Override
