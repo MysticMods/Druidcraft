@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "druidcraft.refmap.json",
   "mixins": [
+    "TestMixin"
   ],
   "client": [
   ],
