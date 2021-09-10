@@ -219,8 +219,8 @@
   "block.druidcraft.duragem_ore": "Minerale di duragemma",
   "block.druidcraft.duragem_block": "Blocco di duragemma",
   "block.druidcraft.mortar_and_pestle": "Mortaio & pestello",
-  "block.druidcraft.mortar_and_pestle.button_enabled": "Tenere premuto per molare l'oggettoHold to grind item",
-  "block.druidcraft.mortar_and_pestle.button_pressed": "Grinding...",
+  "block.druidcraft.mortar_and_pestle.button_enabled": "Tenere premuto per molare l'oggetto",
+  "block.druidcraft.mortar_and_pestle.button_pressed": "Molando...",
   "block.druidcraft.mortar_and_pestle.button_disabled": "Impossibile molare",
   "entity.druidcraft.dreadfish": "Pesce terrore",
   "entity.druidcraft.beetle": "Coleottero",
@@ -250,10 +250,10 @@
   "subtitles.druidcraft.ui.woodcutter.take_result": "Taglialegna usato",
 
   "itemGroup.druidcraft": "Druidcraft",
-  "itemGroup.druidcraft_wip": "Druidcraft WIP - No Touchy!",
+  "itemGroup.druidcraft_wip": "Druidcraft WIP - Non toccare!",
 
   "advancements.druidcraft.root.title": "Druidcraft",
-  "advancements.druidcraft.root.description": "Forage through grass for some hemp seeds per dei semi di ",
+  "advancements.druidcraft.root.description": "Forage through grass for some hemp seeds per dei semi di canapa",
   "advancements.druidcraft.grow_hemp.title": "é industriale, lo giuro! It's Industrial, I Swear!",
   "advancements.druidcraft.grow_hemp.description": "Plant some hemp and harvest it",
   "advancements.druidcraft.bone_armor.title": "Thick Skulled",
