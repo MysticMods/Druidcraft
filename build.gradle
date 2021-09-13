@@ -82,8 +82,6 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'info'
 
-            args 'nogui'
-
             mods {
                 druidcraft {
                     source sourceSets.main
