@@ -32,7 +32,7 @@ public class Druidcraft {
     public Druidcraft() {
         INSTANCE = this;
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Configuration.server_config);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Configuration.common_config);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Configuration.client_config);
 
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -41,7 +41,7 @@ public class Druidcraft {
         bus.addListener(this::doClientStuff);
         bus.addListener(this::doParticleStuff);
 
-        Configuration.loadConfig(Configuration.server_config, FMLPaths.CONFIGDIR.get().resolve("druidcraft-server.toml").toString());
+        Configuration.loadConfig(Configuration.common_config, FMLPaths.CONFIGDIR.get().resolve("druidcraft-common.toml").toString());
         Configuration.loadConfig(Configuration.client_config, FMLPaths.CONFIGDIR.get().resolve("druidcraft-client.toml").toString());
     }
 
@@ -51,7 +51,7 @@ public class Druidcraft {
         event.enqueueWork(() -> {
             // Registry.register(Registry.BIOME_PROVIDER_CODEC, new ResourceLocation(MODID, "druidcraft"), DruidcraftNetherBiomeProvider.CODEC);
             // TODO: Pull the list from NetherBiomeProvider somehow and then overwrite with the same list with custom biomes tacked onto the end.
-            NetherBiomeProvider.Preset.DEFAULT_NETHER_PROVIDER_PRESET = new NetherBiomeProvider.Preset(new ResourceLocation("nether"), (preset, lookupRegistry, seed) -> {
+            /*NetherBiomeProvider.Preset.DEFAULT_NETHER_PROVIDER_PRESET = new NetherBiomeProvider.Preset(new ResourceLocation("nether"), (preset, lookupRegistry, seed) -> {
                 return new NetherBiomeProvider(seed, ImmutableList.of(Pair.of(new Biome.Attributes(0.0F, 0.0F, 0.0F, 0.0F, 0.0F), () -> {
                     return lookupRegistry.getOrThrow(Biomes.NETHER_WASTES);
                 }), Pair.of(new Biome.Attributes(0.0F, -0.5F, 0.0F, 0.0F, 0.0F), () -> {
@@ -65,7 +65,7 @@ public class Druidcraft {
                 }), Pair.of(new Biome.Attributes(0.4F, 0.5F, 0.0F, 0.0F, 0.0F), () -> {
                     return lookupRegistry.getOrThrow(BiomeRegistry.BiomeKeys.torrid_jungle);
                 })), Optional.of(Pair.of(lookupRegistry, preset)));
-            });
+            });*/
             VanillaIntegrationRegistry.setup();
         });
 
@@ -85,11 +85,4 @@ public class Druidcraft {
         ParticleRegistry.registerFactories();
         LOGGER.info("Particle registry method registered.");
     }
-
-/*    @SubscribeEvent
-    public void onServerStarting(FMLServerStartingEvent event) {
-        LOGGER.info("HELLO from server starting");
-    }*/
-
-
 }

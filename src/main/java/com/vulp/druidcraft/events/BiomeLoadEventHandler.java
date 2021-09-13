@@ -2,7 +2,7 @@ package com.vulp.druidcraft.events;
 
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.config.EntitySpawnConfig;
-import com.vulp.druidcraft.config.WorldGenConfig;
+import com.vulp.druidcraft.config.OreConfig;
 import com.vulp.druidcraft.registry.EntityRegistry;
 import com.vulp.druidcraft.registry.ConfiguredFeatureRegistry;
 import net.minecraft.entity.EntityClassification;
@@ -10,8 +10,6 @@ import net.minecraft.util.RegistryKey;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.Features;
-import net.minecraft.world.gen.placement.*;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
@@ -20,9 +18,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 @Mod.EventBusSubscriber(modid= Druidcraft.MODID, bus= Mod.EventBusSubscriber.Bus.FORGE)
 public class BiomeLoadEventHandler {
@@ -62,7 +58,7 @@ public class BiomeLoadEventHandler {
             settings.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, ConfiguredFeatureRegistry.rockroot);
         }
 
-        if (event.getCategory() == Biome.Category.NETHER && WorldGenConfig.generate_wip.get()) {
+        if (event.getCategory() == Biome.Category.NETHER && OreConfig.generate_wip.get()) {
             BiomeGenerationSettingsBuilder settings = event.getGeneration();
             settings.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, ConfiguredFeatureRegistry.nether_fiery_glass);
             settings.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, ConfiguredFeatureRegistry.brightstone);
