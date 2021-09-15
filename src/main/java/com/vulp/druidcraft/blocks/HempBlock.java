@@ -25,7 +25,6 @@ import java.util.Random;
 public class HempBlock extends DynamicCropBlock implements IGrowable {
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_3;
-    private static boolean topBlockValid;
 
     public HempBlock(Properties properties) {
         super(properties);
@@ -63,8 +62,11 @@ public class HempBlock extends DynamicCropBlock implements IGrowable {
         if (this.getAge(state) != j) {
             serverWorld.setBlockState(blockPos, this.withAge(i), 2);
         }
-        else if ((this.getAge(state) == j) && (topBlockValid = true)) {
-            serverWorld.setBlockState(blockPos.up(), this.getDefaultState());
+        else if ((this.getAge(state) == j)) {
+            BlockState up = serverWorld.getBlockState(blockPos.up());
+            if (up.getMaterial().isReplaceable() || up.isAir(serverWorld, blockPos.up())) {
+                serverWorld.setBlockState(blockPos.up(), this.getDefaultState());
+            }
         }
     }
 
@@ -75,8 +77,7 @@ public class HempBlock extends DynamicCropBlock implements IGrowable {
             world.destroyBlock(pos, true);
         }
 
-        topBlockValid = (!(world.getBlockState(pos.down()).getBlock() instanceof HempBlock)) && (world.isAirBlock(pos.up()));
-
+        boolean topBlockValid = (!(world.getBlockState(pos.down()).getBlock() instanceof HempBlock)) && (world.isAirBlock(pos.up()));
 
         if (!world.isAreaLoaded(pos, 1))
             return;
