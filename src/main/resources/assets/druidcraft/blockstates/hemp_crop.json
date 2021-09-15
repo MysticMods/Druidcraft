@@ -1,24 +1,45 @@
 {
-    "variants": {
-        "age=0":
+	"variants": {
+		"age=0,half=top":
 		[ { "model": "druidcraft:block/hemp_stage0" },
-		{ "model": "druidcraft:block/hemp_stage0", "y": 90 },
-		{ "model": "druidcraft:block/hemp_stage0", "y": 180 },
-		{ "model": "druidcraft:block/hemp_stage0", "y": 270 } ],
-        "age=1":
+			{ "model": "druidcraft:block/hemp_stage0", "y": 90 },
+			{ "model": "druidcraft:block/hemp_stage0", "y": 180 },
+			{ "model": "druidcraft:block/hemp_stage0", "y": 270 } ],
+		"age=1,half=top":
 		[ { "model": "druidcraft:block/hemp_stage1" },
-		{ "model": "druidcraft:block/hemp_stage1", "y": 90 },
-		{ "model": "druidcraft:block/hemp_stage1", "y": 180 },
-		{ "model": "druidcraft:block/hemp_stage1", "y": 270 } ],
-		"age=2":
+			{ "model": "druidcraft:block/hemp_stage1", "y": 90 },
+			{ "model": "druidcraft:block/hemp_stage1", "y": 180 },
+			{ "model": "druidcraft:block/hemp_stage1", "y": 270 } ],
+		"age=2,half=top":
 		[ { "model": "druidcraft:block/hemp_stage2" },
-		{ "model": "druidcraft:block/hemp_stage2", "y": 90 },
-		{ "model": "druidcraft:block/hemp_stage2", "y": 180 },
-		{ "model": "druidcraft:block/hemp_stage2", "y": 270 } ],
-		"age=3":
+			{ "model": "druidcraft:block/hemp_stage2", "y": 90 },
+			{ "model": "druidcraft:block/hemp_stage2", "y": 180 },
+			{ "model": "druidcraft:block/hemp_stage2", "y": 270 } ],
+		"age=3,half=top":
 		[ { "model": "druidcraft:block/hemp_stage3" },
-		{ "model": "druidcraft:block/hemp_stage3", "y": 90 },
-		{ "model": "druidcraft:block/hemp_stage3", "y": 180 },
-		{ "model": "druidcraft:block/hemp_stage3", "y": 270 } ]
-    }
+			{ "model": "druidcraft:block/hemp_stage3", "y": 90 },
+			{ "model": "druidcraft:block/hemp_stage3", "y": 180 },
+			{ "model": "druidcraft:block/hemp_stage3", "y": 270 } ],
+		"age=0,half=bottom":
+		[ { "model": "druidcraft:block/hemp_stage0" },
+			{ "model": "druidcraft:block/hemp_stage0", "y": 90 },
+			{ "model": "druidcraft:block/hemp_stage0", "y": 180 },
+			{ "model": "druidcraft:block/hemp_stage0", "y": 270 } ],
+		"age=1,half=bottom":
+		[ { "model": "druidcraft:block/hemp_stage1" },
+			{ "model": "druidcraft:block/hemp_stage1", "y": 90 },
+			{ "model": "druidcraft:block/hemp_stage1", "y": 180 },
+			{ "model": "druidcraft:block/hemp_stage1", "y": 270 } ],
+		"age=2,half=bottom":
+		[ { "model": "druidcraft:block/hemp_stage2" },
+			{ "model": "druidcraft:block/hemp_stage2", "y": 90 },
+			{ "model": "druidcraft:block/hemp_stage2", "y": 180 },
+			{ "model": "druidcraft:block/hemp_stage2", "y": 270 } ],
+		"age=3,half=bottom":
+		[ { "model": "druidcraft:block/hemp_stage3" },
+			{ "model": "druidcraft:block/hemp_stage3", "y": 90 },
+			{ "model": "druidcraft:block/hemp_stage3", "y": 180 },
+			{ "model": "druidcraft:block/hemp_stage3", "y": 270 } ]
+	}
 }
+
