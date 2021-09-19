@@ -202,9 +202,9 @@ public class SmallBeamBlock extends Block implements IBucketPickupHandler, ILiqu
         if (state.get(WATERLOGGED)) {
             world.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
-        SmallBeamTileEntity tileEntity = (SmallBeamTileEntity) world.getTileEntity(currentPos);
-        if (tileEntity != null) {
-            tileEntity.ropeConnectionCalculations(world, state, currentPos);
+        TileEntity tileEntity = world.getTileEntity(currentPos);
+        if (tileEntity instanceof SmallBeamTileEntity) {
+            ((SmallBeamTileEntity) tileEntity).ropeConnectionCalculations(world, state, currentPos);
         }
         return calculateState(state, world, currentPos, state.get(DEFAULT_AXIS));
     }
