@@ -23,7 +23,7 @@ public class PacketHandler {
         register(DeployBedrollMessage.class, new DeployBedrollMessage());
         register(BlockProtectionVisualMessage.class, new BlockProtectionVisualMessage());
         register(FlareTorchParticleMessage.class, new FlareTorchParticleMessage());
-        register(MortarGrindMessage.class, new MortarGrindMessage());
+/*        register(MortarGrindMessage.class, new MortarGrindMessage());*/
         register(FluidCraftingIDMessage.class, new FluidCraftingIDMessage());
     }
 

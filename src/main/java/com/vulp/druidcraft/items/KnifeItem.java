@@ -3,8 +3,8 @@ package com.vulp.druidcraft.items;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.vulp.druidcraft.api.IKnifeable;
 import com.vulp.druidcraft.api.SideType;
-import com.vulp.druidcraft.blocks.SmithingWorkbenchBlock;
 import com.vulp.druidcraft.client.renders.RenderTypeDictionary;
 import com.vulp.druidcraft.registry.BlockRegistry;
 import com.vulp.druidcraft.registry.ItemRegistry;
@@ -26,6 +26,7 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.particles.BlockParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.Property;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -49,7 +50,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class KnifeItem extends Item {
 
-    public static final ImmutableSet<Block> KNIFEABLE_BLOCKS = ImmutableSet.of(BlockRegistry.rope, BlockRegistry.crate, Blocks.SMITHING_TABLE, BlockRegistry.smithing_workbench);
+    public static final ImmutableSet<Block> KNIFEABLE_BLOCKS = ImmutableSet.of(BlockRegistry.rope, BlockRegistry.crate/*, Blocks.SMITHING_TABLE, BlockRegistry.smithing_workbench*/);
 
     public KnifeItem(Properties properties) {
         super(properties);
@@ -90,7 +91,7 @@ public class KnifeItem extends Item {
     }
 
     private static ActionResultType fuseSmithingTables(World world, BlockPos pos, Direction dir, PlayerEntity player) {
-        if (world.getBlockState(pos.offset(dir)).getBlock() == Blocks.SMITHING_TABLE) {
+ /*       if (world.getBlockState(pos.offset(dir)).getBlock() == Blocks.SMITHING_TABLE) {
             Direction facingDir = getSmithingWorkbenchOrientation(player, dir.getAxis());
             world.setBlockState(pos, BlockRegistry.smithing_workbench.getDefaultState().with(SmithingWorkbenchBlock.FACING, facingDir).with(SmithingWorkbenchBlock.TYPE, facingDir.rotateYCCW() == dir ? SideType.LEFT : SideType.RIGHT));
             world.setBlockState(pos.offset(dir), BlockRegistry.smithing_workbench.getDefaultState().with(SmithingWorkbenchBlock.FACING, facingDir).with(SmithingWorkbenchBlock.TYPE, facingDir.rotateY() == dir.getOpposite() ? SideType.RIGHT : SideType.LEFT));
@@ -101,7 +102,7 @@ public class KnifeItem extends Item {
                 world.playSound(player, pos, SoundEvents.BLOCK_WOOD_PLACE, SoundCategory.BLOCKS, 1.0F, 1.0F);
             }
             return ActionResultType.SUCCESS;
-        }
+        }*/
         return ActionResultType.PASS;
     }
 
@@ -182,7 +183,7 @@ public class KnifeItem extends Item {
         return null;
     }
 
-    /*@Override
+@Override
     public ActionResultType onItemUse(ItemUseContext context) {
         PlayerEntity player = context.getPlayer();
         if (player == null) return ActionResultType.PASS;
@@ -205,7 +206,8 @@ public class KnifeItem extends Item {
         }
 
         return super.onItemUse(context);
-    }*/
+    }
+
 
     private static <T extends Comparable<T>> BlockState cycleProperty(BlockState state, Property<T> propertyIn) {
         return state.with(propertyIn, getAdjacentValue(propertyIn.getAllowedValues(), state.get(propertyIn)));

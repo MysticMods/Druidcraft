@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.blocks;
 
 import com.vulp.druidcraft.api.StackPart;
@@ -50,3 +51,4 @@ public class ScorchingCurtainBlock extends HangingBlock {
     }
 
 }
+*/

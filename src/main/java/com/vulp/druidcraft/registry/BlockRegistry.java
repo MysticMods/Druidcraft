@@ -5,7 +5,6 @@ import com.vulp.druidcraft.blocks.*;
 import com.vulp.druidcraft.blocks.FungusBlock;
 import com.vulp.druidcraft.blocks.trees.DarkwoodTree;
 import com.vulp.druidcraft.blocks.trees.ElderTree;
-import com.vulp.druidcraft.blocks.trees.GiantHeartburnFungus;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.block.StairsBlock;
@@ -33,7 +32,7 @@ public class BlockRegistry {
   private static Set<Block> BLOCKS = new HashSet<>();
   private static Set<Block> CHESTS = new HashSet<>();
 
-  public static Block debug_block = register("debug", new DebugBlock(DebugBlock.Properties.create(Material.CLAY)));
+/*  public static Block debug_block = register("debug", new DebugBlock(DebugBlock.Properties.create(Material.CLAY)));*/
   public static Block hemp_crop = register("hemp_crop", new HempBlock(HempBlock.Properties.create(Material.PLANTS).sound(SoundType.CROP).hardnessAndResistance(0.0f).doesNotBlockMovement().tickRandomly()));
   public static Block amber_ore = register("amber_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(1), 3, 6));
   public static Block moonstone_ore = register("moonstone_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(3), 3, 7));
@@ -59,13 +58,13 @@ public class BlockRegistry {
   public static Block darkwood_trapdoor = register("darkwood_trapdoor", new TrapDoorBlock(TrapDoorBlock.Properties.create(Material.WOOD).hardnessAndResistance(3.0f).harvestTool(ToolType.AXE).notSolid().sound(SoundType.WOOD)));
   public static Block darkwood_door = register("darkwood_door", new DoorBlock(DoorBlock.Properties.create(Material.WOOD).hardnessAndResistance(3.0f, 5.0f).harvestTool(ToolType.AXE).notSolid().sound(SoundType.WOOD)));
   public static Block darkwood_sapling = register("darkwood_sapling", new SaplingBlock(new DarkwoodTree(), SaplingBlock.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).tickRandomly().doesNotBlockMovement().sound(SoundType.PLANT)));
-  public static Block darkwood_sign = register("darkwood_sign", new CustomStandingSignBlock(CustomStandingSignBlock.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(1.0F).sound(SoundType.WOOD), WoodTypeRegistry.DARKWOOD));
+/*  public static Block darkwood_sign = register("darkwood_sign", new CustomStandingSignBlock(CustomStandingSignBlock.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(1.0F).sound(SoundType.WOOD), WoodTypeRegistry.DARKWOOD));
   public static Block darkwood_wall_sign = register("darkwood_wall_sign", new CustomWallSignBlock(CustomWallSignBlock.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(1.0F).sound(SoundType.WOOD), WoodTypeRegistry.DARKWOOD));
   public static Block darkwood_chest = registerChest("darkwood_chest", new CustomChestBlock(CustomChestBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.5F).sound(SoundType.WOOD), () -> TileEntityRegistry.custom_chest));
   public static Block trapped_darkwood_chest = registerChest("trapped_darkwood_chest", new CustomTrappedChestBlock(CustomTrappedChestBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.5F).sound(SoundType.WOOD), () -> TileEntityRegistry.custom_trapped_chest));
   public static Block darkwood_bookshelf = register("darkwood_bookshelf", new BookshelfBlock(1, Block.Properties.create(Material.WOOD).hardnessAndResistance(1.5F).harvestTool(ToolType.AXE).sound(SoundType.WOOD)));
-  public static Block darkwood_ladder = register("darkwood_ladder", new CustomLadderBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.4F).notSolid().harvestTool(ToolType.AXE).sound(SoundType.LADDER)));
-  public static Block darkwood_beehive = register("darkwood_beehive", new BeehiveBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(0.6F).harvestTool(ToolType.AXE).sound(SoundType.WOOD)));
+  public static Block darkwood_ladder = register("darkwood_ladder", new CustomLadderBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.4F).notSolid().harvestTool(ToolType.AXE).sound(SoundType.LADDER)));*/
+/*  public static Block darkwood_beehive = register("darkwood_beehive", new BeehiveBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(0.6F).harvestTool(ToolType.AXE).sound(SoundType.WOOD)));*/
 
   public static Block elder_log = register("elder_log", new RotatedPillarBlock(RotatedPillarBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0f).harvestTool(ToolType.AXE).sound(SoundType.WOOD)));
   public static Block stripped_elder_log = register("stripped_elder_log", new RotatedPillarBlock(RotatedPillarBlock.Properties.from(elder_log)));
@@ -169,7 +168,7 @@ public class BlockRegistry {
   public static Block black_soulfire = register("black_soulfire", new SoulfireBlock(DyeColor.BLACK, SoulfireBlock.Properties.create(Material.FIRE).sound(SoundType.SNOW).hardnessAndResistance(0.0f).doesNotBlockMovement().setLightLevel((light) -> (13))));
   public static Block woodcutter = register("woodcutter", new WoodcutterBlock(WoodcutterBlock.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(1.75f)));
 
-  public static Block nether_fiery_glass_ore = register("nether_fiery_glass_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(1), 2, 5));
+/*  public static Block nether_fiery_glass_ore = register("nether_fiery_glass_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(1), 2, 5));
   public static Block brightstone_ore = register("brightstone_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).setLightLevel((light) -> (8)).harvestTool(ToolType.PICKAXE).harvestLevel(3), 3, 8));
   public static Block hellkiln = register("hellkiln", new HellkilnBlock(HellkilnBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).setLightLevel(getLightValueLit(15)).harvestTool(ToolType.PICKAXE).harvestLevel(0)));
   public static Block hellkiln_igniter = register("hellkiln_igniter", new HellkilnIgniterBlock(HellkilnIgniterBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0f).setLightLevel(getLightValueLit(13)).harvestTool(ToolType.PICKAXE).harvestLevel(0)));
@@ -192,7 +191,7 @@ public class BlockRegistry {
   public static Block glow_air = register("glow_air", new AirBlock(Block.Properties.create(Material.AIR).doesNotBlockMovement().noDrops().setAir().setLightLevel((light) -> (12))));
 
   public static Block duragem_ore = register("duragem_ore", new OreXPBlock(OreBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(5.0f).harvestTool(ToolType.PICKAXE).harvestLevel(4), 2, 6));
-  public static Block duragem_block = register("duragem_block", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0f).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(4).sound(SoundType.STONE)));
+  public static Block duragem_block = register("duragem_block", new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0f).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(4).sound(SoundType.STONE)));*/
 
   public static Block snow_bricks = register("snow_bricks", new Block(Block.Properties.create(Material.SNOW).hardnessAndResistance(0.4f).sound(SoundType.SNOW)));
   public static Block snow_tiles = register("snow_tiles", new Block(Block.Properties.create(Material.SNOW).hardnessAndResistance(0.4f).sound(SoundType.SNOW)));
@@ -201,7 +200,7 @@ public class BlockRegistry {
   public static Block packed_ice_bricks = register("packed_ice_bricks", new Block(Block.Properties.create(Material.ICE).hardnessAndResistance(0.6f).slipperiness(0.98F).sound(SoundType.GLASS)));
   public static Block worked_packed_ice = register("worked_packed_ice", new Block(Block.Properties.create(Material.ICE).hardnessAndResistance(0.6f).slipperiness(0.98F).sound(SoundType.GLASS)));
 
-  public static Block flare_torch = register("flare_torch", new FlareTorchBlock(FlareTorchBlock.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).setLightLevel((light) -> (10)).sound(SoundType.WOOD)));
+/*  public static Block flare_torch = register("flare_torch", new FlareTorchBlock(FlareTorchBlock.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).setLightLevel((light) -> (10)).sound(SoundType.WOOD)));
   public static Block wall_flare_torch = register("wall_flare_torch", new WallFlareTorchBlock(WallFlareTorchBlock.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).setLightLevel((light) -> (10)).sound(SoundType.WOOD).lootFrom(flare_torch)));
   public static Block liquid_rainbow = register("liquid_rainbow", new FlowingFluidBlock(() -> (FlowingFluid) FluidRegistry.liquid_rainbow, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()));
   public static Block cloud_block = register("cloud_block", new Block(Block.Properties.create(Material.WOOL).hardnessAndResistance(0.5f).sound(SoundType.SNOW)));
@@ -211,7 +210,7 @@ public class BlockRegistry {
   public static Block skyberry_bush = register("skyberry_bush", new Block(Block.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).sound(SoundType.PLANT)));
   public static Block live_skyberry_bush = register("live_skyberry_bush", new Block(Block.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).sound(SoundType.PLANT)));
   public static Block smithing_workbench = register("smithing_workbench", new SmithingWorkbenchBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(1.75F)));
-  public static Block mortar_and_pestle = register("mortar_and_pestle", new MortarAndPestleBlock(Block.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.5F).sound(SoundType.STONE)));
+  public static Block mortar_and_pestle = register("mortar_and_pestle", new MortarAndPestleBlock(Block.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.5F).sound(SoundType.STONE)));*/
   public static Block fluid_crafting_table = register("fluid_crafting_table", new FluidCraftingTableBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(1.75F).sound(SoundType.WOOD)));
 
   private static Block registerChest(String name, Block block) {

@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.world.features;
 
 import com.mojang.serialization.Codec;
@@ -174,3 +175,4 @@ public class GiantHeartburnFungusFeature extends DumbTreeFeature {
     }
 
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.world.features;
 
 import com.mojang.serialization.Codec;
@@ -89,4 +90,4 @@ public class GaseousGrowthFeature extends Feature<NoFeatureConfig> {
         return BlockRegistry.gaseous_growth.getDefaultState().with(GaseousGrowthBlock.PART, part);
     }
 
-}
+}*/

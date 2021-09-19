@@ -1,5 +1,6 @@
 package com.vulp.druidcraft.registry;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
@@ -115,7 +116,9 @@ public class VanillaIntegrationRegistry {
     }
 
     private static void addStrippable(Block unstrippedBlock, Block strippedBlock) {
-        AxeItem.BLOCK_STRIPPING_MAP = Maps.newHashMap(AxeItem.BLOCK_STRIPPING_MAP);
+        if (AxeItem.BLOCK_STRIPPING_MAP instanceof ImmutableMap) {
+            AxeItem.BLOCK_STRIPPING_MAP = Maps.newHashMap(AxeItem.BLOCK_STRIPPING_MAP);
+        }
         AxeItem.BLOCK_STRIPPING_MAP.put(unstrippedBlock, strippedBlock);
     }
 }

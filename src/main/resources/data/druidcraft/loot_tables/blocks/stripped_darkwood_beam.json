@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "druidcraft:hellkiln_igniter"
+          "name": "druidcraft:stripped_darkwood_beam"
         }
       ],
       "conditions": [

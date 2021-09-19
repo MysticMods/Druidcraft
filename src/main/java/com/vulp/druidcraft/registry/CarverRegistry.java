@@ -1,7 +1,7 @@
 package com.vulp.druidcraft.registry;
 
 import com.vulp.druidcraft.Druidcraft;
-import com.vulp.druidcraft.world.carvers.CustomNetherCaveCarver;
+/*import com.vulp.druidcraft.world.carvers.CustomNetherCaveCarver;*/
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.carver.ICarverConfig;
@@ -23,7 +23,7 @@ public class CarverRegistry {
 
     private static Set<WorldCarver<?>> CARVERS = new HashSet<>();
 
-    public static final WorldCarver<ProbabilityConfig> CUSTOM_NETHER_CAVE = register("custom_nether_cave", new CustomNetherCaveCarver(ProbabilityConfig.CODEC));
+/*    public static final WorldCarver<ProbabilityConfig> CUSTOM_NETHER_CAVE = register("custom_nether_cave", new CustomNetherCaveCarver(ProbabilityConfig.CODEC));*/
 
     public static <C extends ICarverConfig, F extends WorldCarver<C>> F register(String name, F carver) {
         ResourceLocation id = new ResourceLocation(Druidcraft.MODID, name);

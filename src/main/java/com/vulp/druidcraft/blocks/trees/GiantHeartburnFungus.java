@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.blocks.trees;
 
 import com.vulp.druidcraft.registry.ConfiguredFeatureRegistry;
@@ -44,3 +45,4 @@ public class GiantHeartburnFungus extends Tree {
     }
 
 }
+*/

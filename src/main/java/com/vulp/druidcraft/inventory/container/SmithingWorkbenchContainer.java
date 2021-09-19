@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.inventory.container;
 
 import com.vulp.druidcraft.recipes.AdvancedSmithingRecipe;
@@ -59,16 +60,20 @@ public class SmithingWorkbenchContainer extends Container {
         this.addSlot(new Slot(this.craftInventory, 6, 74, 52));
         this.addSlot(new Slot(this.resultInventory, 7, 134, 40) {
 
-            /**
+            */
+/**
              * Check if the stack is allowed to be placed in this slot, used for armor slots as well as furnace fuel.
-             */
+             *//*
+
             public boolean isItemValid(ItemStack stack) {
                 return false;
             }
 
-            /**
+            */
+/**
              * Return whether this slot's stack can be taken from this slot.
-             */
+             *//*
+
             public boolean canTakeStack(PlayerEntity playerIn) {
                 return doesRecipeMatch(playerIn, this.getHasStack());
             }
@@ -226,3 +231,4 @@ public class SmithingWorkbenchContainer extends Container {
     }
 
 }
+*/

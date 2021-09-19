@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.blocks.tileentities;
 
 import com.vulp.druidcraft.blocks.HellkilnBlock;
@@ -173,3 +174,4 @@ public class HellkilnIgniterTileEntity extends LockableTileEntity implements ITi
     }
 
 }
+*/

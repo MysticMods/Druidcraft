@@ -16,8 +16,8 @@ public interface IModdedRecipeType<T extends IRecipe<?>> {
     IRecipeType<WoodcuttingRecipe> woodcutting = register("woodcutting");
     IRecipeType<HellkilnRecipe> hellkiln_smelting = register("hellkiln_smelting");
     IRecipeType<InfernalLanternFuellingRecipe> infernal_lantern_fuelling = register("infernal_lantern_fuelling");
-    IRecipeType<AdvancedSmithingRecipe> advanced_smithing = register("advanced_smithing");
-    IRecipeType<MortarAndPestleRecipe> mortar_and_pestle = register("mortar_and_pestle");
+/*    IRecipeType<AdvancedSmithingRecipe> advanced_smithing = register("advanced_smithing");
+    IRecipeType<MortarAndPestleRecipe> mortar_and_pestle = register("mortar_and_pestle");*/
 
     static <T extends IRecipe<?>> IRecipeType<T> register(final String key) {
         return Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(Druidcraft.MODID, key), new IRecipeType<T>() {

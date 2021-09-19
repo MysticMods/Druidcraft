@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.api;
 
 import com.vulp.druidcraft.registry.BlockRegistry;
@@ -39,3 +40,4 @@ public enum ChestToString {
     }
 
 }
+*/

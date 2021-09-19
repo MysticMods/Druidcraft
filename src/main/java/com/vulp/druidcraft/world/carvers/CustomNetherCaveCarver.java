@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.world.carvers;
 
 import com.google.common.collect.ImmutableSet;
@@ -36,3 +37,4 @@ public class CustomNetherCaveCarver extends NetherCaveCarver {
     }
 
 }
+*/

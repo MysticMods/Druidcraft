@@ -10,7 +10,7 @@ import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
 
 public class ConfiguredSurfaceRegistry {
   public static ConfiguredSurfaceBuilder<?> DARKWOOD_FOREST = register("darkwood_forest", new ConfiguredSurfaceBuilder<>(SurfaceBuilder.DEFAULT, new SurfaceBuilderConfig(Blocks.GRASS_BLOCK.getDefaultState(), Blocks.DIRT.getDefaultState(), Blocks.SAND.getDefaultState())));
-  public static ConfiguredSurfaceBuilder<?> GLOWING_JUNGLE = register("glowing_jungle", new ConfiguredSurfaceBuilder<>(SurfaceBuilder.field_237189_ad_, new SurfaceBuilderConfig(BlockRegistry.overgrown_nylium.getDefaultState(), Blocks.NETHERRACK.getDefaultState(), BlockRegistry.heavily_overgrown_nylium.getDefaultState())));
+/*  public static ConfiguredSurfaceBuilder<?> GLOWING_JUNGLE = register("glowing_jungle", new ConfiguredSurfaceBuilder<>(SurfaceBuilder.field_237189_ad_, new SurfaceBuilderConfig(BlockRegistry.overgrown_nylium.getDefaultState(), Blocks.NETHERRACK.getDefaultState(), BlockRegistry.heavily_overgrown_nylium.getDefaultState())));*/
 
   public static <FC extends ISurfaceBuilderConfig> ConfiguredSurfaceBuilder<FC> register(String p_243968_0_, ConfiguredSurfaceBuilder<FC> p_243968_1_) {
     return Registry.register(WorldGenRegistries.CONFIGURED_SURFACE_BUILDER, p_243968_0_, p_243968_1_);

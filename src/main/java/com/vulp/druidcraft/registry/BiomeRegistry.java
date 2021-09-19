@@ -18,7 +18,7 @@ public class BiomeRegistry {
     public static class BiomeKeys {
 
         public static final RegistryKey<Biome> darkwood_forest = RegistryKey.getOrCreateKey(Registry.BIOME_KEY, DruidcraftRegistry.location("darkwood_forest"));
-        public static final RegistryKey<Biome> torrid_jungle = RegistryKey.getOrCreateKey(Registry.BIOME_KEY, DruidcraftRegistry.location("glowing_jungle"));
+/*        public static final RegistryKey<Biome> torrid_jungle = RegistryKey.getOrCreateKey(Registry.BIOME_KEY, DruidcraftRegistry.location("glowing_jungle"));*/
 
     }
 
@@ -36,7 +36,7 @@ public class BiomeRegistry {
     public static void register (RegistryEvent.Register<Biome> event) {
 
         register("darkwood_forest", BiomeBuilder.makeDarkwoodForest());
-        register("glowing_jungle", BiomeBuilder.makeGlowingJungle());
+/*        register("glowing_jungle", BiomeBuilder.makeGlowingJungle());*/
 
         event.getRegistry().registerAll(BIOMES.toArray(new Biome[0]));
         registerBiomes();
@@ -47,7 +47,7 @@ public class BiomeRegistry {
         BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(BiomeKeys.darkwood_forest, 1));
         BiomeDictionary.addTypes(BiomeKeys.darkwood_forest, BiomeDictionary.Type.CONIFEROUS, BiomeDictionary.Type.OVERWORLD, BiomeDictionary.Type.DENSE, BiomeDictionary.Type.MAGICAL);
 
-        BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(BiomeKeys.torrid_jungle, 10));
-        BiomeDictionary.addTypes(BiomeKeys.torrid_jungle, BiomeDictionary.Type.HOT, BiomeDictionary.Type.JUNGLE, BiomeDictionary.Type.DRY, BiomeDictionary.Type.NETHER);
+/*        BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(BiomeKeys.torrid_jungle, 10));
+        BiomeDictionary.addTypes(BiomeKeys.torrid_jungle, BiomeDictionary.Type.HOT, BiomeDictionary.Type.JUNGLE, BiomeDictionary.Type.DRY, BiomeDictionary.Type.NETHER);*/
     }
 }

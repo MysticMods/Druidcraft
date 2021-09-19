@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.integration.jei;
 
 import com.vulp.druidcraft.Druidcraft;
@@ -76,3 +77,4 @@ public class MortarAndPestleCategory implements IRecipeCategory<MortarAndPestleR
     }
 
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.client.gui.screen.inventory;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -84,3 +85,4 @@ public class SmithingWorkbenchScreen extends ContainerScreen<SmithingWorkbenchCo
     }
 
 }
+*/

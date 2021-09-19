@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.blocks.tileentities;
 
 import com.vulp.druidcraft.Druidcraft;
@@ -169,4 +170,4 @@ public class MortarAndPestleTileEntity extends LockableTileEntity implements ITi
         this.items.clear();
     }
 
-}
+}*/

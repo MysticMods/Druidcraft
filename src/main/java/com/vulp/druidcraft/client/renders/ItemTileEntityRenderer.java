@@ -9,6 +9,7 @@ import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.DruidcraftRegistry;
 import com.vulp.druidcraft.blocks.CustomChestBlock;
 import com.vulp.druidcraft.blocks.tileentities.CustomChestTileEntity;
+import com.vulp.druidcraft.blocks.tileentities.CustomTrappedChestTileEntity;
 import com.vulp.druidcraft.client.models.BoneShieldModel;
 import com.vulp.druidcraft.client.models.ChitinShieldModel;
 import com.vulp.druidcraft.client.models.FieryShieldModel;
@@ -53,7 +54,8 @@ public class ItemTileEntityRenderer extends ItemStackTileEntityRenderer {
     private final MoonstoneShieldModel moonstone_shield = new MoonstoneShieldModel();
     private final FieryShieldModel fiery_shield = new FieryShieldModel();
 
-    private final CustomChestTileEntity chestTile = new CustomChestTileEntity();
+    private CustomChestTileEntity chestTile = null;
+    private CustomTrappedChestTileEntity trappedTile = null;
 
     public static final ResourceLocation bone_shield_tex = DruidcraftRegistry.location("entity/shields/bone");
     public static final ResourceLocation chitin_shield_tex = DruidcraftRegistry.location("entity/shields/chitin");
@@ -63,17 +65,17 @@ public class ItemTileEntityRenderer extends ItemStackTileEntityRenderer {
     @Override
     public void func_239207_a_(ItemStack stack, ItemCameraTransforms.TransformType p_239207_2_, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
         Item item = stack.getItem();
-        if (item instanceof BlockItem) {
-            Block block = ((BlockItem) item).getBlock();
-            TileEntity tileentity;
-            if (block == Blocks.CHEST) {
-                tileentity = this.chestTile;
-            } else {
-                return;
+        if (item == ItemRegistry.darkwood_chest) {
+            if (chestTile == null) {
+                chestTile = new CustomChestTileEntity();
             }
-            TileEntityRendererDispatcher.instance.renderItem(tileentity, matrixStack, buffer, combinedLight, combinedOverlay);
-        }
-        if (item instanceof BasicShieldItem) {
+            TileEntityRendererDispatcher.instance.renderItem(chestTile, matrixStack, buffer, combinedLight, combinedOverlay);
+        } else if (item == ItemRegistry.trapped_darkwood_chest) {
+            if (trappedTile == null) {
+                trappedTile = new CustomTrappedChestTileEntity();
+            }
+            TileEntityRendererDispatcher.instance.renderItem(trappedTile, matrixStack, buffer, combinedLight, combinedOverlay);
+        } else if (item instanceof BasicShieldItem) {
             matrixStack.push();
             matrixStack.scale(1.0F, -1.0F, -1.0F);
             if (item == ItemRegistry.bone_shield) {

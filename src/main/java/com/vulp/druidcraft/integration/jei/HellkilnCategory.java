@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.integration.jei;
 
 import com.google.common.cache.CacheBuilder;
@@ -152,4 +153,4 @@ public class HellkilnCategory implements IRecipeCategory<HellkilnRecipe> {
         guiItemStacks.set(ingredients);
     }
 
-}
+}*/

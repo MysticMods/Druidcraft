@@ -1,9 +1,0 @@
-{
-  "type": "druidcraft:mortar_and_pestle",
-  "ingredient": {
-    "item": "druidcraft:duragem"
-  },
-  "result": {
-    "item": "druidcraft:crushed_duragem"
-  }
-}

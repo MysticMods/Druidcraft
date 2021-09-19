@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.items;
 
 import com.vulp.druidcraft.blocks.HellkilnBlock;
@@ -16,3 +17,4 @@ public class HellkilnItem extends BlockItem {
         return context.getWorld().setBlockState(context.getPos(), state.getBlockState().with(HellkilnBlock.BOTTOM, true), 26);
     }
 }
+*/

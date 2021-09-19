@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.blocks;
 
 import com.vulp.druidcraft.blocks.tileentities.HellkilnIgniterTileEntity;
@@ -207,3 +208,4 @@ public class HellkilnBlock extends ContainerBlock {
     }
 
 }
+*/

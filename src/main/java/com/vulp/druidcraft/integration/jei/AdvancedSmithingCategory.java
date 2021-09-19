@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.integration.jei;
 
 import com.vulp.druidcraft.Druidcraft;
@@ -83,4 +84,4 @@ public class AdvancedSmithingCategory implements IRecipeCategory<AdvancedSmithin
         guiItemStacks.set(ingredients);
     }
 
-}
+}*/

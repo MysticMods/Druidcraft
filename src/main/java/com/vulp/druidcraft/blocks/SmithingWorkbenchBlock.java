@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.blocks;
 
 import com.vulp.druidcraft.Druidcraft;
@@ -83,3 +84,4 @@ public class SmithingWorkbenchBlock extends Block {
     }
 
 }
+*/

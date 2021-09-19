@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.blocks;
 
 import com.vulp.druidcraft.Druidcraft;
@@ -104,3 +105,4 @@ public class MortarAndPestleBlock extends ContainerBlock {
         return super.getStateForPlacement(context).with(FACING, context.getPlacementHorizontalFacing());
     }
 }
+*/

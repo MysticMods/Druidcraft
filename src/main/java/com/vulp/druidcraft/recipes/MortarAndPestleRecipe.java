@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.recipes;
 
 import com.google.gson.JsonObject;
@@ -85,3 +86,4 @@ public class MortarAndPestleRecipe implements IRecipe<IInventory> {
     }
 
 }
+*/

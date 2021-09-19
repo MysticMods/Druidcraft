@@ -50,8 +50,8 @@ public class RenderRegistry
         // BLOCK TILE ENTITIES
         ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.small_beam, SmallBeamTileEntityRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.custom_sign, SignTileEntityRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.custom_chest, CustomChestTileEntityRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.custom_trapped_chest, CustomChestTileEntityRenderer::new);
+/*        ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.custom_chest, CustomChestTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.custom_trapped_chest, CustomTrappedChestTileEntityRenderer::new);*/
         ClientRegistry.bindTileEntityRenderer(TileEntityRegistry.fluid_crafting_table, FluidCraftingTableTileEntityRenderer::new);
 
         // ITEM TILE ENTITIES
@@ -74,18 +74,18 @@ public class RenderRegistry
             //    RenderTypeLookup.setRenderLayer(BlockRegistry.aloe_vera_crop, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.amber_block, RenderType.getTranslucent());
             RenderTypeLookup.setRenderLayer(BlockRegistry.blueberry_bush, RenderType.getCutout());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.scorching_curtain, RenderType.getCutout());
+/*            RenderTypeLookup.setRenderLayer(BlockRegistry.scorching_curtain, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.gaseous_growth, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.heartburn_fungus, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.overgrown_roots, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.tall_overgrown_roots, RenderType.getCutout());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.brambleroot, RenderType.getCutout());
+            RenderTypeLookup.setRenderLayer(BlockRegistry.brambleroot, RenderType.getCutout());*/
             RenderTypeLookup.setRenderLayer(BlockRegistry.ceramic_lantern, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.darkwood_door, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.darkwood_leaves, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.darkwood_sapling, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.darkwood_trapdoor, RenderType.getCutout());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.darkwood_ladder, RenderType.getCutout());
+/*            RenderTypeLookup.setRenderLayer(BlockRegistry.darkwood_ladder, RenderType.getCutout());*/
             RenderTypeLookup.setRenderLayer(BlockRegistry.elder_door, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.elder_leaves, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.elder_sapling, RenderType.getCutout());
@@ -93,9 +93,9 @@ public class RenderRegistry
             RenderTypeLookup.setRenderLayer(BlockRegistry.elder_leaf_layer, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.elder_trapdoor, RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(BlockRegistry.fiery_torch, RenderType.getCutout());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.flare_torch, RenderType.getCutout());
+/*            RenderTypeLookup.setRenderLayer(BlockRegistry.flare_torch, RenderType.getCutout());*/
             RenderTypeLookup.setRenderLayer(BlockRegistry.wall_fiery_torch, RenderType.getCutout());
-            RenderTypeLookup.setRenderLayer(BlockRegistry.wall_flare_torch, RenderType.getCutout());
+/*            RenderTypeLookup.setRenderLayer(BlockRegistry.wall_flare_torch, RenderType.getCutout());*/
             RenderTypeLookup.setRenderLayer(BlockRegistry.ice_bricks, RenderType.getTranslucent());
             RenderTypeLookup.setRenderLayer(BlockRegistry.worked_ice, RenderType.getTranslucent());
             RenderTypeLookup.setRenderLayer(BlockRegistry.fluid_crafting_table, RenderType.getTranslucent());
@@ -139,8 +139,8 @@ public class RenderRegistry
             ScreenManager.registerFactory(GUIRegistry.travel_pack, TravelPackScreen::new);
             ScreenManager.registerFactory(GUIRegistry.hellkiln, HellkilnScreen::new);
             ScreenManager.registerFactory(GUIRegistry.hellkiln_igniter, HellkilnIgniterScreen::new);
-            ScreenManager.registerFactory(GUIRegistry.smithing_workbench, SmithingWorkbenchScreen::new);
-            ScreenManager.registerFactory(GUIRegistry.mortar_and_pestle, MortarAndPestleScreen::new);
+/*            ScreenManager.registerFactory(GUIRegistry.smithing_workbench, SmithingWorkbenchScreen::new);
+            ScreenManager.registerFactory(GUIRegistry.mortar_and_pestle, MortarAndPestleScreen::new);*/
             ScreenManager.registerFactory(GUIRegistry.fluid_crafting_table, FluidCraftingTableScreen::new);
 
             // PLAYER MODEL HOOK

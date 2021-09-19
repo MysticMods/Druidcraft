@@ -8,7 +8,8 @@
             "item": "druidcraft:elderflower"
         },
         {
-            "item": "minecraft:potion"
+            "item": "minecraft:potion",
+            "nbt": "{Potion:\"minecraft:water\"}"
         }
     ],
     "result": {

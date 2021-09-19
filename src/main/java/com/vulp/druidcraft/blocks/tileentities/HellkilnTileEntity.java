@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.blocks.tileentities;
 
 import com.vulp.druidcraft.Druidcraft;
@@ -233,6 +234,7 @@ public class HellkilnTileEntity extends LockableTileEntity implements ITickableT
 
 
 
+*/
 /*      FURNACE
         0 = input
         1 = fuel
@@ -249,7 +251,8 @@ public class HellkilnTileEntity extends LockableTileEntity implements ITickableT
         2 - 6x furnace speed - 6 each - 1200 ticks
         3 - 4x furnace speed - 4 each - 600 ticks
 
-        100 ticks each fuel, 100 ticks per 20 fuel.*/
+        100 ticks each fuel, 100 ticks per 20 fuel.*//*
+
 
     @Override
     public void tick() {
@@ -480,3 +483,4 @@ public class HellkilnTileEntity extends LockableTileEntity implements ITickableT
 
     }
 }
+*/

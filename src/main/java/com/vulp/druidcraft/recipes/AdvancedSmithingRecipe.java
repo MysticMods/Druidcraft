@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.recipes;
 
 import com.google.gson.JsonArray;
@@ -153,3 +154,4 @@ public class AdvancedSmithingRecipe implements IRecipe<IInventory> {
     }
 
 }
+*/

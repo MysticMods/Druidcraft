@@ -135,7 +135,7 @@ public class ItemRegistry
     public static Item darkwood_sign;
     public static Item darkwood_bookshelf;
     public static Item darkwood_ladder;
-    public static Item darkwood_beehive;
+/*    public static Item darkwood_beehive;*/
     public static Item darkwood_chest;
     public static Item trapped_darkwood_chest;
 

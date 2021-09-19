@@ -1,9 +1,11 @@
+/*
 package com.vulp.druidcraft.client.renders;
 
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.api.ChestToString;
 import com.vulp.druidcraft.blocks.CustomChestBlock;
 import com.vulp.druidcraft.blocks.CustomTrappedChestBlock;
+import com.vulp.druidcraft.registry.BlockRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.model.RenderMaterial;
 import net.minecraft.client.renderer.tileentity.ChestTileEntityRenderer;
@@ -21,6 +23,7 @@ public class CustomChestTileEntityRenderer<T extends TileEntity & IChestLid> ext
 
     private static final String path = "entity/chests/";
     private static Map<Block, ChestResources> RESOURCEMAP = new HashMap<>();
+    protected boolean trapped = false;
 
     public CustomChestTileEntityRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
@@ -60,7 +63,7 @@ public class CustomChestTileEntityRenderer<T extends TileEntity & IChestLid> ext
 
     @Override
     protected RenderMaterial getMaterial(T tileEntity, ChestType chestType) {
-        ChestResources resources = RESOURCEMAP.get(tileEntity.getBlockState().getBlock());
+        ChestResources resources = RESOURCEMAP.get(trapped ? BlockRegistry.trapped_darkwood_chest : BlockRegistry.darkwood_chest);
         if (resources == null) {
             return null;
         }
@@ -100,3 +103,4 @@ public class CustomChestTileEntityRenderer<T extends TileEntity & IChestLid> ext
     }
 
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.network.message;
 
 import com.vulp.druidcraft.blocks.tileentities.MortarAndPestleTileEntity;
@@ -52,3 +53,4 @@ public class MortarGrindMessage implements IMessage<MortarGrindMessage> {
         supplier.get().setPacketHandled(true);
     }
 }
+*/

@@ -1,9 +1,0 @@
-{
-  "type": "druidcraft:mortar_and_pestle",
-  "ingredient": {
-    "item": "druidcraft:fiery_glass"
-  },
-  "result": {
-    "item": "druidcraft:crushed_fiery_glass"
-  }
-}

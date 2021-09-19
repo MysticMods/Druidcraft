@@ -1,0 +1,13 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "druidcraft:stripped_darkwood_log"
+        }
+    },
+    "result": { "item": "druidcraft:stripped_darkwood_beam", "count": 3 },
+    "group": "beams"
+}

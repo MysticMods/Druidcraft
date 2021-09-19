@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.blocks;
 
 import com.vulp.druidcraft.Druidcraft;
@@ -27,3 +28,4 @@ public class BramblerootBlock extends ThickRootBlock {
     }
 
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.blocks;
 
 import com.google.common.collect.Maps;
@@ -151,3 +152,4 @@ public class ThickRootBlock extends Block implements IBucketPickupHandler, ILiqu
     }
 
 }
+*/

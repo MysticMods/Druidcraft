@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.inventory.container;
 
 import com.vulp.druidcraft.recipes.AdvancedSmithingRecipe;
@@ -215,3 +216,4 @@ public class MortarAndPestleContainer extends Container {
     }
 
 }
+*/
