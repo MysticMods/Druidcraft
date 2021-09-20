@@ -24,7 +24,7 @@ public class PacketHandler {
         register(BlockProtectionVisualMessage.class, new BlockProtectionVisualMessage());
         register(FlareTorchParticleMessage.class, new FlareTorchParticleMessage());
 /*        register(MortarGrindMessage.class, new MortarGrindMessage());*/
-        register(FluidCraftingIDMessage.class, new FluidCraftingIDMessage());
+/*        register(FluidCraftingIDMessage.class, new FluidCraftingIDMessage());*/
     }
 
     private static <T> void register(Class<T> clazz, IMessage<T> message)

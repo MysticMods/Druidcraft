@@ -21,12 +21,12 @@ public class GUIRegistry {
     public static ContainerType<CrateContainer> generic_9X12 = (ContainerType<CrateContainer>) new ContainerType<>(CrateContainer::createGeneric9X12).setRegistryName(Druidcraft.MODID, "generic_9x12");
     public static ContainerType<CrateContainer> generic_9X24 = (ContainerType<CrateContainer>) new ContainerType<>(CrateContainer::createGeneric9X24).setRegistryName(Druidcraft.MODID, "generic_9x24");
     public static ContainerType<WoodcutterContainer> woodcutter = (ContainerType<WoodcutterContainer>) new ContainerType<>(WoodcutterContainer::new).setRegistryName(Druidcraft.MODID, "woodcutter");
-    public static ContainerType<HellkilnContainer> hellkiln = (ContainerType<HellkilnContainer>) new ContainerType<>(HellkilnContainer::new).setRegistryName(Druidcraft.MODID, "hellkiln");
+ /*   public static ContainerType<HellkilnContainer> hellkiln = (ContainerType<HellkilnContainer>) new ContainerType<>(HellkilnContainer::new).setRegistryName(Druidcraft.MODID, "hellkiln");*/
     public static ContainerType<HellkilnIgniterContainer> hellkiln_igniter = (ContainerType<HellkilnIgniterContainer>) new ContainerType<>(HellkilnIgniterContainer::new).setRegistryName(Druidcraft.MODID, "hellkiln_igniter");
     public static ContainerType<TravelPackContainer> travel_pack = (ContainerType<TravelPackContainer>) new ContainerType<>(TravelPackContainer::createClientContainer).setRegistryName(Druidcraft.MODID, "travel_pack");
 /*    public static ContainerType<SmithingWorkbenchContainer> smithing_workbench = (ContainerType<SmithingWorkbenchContainer>) new ContainerType<>(SmithingWorkbenchContainer::new).setRegistryName(Druidcraft.MODID, "smithing_workbench");*/
 /*    public static ContainerType<MortarAndPestleContainer> mortar_and_pestle = (ContainerType<MortarAndPestleContainer>) new ContainerType<>(MortarAndPestleContainer::new).setRegistryName(Druidcraft.MODID, "mortar_and_pestle");*/
-    public static ContainerType<FluidCraftingTableContainer> fluid_crafting_table = (ContainerType<FluidCraftingTableContainer>) new ContainerType<>(FluidCraftingTableContainer::new).setRegistryName(Druidcraft.MODID, "fluid_crafting_table");
+/*    public static ContainerType<FluidCraftingTableContainer> fluid_crafting_table = (ContainerType<FluidCraftingTableContainer>) new ContainerType<>(FluidCraftingTableContainer::new).setRegistryName(Druidcraft.MODID, "fluid_crafting_table");*/
 
 
 }

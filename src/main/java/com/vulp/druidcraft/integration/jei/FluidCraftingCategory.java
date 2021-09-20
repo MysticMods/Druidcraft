@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.integration.jei;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -129,4 +130,4 @@ public class FluidCraftingCategory implements IRecipeCategory<FluidCraftingRecip
         guiItemStacks.set(ingredients);
     }
 
-}
+}*/

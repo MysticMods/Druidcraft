@@ -211,7 +211,7 @@ public class BlockRegistry {
   public static Block live_skyberry_bush = register("live_skyberry_bush", new Block(Block.Properties.create(Material.PLANTS).hardnessAndResistance(0.0f).sound(SoundType.PLANT)));
   public static Block smithing_workbench = register("smithing_workbench", new SmithingWorkbenchBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(1.75F)));
   public static Block mortar_and_pestle = register("mortar_and_pestle", new MortarAndPestleBlock(Block.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.5F).sound(SoundType.STONE)));*/
-  public static Block fluid_crafting_table = register("fluid_crafting_table", new FluidCraftingTableBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(1.75F).sound(SoundType.WOOD)));
+/*  public static Block fluid_crafting_table = register("fluid_crafting_table", new FluidCraftingTableBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(1.75F).sound(SoundType.WOOD)));*/
 
   private static Block registerChest(String name, Block block) {
     CHESTS.add(block);

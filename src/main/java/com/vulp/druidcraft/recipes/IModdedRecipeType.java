@@ -14,8 +14,8 @@ import java.util.Optional;
 public interface IModdedRecipeType<T extends IRecipe<?>> {
 
     IRecipeType<WoodcuttingRecipe> woodcutting = register("woodcutting");
-    IRecipeType<HellkilnRecipe> hellkiln_smelting = register("hellkiln_smelting");
-    IRecipeType<InfernalLanternFuellingRecipe> infernal_lantern_fuelling = register("infernal_lantern_fuelling");
+/*    IRecipeType<HellkilnRecipe> hellkiln_smelting = register("hellkiln_smelting");
+    IRecipeType<InfernalLanternFuellingRecipe> infernal_lantern_fuelling = register("infernal_lantern_fuelling");*/
 /*    IRecipeType<AdvancedSmithingRecipe> advanced_smithing = register("advanced_smithing");
     IRecipeType<MortarAndPestleRecipe> mortar_and_pestle = register("mortar_and_pestle");*/
 

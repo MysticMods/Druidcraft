@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.inventory.container;
 
 import com.vulp.druidcraft.recipes.HellkilnRecipe;
@@ -176,3 +177,4 @@ public class HellkilnContainer extends RecipeBookContainer<IInventory> {
         return this.hellkilnInventory.isUsableByPlayer(playerIn);
     }
 }
+*/

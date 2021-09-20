@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.recipes;
 
 import com.google.common.collect.Lists;
@@ -44,9 +45,11 @@ public class InfernalLanternFuellingRecipe extends SpecialRecipe {
         return this.fuel.test(stack) ? this.amount : 0;
     }
 
-    /**
+    */
+/**
      * Used to check if a recipe matches current crafting inventory
-     */
+     *//*
+
     public boolean matches(CraftingInventory inv, World worldIn) {
         int fuel = 0;
         int lantern = 0;
@@ -66,9 +69,11 @@ public class InfernalLanternFuellingRecipe extends SpecialRecipe {
         return false;
     }
 
-    /**
+    */
+/**
      * Returns an Item that is the result of this recipe
-     */
+     *//*
+
     public ItemStack getCraftingResult(CraftingInventory inv) {
         int fuelItems = 0;
         int lantern = 0;
@@ -104,9 +109,11 @@ public class InfernalLanternFuellingRecipe extends SpecialRecipe {
         return tempStack;
     }
 
-    /**
+    */
+/**
      * Used to determine if this recipe can fit in a grid of the given width/height
-     */
+     *//*
+
     public boolean canFit(int width, int height) {
         return width * height >= 2;
     }
@@ -139,3 +146,4 @@ public class InfernalLanternFuellingRecipe extends SpecialRecipe {
     }
 
 }
+*/

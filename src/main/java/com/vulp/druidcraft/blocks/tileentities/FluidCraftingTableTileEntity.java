@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.blocks.tileentities;
 
 import com.vulp.druidcraft.Druidcraft;
@@ -112,3 +113,4 @@ public class FluidCraftingTableTileEntity extends TileEntity implements INamedCo
         return new FluidCraftingTableContainer(id, playerInventory, this.fluidID, IWorldPosCallable.of(this.world, this.pos));
     }
 }
+*/

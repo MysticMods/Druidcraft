@@ -1,11 +1,6 @@
 package com.vulp.druidcraft.integration.jei;
 
 import com.vulp.druidcraft.Druidcraft;
-import com.vulp.druidcraft.client.gui.screen.inventory.FluidCraftingTableScreen;
-import com.vulp.druidcraft.client.gui.screen.inventory.HellkilnScreen;
-import com.vulp.druidcraft.inventory.container.FluidCraftingTableContainer;
-import com.vulp.druidcraft.inventory.container.HellkilnContainer;
-import com.vulp.druidcraft.recipes.FluidCraftingRecipe;
 import com.vulp.druidcraft.recipes.IModdedRecipeType;
 import com.vulp.druidcraft.registry.BlockRegistry;
 import mezz.jei.api.IModPlugin;
@@ -42,8 +37,8 @@ public class JEIDruidcraftPlugin implements IModPlugin {
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
         registry.addRecipeCategories(
-                new WoodcuttingCategory(registry.getJeiHelpers().getGuiHelper()),
-                new FluidCraftingCategory(registry.getJeiHelpers().getGuiHelper())
+                new WoodcuttingCategory(registry.getJeiHelpers().getGuiHelper())
+/*                new FluidCraftingCategory(registry.getJeiHelpers().getGuiHelper())*/
  /*               new AdvancedSmithingCategory(registry.getJeiHelpers().getGuiHelper()),
                 new MortarAndPestleCategory(registry.getJeiHelpers().getGuiHelper()),
                 new HellkilnCategory(registry.getJeiHelpers().getGuiHelper())*/
@@ -54,7 +49,7 @@ public class JEIDruidcraftPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         World world = Minecraft.getInstance().world;
         registration.addRecipes(IModdedRecipeType.getRecipes(world, IModdedRecipeType.woodcutting).values(), WoodcuttingCategory.UID);
-        registration.addRecipes(setupFluidCraftingRecipes(IModdedRecipeType.getRecipes(world, IRecipeType.CRAFTING).values()), FluidCraftingCategory.UID);
+/*        registration.addRecipes(setupFluidCraftingRecipes(IModdedRecipeType.getRecipes(world, IRecipeType.CRAFTING).values()), FluidCraftingCategory.UID);*/
 /*        registration.addRecipes(updateAdvSmithingList(IModdedRecipeType.getRecipes(world, IModdedRecipeType.advanced_smithing).values(), IModdedRecipeType.getRecipes(world, IRecipeType.SMITHING).values()), AdvancedSmithingCategory.UID);
         registration.addRecipes(IModdedRecipeType.getRecipes(world, IModdedRecipeType.mortar_and_pestle).values(), MortarAndPestleCategory.UID);*/
 /*        registration.addRecipes(IModdedRecipeType.getRecipes(world, IModdedRecipeType.hellkiln_smelting).values(), HellkilnCategory.UID);*/
@@ -63,7 +58,7 @@ public class JEIDruidcraftPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        registration.addRecipeTransferHandler(FluidCraftingTableContainer.class, FluidCraftingCategory.UID, 1, 9, 10, 36);
+/*        registration.addRecipeTransferHandler(FluidCraftingTableContainer.class, FluidCraftingCategory.UID, 1, 9, 10, 36);*/
 /*        registration.addRecipeTransferHandler(SmithingWorkbenchContainer.class, AdvancedSmithingCategory.UID, 0, 6, 8, 36);
         registration.addRecipeTransferHandler(HellkilnContainer.class, HellkilnCategory.UID, 0, 2, 3, 36);*/
     }
@@ -81,7 +76,7 @@ public class JEIDruidcraftPlugin implements IModPlugin {
 /*        registration.addRecipeClickArea(SmithingWorkbenchScreen.class, 101, 41, 22, 15, AdvancedSmithingCategory.UID);*/
 /*        registration.addRecipeClickArea(MortarAndPestleScreen.class, 77, 35, 23, 15, MortarAndPestleCategory.UID);*/
 /*        registration.addRecipeClickArea(HellkilnScreen.class, 71, 31, 34, 31, HellkilnCategory.UID);*/
-        registration.addRecipeClickArea(FluidCraftingTableScreen.class, 88, 32, 28, 23, FluidCraftingCategory.UID);
+/*        registration.addRecipeClickArea(FluidCraftingTableScreen.class, 88, 32, 28, 23, FluidCraftingCategory.UID);*/
     }
 
     @Override
@@ -97,7 +92,7 @@ public class JEIDruidcraftPlugin implements IModPlugin {
         return list;
     }
 
-    private List<IRecipe<CraftingInventory>> setupFluidCraftingRecipes(Collection<IRecipe<CraftingInventory>> recList) {
+/*    private List<IRecipe<CraftingInventory>> setupFluidCraftingRecipes(Collection<IRecipe<CraftingInventory>> recList) {
         List<IRecipe<CraftingInventory>> finalList = new ArrayList<>(Collections.emptyList());
         for (IRecipe<CraftingInventory> rec : recList) {
             if (rec instanceof FluidCraftingRecipe) {
@@ -105,7 +100,7 @@ public class JEIDruidcraftPlugin implements IModPlugin {
             }
         }
         return finalList;
-    }
+    }*/
 
 /*    private <C extends IInventory, T extends IRecipe<C>> List<AdvancedSmithingRecipe> updateAdvSmithingList(Collection<T> advRecList, Collection<T> recList) {
         List<AdvancedSmithingRecipe> finalList = new ArrayList<>(Collections.emptyList());

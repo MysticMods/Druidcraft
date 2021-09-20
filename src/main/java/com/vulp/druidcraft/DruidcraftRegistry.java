@@ -408,9 +408,9 @@ public class DruidcraftRegistry {
     public static void onRecipeRegistry(final RegistryEvent.Register<IRecipeSerializer<?>> RecipeRegistryEvent)
     {
         RecipeRegistryEvent.getRegistry().register(RecipeSerializers.woodcutting.setRegistryName(location("woodcutting")));
-        RecipeRegistryEvent.getRegistry().register(RecipeSerializers.fluid_crafting.setRegistryName(location("fluid_crafting")));
+/*        RecipeRegistryEvent.getRegistry().register(RecipeSerializers.fluid_crafting.setRegistryName(location("fluid_crafting")));
         RecipeRegistryEvent.getRegistry().register(RecipeSerializers.hellkiln_smelting.setRegistryName(location("hellkiln_smelting")));
-        RecipeRegistryEvent.getRegistry().register(RecipeSerializers.infernal_lantern_fuelling.setRegistryName(location("infernal_lantern_fuelling")));
+        RecipeRegistryEvent.getRegistry().register(RecipeSerializers.infernal_lantern_fuelling.setRegistryName(location("infernal_lantern_fuelling")));*/
 /*        RecipeRegistryEvent.getRegistry().register(RecipeSerializers.advanced_smithing.setRegistryName(location("advanced_smithing")));
         RecipeRegistryEvent.getRegistry().register(RecipeSerializers.mortar_and_pestle.setRegistryName(location("mortar_and_pestle")));*/
 
@@ -429,12 +429,12 @@ public class DruidcraftRegistry {
                         GUIRegistry.generic_9X12,
                         GUIRegistry.generic_9X24,
                         GUIRegistry.woodcutter,
-                        GUIRegistry.travel_pack,
-/*                        GUIRegistry.hellkiln,
+                        GUIRegistry.travel_pack/*,
+                        GUIRegistry.hellkiln,
                         GUIRegistry.hellkiln_igniter,
                         GUIRegistry.smithing_workbench,
-                        GUIRegistry.mortar_and_pestle,*/
-                        GUIRegistry.fluid_crafting_table
+                        GUIRegistry.mortar_and_pestle,
+                        GUIRegistry.fluid_crafting_table*/
                 );
 
 /*        LOGGER.info("GUI registered.");*/

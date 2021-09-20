@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.client.gui.screen.inventory;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -46,4 +47,4 @@ public class FluidCraftingTableScreen extends ContainerScreen<FluidCraftingTable
         this.blit(p_230450_1_, lvt_5_1_, lvt_6_1_, 0, 0, this.xSize, this.ySize);
     }
 
-}
+}*/

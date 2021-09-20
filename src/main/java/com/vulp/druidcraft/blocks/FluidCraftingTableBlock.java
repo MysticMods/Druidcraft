@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.blocks;
 
 import com.vulp.druidcraft.blocks.tileentities.FluidCraftingTableTileEntity;
@@ -146,3 +147,4 @@ public class FluidCraftingTableBlock extends ContainerBlock {
     }
 
 }
+*/

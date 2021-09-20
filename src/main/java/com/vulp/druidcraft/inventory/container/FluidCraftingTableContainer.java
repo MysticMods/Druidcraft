@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.inventory.container;
 
 import com.vulp.druidcraft.recipes.FluidCraftingRecipe;
@@ -86,9 +87,11 @@ public class FluidCraftingTableContainer extends Container {
         }
     }
 
-    /**
+    */
+/**
      * Callback for when the crafting matrix is changed.
-     */
+     *//*
+
     public void onCraftMatrixChanged(IInventory inventoryIn) {
         this.worldPosCallable.consume((p_217069_1_, p_217069_2_) -> {
             updateCraftingResult(this.windowId, p_217069_1_, this.player, this.craftMatrix, this.craftResult);
@@ -108,25 +111,31 @@ public class FluidCraftingTableContainer extends Container {
         return recipeIn.matches(this.craftMatrix, this.player.world);
     }
 
-    /**
+    */
+/**
      * Called when the container is closed.
-     */
+     *//*
+
     public void onContainerClosed(PlayerEntity playerIn) {
         super.onContainerClosed(playerIn);
         this.worldPosCallable.consume((world, pos) -> this.clearContainer(playerIn, world, this.craftMatrix));
     }
 
-    /**
+    */
+/**
      * Determines whether supplied player can use this container
-     */
+     *//*
+
     public boolean canInteractWith(PlayerEntity playerIn) {
         return isWithinUsableDistance(this.worldPosCallable, playerIn, BlockRegistry.fluid_crafting_table);
     }
 
-    /**
+    */
+/**
      * Handle when the stack in slot {@code index} is shift-clicked. Normally this moves the stack between the player
      * inventory and the other inventory(s).
-     */
+     *//*
+
     public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
@@ -175,10 +184,12 @@ public class FluidCraftingTableContainer extends Container {
         return itemstack;
     }
 
-    /**
+    */
+/**
      * Called to determine if the current slot is valid for the stack merging (double-click) code. The stack passed in is
      * null for the initial slot that was double-clicked.
-     */
+     *//*
+
     public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
         return slotIn.inventory != this.craftResult && super.canMergeSlot(stack, slotIn);
     }
@@ -200,4 +211,4 @@ public class FluidCraftingTableContainer extends Container {
         return 10;
     }
 
-}
+}*/

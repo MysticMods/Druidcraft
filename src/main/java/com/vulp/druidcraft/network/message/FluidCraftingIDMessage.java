@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.network.message;
 
 import com.vulp.druidcraft.blocks.tileentities.FluidCraftingTableTileEntity;
@@ -52,4 +53,4 @@ public class FluidCraftingIDMessage implements IMessage<FluidCraftingIDMessage> 
         });
         supplier.get().setPacketHandled(true);
     }
-}
+}*/

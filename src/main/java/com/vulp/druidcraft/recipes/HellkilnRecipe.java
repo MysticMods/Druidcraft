@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.recipes;
 
 import com.google.gson.JsonObject;
@@ -104,3 +105,4 @@ public class HellkilnRecipe implements IRecipe<IInventory> {
     }
 
 }
+*/

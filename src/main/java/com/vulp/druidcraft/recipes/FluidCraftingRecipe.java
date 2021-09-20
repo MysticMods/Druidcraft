@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.recipes;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -369,4 +370,4 @@ public class FluidCraftingRecipe extends SpecialRecipe {
         }
     }
 
-}
+}*/

@@ -1,3 +1,4 @@
+/*
 package com.vulp.druidcraft.client.renders;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -63,3 +64,4 @@ public class FluidCraftingTableTileEntityRenderer extends TileEntityRenderer<Flu
     }
 
 }
+*/
