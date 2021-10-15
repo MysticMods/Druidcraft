@@ -6,10 +6,14 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.Mod;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 @Mod.EventBusSubscriber
 public class Configuration
 {
+    public static List<AbstractConfig> CONFIGS = new ArrayList<>();
+
     private static final ForgeConfigSpec.Builder common_builder = new ForgeConfigSpec.Builder();
     public static final ForgeConfigSpec common_config;
 
@@ -18,7 +22,7 @@ public class Configuration
 
     static
     {
-        OreConfig.init(common_builder, client_builder);
+        OreConfigs.init(common_builder, client_builder);
         DropRateConfig.init(common_builder, client_builder);
         HarvestConfig.init(common_builder, client_builder);
         EntitySpawnConfig.init(common_builder, client_builder);

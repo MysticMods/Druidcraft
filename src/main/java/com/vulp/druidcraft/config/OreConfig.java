@@ -1,34 +1,108 @@
 package com.vulp.druidcraft.config;
 
+import com.vulp.druidcraft.util.OreGenTest;
+import net.minecraft.block.Block;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.template.RuleTest;
 import net.minecraftforge.common.ForgeConfigSpec;
 
-public class OreConfig
-{
-    public static ForgeConfigSpec.IntValue amber_size;
-    public static ForgeConfigSpec.IntValue amber_weight;
-    public static ForgeConfigSpec.IntValue moonstone_size;
-    public static ForgeConfigSpec.IntValue moonstone_weight;
-    public static ForgeConfigSpec.IntValue fiery_glass_size;
-    public static ForgeConfigSpec.IntValue fiery_glass_weight;
-    public static ForgeConfigSpec.IntValue rockroot_size;
-    public static ForgeConfigSpec.IntValue rockroot_weight;
-    public static ForgeConfigSpec.BooleanValue generate_ores;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
-    public static ForgeConfigSpec.BooleanValue generate_wip;
+public class OreConfig extends AbstractConfig {
 
-    public static void init(ForgeConfigSpec.Builder common, ForgeConfigSpec.Builder client)
-    {
-        common.comment("World Generation Config");
+    private String name;
+    private int chance;
+    private int minY;
+    private int maxY;
+    private int size;
+    private List<RegistryKey<World>> dimensions;
+    private Supplier<Block> ore;
 
-        amber_size = common.comment("Determines the size of an amber vein.").defineInRange("oregeneration.amber_size", 4, 1, 32);
-        amber_weight = common.comment("Determines the rarity of amber veins.").defineInRange("oregeneration.amber_weight", 2, 0, 200);
-        moonstone_size = common.comment("Determines the size of a moonstone vein.").defineInRange("oregeneration.moonstone_size", 4, 1, 32);
-        moonstone_weight = common.comment("Determines the rarity of moonstone veins.").defineInRange("oregeneration.moonstone_weight", 3, 0, 200);
-        fiery_glass_size = common.comment("Determines the size of a fiery glass vein.").defineInRange("oregeneration.fiery_glass_size", 7, 1, 32);
-        fiery_glass_weight = common.comment("Determines the rarity of fiery glass veins.").defineInRange("oregeneration.fiery_glass_weight", 5, 0, 200);
-        rockroot_size = common.comment("Determines the size of a rockroot vein.").defineInRange("oregeneration.rockroot_size", 3, 1, 32);
-        rockroot_weight = common.comment("Determines the rarity of rockroot veins.").defineInRange("oregeneration.rockroot_weight", 16, 0, 200);
-        generate_ores = common.comment("Whether to have ores from this mod spawn at all.").define("oregeneration.generate_ores", true);
-        generate_wip = common.comment("Whether to spawn WIP features, some of which may be buggy or not work at all. Mainly here for dev use, leave off.").define("worldgeneration.generate_wip", false);
+    private ForgeConfigSpec.IntValue configChance;
+    private ForgeConfigSpec.IntValue configMinY;
+    private ForgeConfigSpec.IntValue configMaxY;
+    private ForgeConfigSpec.IntValue configSize;
+    private ForgeConfigSpec.ConfigValue<List<? extends String>> configDimensions;
+
+    private RuleTest rule;
+
+    public OreConfig(String name, int chance, int minY, int maxY, int size, List<RegistryKey<World>> dimensions, Supplier<Block> ore) {
+        this(name, chance, minY, maxY, size, dimensions, ore, OreGenTest.INSTANCE);
+    }
+
+    public OreConfig(String name, int chance, int minY, int maxY, int size, List<RegistryKey<World>> dimensions, Supplier<Block> ore, RuleTest test) {
+        super();
+        this.name = name;
+        this.chance = chance;
+        this.minY = minY;
+        this.maxY = maxY;
+        this.size = size;
+        this.ore = ore;
+        this.dimensions = dimensions;
+        this.rule = test;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getChance() {
+        return configChance.get();
+    }
+
+    public int getMinY() {
+        return configMinY.get();
+    }
+
+    public int getMaxY() {
+        return configMaxY.get();
+    }
+
+    public int getSize() {
+        return configSize.get();
+    }
+
+    public Block getOre() {
+        return ore.get();
+    }
+
+    public RuleTest getRule() {
+        return rule;
+    }
+
+    public ResourceLocation getOreKey() {
+        return ore.get().getRegistryName();
+    }
+
+    private Set<RegistryKey<World>> storedDimension = null;
+
+    public Set<RegistryKey<World>> getDimensions() {
+        if (storedDimension == null) {
+            storedDimension = configDimensions.get().stream().map(o -> RegistryKey.getOrCreateKey(Registry.WORLD_KEY, new ResourceLocation(o))).collect(Collectors.toSet());
+        }
+
+        return storedDimension;
+    }
+
+    @Override
+    public void apply(ForgeConfigSpec.Builder builder) {
+        builder.comment(name + " ore generation.").push(name + "_oregen");
+        configChance = builder.comment("Number of veins per chunk (set to 0 to disable).").defineInRange("oreChances", chance, 0, 256);
+        configSize = builder.comment("Max size of the vein.").defineInRange("veinSize", size, 1, 256);
+        configMinY = builder.comment("Number of veins per chunk (set to 0 to disable).").defineInRange("minY", minY, 0, 256);
+        configMaxY = builder.comment("Number of veins per chunk (set to 0 to disable).").defineInRange("maxY", maxY, 0, 256);
+        configDimensions = builder.comment("The dimensions that this ore should spawn in as a list (default [\"minecraft:overworld\"])").defineList("dimensions", dimensions.stream().map(RegistryKey::getLocation).map(ResourceLocation::toString).collect(Collectors.toList()), (o) -> o instanceof String);
+        builder.pop();
+    }
+
+    @Override
+    public void reset() {
+        storedDimension = null;
     }
 }

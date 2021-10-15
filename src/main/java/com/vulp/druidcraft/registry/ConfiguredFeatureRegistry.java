@@ -2,7 +2,7 @@ package com.vulp.druidcraft.registry;
 
 import com.google.common.collect.ImmutableList;
 import com.vulp.druidcraft.Druidcraft;
-import com.vulp.druidcraft.config.OreConfig;
+import com.vulp.druidcraft.config.OreConfigs;
 import com.vulp.druidcraft.world.config.BlockStateRadiusFeatureConfig;
 import com.vulp.druidcraft.world.config.DummyTreeFeatureConfig;
 import com.vulp.druidcraft.world.config.FeatureConfigurations;
@@ -13,10 +13,6 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.biome.BiomeGenerationSettings;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.blockplacer.DoublePlantBlockPlacer;
-import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
-import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
-import net.minecraft.world.gen.blockstateprovider.WeightedBlockStateProvider;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.placement.*;
 
@@ -43,10 +39,10 @@ public class ConfiguredFeatureRegistry {
   public static ConfiguredFeature<?, ?> lavender = register("lavender", Feature.FLOWER.withConfiguration(FeatureConfigurations.Bushes.lavender).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242731_b(2).chance(10));
   public static ConfiguredFeature<?, ?> darkwood_trees_feature = register("darkwood_trees", Feature.RANDOM_SELECTOR.withConfiguration(new MultipleRandomFeatureConfig(ImmutableList.of(mega_darkwood_tree.withChance(0.5F), ConfiguredFeatureRegistry.darkwood_tree.withChance(0.5F)), darkwood_tree)).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(12, 0.3F, 3))));
   public static ConfiguredFeature<?, ?> darkwood_bushes_feature = register("darkwood_bushes", darkwood_bush.withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(5, 0.1F, 2))));
-  public static ConfiguredFeature<?, ?> amber = register("amber_ore", Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, BlockRegistry.amber_ore.getDefaultState(), OreConfig.amber_size.get())).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(0, 0, 256))).square().func_242731_b(OreConfig.amber_weight.get()));
-  public static ConfiguredFeature<?, ?> moonstone = register("moonstone_ore", Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, BlockRegistry.moonstone_ore.getDefaultState(), OreConfig.moonstone_size.get())).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(0, 0, 256))).square().func_242731_b(OreConfig.moonstone_weight.get()));
-  public static ConfiguredFeature<?, ?> fiery_glass = register("fiery_glass", Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, BlockRegistry.fiery_glass_ore.getDefaultState(), OreConfig.fiery_glass_size.get())).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(0, 0, 32))).square().func_242731_b(OreConfig.fiery_glass_weight.get()));
-  public static ConfiguredFeature<?, ?> rockroot = register("rockroot", Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, BlockRegistry.rockroot_ore.getDefaultState(), OreConfig.rockroot_size.get())).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(48, 16, 256))).square().func_242731_b(OreConfig.rockroot_weight.get()));
+  public static ConfiguredFeature<?, ?> amber = register("amber_ore", Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, BlockRegistry.amber_ore.getDefaultState(), OreConfigs.amber_size.get())).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(0, 0, 256))).square().func_242731_b(OreConfigs.amber_weight.get()));
+  public static ConfiguredFeature<?, ?> moonstone = register("moonstone_ore", Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, BlockRegistry.moonstone_ore.getDefaultState(), OreConfigs.moonstone_size.get())).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(0, 0, 256))).square().func_242731_b(OreConfigs.moonstone_weight.get()));
+  public static ConfiguredFeature<?, ?> fiery_glass = register("fiery_glass", Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, BlockRegistry.fiery_glass_ore.getDefaultState(), OreConfigs.fiery_glass_size.get())).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(0, 0, 32))).square().func_242731_b(OreConfigs.fiery_glass_weight.get()));
+  public static ConfiguredFeature<?, ?> rockroot = register("rockroot", Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, BlockRegistry.rockroot_ore.getDefaultState(), OreConfigs.rockroot_size.get())).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(48, 16, 256))).square().func_242731_b(OreConfigs.rockroot_weight.get()));
 /*  public static ConfiguredFeature<?, ?> nether_fiery_glass = register("nether_fiery_glass", Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, BlockRegistry.nether_fiery_glass_ore.getDefaultState(), OreConfig.fiery_glass_size.get())).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(0, 0, 256))).square().func_242731_b(OreConfig.fiery_glass_weight.get()));
   public static ConfiguredFeature<?, ?> brightstone = register("brightstone", Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, BlockRegistry.brightstone_ore.getDefaultState(), OreConfig.amber_size.get())).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(0, 0, 256))).square().func_242731_b(OreConfig.amber_weight.get()));*/
   public static ConfiguredFeature<?, ?> boulder = register("boulder", FeatureRegistry.taiga_rock.withConfiguration(new BlockStateRadiusFeatureConfig(Blocks.MOSSY_COBBLESTONE.getDefaultState(), 0)).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(2));

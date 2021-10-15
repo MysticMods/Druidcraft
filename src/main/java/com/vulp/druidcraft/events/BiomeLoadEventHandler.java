@@ -2,7 +2,6 @@ package com.vulp.druidcraft.events;
 
 import com.vulp.druidcraft.Druidcraft;
 import com.vulp.druidcraft.config.EntitySpawnConfig;
-import com.vulp.druidcraft.config.OreConfig;
 import com.vulp.druidcraft.registry.EntityRegistry;
 import com.vulp.druidcraft.registry.ConfiguredFeatureRegistry;
 import net.minecraft.entity.EntityClassification;
